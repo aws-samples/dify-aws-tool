@@ -1,0 +1,121 @@
+identity:
+  name: lambda_translate_utils
+  author: AWS
+  label:
+    en_US: LambdaTranslateTool
+    zh_Hans: Lambda翻译工具
+    pt_BR: LambdaTranslateTool
+  icon: icon.svg
+description:
+  human:
+    en_US: A util tools for LLM translation, specfic Lambda Function deployment is needed on AWS. Deployment tutorial - https://amzn-chn.feishu.cn/docx/HxO8dK41UosPFvxAylScW6Xunah
+    zh_Hans: 大语言模型翻译工具(专词映射获取)，需要在AWS上部署对应Lambda，可参考https://amzn-chn.feishu.cn/docx/HxO8dK41UosPFvxAylScW6Xunah
+    pt_BR: A util tools for LLM translation, specfic Lambda Function deployment is needed on AWS. Deployment tutorial - https://amzn-chn.feishu.cn/docx/HxO8dK41UosPFvxAylScW6Xunah
+  llm: A util tools for translation.
+parameters:
+  - name: text_content
+    type: string
+    required: true
+    label:
+      en_US: source content for translation
+      zh_Hans: 待翻译原文
+      pt_BR: source content for translation
+    human_description:
+      en_US: source content for translation
+      zh_Hans: 待翻译原文
+      pt_BR: source content for translation
+    llm_description: source content for translation
+    form: llm
+  - name: src_lang
+    type: string
+    required: true
+    label:
+      en_US: language code for source text
+      zh_Hans: 原文的语言代号
+      pt_BR: language code for source text
+    human_description:
+      en_US: language code for source text
+      zh_Hans: 原文的语言代号
+      pt_BR: language code for source text
+    llm_description: language code for source text
+    form: form
+  - name: dest_lang
+    type: string
+    required: true
+    label:
+      en_US: destination language code of translation
+      zh_Hans: 翻译目标语言代号
+      pt_BR: destination language code of translation
+    human_description:
+      en_US: destination language code of translation
+      zh_Hans: 翻译目标语言代号
+      pt_BR: destination language code of translation
+    llm_description: destination language code of translation
+    form: form
+  - name: aws_region
+    type: string
+    required: false
+    label:
+      en_US: region of lambda
+      zh_Hans: Lambda 所在的region
+      pt_BR: region of lambda
+    human_description:
+      en_US: region of lambda
+      zh_Hans: Lambda 所在的region
+      pt_BR: region of lambda
+    llm_description: region of lambda
+    form: form
+  - name: model_id
+    type: string
+    required: false
+    default: anthropic.claude-3-sonnet-20240229-v1:0
+    label:
+      en_US: LLM model_id in bedrock
+      zh_Hans: bedrock上的大语言模型model_id
+      pt_BR: LLM model_id in bedrock
+    human_description:
+      en_US: LLM model_id in bedrock
+      zh_Hans: bedrock上的大语言模型model_id
+      pt_BR: LLM model_id in bedrock
+    llm_description: LLM model_id in bedrock
+    form: form
+  - name: request_type
+    type: select
+    required: false
+    label:
+      en_US: request type
+      zh_Hans: 请求类型
+      pt_BR: request type
+    human_description:
+      en_US: request type
+      zh_Hans: 请求类型
+      pt_BR: request type
+    default: term_mapping
+    options:
+      - value: term_mapping
+        label:
+          en_US: term_mapping
+          zh_Hans: 专词映射
+      - value: segment_only
+        label:
+          en_US: segment_only
+          zh_Hans: 仅切词
+      - value: translate
+        label:
+          en_US: translate
+          zh_Hans: 翻译内容
+    form: form
+  - name: lambda_name
+    type: string
+    default: "translate_tool"
+    required: true
+    label:
+      en_US: lambda name for term mapping retrieval
+      zh_Hans: 专词召回映射的lambda名称
+      pt_BR: lambda name for term mapping retrieval
+    human_description:
+      en_US: lambda name for term mapping retrieval
+      zh_Hans: 专词召回映射的lambda名称
+      pt_BR: lambda name for term mapping retrieval
+    llm_description: lambda name for term mapping retrieval
+    form: form
