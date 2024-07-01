@@ -1,0 +1,179 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: term_based_translation
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: end
+      id: 1719384909889-source-1718861663614-target
+      source: '1719384909889'
+      sourceHandle: source
+      target: '1718861663614'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1718697368665-source-1719466553831-target
+      source: '1718697368665'
+      sourceHandle: source
+      target: '1719466553831'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1719466553831-source-1719384909889-target
+      source: '1719466553831'
+      sourceHandle: source
+      target: '1719384909889'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: src_content
+          max_length: 33024
+          options: []
+          required: true
+          type: paragraph
+          variable: src_content
+      height: 90
+      id: '1718697368665'
+      position:
+        x: 56.40234123952587
+        y: 396.1811941244753
+      positionAbsolute:
+        x: 56.40234123952587
+        y: 396.1811941244753
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs: []
+        selected: false
+        title: End
+        type: end
+      height: 54
+      id: '1718861663614'
+      position:
+        x: 1264.115822975537
+        y: 396.1811941244753
+      positionAbsolute:
+        x: 1264.115822975537
+        y: 396.1811941244753
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(json_str: str) -> dict:\n    obj = json.loads(json_str)\n\
+          \    mappings = []\n    for item in obj['term_mapping']:\n        mappings.append(\"\
+          {}->{}\".format(item[0], item[1]))\n\n    return { \"mappings\" : mappings\
+          \ }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          mappings:
+            children: null
+            type: array[string]
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1719466553831'
+          - text
+          variable: json_str
+      height: 54
+      id: '1719384909889'
+      position:
+        x: 872.1519868689577
+        y: 396.1811941244753
+      positionAbsolute:
+        x: 872.1519868689577
+        y: 396.1811941244753
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: LambdaTranslateTool
+        tool_configurations:
+          aws_region: us-west-2
+          dest_lang: EN
+          lambda_name: translate_tool
+          model_id: anthropic.claude-3-sonnet-20240229-v1:0
+          request_type: term_mapping
+          src_lang: CHS
+        tool_label: LambdaTranslateTool
+        tool_name: lambda_translate_utils
+        tool_parameters:
+          text_content:
+            type: mixed
+            value: '{{#1718697368665.src_content#}}'
+        type: tool
+      height: 220
+      id: '1719466553831'
+      position:
+        x: 457.2278352048229
+        y: 396.1811941244753
+      positionAbsolute:
+        x: 457.2278352048229
+        y: 396.1811941244753
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 264.4218220808159
+      y: 174.57975027234465
+      zoom: 0.9592114568499873
