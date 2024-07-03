@@ -70,13 +70,14 @@ class SageMakerReRankTool(BuiltinTool):
             scores = self._sagemaker_rerank(query_input=query, docs=docs, rerank_endpoint=self.sagemaker_endpoint)
 
             line = 7
-            sorted_scores = sorted(zip(candidate_docs, scores), key=lambda x: x[1], reverse=True)
+            for idx in range(len(candidate_docs)):
+                candidate_docs[idx]["score"] = scores[idx]
 
             line = 8
-            results = [ item[0] for item in sorted_scores[:self.topk]]
+            sorted_candidate_docs = sorted(candidate_docs, key=lambda x: x['score'], reverse=True)
 
             line = 9
-            results_str = json.dumps(results, ensure_ascii=False)
+            results_str = json.dumps(sorted_candidate_docs[:self.topk], ensure_ascii=False)
             return self.create_text_message(text=results_str)
             
         except Exception as e:
