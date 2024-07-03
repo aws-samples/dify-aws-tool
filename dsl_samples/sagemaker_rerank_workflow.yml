@@ -114,6 +114,11 @@ workflow:
         dataset_ids:
         - 342d9b81-35b4-4b29-86d0-801aaf6a8f4e
         desc: ''
+        multiple_retrieval_config:
+          reranking_model:
+            model: ''
+            provider: ''
+          top_k: 2
         query_variable_selector:
         - '1719390578982'
         - query
@@ -135,7 +140,7 @@ workflow:
       positionAbsolute:
         x: 501
         y: 532
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -176,7 +181,7 @@ workflow:
       positionAbsolute:
         x: 1423
         y: 532
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -217,11 +222,15 @@ workflow:
       width: 244
     - data:
         desc: ''
-        outputs: []
+        outputs:
+        - value_selector:
+          - '1719391028777'
+          - text
+          variable: answer
         selected: false
         title: End
         type: end
-      height: 54
+      height: 90
       id: '1719396469904'
       position:
         x: 1729
@@ -269,6 +278,6 @@ workflow:
       type: custom
       width: 244
     viewport:
-      x: -69.38395249428186
-      y: -222.45888470286354
-      zoom: 1.209321807529141
+      x: -295.4623435824269
+      y: -144.52722736403018
+      zoom: 0.713614996657191
