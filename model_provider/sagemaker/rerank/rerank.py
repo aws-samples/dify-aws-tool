@@ -3,6 +3,8 @@ from typing import Optional, Any, Union
 # import cohere
 # from cohere.core import RequestOptions
 
+from core.model_runtime.entities.common_entities import I18nObject
+from core.model_runtime.entities.model_entities import AIModelEntity, FetchFrom, ModelType
 from core.model_runtime.entities.rerank_entities import RerankDocument, RerankResult
 from core.model_runtime.errors.invoke import (
     InvokeAuthorizationError,
@@ -153,18 +155,37 @@ class SageMakerRerankModel(RerankModel):
         """
         return {
             InvokeConnectionError: [
-                RuntimeError
+                InvokeConnectionError
             ],
             InvokeServerUnavailableError: [
-                RuntimeError
+                InvokeServerUnavailableError
             ],
             InvokeRateLimitError: [
-                RuntimeError
+                InvokeRateLimitError
             ],
             InvokeAuthorizationError: [
-                RuntimeError
+                InvokeAuthorizationError
             ],
             InvokeBadRequestError: [
-                RuntimeError
+                InvokeBadRequestError,
+                KeyError,
+                ValueError
             ]
         }
+
+    def get_customizable_model_schema(self, model: str, credentials: dict) -> AIModelEntity | None:
+        """
+            used to define customizable model schema
+        """
+        entity = AIModelEntity(
+            model=model,
+            label=I18nObject(
+                en_US=model
+            ),
+            fetch_from=FetchFrom.CUSTOMIZABLE_MODEL,
+            model_type=ModelType.RERANK,
+            model_properties={ },
+            parameter_rules=[]
+        )
+
+        return entity

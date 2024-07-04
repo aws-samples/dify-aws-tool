@@ -3,26 +3,8 @@ import logging
 from collections.abc import Generator, Iterator
 from typing import Optional, Union, cast, Any
 
-# import cohere
-# from cohere import (
-#     ChatMessage,
-#     ChatStreamRequestToolResultsItem,
-#     GenerateStreamedResponse,
-#     GenerateStreamedResponse_StreamEnd,
-#     GenerateStreamedResponse_StreamError,
-#     GenerateStreamedResponse_TextGeneration,
-#     Generation,
-#     NonStreamedChatResponse,
-#     StreamedChatResponse,
-#     StreamedChatResponse_StreamEnd,
-#     StreamedChatResponse_TextGeneration,
-#     StreamedChatResponse_ToolCallsGeneration,
-#     Tool,
-#     ToolCall,
-#     ToolParameterDefinitionsValue,
-# )
-# from cohere.core import RequestOptions
 
+from core.model_runtime.entities.common_entities import I18nObject
 from core.model_runtime.entities.llm_entities import LLMMode, LLMResult, LLMResultChunk, LLMResultChunkDelta
 from core.model_runtime.entities.message_entities import (
     AssistantPromptMessage,
@@ -157,153 +139,6 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         except Exception as ex:
             raise CredentialsValidateFailedError(str(ex))
 
-    # def _convert_prompt_message_to_dict(self, message: PromptMessage) -> Optional[ChatMessage]:
-    #     """
-    #     Convert PromptMessage to dict for Cohere model
-    #     """
-    #     if isinstance(message, UserPromptMessage):
-    #         message = cast(UserPromptMessage, message)
-    #         if isinstance(message.content, str):
-    #             chat_message = ChatMessage(role="USER", message=message.content)
-    #         else:
-    #             sub_message_text = ''
-    #             for message_content in message.content:
-    #                 if message_content.type == PromptMessageContentType.TEXT:
-    #                     message_content = cast(TextPromptMessageContent, message_content)
-    #                     sub_message_text += message_content.data
-
-    #             chat_message = ChatMessage(role="USER", message=sub_message_text)
-    #     elif isinstance(message, AssistantPromptMessage):
-    #         message = cast(AssistantPromptMessage, message)
-    #         if not message.content:
-    #             return None
-    #         chat_message = ChatMessage(role="CHATBOT", message=message.content)
-    #     elif isinstance(message, SystemPromptMessage):
-    #         message = cast(SystemPromptMessage, message)
-    #         chat_message = ChatMessage(role="USER", message=message.content)
-    #     elif isinstance(message, ToolPromptMessage):
-    #         return None
-    #     else:
-    #         raise ValueError(f"Got unknown type {message}")
-
-    #     return chat_message
-
-    # def _convert_tools(self, tools: list[PromptMessageTool]) -> list[Tool]:
-    #     """
-    #     Convert tools to Cohere model
-    #     """
-    #     cohere_tools = []
-    #     for tool in tools:
-    #         properties = tool.parameters['properties']
-    #         required_properties = tool.parameters['required']
-
-    #         parameter_definitions = {}
-    #         for p_key, p_val in properties.items():
-    #             required = False
-    #             if p_key in required_properties:
-    #                 required = True
-
-    #             desc = p_val['description']
-    #             if 'enum' in p_val:
-    #                 desc += (f"; Only accepts one of the following predefined options: "
-    #                          f"[{', '.join(p_val['enum'])}]")
-
-    #             parameter_definitions[p_key] = ToolParameterDefinitionsValue(
-    #                 description=desc,
-    #                 type=p_val['type'],
-    #                 required=required
-    #             )
-
-    #         cohere_tool = Tool(
-    #             name=tool.name,
-    #             description=tool.description,
-    #             parameter_definitions=parameter_definitions
-    #         )
-
-    #         cohere_tools.append(cohere_tool)
-
-    #     return cohere_tools
-
-    def _num_tokens_from_string(self, model: str, credentials: dict, text: str) -> int:
-        """
-        Calculate num tokens for text completion model.
-
-        :param model: model name
-        :param credentials: credentials
-        :param text: prompt text
-        :return: number of tokens
-        """
-        # initialize client
-        client = cohere.Client(credentials.get('api_key'), base_url=credentials.get('base_url'))
-
-        response = client.tokenize(
-            text=text,
-            model=model
-        )
-
-        return len(response.tokens)
-
-    # def _num_tokens_from_messages(self, model: str, credentials: dict, messages: list[PromptMessage]) -> int:
-    #     """Calculate num tokens Cohere model."""
-    #     calc_messages = []
-    #     for message in messages:
-    #         cohere_message = self._convert_prompt_message_to_dict(message)
-    #         if cohere_message:
-    #             calc_messages.append(cohere_message)
-    #     message_strs = [f"{message.role}: {message.message}" for message in calc_messages]
-    #     message_str = "\n".join(message_strs)
-
-    #     real_model = model
-    #     if self.get_model_schema(model, credentials).fetch_from == FetchFrom.PREDEFINED_MODEL:
-    #         real_model = model.removesuffix('-chat')
-
-    #     return self._num_tokens_from_string(real_model, credentials, message_str)
-
-    # def get_customizable_model_schema(self, model: str, credentials: dict) -> AIModelEntity:
-    #     """
-    #         Cohere supports fine-tuning of their models. This method returns the schema of the base model
-    #         but renamed to the fine-tuned model name.
-
-    #         :param model: model name
-    #         :param credentials: credentials
-
-    #         :return: model schema
-    #     """
-    #     # get model schema
-    #     models = self.predefined_models()
-    #     model_map = {model.model: model for model in models}
-
-    #     mode = credentials.get('mode')
-
-    #     if mode == 'chat':
-    #         base_model_schema = model_map['command-light-chat']
-    #     else:
-    #         base_model_schema = model_map['command-light']
-
-    #     base_model_schema = cast(AIModelEntity, base_model_schema)
-
-    #     base_model_schema_features = base_model_schema.features or []
-    #     base_model_schema_model_properties = base_model_schema.model_properties or {}
-    #     base_model_schema_parameters_rules = base_model_schema.parameter_rules or []
-
-    #     entity = AIModelEntity(
-    #         model=model,
-    #         label=I18nObject(
-    #             zh_Hans=model,
-    #             en_US=model
-    #         ),
-    #         model_type=ModelType.LLM,
-    #         features=[feature for feature in base_model_schema_features],
-    #         fetch_from=FetchFrom.CUSTOMIZABLE_MODEL,
-    #         model_properties={
-    #             key: property for key, property in base_model_schema_model_properties.items()
-    #         },
-    #         parameter_rules=[rule for rule in base_model_schema_parameters_rules],
-    #         pricing=base_model_schema.pricing
-    #     )
-
-    #     return entity
-
     @property
     def _invoke_error_mapping(self) -> dict[type[InvokeError], list[type[Exception]]]:
         """
@@ -316,18 +151,94 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         """
         return {
             InvokeConnectionError: [
-                RuntimeError
+                InvokeConnectionError
             ],
             InvokeServerUnavailableError: [
-                RuntimeError
+                InvokeServerUnavailableError
             ],
             InvokeRateLimitError: [
-                RuntimeError
+                InvokeRateLimitError
             ],
             InvokeAuthorizationError: [
-                RuntimeError
+                InvokeAuthorizationError
             ],
             InvokeBadRequestError: [
-                RuntimeError
+                InvokeBadRequestError,
+                KeyError,
+                ValueError
             ]
         }
+
+    def get_customizable_model_schema(self, model: str, credentials: dict) -> AIModelEntity | None:
+        """
+            used to define customizable model schema
+        """
+        rules = [
+            ParameterRule(
+                name='temperature',
+                type=ParameterType.FLOAT,
+                use_template='temperature',
+                label=I18nObject(
+                    zh_Hans='温度',
+                    en_US='Temperature'
+                ),
+            ),
+            ParameterRule(
+                name='top_p',
+                type=ParameterType.FLOAT,
+                use_template='top_p',
+                label=I18nObject(
+                    zh_Hans='Top P',
+                    en_US='Top P'
+                )
+            ),
+            ParameterRule(
+                name='max_tokens',
+                type=ParameterType.INT,
+                use_template='max_tokens',
+                min=1,
+                max=credentials.get('context_length', 2048),
+                default=512,
+                label=I18nObject(
+                    zh_Hans='最大生成长度',
+                    en_US='Max Tokens'
+                )
+            )
+        ]
+
+        completion_type = LLMMode.value_of(credentials["mode"])
+
+        if completion_type == LLMMode.CHAT:
+            print(f"completion_type : {LLMMode.CHAT.value}") 
+
+        if completion_type == LLMMode.COMPLETION:
+            print(f"completion_type : {LLMMode.COMPLETION.value}") 
+
+        features = []
+
+        support_function_call = credentials.get('support_function_call', False)
+        if support_function_call:
+            features.append(ModelFeature.TOOL_CALL)
+
+        support_vision = credentials.get('support_vision', False)
+        if support_vision:
+            features.append(ModelFeature.VISION)
+
+        context_length = credentials.get('context_length', 2048)
+
+        entity = AIModelEntity(
+            model=model,
+            label=I18nObject(
+                en_US=model
+            ),
+            fetch_from=FetchFrom.CUSTOMIZABLE_MODEL,
+            model_type=ModelType.LLM,
+            features=features,
+            model_properties={
+                ModelPropertyKey.MODE: completion_type,
+                ModelPropertyKey.CONTEXT_SIZE: context_length
+            },
+            parameter_rules=rules
+        )
+
+        return entity

@@ -1,9 +1,0 @@
-model: bge-m3-v2.0
-model_type: text-embedding
-model_properties:
-  context_size: 8192
-  max_chunks: 20
-pricing:
-  input: '0.1'
-  unit: '0.000001'
-  currency: USD

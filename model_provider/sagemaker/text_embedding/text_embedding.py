@@ -5,6 +5,8 @@ from typing import Optional, Any
 import numpy as np
 # from cohere.core import RequestOptions
 
+from core.model_runtime.entities.common_entities import I18nObject
+from core.model_runtime.entities.model_entities import AIModelEntity, FetchFrom, ModelType
 from core.model_runtime.entities.model_entities import PriceType
 from core.model_runtime.entities.text_embedding_entities import EmbeddingUsage, TextEmbeddingResult
 from core.model_runtime.errors.invoke import (
@@ -110,28 +112,41 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
 
     @property
     def _invoke_error_mapping(self) -> dict[type[InvokeError], list[type[Exception]]]:
-        """
-        Map model invoke error to unified error
-        The key is the error type thrown to the caller
-        The value is the error type thrown by the model,
-        which needs to be converted into a unified error type for the caller.
-
-        :return: Invoke error mapping
-        """
         return {
             InvokeConnectionError: [
-                RuntimeError
+                InvokeConnectionError
             ],
             InvokeServerUnavailableError: [
-                RuntimeError
+                InvokeServerUnavailableError
             ],
             InvokeRateLimitError: [
-                RuntimeError
+                InvokeRateLimitError
             ],
             InvokeAuthorizationError: [
-                RuntimeError
+                InvokeAuthorizationError
             ],
             InvokeBadRequestError: [
-                RuntimeError
+                KeyError
             ]
         }
+
+    def get_customizable_model_schema(self, model: str, credentials: dict) -> AIModelEntity | None:
+        """
+            used to define customizable model schema
+        """
+        
+        entity = AIModelEntity(
+            model=model,
+            label=I18nObject(
+                en_US=model
+            ),
+            fetch_from=FetchFrom.CUSTOMIZABLE_MODEL,
+            model_type=ModelType.TEXT_EMBEDDING,
+            model_properties={
+                ModelPropertyKey.MAX_CHUNKS: 1,
+                ModelPropertyKey.CONTEXT_SIZE: 'max_tokens' in credentials and credentials['max_tokens'] or 512,
+            },
+            parameter_rules=[]
+        )
+
+        return entity
