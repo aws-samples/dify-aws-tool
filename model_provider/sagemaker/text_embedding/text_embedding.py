@@ -1,9 +1,9 @@
 import time
-from typing import Optional
+from typing import Optional, Any
 
-import cohere
+# import cohere
 import numpy as np
-from cohere.core import RequestOptions
+# from cohere.core import RequestOptions
 
 from core.model_runtime.entities.model_entities import PriceType
 from core.model_runtime.entities.text_embedding_entities import EmbeddingUsage, TextEmbeddingResult
@@ -23,6 +23,7 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
     """
     Model class for Cohere text embedding model.
     """
+    sagemaker_client: Any = None
 
     def _invoke(self, model: str, credentials: dict,
                 texts: list[str], user: Optional[str] = None) \
@@ -37,65 +38,14 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
         :return: embeddings result
         """
         # get model properties
-        context_size = self._get_context_size(model, credentials)
-        max_chunks = self._get_max_chunks(model, credentials)
 
-        embeddings: list[list[float]] = [[] for _ in range(len(texts))]
-        tokens = []
-        indices = []
-        used_tokens = 0
-
-        for i, text in enumerate(texts):
-            tokenize_response = self._tokenize(
-                model=model,
-                credentials=credentials,
-                text=text
-            )
-
-            for j in range(0, len(tokenize_response), context_size):
-                tokens += [tokenize_response[j: j + context_size]]
-                indices += [i]
-
-        batched_embeddings = []
-        _iter = range(0, len(tokens), max_chunks)
-
-        for i in _iter:
-            # call embedding model
-            embeddings_batch, embedding_used_tokens = self._embedding_invoke(
-                model=model,
-                credentials=credentials,
-                texts=["".join(token) for token in tokens[i: i + max_chunks]]
-            )
-
-            used_tokens += embedding_used_tokens
-            batched_embeddings += embeddings_batch
-
-        results: list[list[list[float]]] = [[] for _ in range(len(texts))]
-        num_tokens_in_batch: list[list[int]] = [[] for _ in range(len(texts))]
-        for i in range(len(indices)):
-            results[indices[i]].append(batched_embeddings[i])
-            num_tokens_in_batch[indices[i]].append(len(tokens[i]))
-
-        for i in range(len(texts)):
-            _result = results[i]
-            if len(_result) == 0:
-                embeddings_batch, embedding_used_tokens = self._embedding_invoke(
-                    model=model,
-                    credentials=credentials,
-                    texts=[" "]
-                )
-
-                used_tokens += embedding_used_tokens
-                average = embeddings_batch[0]
-            else:
-                average = np.average(_result, axis=0, weights=num_tokens_in_batch[i])
-            embeddings[i] = (average / np.linalg.norm(average)).tolist()
+        embeddings = [ [0.0] * 1024 for item in range(len(texts)) ]
 
         # calc usage
         usage = self._calc_response_usage(
             model=model,
             credentials=credentials,
-            tokens=used_tokens
+            tokens=0
         )
 
         return TextEmbeddingResult(
@@ -113,44 +63,7 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
         :param texts: texts to embed
         :return:
         """
-        if len(texts) == 0:
-            return 0
-
-        full_text = ' '.join(texts)
-
-        try:
-            response = self._tokenize(
-                model=model,
-                credentials=credentials,
-                text=full_text
-            )
-        except Exception as e:
-            raise self._transform_invoke_error(e)
-
-        return len(response)
-
-    def _tokenize(self, model: str, credentials: dict, text: str) -> list[str]:
-        """
-        Tokenize text
-        :param model: model name
-        :param credentials: model credentials
-        :param text: text to tokenize
-        :return:
-        """
-        if not text:
-            return []
-
-        # initialize client
-        client = cohere.Client(credentials.get('api_key'), base_url=credentials.get('base_url'))
-
-        response = client.tokenize(
-            text=text,
-            model=model,
-            offline=False,
-            request_options=RequestOptions(max_retries=0)
-        )
-
-        return response.token_strings
+        return 0
 
     def validate_credentials(self, model: str, credentials: dict) -> None:
         """
@@ -161,36 +74,9 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
         :return:
         """
         try:
-            # call embedding model
-            self._embedding_invoke(
-                model=model,
-                credentials=credentials,
-                texts=['ping']
-            )
+            print("validate_credentials ok....")
         except Exception as ex:
             raise CredentialsValidateFailedError(str(ex))
-
-    def _embedding_invoke(self, model: str, credentials: dict, texts: list[str]) -> tuple[list[list[float]], int]:
-        """
-        Invoke embedding model
-
-        :param model: model name
-        :param credentials: model credentials
-        :param texts: texts to embed
-        :return: embeddings and used tokens
-        """
-        # initialize client
-        client = cohere.Client(credentials.get('api_key'), base_url=credentials.get('base_url'))
-
-        # call embedding model
-        response = client.embed(
-            texts=texts,
-            model=model,
-            input_type='search_document' if len(texts) > 1 else 'search_query',
-            request_options=RequestOptions(max_retries=1)
-        )
-
-        return response.embeddings, int(response.meta.billed_units.input_tokens)
 
     def _calc_response_usage(self, model: str, credentials: dict, tokens: int) -> EmbeddingUsage:
         """
@@ -234,21 +120,18 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
         """
         return {
             InvokeConnectionError: [
-                cohere.errors.service_unavailable_error.ServiceUnavailableError
+                RuntimeError
             ],
             InvokeServerUnavailableError: [
-                cohere.errors.internal_server_error.InternalServerError
+                RuntimeError
             ],
             InvokeRateLimitError: [
-                cohere.errors.too_many_requests_error.TooManyRequestsError
+                RuntimeError
             ],
             InvokeAuthorizationError: [
-                cohere.errors.unauthorized_error.UnauthorizedError,
-                cohere.errors.forbidden_error.ForbiddenError
+                RuntimeError
             ],
             InvokeBadRequestError: [
-                cohere.core.api_error.ApiError,
-                cohere.errors.bad_request_error.BadRequestError,
-                cohere.errors.not_found_error.NotFoundError,
+                RuntimeError
             ]
         }

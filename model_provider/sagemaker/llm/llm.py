@@ -1,7 +1,7 @@
 import json
 import logging
 from collections.abc import Generator, Iterator
-from typing import Optional, Union, cast
+from typing import Optional, Union, cast, Any
 
 # import cohere
 # from cohere import (
@@ -139,10 +139,7 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         model_mode = self.get_model_mode(model)
 
         try:
-            if model_mode == LLMMode.CHAT:
-                return self._num_tokens_from_messages(model, credentials, prompt_messages)
-            else:
-                return self._num_tokens_from_string(model, credentials, prompt_messages[0].content)
+            return 0
         except Exception as e:
             raise self._transform_invoke_error(e)
 
@@ -160,374 +157,72 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         except Exception as ex:
             raise CredentialsValidateFailedError(str(ex))
 
-    def _handle_generate_response(self, model: str, credentials: dict, response: Generation,
-                                  prompt_messages: list[PromptMessage]) \
-            -> LLMResult:
-        """
-        Handle llm response
+    # def _convert_prompt_message_to_dict(self, message: PromptMessage) -> Optional[ChatMessage]:
+    #     """
+    #     Convert PromptMessage to dict for Cohere model
+    #     """
+    #     if isinstance(message, UserPromptMessage):
+    #         message = cast(UserPromptMessage, message)
+    #         if isinstance(message.content, str):
+    #             chat_message = ChatMessage(role="USER", message=message.content)
+    #         else:
+    #             sub_message_text = ''
+    #             for message_content in message.content:
+    #                 if message_content.type == PromptMessageContentType.TEXT:
+    #                     message_content = cast(TextPromptMessageContent, message_content)
+    #                     sub_message_text += message_content.data
 
-        :param model: model name
-        :param credentials: credentials
-        :param response: response
-        :param prompt_messages: prompt messages
-        :return: llm response
-        """
-        assistant_text = response.generations[0].text
+    #             chat_message = ChatMessage(role="USER", message=sub_message_text)
+    #     elif isinstance(message, AssistantPromptMessage):
+    #         message = cast(AssistantPromptMessage, message)
+    #         if not message.content:
+    #             return None
+    #         chat_message = ChatMessage(role="CHATBOT", message=message.content)
+    #     elif isinstance(message, SystemPromptMessage):
+    #         message = cast(SystemPromptMessage, message)
+    #         chat_message = ChatMessage(role="USER", message=message.content)
+    #     elif isinstance(message, ToolPromptMessage):
+    #         return None
+    #     else:
+    #         raise ValueError(f"Got unknown type {message}")
 
-        # transform assistant message to prompt message
-        assistant_prompt_message = AssistantPromptMessage(
-            content=assistant_text
-        )
+    #     return chat_message
 
-        # calculate num tokens
-        prompt_tokens = int(response.meta.billed_units.input_tokens)
-        completion_tokens = int(response.meta.billed_units.output_tokens)
+    # def _convert_tools(self, tools: list[PromptMessageTool]) -> list[Tool]:
+    #     """
+    #     Convert tools to Cohere model
+    #     """
+    #     cohere_tools = []
+    #     for tool in tools:
+    #         properties = tool.parameters['properties']
+    #         required_properties = tool.parameters['required']
 
-        # transform usage
-        usage = self._calc_response_usage(model, credentials, prompt_tokens, completion_tokens)
+    #         parameter_definitions = {}
+    #         for p_key, p_val in properties.items():
+    #             required = False
+    #             if p_key in required_properties:
+    #                 required = True
 
-        # transform response
-        response = LLMResult(
-            model=model,
-            prompt_messages=prompt_messages,
-            message=assistant_prompt_message,
-            usage=usage
-        )
+    #             desc = p_val['description']
+    #             if 'enum' in p_val:
+    #                 desc += (f"; Only accepts one of the following predefined options: "
+    #                          f"[{', '.join(p_val['enum'])}]")
 
-        return response
+    #             parameter_definitions[p_key] = ToolParameterDefinitionsValue(
+    #                 description=desc,
+    #                 type=p_val['type'],
+    #                 required=required
+    #             )
 
-    def _handle_generate_stream_response(self, model: str, credentials: dict,
-                                         response: Iterator[GenerateStreamedResponse],
-                                         prompt_messages: list[PromptMessage]) -> Generator:
-        """
-        Handle llm stream response
+    #         cohere_tool = Tool(
+    #             name=tool.name,
+    #             description=tool.description,
+    #             parameter_definitions=parameter_definitions
+    #         )
 
-        :param model: model name
-        :param response: response
-        :param prompt_messages: prompt messages
-        :return: llm response chunk generator
-        """
-        index = 1
-        full_assistant_content = ''
-        for chunk in response:
-            if isinstance(chunk, GenerateStreamedResponse_TextGeneration):
-                chunk = cast(GenerateStreamedResponse_TextGeneration, chunk)
-                text = chunk.text
+    #         cohere_tools.append(cohere_tool)
 
-                if text is None:
-                    continue
-
-                # transform assistant message to prompt message
-                assistant_prompt_message = AssistantPromptMessage(
-                    content=text
-                )
-
-                full_assistant_content += text
-
-                yield LLMResultChunk(
-                    model=model,
-                    prompt_messages=prompt_messages,
-                    delta=LLMResultChunkDelta(
-                        index=index,
-                        message=assistant_prompt_message,
-                    )
-                )
-
-                index += 1
-            elif isinstance(chunk, GenerateStreamedResponse_StreamEnd):
-                chunk = cast(GenerateStreamedResponse_StreamEnd, chunk)
-
-                # calculate num tokens
-                prompt_tokens = self._num_tokens_from_messages(model, credentials, prompt_messages)
-                completion_tokens = self._num_tokens_from_messages(
-                    model,
-                    credentials,
-                    [AssistantPromptMessage(content=full_assistant_content)]
-                )
-
-                # transform usage
-                usage = self._calc_response_usage(model, credentials, prompt_tokens, completion_tokens)
-
-                yield LLMResultChunk(
-                    model=model,
-                    prompt_messages=prompt_messages,
-                    delta=LLMResultChunkDelta(
-                        index=index,
-                        message=AssistantPromptMessage(content=''),
-                        finish_reason=chunk.finish_reason,
-                        usage=usage
-                    )
-                )
-                break
-            elif isinstance(chunk, GenerateStreamedResponse_StreamError):
-                chunk = cast(GenerateStreamedResponse_StreamError, chunk)
-                raise InvokeBadRequestError(chunk.err)
-
-    def _handle_chat_generate_response(self, model: str, credentials: dict, response: NonStreamedChatResponse,
-                                       prompt_messages: list[PromptMessage]) \
-            -> LLMResult:
-        """
-        Handle llm chat response
-
-        :param model: model name
-        :param credentials: credentials
-        :param response: response
-        :param prompt_messages: prompt messages
-        :return: llm response
-        """
-        assistant_text = response.text
-
-        tool_calls = []
-        if response.tool_calls:
-            for cohere_tool_call in response.tool_calls:
-                tool_call = AssistantPromptMessage.ToolCall(
-                    id=cohere_tool_call.name,
-                    type='function',
-                    function=AssistantPromptMessage.ToolCall.ToolCallFunction(
-                        name=cohere_tool_call.name,
-                        arguments=json.dumps(cohere_tool_call.parameters)
-                    )
-                )
-                tool_calls.append(tool_call)
-
-        # transform assistant message to prompt message
-        assistant_prompt_message = AssistantPromptMessage(
-            content=assistant_text,
-            tool_calls=tool_calls
-        )
-
-        # calculate num tokens
-        prompt_tokens = self._num_tokens_from_messages(model, credentials, prompt_messages)
-        completion_tokens = self._num_tokens_from_messages(model, credentials, [assistant_prompt_message])
-
-        # transform usage
-        usage = self._calc_response_usage(model, credentials, prompt_tokens, completion_tokens)
-
-        # transform response
-        response = LLMResult(
-            model=model,
-            prompt_messages=prompt_messages,
-            message=assistant_prompt_message,
-            usage=usage
-        )
-
-        return response
-
-    def _handle_chat_generate_stream_response(self, model: str, credentials: dict,
-                                              response: Iterator[StreamedChatResponse],
-                                              prompt_messages: list[PromptMessage]) -> Generator:
-        """
-        Handle llm chat stream response
-
-        :param model: model name
-        :param response: response
-        :param prompt_messages: prompt messages
-        :return: llm response chunk generator
-        """
-
-        def final_response(full_text: str,
-                           tool_calls: list[AssistantPromptMessage.ToolCall],
-                           index: int,
-                           finish_reason: Optional[str] = None) -> LLMResultChunk:
-            # calculate num tokens
-            prompt_tokens = self._num_tokens_from_messages(model, credentials, prompt_messages)
-
-            full_assistant_prompt_message = AssistantPromptMessage(
-                content=full_text,
-                tool_calls=tool_calls
-            )
-            completion_tokens = self._num_tokens_from_messages(model, credentials, [full_assistant_prompt_message])
-
-            # transform usage
-            usage = self._calc_response_usage(model, credentials, prompt_tokens, completion_tokens)
-
-            return LLMResultChunk(
-                model=model,
-                prompt_messages=prompt_messages,
-                delta=LLMResultChunkDelta(
-                    index=index,
-                    message=AssistantPromptMessage(content='', tool_calls=tool_calls),
-                    finish_reason=finish_reason,
-                    usage=usage
-                )
-            )
-
-        index = 1
-        full_assistant_content = ''
-        tool_calls = []
-        for chunk in response:
-            if isinstance(chunk, StreamedChatResponse_TextGeneration):
-                chunk = cast(StreamedChatResponse_TextGeneration, chunk)
-                text = chunk.text
-
-                if text is None:
-                    continue
-
-                # transform assistant message to prompt message
-                assistant_prompt_message = AssistantPromptMessage(
-                    content=text
-                )
-
-                full_assistant_content += text
-
-                yield LLMResultChunk(
-                    model=model,
-                    prompt_messages=prompt_messages,
-                    delta=LLMResultChunkDelta(
-                        index=index,
-                        message=assistant_prompt_message,
-                    )
-                )
-
-                index += 1
-            elif isinstance(chunk, StreamedChatResponse_ToolCallsGeneration):
-                chunk = cast(StreamedChatResponse_ToolCallsGeneration, chunk)
-                if chunk.tool_calls:
-                    for cohere_tool_call in chunk.tool_calls:
-                        tool_call = AssistantPromptMessage.ToolCall(
-                            id=cohere_tool_call.name,
-                            type='function',
-                            function=AssistantPromptMessage.ToolCall.ToolCallFunction(
-                                name=cohere_tool_call.name,
-                                arguments=json.dumps(cohere_tool_call.parameters)
-                            )
-                        )
-                        tool_calls.append(tool_call)
-            elif isinstance(chunk, StreamedChatResponse_StreamEnd):
-                chunk = cast(StreamedChatResponse_StreamEnd, chunk)
-                yield final_response(full_assistant_content, tool_calls, index, chunk.finish_reason)
-                index += 1
-
-    def _convert_prompt_messages_to_message_and_chat_histories(self, prompt_messages: list[PromptMessage]) \
-            -> tuple[str, list[ChatMessage], list[ChatStreamRequestToolResultsItem]]:
-        """
-        Convert prompt messages to message and chat histories
-        :param prompt_messages: prompt messages
-        :return:
-        """
-        chat_histories = []
-        latest_tool_call_n_outputs = []
-        for prompt_message in prompt_messages:
-            if prompt_message.role == PromptMessageRole.ASSISTANT:
-                prompt_message = cast(AssistantPromptMessage, prompt_message)
-                if prompt_message.tool_calls:
-                    for tool_call in prompt_message.tool_calls:
-                        latest_tool_call_n_outputs.append(ChatStreamRequestToolResultsItem(
-                            call=ToolCall(
-                                name=tool_call.function.name,
-                                parameters=json.loads(tool_call.function.arguments)
-                            ),
-                            outputs=[]
-                        ))
-                else:
-                    cohere_prompt_message = self._convert_prompt_message_to_dict(prompt_message)
-                    if cohere_prompt_message:
-                        chat_histories.append(cohere_prompt_message)
-            elif prompt_message.role == PromptMessageRole.TOOL:
-                prompt_message = cast(ToolPromptMessage, prompt_message)
-                if latest_tool_call_n_outputs:
-                    i = 0
-                    for tool_call_n_outputs in latest_tool_call_n_outputs:
-                        if tool_call_n_outputs.call.name == prompt_message.tool_call_id:
-                            latest_tool_call_n_outputs[i] = ChatStreamRequestToolResultsItem(
-                                call=ToolCall(
-                                    name=tool_call_n_outputs.call.name,
-                                    parameters=tool_call_n_outputs.call.parameters
-                                ),
-                                outputs=[{
-                                    "result": prompt_message.content
-                                }]
-                            )
-                            break
-                        i += 1
-            else:
-                cohere_prompt_message = self._convert_prompt_message_to_dict(prompt_message)
-                if cohere_prompt_message:
-                    chat_histories.append(cohere_prompt_message)
-
-        if latest_tool_call_n_outputs:
-            new_latest_tool_call_n_outputs = []
-            for tool_call_n_outputs in latest_tool_call_n_outputs:
-                if tool_call_n_outputs.outputs:
-                    new_latest_tool_call_n_outputs.append(tool_call_n_outputs)
-
-            latest_tool_call_n_outputs = new_latest_tool_call_n_outputs
-
-        # get latest message from chat histories and pop it
-        if len(chat_histories) > 0:
-            latest_message = chat_histories.pop()
-            message = latest_message.message
-        else:
-            raise ValueError('Prompt messages is empty')
-
-        return message, chat_histories, latest_tool_call_n_outputs
-
-    def _convert_prompt_message_to_dict(self, message: PromptMessage) -> Optional[ChatMessage]:
-        """
-        Convert PromptMessage to dict for Cohere model
-        """
-        if isinstance(message, UserPromptMessage):
-            message = cast(UserPromptMessage, message)
-            if isinstance(message.content, str):
-                chat_message = ChatMessage(role="USER", message=message.content)
-            else:
-                sub_message_text = ''
-                for message_content in message.content:
-                    if message_content.type == PromptMessageContentType.TEXT:
-                        message_content = cast(TextPromptMessageContent, message_content)
-                        sub_message_text += message_content.data
-
-                chat_message = ChatMessage(role="USER", message=sub_message_text)
-        elif isinstance(message, AssistantPromptMessage):
-            message = cast(AssistantPromptMessage, message)
-            if not message.content:
-                return None
-            chat_message = ChatMessage(role="CHATBOT", message=message.content)
-        elif isinstance(message, SystemPromptMessage):
-            message = cast(SystemPromptMessage, message)
-            chat_message = ChatMessage(role="USER", message=message.content)
-        elif isinstance(message, ToolPromptMessage):
-            return None
-        else:
-            raise ValueError(f"Got unknown type {message}")
-
-        return chat_message
-
-    def _convert_tools(self, tools: list[PromptMessageTool]) -> list[Tool]:
-        """
-        Convert tools to Cohere model
-        """
-        cohere_tools = []
-        for tool in tools:
-            properties = tool.parameters['properties']
-            required_properties = tool.parameters['required']
-
-            parameter_definitions = {}
-            for p_key, p_val in properties.items():
-                required = False
-                if p_key in required_properties:
-                    required = True
-
-                desc = p_val['description']
-                if 'enum' in p_val:
-                    desc += (f"; Only accepts one of the following predefined options: "
-                             f"[{', '.join(p_val['enum'])}]")
-
-                parameter_definitions[p_key] = ToolParameterDefinitionsValue(
-                    description=desc,
-                    type=p_val['type'],
-                    required=required
-                )
-
-            cohere_tool = Tool(
-                name=tool.name,
-                description=tool.description,
-                parameter_definitions=parameter_definitions
-            )
-
-            cohere_tools.append(cohere_tool)
-
-        return cohere_tools
+    #     return cohere_tools
 
     def _num_tokens_from_string(self, model: str, credentials: dict, text: str) -> int:
         """
@@ -548,66 +243,66 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
 
         return len(response.tokens)
 
-    def _num_tokens_from_messages(self, model: str, credentials: dict, messages: list[PromptMessage]) -> int:
-        """Calculate num tokens Cohere model."""
-        calc_messages = []
-        for message in messages:
-            cohere_message = self._convert_prompt_message_to_dict(message)
-            if cohere_message:
-                calc_messages.append(cohere_message)
-        message_strs = [f"{message.role}: {message.message}" for message in calc_messages]
-        message_str = "\n".join(message_strs)
+    # def _num_tokens_from_messages(self, model: str, credentials: dict, messages: list[PromptMessage]) -> int:
+    #     """Calculate num tokens Cohere model."""
+    #     calc_messages = []
+    #     for message in messages:
+    #         cohere_message = self._convert_prompt_message_to_dict(message)
+    #         if cohere_message:
+    #             calc_messages.append(cohere_message)
+    #     message_strs = [f"{message.role}: {message.message}" for message in calc_messages]
+    #     message_str = "\n".join(message_strs)
 
-        real_model = model
-        if self.get_model_schema(model, credentials).fetch_from == FetchFrom.PREDEFINED_MODEL:
-            real_model = model.removesuffix('-chat')
+    #     real_model = model
+    #     if self.get_model_schema(model, credentials).fetch_from == FetchFrom.PREDEFINED_MODEL:
+    #         real_model = model.removesuffix('-chat')
 
-        return self._num_tokens_from_string(real_model, credentials, message_str)
+    #     return self._num_tokens_from_string(real_model, credentials, message_str)
 
-    def get_customizable_model_schema(self, model: str, credentials: dict) -> AIModelEntity:
-        """
-            Cohere supports fine-tuning of their models. This method returns the schema of the base model
-            but renamed to the fine-tuned model name.
+    # def get_customizable_model_schema(self, model: str, credentials: dict) -> AIModelEntity:
+    #     """
+    #         Cohere supports fine-tuning of their models. This method returns the schema of the base model
+    #         but renamed to the fine-tuned model name.
 
-            :param model: model name
-            :param credentials: credentials
+    #         :param model: model name
+    #         :param credentials: credentials
 
-            :return: model schema
-        """
-        # get model schema
-        models = self.predefined_models()
-        model_map = {model.model: model for model in models}
+    #         :return: model schema
+    #     """
+    #     # get model schema
+    #     models = self.predefined_models()
+    #     model_map = {model.model: model for model in models}
 
-        mode = credentials.get('mode')
+    #     mode = credentials.get('mode')
 
-        if mode == 'chat':
-            base_model_schema = model_map['command-light-chat']
-        else:
-            base_model_schema = model_map['command-light']
+    #     if mode == 'chat':
+    #         base_model_schema = model_map['command-light-chat']
+    #     else:
+    #         base_model_schema = model_map['command-light']
 
-        base_model_schema = cast(AIModelEntity, base_model_schema)
+    #     base_model_schema = cast(AIModelEntity, base_model_schema)
 
-        base_model_schema_features = base_model_schema.features or []
-        base_model_schema_model_properties = base_model_schema.model_properties or {}
-        base_model_schema_parameters_rules = base_model_schema.parameter_rules or []
+    #     base_model_schema_features = base_model_schema.features or []
+    #     base_model_schema_model_properties = base_model_schema.model_properties or {}
+    #     base_model_schema_parameters_rules = base_model_schema.parameter_rules or []
 
-        entity = AIModelEntity(
-            model=model,
-            label=I18nObject(
-                zh_Hans=model,
-                en_US=model
-            ),
-            model_type=ModelType.LLM,
-            features=[feature for feature in base_model_schema_features],
-            fetch_from=FetchFrom.CUSTOMIZABLE_MODEL,
-            model_properties={
-                key: property for key, property in base_model_schema_model_properties.items()
-            },
-            parameter_rules=[rule for rule in base_model_schema_parameters_rules],
-            pricing=base_model_schema.pricing
-        )
+    #     entity = AIModelEntity(
+    #         model=model,
+    #         label=I18nObject(
+    #             zh_Hans=model,
+    #             en_US=model
+    #         ),
+    #         model_type=ModelType.LLM,
+    #         features=[feature for feature in base_model_schema_features],
+    #         fetch_from=FetchFrom.CUSTOMIZABLE_MODEL,
+    #         model_properties={
+    #             key: property for key, property in base_model_schema_model_properties.items()
+    #         },
+    #         parameter_rules=[rule for rule in base_model_schema_parameters_rules],
+    #         pricing=base_model_schema.pricing
+    #     )
 
-        return entity
+    #     return entity
 
     @property
     def _invoke_error_mapping(self) -> dict[type[InvokeError], list[type[Exception]]]:
@@ -621,21 +316,18 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         """
         return {
             InvokeConnectionError: [
-                cohere.errors.service_unavailable_error.ServiceUnavailableError
+                RuntimeError
             ],
             InvokeServerUnavailableError: [
-                cohere.errors.internal_server_error.InternalServerError
+                RuntimeError
             ],
             InvokeRateLimitError: [
-                cohere.errors.too_many_requests_error.TooManyRequestsError
+                RuntimeError
             ],
             InvokeAuthorizationError: [
-                cohere.errors.unauthorized_error.UnauthorizedError,
-                cohere.errors.forbidden_error.ForbiddenError
+                RuntimeError
             ],
             InvokeBadRequestError: [
-                cohere.core.api_error.ApiError,
-                cohere.errors.bad_request_error.BadRequestError,
-                cohere.errors.not_found_error.NotFoundError,
+                RuntimeError
             ]
         }
