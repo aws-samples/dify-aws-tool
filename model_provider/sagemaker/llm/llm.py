@@ -2,7 +2,7 @@ import json
 import logging
 from collections.abc import Generator, Iterator
 from typing import Optional, Union, cast, Any
-
+import boto3
 
 from core.model_runtime.entities.common_entities import I18nObject
 from core.model_runtime.entities.llm_entities import LLMMode, LLMResult, LLMResultChunk, LLMResultChunkDelta

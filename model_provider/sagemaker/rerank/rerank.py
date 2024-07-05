@@ -1,5 +1,7 @@
 from typing import Optional, Any, Union
-
+import logging
+import boto3
+import json
 # import cohere
 # from cohere.core import RequestOptions
 
@@ -17,6 +19,7 @@ from core.model_runtime.errors.invoke import (
 from core.model_runtime.errors.validate import CredentialsValidateFailedError
 from core.model_runtime.model_providers.__base.rerank_model import RerankModel
 
+logger = logging.getLogger(__name__)
 
 class SageMakerRerankModel(RerankModel):
     """
@@ -117,7 +120,7 @@ class SageMakerRerankModel(RerankModel):
             )
 
         except Exception as e:
-            return print(f'Exception {str(e)}, line : {line}')
+            logger.exception(f'Exception {e}, line : {line}')
 
     def validate_credentials(self, model: str, credentials: dict) -> None:
         """

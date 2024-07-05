@@ -3,6 +3,8 @@ from typing import Optional, Any
 
 # import cohere
 import numpy as np
+import boto3
+import json
 # from cohere.core import RequestOptions
 
 from core.model_runtime.entities.common_entities import I18nObject

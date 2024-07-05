@@ -7,7 +7,7 @@ from core.model_runtime.model_providers.__base.model_provider import ModelProvid
 logger = logging.getLogger(__name__)
 
 
-class CohereProvider(ModelProvider):
+class SageMakerProvider(ModelProvider):
     def validate_provider_credentials(self, credentials: dict) -> None:
         """
         Validate provider credentials
@@ -16,16 +16,4 @@ class CohereProvider(ModelProvider):
 
         :param credentials: provider credentials, credentials form defined in `provider_credential_schema`.
         """
-        try:
-            model_instance = self.get_model_instance(ModelType.RERANK)
-
-            # Use `rerank-english-v2.0` model for validate,
-            model_instance.validate_credentials(
-                model='bge-rerank-m3-v2.0',
-                credentials=credentials
-            )
-        except CredentialsValidateFailedError as ex:
-            raise ex
-        except Exception as ex:
-            logger.exception(f'{self.get_provider_schema().provider} credentials validate failed')
-            raise ex
+        pass
