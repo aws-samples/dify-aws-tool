@@ -2,8 +2,6 @@ from typing import Optional, Any, Union
 import logging
 import boto3
 import json
-# import cohere
-# from cohere.core import RequestOptions
 
 from core.model_runtime.entities.common_entities import I18nObject
 from core.model_runtime.entities.model_entities import AIModelEntity, FetchFrom, ModelType
@@ -86,22 +84,19 @@ class SageMakerRerankModel(RerankModel):
                     self.sagemaker_client = boto3.client("sagemaker-runtime")
 
             line = 2
-            print("credentials:")
-            print(credentials)
 
-            line = 3
             sagemaker_endpoint = credentials.get('sagemaker_endpoint', None)
             candidate_docs = []
 
             scores = self._sagemaker_rerank(query, docs, sagemaker_endpoint)
-            for idx in range(len(candidate_docs)):
+            for idx in range(len(scores)):
                 candidate_docs.append({"content" : docs[idx], "score": scores[idx]})
 
-            sorted_candidate_docs = sorted(candidate_docs, key=lambda x: x['score'], reverse=True)
-            
-            line = 4
+            sorted(candidate_docs, key=lambda x: x['score'], reverse=True)
+
+            line = 3
             rerank_documents = []
-            for idx, result in enumerate(sorted_candidate_docs):
+            for idx, result in enumerate(candidate_docs):
                 rerank_document = RerankDocument(
                     index=idx,
                     text=result.get('content'),
