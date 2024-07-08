@@ -22,35 +22,6 @@ supported_model_types:
   - rerank
 configurate_methods:
   - customizable-model
-provider_credential_schema:
-  credential_form_schemas:
-    - variable: access_key
-      label:
-        zh_Hans: Access Key
-        en_US: Access Key
-      type: secret-input
-      required: false
-      placeholder:
-        zh_Hans: AKIARRYB*******EHV
-        en_US: AKIARRYB*******EHV
-    - variable: secret_key
-      label:
-        zh_Hans: Secret Key
-        en_US: Secret Key
-      type: secret-input
-      required: false
-      placeholder:
-        zh_Hans: DhZ4Gig+W6i***********LMge3EHxVtOHKZ
-        en_US: DhZ4Gig+W6i***********LMge3EHxVtOHKZ
-    - variable: aws_region
-      label:
-        zh_Hans: aws region
-        en_US: aws region
-      type: text-input
-      required: false
-      placeholder:
-        zh_Hans: us-west-2
-        en_US: us-west-2
 model_credential_schema:
   model:
     label:

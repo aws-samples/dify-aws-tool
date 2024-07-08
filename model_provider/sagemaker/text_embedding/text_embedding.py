@@ -4,6 +4,8 @@ from typing import Optional, Any
 import numpy as np
 import boto3
 import json
+import logging
+import itertools
 
 from core.model_runtime.entities.common_entities import I18nObject
 from core.model_runtime.entities.model_entities import AIModelEntity, FetchFrom, ModelType, ModelPropertyKey
@@ -22,6 +24,8 @@ from core.model_runtime.model_providers.__base.text_embedding_model import TextE
 
 BATCH_SIZE = 20
 CONTEXT_SIZE=8192
+
+logger = logging.getLogger(__name__)
 
 def batch_generator(generator, batch_size):
         while True:
