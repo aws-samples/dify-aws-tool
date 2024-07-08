@@ -38,7 +38,7 @@ parameters:
       zh_Hans: 原文的语言代号
       pt_BR: language code for source text
     llm_description: language code for source text
-    form: form
+    form: llm
   - name: dest_lang
     type: string
     required: true
@@ -51,7 +51,7 @@ parameters:
       zh_Hans: 翻译目标语言代号
       pt_BR: destination language code of translation
     llm_description: destination language code of translation
-    form: form
+    form: llm
   - name: aws_region
     type: string
     required: false
@@ -78,6 +78,19 @@ parameters:
       zh_Hans: bedrock上的大语言模型model_id
       pt_BR: LLM model_id in bedrock
     llm_description: LLM model_id in bedrock
+    form: form
+  - name: dictionary_name
+    type: string
+    required: false
+    label:
+      en_US: dictionary name for term mapping
+      zh_Hans: 专词映射表名称
+      pt_BR: dictionary name for term mapping
+    human_description:
+      en_US: dictionary name for term mapping
+      zh_Hans: 专词映射表名称
+      pt_BR: dictionary name for term mapping
+    llm_description: dictionary name for term mapping
     form: form
   - name: request_type
     type: select

@@ -9,11 +9,12 @@ from core.tools.tool.builtin_tool import BuiltinTool
 class LambdaTranslateUtilsTool(BuiltinTool):
     lambda_client: Any = None
 
-    def _invoke_lambda(self, text_content, src_lang, dest_lang, model_id, request_type, lambda_name):
+    def _invoke_lambda(self, text_content, src_lang, dest_lang, model_id, dictionary_name, request_type, lambda_name):
         msg = { 
             "src_content":text_content, 
             "src_lang": src_lang, 
             "dest_lang":dest_lang, 
+            "dictionary_id": dictionary_name,
             "request_type" : request_type, 
             "model_id" : model_id
         }
@@ -72,8 +73,13 @@ class LambdaTranslateUtilsTool(BuiltinTool):
             model_id = tool_parameters.get('model_id', '')
             if not model_id:
                 return self.create_text_message('Please input model_id')
+
+            line = 7
+            dictionary_name = tool_parameters.get('dictionary_name', '')
+            if not dictionary_name:
+                return self.create_text_message('Please input dictionary_name')
             
-            result = self._invoke_lambda(text_content, src_lang, dest_lang, model_id, request_type, lambda_name)
+            result = self._invoke_lambda(text_content, src_lang, dest_lang, model_id, dictionary_name, request_type, lambda_name)
 
             return self.create_text_message(text=result)
 
