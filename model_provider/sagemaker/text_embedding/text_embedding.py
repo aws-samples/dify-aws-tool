@@ -55,7 +55,7 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
         )
         json_str = response_model['Body'].read().decode('utf8')
         json_obj = json.loads(json_str)
-        embeddings = json_obj['sentence_embeddings']
+        embeddings = json_obj['embeddings']
         return embeddings
 
     def _invoke(self, model: str, credentials: dict,
@@ -107,7 +107,7 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
             usage = self._calc_response_usage(
                 model=model,
                 credentials=credentials,
-                tokens=0
+                tokens=0 # It's not SAAS API, usage is meaningless
             )
             line = 6
 
@@ -119,7 +119,6 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
 
         except Exception as e:
             logger.exception(f'Exception {e}, line : {line}')
-
 
     def get_num_tokens(self, model: str, credentials: dict, texts: list[str]) -> int:
         """
