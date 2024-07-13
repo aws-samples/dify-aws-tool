@@ -3,12 +3,27 @@
 </p>
 <br>
 
-# Dify AWS Tools
+# Dify AWS Tool
 
 ## Introduction
-This repo provide some sample code to show how to integrate some tools which based on AWS Service to [Dify](https://github.com/langgenius/dify). In addition to the reference code, you can also refer to the [official guide](https://docs.dify.ai/guides/tools/quick-tool-integration) for more information.
+This repo provides some sample code to show how to integrate SageMaker Provider and some AWS Service based tools to [Dify](https://github.com/langgenius/dify). 
+
+In addition to the reference code, you can also refer to the [Dify official guide](https://docs.dify.ai/guides/tools/quick-tool-integration) for more information.
+
+
+
+## Prerequisites
+
+- Dify Environment
+
+- AWS Account and AWS Experience
+
+- Basic experience with Linux environments
+
+  
 
 ## How to Install
+
 ```
 # step1 - download code
 git clone https://github.com/aws-samples/dify-aws-tool/
@@ -26,23 +41,47 @@ sudo docker build -t dify-api:{tag} .
 # change api and worker service's images to the image you just built
 ```
 
-## Tools
-- Text Rerank Tool (based on SageMaker)
-    - sagemaker endpoint - deploy [notebook](https://github.com/aws-samples/private-llm-qa-bot/blob/main/notebooks/embedding/bge-reranker-v2-m3-deploy.ipynb)
-    - snapshot
-        ![Rerank](./rerank.png)
+
+
+## How to deploy SageMaker Endpoint
+
+If you want to add your Embedding/Rerank model to Dify Sagemaker Model Provider, you should deploy them by yourself in AWS/SageMaker at first.
+
+- Access to Amazon SageMaker Notebook
+
+    ![notebook](./snapshots/notebook_entry.png)
+
+- Clone the below notebooks
+    Enter the terminal, then run below script
+    ```bash
+    cd SageMaker/
+    # download embedding model
+    wget https://raw.githubusercontent.com/aws-samples/dify-aws-tool/dev/notebook/bge-embedding-m3-deploy.ipynb
+    ## download rerank model
+    wget https://raw.githubusercontent.com/aws-samples/dify-aws-tool/dev/notebook/bge-reranker-v2-m3-deploy.ipynb
+    ```
+- Run the cells of notebook Sequentially
+    We prefer g4dn.xlarge(T4) GPU for embedding model and rerank model, and also please notice differences between China region and Global region.
+
+- Check the Endpoints
+  
+  ![endpoint](./snapshots/endpoint_entry.png)
+  
+
+
+## How to use Tools in Dify
+
+- Text Rerank Tool 
+    - Deploy the SageMaker endpoint([bge-rerank-m3-v2](https://github.com/aws-samples/dify-aws-tool/blob/dev/notebook/bge-reranker-v2-m3-deploy.ipynb))
+    - Orchestrate this tool like below snapshot
+        ![Rerank](./snapshots/rerank.png)
 - Term mapping Retrieval Tool (Translation scenario, based on Lambda and Dynamodb)
-    - Term-based Tranlation Repo - [dynamodb-rag](https://github.com/ybalbert001/dynamodb-rag/tree/translate)  
-    - snapshot
-    - ![Term_Retrieval](./term_retrieval.png)
+    - Deploy Repo [[dynamodb-rag](https://github.com/ybalbert001/dynamodb-rag/tree/translate)] 
+    - Orchestrate this tool like below snapshot
+        ![Term_Retrieval](./snapshots/term_retrieval.png)
     
 
-## Prerequisites
-- Dify Environment
-- Some experience with AWS
-- Basic experience with Linux environments
-- Basic experience with Dify
-
 ## Target Audience
+
 - Dify / AWS User
 - GenAI Developer
