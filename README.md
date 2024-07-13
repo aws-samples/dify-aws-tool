@@ -32,8 +32,8 @@ tag=aws
 git clone https://github.com/aws-samples/dify-aws-tool/
 
 # step2 - intall code
-mv ./dify_aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
-mv ./dify_aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
+mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
 
 # step3 - build image
 cd ${dify_path}/api
@@ -42,6 +42,9 @@ sudo docker build -t dify-api:${tag} .
 # step4 - restart dify with new image
 # modify ${dify_path}/docker/docker-compose.yaml
 # change api and worker service's images to the image you just built
+cd ${dify_path}/docker/
+sudo docker compose down
+sudo docker compose up -d
 ```
 
 
