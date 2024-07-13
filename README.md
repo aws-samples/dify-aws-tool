@@ -30,7 +30,7 @@ git clone https://github.com/aws-samples/dify-aws-tool/
 
 # step2 - intall code
 mv ./dify_aws-tool/builtin_tools/aws {dify_path}/api/core/tools/provider/builtin/
-mv ./dify_aws-tool/model_provider/sagemaker {dify_path}/api/core/model_runtime/model_provider/
+mv ./dify_aws-tool/model_provider/sagemaker {dify_path}/api/core/model_runtime/model_providers/
 
 # step3 - build image
 cd {dify_path}/api
