@@ -3,9 +3,9 @@ label:
   zh_Hans: Sagemaker
   en_US: Sagemaker
 icon_small:
-  en_US: icon_s_en.svg
+  en_US: icon_s_en.png
 icon_large:
-  en_US: icon_l_en.svg
+  en_US: icon_l_en.png
 description:
   en_US: Customized model on Sagemaker
   zh_Hans: Sagemaker上的私有化部署的模型
