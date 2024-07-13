@@ -25,20 +25,26 @@ In addition to the reference code, you can also refer to the [Dify official guid
 ## How to Install
 
 ```
+dify_path=/home/ec2-user/dify
+tag=aws
+
 # step1 - download code
 git clone https://github.com/aws-samples/dify-aws-tool/
 
 # step2 - intall code
-mv ./dify_aws-tool/builtin_tools/aws {dify_path}/api/core/tools/provider/builtin/
-mv ./dify_aws-tool/model_provider/sagemaker {dify_path}/api/core/model_runtime/model_providers/
+mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
+mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
 
 # step3 - build image
-cd {dify_path}/api
-sudo docker build -t dify-api:{tag} .
+cd ${dify_path}/api
+sudo docker build -t dify-api:${tag} .
 
 # step4 - restart dify with new image
-# modify {dify_path}/docker/docker-compose.yaml
+# modify ${dify_path}/docker/docker-compose.yaml
 # change api and worker service's images to the image you just built
+cd ${dify_path}/docker/
+sudo docker compose down
+sudo docker compose up -d
 ```
 
 
@@ -56,9 +62,9 @@ If you want to add your Embedding/Rerank model to Dify Sagemaker Model Provider,
     ```bash
     cd SageMaker/
     # download embedding model
-    wget https://raw.githubusercontent.com/aws-samples/dify-aws-tool/dev/notebook/bge-embedding-m3-deploy.ipynb
+    wget https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb
     ## download rerank model
-    wget https://raw.githubusercontent.com/aws-samples/dify-aws-tool/dev/notebook/bge-reranker-v2-m3-deploy.ipynb
+    wget https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-reranker-v2-m3-deploy.ipynb
     ```
 - Run the cells of notebook Sequentially
     We prefer g4dn.xlarge(T4) GPU for embedding model and rerank model, and also please notice differences between China region and Global region.
@@ -72,7 +78,7 @@ If you want to add your Embedding/Rerank model to Dify Sagemaker Model Provider,
 ## How to use Tools in Dify
 
 - Text Rerank Tool 
-    - Deploy the SageMaker endpoint([bge-rerank-m3-v2](https://github.com/aws-samples/dify-aws-tool/blob/dev/notebook/bge-reranker-v2-m3-deploy.ipynb))
+    - Deploy the SageMaker endpoint([bge-rerank-m3-v2](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb))
     - Orchestrate this tool like below snapshot
         ![Rerank](./snapshots/rerank.png)
 - Term mapping Retrieval Tool (Translation scenario, based on Lambda and Dynamodb)
