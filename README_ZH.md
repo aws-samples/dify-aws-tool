@@ -35,8 +35,8 @@ cd ${dify_path}/api
 sudo docker build -t dify-api:${tag} .
 
 # step4 - 使用新镜像重启dify
-# modify ${dify_path}/docker/docker-compose.yaml
-# change api and worker service's images to the image you just built
+# 修改 ${dify_path}/docker/docker-compose.yaml
+# 把 api and worker 服务对应的镜像改成你刚刚构建的新镜像
 cd ${dify_path}/docker/
 sudo docker compose down
 sudo docker compose up -d
