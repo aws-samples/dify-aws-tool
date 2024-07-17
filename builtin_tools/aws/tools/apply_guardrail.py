@@ -1,81 +1,58 @@
 import boto3
 import json
-
-from typing import Any, Optional, Union, List
+from typing import Any, Union, List
 from core.tools.entities.tool_entities import ToolInvokeMessage
 from core.tools.tool.builtin_tool import BuiltinTool
 
+class ApplyGuardrailTool(BuiltinTool):
+    bedrockRuntimeClient: Any = None
+    bedrockClient: Any = None
 
-class LambdaTranslateUtilsTool(BuiltinTool):
-    lambda_client: Any = None
+    def _initialize_clients(self, region: str = "us-east-1"):
+        if not self.bedrockRuntimeClient:
+            self.bedrockRuntimeClient = boto3.client('bedrock-runtime', region_name=region)
+        if not self.bedrockClient:
+            self.bedrockClient = boto3.client('bedrock', region_name=region)
 
-    def _invoke_lambda(self, text_content, src_lang, dest_lang, model_id, request_type, lambda_name):
-        msg = { 
-            "src_content":text_content, 
-            "src_lang": src_lang, 
-            "dest_lang":dest_lang, 
-            "request_type" : request_type, 
-            "model_id" : model_id
-        }
-
-        invoke_response = self.lambda_client.invoke(FunctionName=lambda_name,
-                                               InvocationType='RequestResponse',
-                                               Payload=json.dumps(msg))
-        response_body = invoke_response['Payload']
-
-        response_str = response_body.read().decode("unicode_escape")
-
-        return response_str
+    def _apply_guardrail(self, guardrail_id: str, guardrail_version: str, source: str, text: str) -> dict:
+        response = self.bedrockRuntimeClient.apply_guardrail(
+            guardrailIdentifier=guardrail_id,
+            guardrailVersion=guardrail_version, 
+            source=source, 
+            content=[{"text": {"text": text}}]
+        )
+        return response
 
     def _invoke(self, 
                 user_id: str, 
-               tool_parameters: dict[str, Any], 
-        ) -> Union[ToolInvokeMessage, list[ToolInvokeMessage]]:
+                tool_parameters: dict[str, Any]
+        ) -> Union[ToolInvokeMessage, List[ToolInvokeMessage]]:
         """
-            invoke tools
+        Invoke the ApplyGuardrail tool
         """
         line = 0
         try:
-            if not self.lambda_client:
-                aws_region = tool_parameters.get('aws_region', None)
-                if aws_region:
-                    self.lambda_client = boto3.client("lambda", region_name=aws_region)
-                else:
-                    self.lambda_client = boto3.client("lambda")
+            self._initialize_clients(tool_parameters.get('aws_region', 'us-east-1'))
 
-            line = 1
-            text_content = tool_parameters.get('text_content', '')
-            if not text_content:
-                return self.create_text_message('Please input text_content')
-            
-            line = 2
-            src_lang = tool_parameters.get('src_lang', '')
-            if not src_lang:
-                return self.create_text_message('Please input src_lang')
-            
-            line = 3
-            dest_lang = tool_parameters.get('dest_lang', '')
-            if not dest_lang:
-                return self.create_text_message('Please input dest_lang')
-            
-            line = 4
-            lambda_name = tool_parameters.get('lambda_name', '')
-            if not lambda_name:
-                return self.create_text_message('Please input lambda_name')
-            
-            line = 5
-            request_type = tool_parameters.get('request_type', '')
-            if not request_type:
-                return self.create_text_message('Please input request_type')
-            
-            line = 6
-            model_id = tool_parameters.get('model_id', '')
-            if not model_id:
-                return self.create_text_message('Please input model_id')
-            
-            result = self._invoke_lambda(text_content, src_lang, dest_lang, model_id, request_type, lambda_name)
+            required_params = ['guardrail_id', 'guardrail_version', 'source', 'text']
+            for param in required_params:
+                line += 1
+                if not tool_parameters.get(param):
+                    return self.create_text_message(f'Please input {param}')
 
-            return self.create_text_message(text=result)
+            line += 1
+            result = self._apply_guardrail(
+                tool_parameters['guardrail_id'],
+                tool_parameters['guardrail_version'],
+                tool_parameters['source'],
+                tool_parameters['text']
+            )
+
+            action = result.get("action", "No action specified")
+            output = result.get("outputs", [{}])[0].get("text", "No output received")
+
+            response_text = f"Action: {action}\nOutput: {output}\nFull response: {json.dumps(result, indent=2)}"
+            return self.create_text_message(text=response_text)
 
         except Exception as e:
-            return self.create_text_message(f'Exception {str(e)}, line : {line}')
+            return self.create_text_message(f'Exception {str(e)}, line: {line}')
