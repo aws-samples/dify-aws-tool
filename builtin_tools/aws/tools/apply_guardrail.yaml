@@ -1,0 +1,56 @@
+identity:
+  name: apply_guardrail
+  author: AWS
+  label:
+    en_US: ApplyGuardrail
+    zh_Hans: 应用防护栏
+description:
+  human:
+    en_US: ApplyGuardrail is a tool
+    zh_Hans: 应用防护栏是一个工具
+  llm: ApplyGuardrail is a tool
+parameters:
+  - name: guardrail_id
+    type: string
+    required: true
+    label:
+      en_US: guardrail id
+      zh_Hans: guardrail id
+    human_description:
+      en_US: guardrail id
+      zh_Hans: guardrail id
+    llm_description: guardrail id
+    form: form
+  - name: guardrail_version
+    type: string
+    required: true
+    label:
+      en_US: guardrail version
+      zh_Hans: guardrail version
+    human_description:
+      en_US: guardrail version
+      zh_Hans: guardrail version
+    llm_description: guardrail version
+    form: form
+  - name: source
+    type: string
+    required: true
+    label:
+      en_US: source
+      zh_Hans: source
+    human_description:
+      en_US: source
+      zh_Hans: source
+    llm_description: source
+    form: form
+  - name: text
+    type: string
+    required: true
+    label:
+      en_US: text
+      zh_Hans: text
+    human_description:
+      en_US: text
+      zh_Hans: text
+    llm_description: text
+    form: form
