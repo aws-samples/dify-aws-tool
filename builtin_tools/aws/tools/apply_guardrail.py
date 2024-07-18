@@ -20,31 +20,11 @@ class GuardrailParameters(BaseModel):
     aws_region: str = Field(default="us-east-1", description="AWS region for the Bedrock client")
 
 class ApplyGuardrailTool(BuiltinTool):
-    bedrockRuntimeClient: Any = None
-
     def _initialize_clients(self, region: str = "us-east-1"):
-        if not self.bedrockRuntimeClient:
-            try:
-                self.bedrockRuntimeClient = boto3.client('bedrock-runtime', region_name=region)
-            except Exception as e:
-                logger.error(f"Failed to initialize Bedrock client: {str(e)}")
-                raise
-
-    def _apply_guardrail(self, params: GuardrailParameters) -> Dict[str, Any]:
         try:
-            response = self.bedrockRuntimeClient.apply_guardrail(
-                guardrailIdentifier=params.guardrail_id,
-                guardrailVersion=params.guardrail_version,
-                source=params.source,
-                content=[{"text": {"text": params.text}}]
-            )
-            logger.info(f"Raw response from AWS: {json.dumps(response, indent=2)}")
-            return response
-        except ClientError as e:
-            logger.error(f"AWS API error: {str(e)}")
-            raise
+            return boto3.client('bedrock-runtime', region_name=region)
         except Exception as e:
-            logger.error(f"Unexpected error in _apply_guardrail: {str(e)}")
+            logger.error(f"Failed to initialize Bedrock client: {str(e)}")
             raise
 
     def _invoke(self,
@@ -59,26 +39,24 @@ class ApplyGuardrailTool(BuiltinTool):
             params = GuardrailParameters(**tool_parameters)
             
             # Initialize AWS client
-            self._initialize_clients(params.aws_region)
+            bedrockRuntimeClient = self._initialize_clients(params.aws_region)
 
             # Apply guardrail
-            result = self._apply_guardrail(params)
+            response = bedrockRuntimeClient.apply_guardrail(
+                guardrailIdentifier=params.guardrail_id,
+                guardrailVersion=params.guardrail_version,
+                source=params.source,
+                content=[{"text": {"text": params.text}}]
+            )
+            
+            logger.info(f"Raw response from AWS: {json.dumps(response, indent=2)}")
 
             # Process the result
-            action = result.get("action", "No action specified")
-            outputs = result.get("outputs", [])
-            
-            output_text = "No output received from the guardrail."
-            if outputs and isinstance(outputs, list) and len(outputs) > 0:
-                output_text = outputs[0].get("text", "No specific output")
+            action = response.get("action", "No action specified")
+            output = response.get("outputs", [{}])[0].get("text", "No output received")
 
-            response_text = (
-                f"Action: {action}\n"
-                f"Output: {output_text}\n"
-                f"Full response: {json.dumps(result, indent=2)}"
-            )
-
-            return self.create_text_message(text=response_text)
+            result = f"Action: {action}\nOutput: {output}\nFull response: {json.dumps(response, indent=2)}"
+            return self.create_text_message(text=result)
 
         except ValueError as e:
             return self.create_text_message(f'Invalid input parameters: {str(e)}')
@@ -89,4 +67,6 @@ class ApplyGuardrailTool(BuiltinTool):
             return self.create_text_message(f'An unexpected error occurred: {str(e)}')
 
     def create_text_message(self, text: str) -> ToolInvokeMessage:
-        return ToolInvokeMessage(text=text, files=[], json=[])
+        message = ToolInvokeMessage(text=text, files=[], json=[])
+        logger.info(f"Created ToolInvokeMessage: {message}")
+        return message
