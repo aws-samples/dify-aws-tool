@@ -43,7 +43,7 @@ parameters:
       zh_Hans: 用于应用护栏的请求中所使用的数据来源。有效值为 "INPUT | OUTPUT"
     llm_description: The source of data used in the request to apply the guardrail. Valid Values "INPUT | OUTPUT"
     form: form
-  - name: content
+  - name: text
     type: string
     required: true
     label:
