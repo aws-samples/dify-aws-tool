@@ -67,17 +67,27 @@ class ApplyGuardrailTool(BuiltinTool):
             # Process the result
             action = result.get("action", "No action specified")
             outputs = result.get("outputs", [])
+            assessments = result.get("assessments", [])
             
+            output_text = "No output received"
             if outputs and isinstance(outputs, list) and len(outputs) > 0:
-                output = outputs[0].get("text", "No output received")
-            else:
-                output = "No output received"
+                output_text = outputs[0].get("text", "No specific output")
 
-            response_text = f"Action: {action}\nOutput: {output}\nFull response: {json.dumps(result, indent=2)}"
+            assessment_text = "No assessments made"
+            if assessments and isinstance(assessments, list) and len(assessments) > 0:
+                assessment_text = json.dumps(assessments, indent=2)
+
+            response_text = (
+                f"Guardrail applied successfully.\n"
+                f"Action: {action}\n"
+                f"Output: {output_text}\n"
+                f"Assessments: {assessment_text}\n"
+                f"Full AWS response: {json.dumps(result, indent=2)}"
+            )
+
             return self.create_text_message(text=response_text)
 
         except ValueError as e:
-            # This will catch any validation errors from Pydantic
             return self.create_text_message(f'Invalid input parameters: {str(e)}')
         except ClientError as e:
             return self.create_text_message(f'AWS API error: {str(e)}')
