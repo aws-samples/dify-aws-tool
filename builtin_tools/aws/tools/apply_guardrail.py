@@ -59,14 +59,19 @@ class ApplyGuardrailTool(BuiltinTool):
             return self.create_text_message(text=result)
 
         except ValueError as e:
-            return self.create_text_message(f'Invalid input parameters: {str(e)}')
+            error_message = f'Invalid input parameters: {str(e)}'
+            logger.error(error_message)
+            return self.create_text_message(text=error_message)
         except ClientError as e:
-            return self.create_text_message(f'AWS API error: {str(e)}')
+            error_message = f'AWS API error: {str(e)}'
+            logger.error(error_message)
+            return self.create_text_message(text=error_message)
         except Exception as e:
-            logger.error(f"Unexpected error in _invoke: {str(e)}", exc_info=True)
-            return self.create_text_message(f'An unexpected error occurred: {str(e)}')
+            error_message = f'An unexpected error occurred: {str(e)}'
+            logger.error(error_message, exc_info=True)
+            return self.create_text_message(text=error_message)
 
     def create_text_message(self, text: str) -> ToolInvokeMessage:
-        message = ToolInvokeMessage(text=text, files=[], json=[])
+        message = ToolInvokeMessage(text=text)
         logger.info(f"Created ToolInvokeMessage: {message}")
         return message
