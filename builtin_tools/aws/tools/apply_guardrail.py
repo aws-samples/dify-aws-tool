@@ -1,15 +1,10 @@
 import json
 import logging
-from typing import Any, Union, List
+from typing import Dict, Any
 
 import boto3
 from botocore.exceptions import ClientError
 from pydantic import BaseModel, Field
-
-from steamship import Tool, SteamshipError
-from steamship.invocable import InvocableResponse
-from steamship.invocable.parameterizable import Parameterizable
-from steamship.data.workspace import SignedUrl
 
 # 设置日志记录
 logging.basicConfig(level=logging.INFO)
@@ -23,13 +18,18 @@ class GuardrailParameters(BaseModel):
     aws_access_key_id: str = Field(default="", description="AWS access key ID")
     aws_secret_access_key: str = Field(default="", description="AWS secret access key")
 
-class ApplyGuardrail(Tool, Parameterizable):
-    bedrock_client = None
-    
-    def _initialize_clients(self, region: str):
+class ApplyGuardrail:
+    def __init__(self):
+        self.bedrock_client = None
+
+    def _initialize_clients(self, region: str, access_key_id: str = None, secret_access_key: str = None):
         """Initialize AWS clients."""
         if self.bedrock_client is None:
-            session = boto3.Session(region_name=region)
+            session = boto3.Session(
+                region_name=region,
+                aws_access_key_id=access_key_id,
+                aws_secret_access_key=secret_access_key
+            )
             self.bedrock_client = session.client(service_name='bedrock-agent-runtime')
         logger.info("AWS clients initialized.")
 
@@ -47,20 +47,17 @@ class ApplyGuardrail(Tool, Parameterizable):
             logger.error(f"Error applying guardrail: {e}")
             raise
 
-    def _invoke(self,
-                user_id: str,
-                tool_parameters: dict[str, Any]
-                ) -> Union[InvocableResponse, List[InvocableResponse]]:
+    def run(self, parameters: Dict[str, Any]) -> str:
         """
-        Invoke the ApplyGuardrail tool
+        Run the ApplyGuardrail tool
         """
-        logger.info(f"Starting _invoke with parameters: {tool_parameters}")
+        logger.info(f"Starting run with parameters: {parameters}")
         try:
             # Validate and parse input parameters
-            params = GuardrailParameters(**tool_parameters)
+            params = GuardrailParameters(**parameters)
             
             # Initialize AWS client
-            self._initialize_clients(params.aws_region)
+            self._initialize_clients(params.aws_region, params.aws_access_key_id, params.aws_secret_access_key)
 
             # Apply guardrail
             result = self._apply_guardrail(params)
@@ -81,24 +78,32 @@ class ApplyGuardrail(Tool, Parameterizable):
                 assessment_text = json.dumps(assessments, indent=2) if assessments else "No assessments made"
                 response_text = f"Action: {action}\nOutput: {output_text}\nAssessments: {assessment_text}"
 
-            logger.info(f"Finishing _invoke, returning: {response_text}")
-            return InvocableResponse(string=response_text)
+            logger.info(f"Finishing run, returning: {response_text}")
+            return response_text
 
         except ValueError as e:
             error_message = f'Invalid input parameters: {str(e)}'
             logger.error(error_message)
-            return InvocableResponse(error=SteamshipError(message=error_message))
+            return error_message
         except ClientError as e:
             error_message = f'AWS API error: {str(e)}'
             logger.error(error_message)
-            return InvocableResponse(error=SteamshipError(message=error_message))
+            return error_message
         except Exception as e:
             error_message = f'An unexpected error occurred: {str(e)}'
             logger.error(error_message, exc_info=True)
-            return InvocableResponse(error=SteamshipError(message=error_message))
+            return error_message
 
-    def run(self, **kwargs) -> Union[InvocableResponse, List[InvocableResponse]]:
-        """
-        Run the ApplyGuardrail tool
-        """
-        return self._invoke(kwargs.get("user_id", ""), kwargs)
+# 使用示例
+if __name__ == "__main__":
+    guardrail = ApplyGuardrail()
+    result = guardrail.run({
+        "guardrail_id": "your_guardrail_id",
+        "guardrail_version": "your_guardrail_version",
+        "content": "Your content to check",
+        "aws_region": "us-east-1",
+        # 如果需要，提供 AWS 凭证
+        # "aws_access_key_id": "your_access_key_id",
+        # "aws_secret_access_key": "your_secret_access_key"
+    })
+    print(result)
