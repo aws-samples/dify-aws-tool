@@ -62,11 +62,11 @@ class ApplyGuardrailTool(BuiltinTool):
                     else:
                         formatted_assessments.append(f"Policy: {policy_type}, Data: {policy_data}")
 
-            result = f"Action: {action}\\n"
-            result += f"Output: {output}\\n"
+            result = f"Action: {action}\n "
+            result += f"Output: {output}\n "
             if formatted_assessments:
-                result += "Assessments:\\n" + "\\n".join(formatted_assessments) + "\\n"
-            result += f"Full response: {json.dumps(response, indent=2, ensure_ascii=False)}"
+                result += "Assessments:\n " + "\n ".join(formatted_assessments) + "\n "
+#           result += f"Full response: {json.dumps(response, indent=2, ensure_ascii=False)}"
 
             return self.create_text_message(text=result)
 
