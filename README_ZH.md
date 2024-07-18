@@ -24,7 +24,7 @@
 
 ## Assets 
 
-<span style="color: red; background-color: yellow; font-weight: bold;">[请注意]：欢迎大家贡献更多的workflow/sagemaker model/builtin tool, 可以fork本仓库提交merge request， 然后更新README.md， 自行在对应的表格新增一行</span>
+***[注意]：欢迎大家贡献更多的workflow/sagemaker model/builtin tool, 可以fork本仓库提交merge request， 然后更新README.md， 自行在对应的表格新增一行***
 
 #### Workflow 
 
