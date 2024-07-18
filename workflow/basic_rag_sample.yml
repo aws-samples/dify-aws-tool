@@ -1,0 +1,283 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Basic_RAG
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1719390578982-source-1719390993772-target
+      source: '1719390578982'
+      sourceHandle: source
+      target: '1719390993772'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1719390993772-source-1719395669647-target
+      source: '1719390993772'
+      sourceHandle: source
+      target: '1719395669647'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1719391028777-source-1719396469904-target
+      source: '1719391028777'
+      sourceHandle: source
+      target: '1719396469904'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: tool
+      id: 1719395669647-source-1719399803983-target
+      source: '1719395669647'
+      sourceHandle: source
+      target: '1719399803983'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1719399803983-source-1719391028777-target
+      source: '1719399803983'
+      sourceHandle: source
+      target: '1719391028777'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: query
+          max_length: 33024
+          options: []
+          required: true
+          type: paragraph
+          variable: query
+      height: 89
+      id: '1719390578982'
+      position:
+        x: 197
+        y: 532
+      positionAbsolute:
+        x: 197
+        y: 532
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - 342d9b81-35b4-4b29-86d0-801aaf6a8f4e
+        desc: ''
+        multiple_retrieval_config:
+          reranking_model:
+            model: ''
+            provider: ''
+          top_k: 2
+        query_variable_selector:
+        - '1719390578982'
+        - query
+        retrieval_mode: single
+        selected: true
+        single_retrieval_config:
+          model:
+            completion_params: {}
+            mode: chat
+            name: anthropic.claude-3-sonnet-20240229-v1:0
+            provider: bedrock
+        title: Knowledge Retrieval
+        type: knowledge-retrieval
+      height: 91
+      id: '1719390993772'
+      position:
+        x: 501
+        y: 532
+      positionAbsolute:
+        x: 501
+        y: 532
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-sonnet-20240229-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 0c64804f-e1d1-466b-b745-8ea279183dbf
+          role: system
+          text: "\u4F60\u662F\u4E00\u4E2AAWS \u6280\u672F\u4E13\u5BB6"
+        - id: 4a34291c-304b-41a5-b0e8-e5478967d23b
+          role: user
+          text: "\u8BF7\u7ED3\u5408\u641C\u7D22\u7684\u6587\u6863\u56DE\u7B54\u7528\
+            \u6237\u7684\u95EE\u9898\n<doc>\n{{#1719399803983.text#}}\n</doc>\n\n\
+            <question>\n{{#1719390578982.query#}}\n</question>"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 97
+      id: '1719391028777'
+      position:
+        x: 1423
+        y: 532
+      positionAbsolute:
+        x: 1423
+        y: 532
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(candidates: list[object]) -> dict:\n    result_list\
+          \ = []\n    for candidate in candidates:\n        item = {\n           \
+          \ \"title\" : candidate['title'],\n            \"content\" : candidate['content']\n\
+          \        }\n        result_list.append(item)\n\n    result_list_str = json.dumps(result_list,\
+          \ ensure_ascii=False)\n    \n    return {\n        \"result\": result_list_str\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1719390993772'
+          - result
+          variable: candidates
+      height: 53
+      id: '1719395669647'
+      position:
+        x: 797
+        y: 532
+      positionAbsolute:
+        x: 797
+        y: 532
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1719391028777'
+          - text
+          variable: answer
+        selected: false
+        title: End
+        type: end
+      height: 89
+      id: '1719396469904'
+      position:
+        x: 1729
+        y: 532
+      positionAbsolute:
+        x: 1729
+        y: 532
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: Sagemaker ReRank
+        tool_configurations:
+          aws_region: us-west-2
+          sagemaker_endpoint: bge-reranker-2024-02-01-02-12-47-505-endpoint
+          topk: 5
+        tool_label: "Sagemaker\u91CD\u6392\u5E8F"
+        tool_name: sagemaker_text_rerank
+        tool_parameters:
+          candidate_texts:
+            type: mixed
+            value: '{{#1719395669647.result#}}'
+          query:
+            type: mixed
+            value: '{{#1719390578982.query#}}'
+        type: tool
+      height: 141
+      id: '1719399803983'
+      position:
+        x: 1113
+        y: 532
+      positionAbsolute:
+        x: 1113
+        y: 532
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -129.20152878993122
+      y: -85.22839374221746
+      zoom: 1.0814237347160562

@@ -1,0 +1,369 @@
+app:
+  description: "\u590D\u523B andrewyng/translation-agent"
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: translation-agent
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1719155682798-source-1719155705207-target
+      source: '1719155682798'
+      sourceHandle: source
+      target: '1719155705207'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1719155705207-source-1719155983575-target
+      source: '1719155705207'
+      sourceHandle: source
+      target: '1719155983575'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1719155983575-source-1719156156959-target
+      source: '1719155983575'
+      sourceHandle: source
+      target: '1719156156959'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1719156156959-source-1719156275567-target
+      source: '1719156156959'
+      sourceHandle: source
+      target: '1719156275567'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: "\u5F00\u59CB"
+        type: start
+        variables:
+        - label: source_text
+          max_length: 5000
+          options: []
+          required: true
+          type: paragraph
+          variable: source_text
+        - label: source_lang
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: source_lang
+        - label: target_lang
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: target_lang
+        - label: country
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: country
+      height: 167
+      id: '1719155682798'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-sonnet-20240229-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: fd1f1326-a4a6-4a70-b501-5a841b779bf4
+          role: system
+          text: 'You are an expert linguist, specializing in translation from {{#1719155682798.source_lang#}}to
+            {{#1719155682798.target_lang#}}
+
+            '
+        - id: 4f18105b-0739-4f57-8794-bf8eb52f7a79
+          role: user
+          text: "This is an {{#1719155682798.source_lang#}}to {{#1719155682798.target_lang#}}\
+            \ translation, please provide the  {{#1719155682798.target_lang#}}translation\
+            \ for this text. \nDo not provide any explanations or text apart from\
+            \ the translation.\n{{#1719155682798.source_lang#}}: {{#1719155682798.source_text#}}\n\
+            \n{{#1719155682798.target_lang#}}:"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      height: 97
+      id: '1719155705207'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-sonnet-20240229-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 472280ea-0d9c-4ce2-bc49-9329fb15906b
+          role: system
+          text: You are an expert linguist specializing in translation from {{#1719155682798.source_lang#}}
+            to {{#1719155682798.target_lang#}}.
+        - id: 513a1681-8f18-4947-a395-da5b07f8e43d
+          role: user
+          text: 'You will be provided with a source text and its translation and your
+            goal is to improve the translation.
+
+
+            Your task is to carefully read a source text and a translation from {{#1719155682798.source_lang#}}to
+            {{#1719155682798.target_lang#}}, and then give constructive criticism
+            and helpful suggestions to improve the translation. \
+
+
+            The final style and tone of the translation should match the style of
+            {{#1719155682798.source_lang#}} colloquially spoken in {{#1719155682798.country#}}.
+
+
+            The source text and initial translation, delimited by XML tags <SOURCE_TEXT></SOURCE_TEXT>
+            and <TRANSLATION></TRANSLATION>, are as follows:
+
+            <SOURCE_TEXT>
+
+            {{#1719155682798.source_text#}}
+
+            </SOURCE_TEXT>
+
+            <TRANSLATION>
+
+            {{#1719155705207.text#}}
+
+            </TRANSLATION>
+
+            When writing suggestions, pay attention to whether there are ways to improve
+            the translation''s \n\
+
+            (i) accuracy (by correcting errors of addition, mistranslation, omission,
+            or untranslated text),\n\
+
+            (ii) fluency (by applying {{#1719155682798.target_lang#}} grammar, spelling
+            and punctuation rules, and ensuring there are no unnecessary repetitions),\n\
+
+            (iii) style (by ensuring the translations reflect the style of the source
+            text and takes into account any cultural context),\n\
+
+            (iv) terminology (by ensuring terminology use is consistent and reflects
+            the source text domain; and by only ensuring you use equivalent idioms
+            {{#1719155682798.target_lang#}}).\n\
+
+            Write a list of specific, helpful and constructive suggestions for improving
+            the translation.
+
+            Each suggestion should address one specific part of the translation.
+
+            Output only the suggestions and nothing else.
+
+            '
+        selected: true
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      height: 97
+      id: '1719155983575'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-sonnet-20240229-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: de681720-7cb8-4f1e-9e64-0f8bd322f8a6
+          role: system
+          text: You are an expert linguist, specializing in translation editing from
+            {{#1719155682798.source_lang#}} to {{#1719155682798.target_lang#}}.
+        - id: a04020e2-d1cc-4b15-ade8-da811f664042
+          role: user
+          text: 'Your task is to carefully read, then edit, a translation from {{#1719155682798.source_lang#}}
+            to {{#1719155682798.target_lang#}}, taking into account a list of expert
+            suggestions and constructive criticisms.
+
+            The source text, the initial translation, and the expert linguist suggestions
+            are delimited by XML tags <SOURCE_TEXT></SOURCE_TEXT>, <TRANSLATION></TRANSLATION>
+            and <EXPERT_SUGGESTIONS></EXPERT_SUGGESTIONS> \
+
+            as follows:
+
+            <SOURCE_TEXT>
+
+            {{#1719155682798.source_text#}}
+
+            </SOURCE_TEXT>
+
+            <TRANSLATION>
+
+            {{#1719155705207.text#}}
+
+            </TRANSLATION>
+
+            <EXPERT_SUGGESTIONS>
+
+            {{#1719155983575.text#}}
+
+            </EXPERT_SUGGESTIONS>
+
+            Please take into account the expert suggestions when editing the translation.
+            Edit the translation by ensuring:
+
+            (i) accuracy (by correcting errors of addition, mistranslation, omission,
+            or untranslated text),
+
+            (ii) fluency (by applying {{#1719155682798.target_lang#}} grammar, spelling
+            and punctuation rules and ensuring there are no unnecessary repetitions),
+            \
+
+
+            (iii) style (by ensuring the translations reflect the style of the source
+            text)
+
+            (iv) terminology (inappropriate for context, inconsistent use), or
+
+            (v) other errors.
+
+            Output only the new translation and nothing else.'
+        selected: false
+        title: LLM 3
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      height: 97
+      id: '1719156156959'
+      position:
+        x: 992
+        y: 282
+      positionAbsolute:
+        x: 992
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1719156156959'
+          - text
+          variable: translation
+        selected: false
+        title: "\u7ED3\u675F"
+        type: end
+      height: 89
+      id: '1719156275567'
+      position:
+        x: 1296
+        y: 282
+      positionAbsolute:
+        x: 1296
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 226.40543208399185
+      y: 207.10618905994716
+      zoom: 0.7438348251055922
