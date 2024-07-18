@@ -1,58 +1,80 @@
 import boto3
 import json
-from typing import Any, Union, List
+import logging
+from typing import Any, Union, List, Dict
+from pydantic import BaseModel, Field
+from botocore.exceptions import ClientError
+
 from core.tools.entities.tool_entities import ToolInvokeMessage
 from core.tools.tool.builtin_tool import BuiltinTool
 
+# 设置日志
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class GuardrailParameters(BaseModel):
+    guardrail_id: str = Field(..., description="The identifier of the guardrail")
+    guardrail_version: str = Field(..., description="The version of the guardrail")
+    source: str = Field(..., description="The source of the content")
+    content: str = Field(..., description="The content to apply the guardrail to")
+    aws_region: str = Field(default="us-east-1", description="AWS region for the Bedrock client")
+
 class ApplyGuardrailTool(BuiltinTool):
     bedrockRuntimeClient: Any = None
-    bedrockClient: Any = None
 
     def _initialize_clients(self, region: str = "us-east-1"):
         if not self.bedrockRuntimeClient:
-            self.bedrockRuntimeClient = boto3.client('bedrock-runtime', region_name=region)
-        if not self.bedrockClient:
-            self.bedrockClient = boto3.client('bedrock', region_name=region)
+            try:
+                self.bedrockRuntimeClient = boto3.client('bedrock-runtime', region_name=region)
+            except Exception as e:
+                logger.error(f"Failed to initialize Bedrock client: {str(e)}")
+                raise
 
-    def _apply_guardrail(self, guardrail_id: str, guardrail_version: str, source: str, text: str) -> dict:
-        response = self.bedrockRuntimeClient.apply_guardrail(
-            guardrailIdentifier=guardrail_id,
-            guardrailVersion=guardrail_version, 
-            source=source, 
-            content=[{"text": {"text": text}}]
-        )
-        return response
+    def _apply_guardrail(self, params: GuardrailParameters) -> Dict[str, Any]:
+        try:
+            response = self.bedrockRuntimeClient.apply_guardrail(
+                guardrailIdentifier=params.guardrail_id,
+                guardrailVersion=params.guardrail_version,
+                source=params.source,
+                content=[{"text": {"text": params.content}}]
+            )
+            return response
+        except ClientError as e:
+            logger.error(f"AWS API error: {str(e)}")
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error in _apply_guardrail: {str(e)}")
+            raise
 
-    def _invoke(self, 
-                user_id: str, 
+    def _invoke(self,
+                user_id: str,
                 tool_parameters: dict[str, Any]
-        ) -> Union[ToolInvokeMessage, List[ToolInvokeMessage]]:
+                ) -> Union[ToolInvokeMessage, List[ToolInvokeMessage]]:
         """
         Invoke the ApplyGuardrail tool
         """
-        line = 0
         try:
-            self._initialize_clients(tool_parameters.get('aws_region', 'us-east-1'))
+            # Validate and parse input parameters
+            params = GuardrailParameters(**tool_parameters)
+            
+            # Initialize AWS client
+            self._initialize_clients(params.aws_region)
 
-            required_params = ['guardrail_id', 'guardrail_version', 'source', 'text']
-            for param in required_params:
-                line += 1
-                if not tool_parameters.get(param):
-                    return self.create_text_message(f'Please input {param}')
+            # Apply guardrail
+            result = self._apply_guardrail(params)
 
-            line += 1
-            result = self._apply_guardrail(
-                tool_parameters['guardrail_id'],
-                tool_parameters['guardrail_version'],
-                tool_parameters['source'],
-                tool_parameters['text']
-            )
-
+            # Process the result
             action = result.get("action", "No action specified")
             output = result.get("outputs", [{}])[0].get("text", "No output received")
 
             response_text = f"Action: {action}\nOutput: {output}\nFull response: {json.dumps(result, indent=2)}"
             return self.create_text_message(text=response_text)
 
+        except ValueError as e:
+            # This will catch any validation errors from Pydantic
+            return self.create_text_message(f'Invalid input parameters: {str(e)}')
+        except ClientError as e:
+            return self.create_text_message(f'AWS API error: {str(e)}')
         except Exception as e:
-            return self.create_text_message(f'Exception {str(e)}, line: {line}')
+            logger.error(f"Unexpected error in _invoke: {str(e)}", exc_info=True)
+            return self.create_text_message(f'An unexpected error occurred: {str(e)}')
