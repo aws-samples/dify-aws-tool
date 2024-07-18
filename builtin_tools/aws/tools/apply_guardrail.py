@@ -42,9 +42,14 @@ class ApplyGuardrailTool(BuiltinTool):
             
             logger.info(f"Raw response from AWS: {json.dumps(response, indent=2)}")
 
+            # Check for empty response
+            if not response:
+                return self.create_text_message(text="Received empty response from AWS Bedrock.")
+           
             # Process the result
             action = response.get("action", "No action specified")
-            output = response.get("outputs", [{}])[0].get("text", "No output received")
+            outputs = response.get("outputs", [])
+            output = outputs[0].get("text", "No output received") if outputs else "No output received"
             assessments = response.get("assessments", [])
 
             # Format assessments
@@ -59,12 +64,21 @@ class ApplyGuardrailTool(BuiltinTool):
 
             result = f"Action: {action}\n"
             result += f"Output: {output}\n"
-            result += "Assessments:\n" + "\n".join(formatted_assessments) + "\n"
-            result += f"Full response: {json.dumps(response, indent=2)}"
+            if formatted_assessments:
+                result += "Assessments:\n" + "\n".join(formatted_assessments) + "\n"
+            result += f"Full response: {json.dumps(response, indent=2, ensure_ascii=False)}"
 
             return self.create_text_message(text=result)
 
+        except boto3.exceptions.BotoCoreError as e:
+            error_message = f'AWS service error: {str(e)}'
+            logger.error(error_message, exc_info=True)
+            return self.create_text_message(text=error_message)
+        except json.JSONDecodeError as e:
+            error_message = f'JSON parsing error: {str(e)}'
+            logger.error(error_message, exc_info=True)
+            return self.create_text_message(text=error_message)
         except Exception as e:
-            error_message = f'An error occurred: {str(e)}'
+            error_message = f'An unexpected error occurred: {str(e)}'
             logger.error(error_message, exc_info=True)
             return self.create_text_message(text=error_message)
