@@ -3,12 +3,14 @@
 </p>
 <br>
 
-# Dify AWS Tools
+# Dify AWS Tool
 
 ## 简介
 本仓库提供了一些示例代码,展示如何将 SageMaker Provider 和一些基于 AWS 服务的工具集成到 [Dify](https://github.com/langgenius/dify) 中。 
 
 除了参考代码外,您还可以参考 Dify [官方指引](https://docs.dify.ai/guides/tools/quick-tool-integration) 获取更多信息。
+
+
 
 ## 前置条件
 
@@ -18,7 +20,42 @@
 
 - 基本的 Linux 环境使用经验
 
+
+
+## Assets 
+
+***[注意]：欢迎大家贡献更多的workflow/sagemaker model/builtin tool, 可以fork本仓库提交merge request， 然后更新README.md， 自行在对应的表格新增一行***
+
+#### Workflow 
+
+| DSL Name                    | Description                                 | Link                                                  | Owner               |
+| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | ------------------- |
+| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | ybalbert@amazon.com |
+| Code_translate              | 不同代码种类之间的翻译工作流                | Coming                                                | binc@amazon.com     |
+| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](basic_rag_sample.yml)                           | ybalbert@amazon.com |
+| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](andrew_translation_agent.yml)                   | chuanxie@amazon.com |
+
+#### Builtin_Tools
+
+| Tool Name                 | Tool Type | Description       | Deploy_doc                                                   | Owner               |
+| ------------------------- | --------- | ----------------- | ------------------------------------------------------------ | ------------------- |
+| Rerank                    | PAAS      | 文本相似性排序    | [Notebook](https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Term_multilingual_mapping | PAAS      | 切词/获取专词映射 | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
+| Bedrock Guardrails        | SAAS      | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。     | 内置工具                                                       | amyli@amazon.com    |
+
+#### Model_Provider
+
+| Model Name       | model_type          | Deploy_doc                                                   | Owner               |
+| ---------------- | ------------------- | ------------------------------------------------------------ | ------------------- |
+| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
+
+
+
 ## 安装方法
+
+下面的脚本仅仅为了集成 SageMaker Model_provider 和 AWS Builtin Tools, 你可以从界面自行导入workflow.
+
 ```
 dify_path=/home/ec2-user/dify
 tag=aws
@@ -42,43 +79,14 @@ sudo docker-compose down
 sudo docker-compose up -d
 ```
 
+
+
 ## 如何部署SageMaker推理端点
 
-如果您想将您的 Embedding/Rerank 模型添加到 Dify Sagemaker Model Provider,您应该首先在 Amazon SageMaker 中自行部署它们。
-
-- 访问 Amazon SageMaker Notebook
-
-    ![notebook](./snapshots/notebook_entry.png)
-
-- 克隆以下 notebooks
-    进入终端,然后运行以下脚本
-    ```bash
-    cd SageMaker/
-    # 下载 embedding model
-    wget https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb
-    ## 下载 rerank model
-    wget https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-reranker-v2-m3-deploy.ipynb
-    ```
-- 按顺序运行 notebook 的每个Cell
-    我们推荐使用 g4dn.xlarge(T4) GPU 用于 embedding 模型和 rerank 模型,同时请注意中国区域和全球区域之间的差异。
-
-- 检查部署出来的推理端点
-  
-  ![endpoint](./snapshots/endpoint_entry.png)
-  
+如果您想将您的 Embedding/Rerank 模型添加到 Dify Sagemaker Model Provider,您应该首先在 Amazon SageMaker 中自行部署它们。详细参见[指引](./notebook/how_to_deploy.md).
 
 
-## 如何在Dify中使用这些工具
 
-- Text Rerank Tool 
-    - Deploy the SageMaker endpoint([bge-rerank-m3-v2](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb))
-    - Orchestrate this tool like below snapshot
-        ![Rerank](./snapshots/rerank.png)
-- Term mapping Retrieval Tool (Translation scenario, based on Lambda and Dynamodb)
-    - Deploy Repo [[dynamodb-rag](https://github.com/ybalbert001/dynamodb-rag/tree/translate)] 
-    - Orchestrate this tool like below snapshot
-        ![Term_Retrieval](./snapshots/term_retrieval.png)
-    
 ## 目标受众
 - Dify / AWS 用户
 - 生成式 AI 开发者
