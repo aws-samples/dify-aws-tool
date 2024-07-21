@@ -41,7 +41,7 @@
 | ------------------------- | --------- | ----------------- | ------------------------------------------------------------ | ------------------- |
 | Rerank                    | PAAS      | 文本相似性排序    | [Notebook](https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
 | Term_multilingual_mapping | PAAS      | 切词/获取专词映射 | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
-| Bedrock Guardrails        | SAAS      | 文本审核过滤      | Coming                                                       | amyli@amazon.com    |
+| Bedrock Guardrails        | SAAS      | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。     | 内置工具                                                       | amyli@amazon.com    |
 
 #### Model_Provider
 
@@ -75,8 +75,8 @@ sudo docker build -t dify-api:${tag} .
 # 修改 ${dify_path}/docker/docker-compose.yaml
 # 把 api and worker 服务对应的镜像改成你刚刚构建的新镜像
 cd ${dify_path}/docker/
-sudo docker compose down
-sudo docker compose up -d
+sudo docker-compose down
+sudo docker-compose up -d
 ```
 
 

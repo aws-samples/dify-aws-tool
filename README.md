@@ -41,7 +41,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | ------------------------- | --------- | ----------------------------------------- | ------------------------------------------------------------ | ------------------- |
 | Rerank                    | PAAS      | Text Similarity Rerank Tool               | [Notebook](https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
 | Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
-| Bedrock Guardrails        | SAAS      | Text moderation Tool                      | Coming                                                       | amyli@amazon.com    |
+| Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail.            | Built-in Tool                                                       | amyli@amazon.com    |
 
 #### Model_Provider
 
@@ -72,8 +72,8 @@ sudo docker build -t dify-api:${tag} .
 # step4 - restart dify with new image
 # [Todo] modify ${dify_path}/docker/docker-compose.yaml, change api and worker service's images to the image you just built
 cd ${dify_path}/docker/
-sudo docker compose down
-sudo docker compose up -d
+sudo docker-compose down
+sudo docker-compose up -d
 ```
 
 
