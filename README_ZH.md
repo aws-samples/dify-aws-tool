@@ -26,29 +26,29 @@
 
 ***[注意]：欢迎大家贡献更多的workflow/sagemaker model/builtin tool, 可以fork本仓库提交merge request， 然后更新README.md， 自行在对应的表格新增一行***
 
-#### Workflow 
+#### 工作流 
 
-| DSL Name                    | Description                                 | Link                                                  | Owner               |
-| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | ------------------- |
-| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | ybalbert@amazon.com |
-| Code_translate              | 不同代码种类之间的翻译工作流                | Coming                                                | binc@amazon.com     |
-| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](basic_rag_sample.yml)                           | ybalbert@amazon.com |
-| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](andrew_translation_agent.yml)                   | chuanxie@amazon.com |
+| 名称                        | 描述                                        | Link                                                  | 依赖                            | 负责人              |
+| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------- |
+| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | ybalbert@amazon.com |
+| Code_translate              | 不同代码种类之间的翻译工作流                | Coming                                                |                                 | binc@amazon.com     |
+| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](basic_rag_sample.yml)                           | Tool(Rerank)                    | ybalbert@amazon.com |
+| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](andrew_translation_agent.yml)                   |                                 | chuanxie@amazon.com |
 
-#### Builtin_Tools
+#### 内置工具
 
-| Tool Name                 | Tool Type | Description       | Deploy_doc                                                   | Owner               |
-| ------------------------- | --------- | ----------------- | ------------------------------------------------------------ | ------------------- |
-| Rerank                    | PAAS      | 文本相似性排序    | [Notebook](https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Term_multilingual_mapping | PAAS      | 切词/获取专词映射 | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
-| Bedrock Guardrails        | SAAS      | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。     | 内置工具                                                       | amyli@amazon.com    |
+| 工具名称                  | 工具类型 | 描述                                                         | 部署文档                                                     | 负责人              |
+| ------------------------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
+| Rerank                    | PAAS     | 文本相似性排序                                               | [Notebook](https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
+| Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 | 内置工具                                                     | amyli@amazon.com    |
 
-#### Model_Provider
+#### 模型提供商
 
-| Model Name       | model_type          | Deploy_doc                                                   | Owner               |
+| 模型名称         | 模型类型            | 部署文档                                                     | 负责人              |
 | ---------------- | ------------------- | ------------------------------------------------------------ | ------------------- |
-| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
 
 
 

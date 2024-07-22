@@ -28,12 +28,12 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 #### Workflow 
 
-| DSL Name                    | Description                                           | Link                                                  | Owner               |
-| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------- |
-| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | ybalbert@amazon.com |
-| Code_translate              | Code Transform between different Program Language     | Coming                                                | binc@amazon.com     |
-| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](basic_rag_sample.yml)                           | ybalbert@amazon.com |
-| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](andrew_translation_agent.yml)                   | chuanxie@amazon.com |
+| DSL Name                    | Description                                           | Link                                                  | Dependency                      | Owner               |
+| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------- |
+| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | ybalbert@amazon.com |
+| Code_translate              | Code Transform between different Program Language     | Coming                                                |                                 | binc@amazon.com     |
+| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](basic_rag_sample.yml)                           | Tool(Rerank)                    | ybalbert@amazon.com |
+| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](andrew_translation_agent.yml)                   |                                 | chuanxie@amazon.com |
 
 #### Builtin_Tools
 
@@ -47,8 +47,8 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 | Model Name       | model_type          | Deploy_doc                                                   | Owner               |
 | ---------------- | ------------------- | ------------------------------------------------------------ | ------------------- |
-| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
 
 
 
