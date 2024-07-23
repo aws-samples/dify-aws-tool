@@ -56,6 +56,66 @@
 
 下面的脚本仅仅为了集成 SageMaker Model_provider 和 AWS Builtin Tools, 你可以从界面自行导入workflow.
 
+1. 设置变量
+   ```bash
+   dify_path=/home/ec2-user/dify #Please set the correct dify install path
+   tag=aws
+   ```
+
+2. 下载代码
+   ```bash
+   cd /home/ec2-user/
+   git clone https://github.com/aws-samples/dify-aws-tool.git
+   ```
+   
+3. 安装代码
+   ```bash
+   mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
+   mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+   ```
+
+4. 构建新镜像
+
+   ```
+   cd ${dify_path}/api
+   sudo docker build -t dify-api:${tag} .
+   ```
+
+5. 为api和worker服务指定新镜像
+
+   ```diff
+   # 修改docker/docker-compose.yaml, 请参考下面的diff
+   diff --git a/docker/docker-compose.yaml b/docker/docker-compose.yaml
+   index cffaa5a6a..38538e5ca 100644
+   --- a/docker/docker-compose.yaml
+   +++ b/docker/docker-compose.yaml
+   @@ -177,7 +177,7 @@ x-shared-env: &shared-api-worker-env
+    services:
+      # API service
+      api:
+   -    image: langgenius/dify-api:0.6.14
+   +    image: dify-api:aws
+        restart: always
+        environment:
+          # Use the shared environment variables.
+   @@ -197,7 +197,7 @@ services:
+      # worker service
+      # The Celery worker for processing the queue.
+      worker:
+   -    image: langgenius/dify-api:0.6.14
+   +    image: dify-api:aws
+        restart: always
+        environment:
+          # Use the shared environment variables.
+   ```
+
+5. 重启Dify
+   ```bash
+   cd ${dify_path}/docker/
+   sudo docker-compose down
+   sudo docker-compose up -d
+   ```
+
 ```
 dify_path=/home/ec2-user/dify
 tag=aws

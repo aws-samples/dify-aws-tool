@@ -54,27 +54,65 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 ## How to Install
 Below Script is only for SageMaker Model_provider and AWS Builtin Tools,  you can import workflows from Web Interface.
-```
-dify_path=/home/ec2-user/dify
-tag=aws
+1. Set Env Variable
+   ```bash
+   dify_path=/home/ec2-user/dify #Please set the correct dify install path
+   tag=aws
+   ```
 
-# step1 - download code
-git clone https://github.com/aws-samples/dify-aws-tool/
+2. download code
+   ```bash
+   cd /home/ec2-user/
+   git clone https://github.com/aws-samples/dify-aws-tool/
+   ```
+   
+3. intall code
+   ```bash
+   mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
+   mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+   ```
 
-# step2 - intall code
-mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
-mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+4. build image
 
-# step3 - build image
-cd ${dify_path}/api
-sudo docker build -t dify-api:${tag} .
+   ```
+   cd ${dify_path}/api
+   sudo docker build -t dify-api:${tag} .
+   ```
 
-# step4 - restart dify with new image
-# [Todo] modify ${dify_path}/docker/docker-compose.yaml, change api and worker service's images to the image you just built
-cd ${dify_path}/docker/
-sudo docker-compose down
-sudo docker-compose up -d
-```
+5. Specify the new image for api and worker services
+
+   ```diff
+   # Modify docker/docker-compose.yaml, Please refer the below diff
+   diff --git a/docker/docker-compose.yaml b/docker/docker-compose.yaml
+   index cffaa5a6a..38538e5ca 100644
+   --- a/docker/docker-compose.yaml
+   +++ b/docker/docker-compose.yaml
+   @@ -177,7 +177,7 @@ x-shared-env: &shared-api-worker-env
+    services:
+      # API service
+      api:
+   -    image: langgenius/dify-api:0.6.14
+   +    image: dify-api:aws
+        restart: always
+        environment:
+          # Use the shared environment variables.
+   @@ -197,7 +197,7 @@ services:
+      # worker service
+      # The Celery worker for processing the queue.
+      worker:
+   -    image: langgenius/dify-api:0.6.14
+   +    image: dify-api:aws
+        restart: always
+        environment:
+          # Use the shared environment variables.
+   ```
+
+5. restart dify 
+   ```bash
+   cd ${dify_path}/docker/
+   sudo docker-compose down
+   sudo docker-compose up -d
+   ```
 
 
 
