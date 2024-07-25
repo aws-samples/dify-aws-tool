@@ -3,6 +3,7 @@ import json
 import logging
 from typing import Any, Dict, Union, List
 from pydantic import BaseModel, Field
+from botocore.exceptions import BotoCoreError
 
 from core.tools.entities.tool_entities import ToolInvokeMessage
 from core.tools.tool.builtin_tool import BuiltinTool
@@ -70,7 +71,7 @@ class ApplyGuardrailTool(BuiltinTool):
 
             return self.create_text_message(text=result)
 
-        except boto3.exceptions.BotoCoreError as e:
+        except BotoCoreError as e:
             error_message = f'AWS service error: {str(e)}'
             logger.error(error_message, exc_info=True)
             return self.create_text_message(text=error_message)
