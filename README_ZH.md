@@ -39,9 +39,9 @@
 
 | 工具名称                  | 工具类型 | 描述                                                         | 部署文档                                                     | 负责人              |
 | ------------------------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
-| Rerank                    | PAAS     | 文本相似性排序                                               | [Notebook](https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
-| Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 | 内置工具                                                     | amyli@amazon.com    |
+| Rerank                    | PAAS     | 文本相似性排序                                               | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) <a name="rerank">Link</a> | ybalbert@amazon.com |
+| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) <a name="translate_tool">Link</a> | ybalbert@amazon.com |
+| Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 |                                                              | amyli@amazon.com    |
 
 #### 模型提供商
 
@@ -54,7 +54,7 @@
 
 ## 安装方法
 
-下面的脚本仅仅为了集成 SageMaker Model_provider 和 AWS Builtin Tools, 你可以从界面自行导入workflow.
+***下面的脚本仅仅为了集成 SageMaker Model_provider 和 AWS Builtin Tools, 你可以从界面自行导入workflow。 SageMaker 模型供应商已经被集成到Dify v0.6.15***
 
 1. 设置变量
    ```bash
