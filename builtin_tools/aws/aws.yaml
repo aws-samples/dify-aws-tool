@@ -6,9 +6,9 @@ identity:
     zh_Hans: 亚马逊云科技
     pt_BR: AWS
   description:
-    en_US: services on AWS.
-    zh_Hans: 各类AWS上的服务
-    pt_BR: services on AWS.
+    en_US: Services on AWS.
+    zh_Hans: 亚马逊云科技的各类服务
+    pt_BR: Services on AWS.
   icon: icon.svg
   tags:
     - search

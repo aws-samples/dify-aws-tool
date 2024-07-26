@@ -37,11 +37,11 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 #### Builtin_Tools
 
-| Tool Name                 | Tool Type | Description                               | Deploy_doc                                                   | Owner               |
-| ------------------------- | --------- | ----------------------------------------- | ------------------------------------------------------------ | ------------------- |
-| Rerank                    | PAAS      | Text Similarity Rerank Tool               | [Notebook](https://raw.githubusercontent.com/aws-samples/dify-aws-tool/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
-| Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail.            | Built-in Tool                                                       | amyli@amazon.com    |
+| Tool Name                 | Tool Type | Description                                                  | Deploy_doc                                                   | Owner               |
+| ------------------------- | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
+| Rerank                    | PAAS      | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
+| Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | amyli@amazon.com    |
 
 #### Model_Provider
 
@@ -53,7 +53,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 
 ## How to Install
-Below Script is only for SageMaker Model_provider and AWS Builtin Tools,  you can import workflows from Web Interface.
+***Below Script is only for SageMaker Model_provider and AWS Builtin Tools,  you can import workflows from Web Interface.  SageMaker Model_provider has already been integrated in Dify v0.6.15***
 1. Set Env Variable
    ```bash
    dify_path=/home/ec2-user/dify #Please set the correct dify install path
@@ -69,9 +69,10 @@ Below Script is only for SageMaker Model_provider and AWS Builtin Tools,  you ca
 3. intall code
    ```bash
    mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
-   mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+   # SageMaker Model Provider has been integrated with Dify，no extra installation needed
+   # mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
    ```
-
+   
 4. build image
 
    ```
