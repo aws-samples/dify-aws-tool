@@ -39,8 +39,8 @@
 
 | 工具名称                  | 工具类型 | 描述                                                         | 部署文档                                                     | 负责人              |
 | ------------------------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
-| Rerank                    | PAAS     | 文本相似性排序                                               | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) <a name="rerank">Link</a> | ybalbert@amazon.com |
-| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) <a name="translate_tool">Link</a> | ybalbert@amazon.com |
+| Rerank                    | PAAS     | 文本相似性排序                                               | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
 | Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 |                                                              | amyli@amazon.com    |
 
 #### 模型提供商
@@ -71,9 +71,10 @@
 3. 安装代码
    ```bash
    mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
-   mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+   # SageMaker Model Provider已经被默认集成到Dify，无需额外安装，所以注释下面一句命令
+   # mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
    ```
-
+   
 4. 构建新镜像
 
    ```

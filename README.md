@@ -39,8 +39,8 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 | Tool Name                 | Tool Type | Description                                                  | Deploy_doc                                                   | Owner               |
 | ------------------------- | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
-| Rerank                    | PAAS      | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) <a name="rerank">Link</a> | ybalbert@amazon.com |
-| Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) <a name="translate_tool">Link</a> | ybalbert@amazon.com |
+| Rerank                    | PAAS      | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
+| Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
 | Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | amyli@amazon.com    |
 
 #### Model_Provider
@@ -69,9 +69,10 @@ In addition to the reference code, you can also refer to the [Dify official guid
 3. intall code
    ```bash
    mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
-   mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+   # SageMaker Model Provider has been integrated with Dify，no extra installation needed
+   # mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
    ```
-
+   
 4. build image
 
    ```

@@ -8,10 +8,10 @@ identity:
   icon: icon.svg
 description:
   human:
-    en_US: A tool for performing text similarity ranking.
-    zh_Hans: Sagemaker重排序工具
+    en_US: A tool for performing text similarity ranking. You can find deploy notebook on Github Repo - https://github.com/aws-samples/dify-aws-tool
+    zh_Hans: Sagemaker重排序工具, 请参考 Github Repo - https://github.com/aws-samples/dify-aws-tool上的部署脚本
     pt_BR: A tool for performing text similarity ranking.
-  llm: A tool for performing text similarity ranking.
+  llm: A tool for performing text similarity ranking. You can find deploy notebook on Github Repo - https://github.com/aws-samples/dify-aws-tool
 parameters:
   - name: sagemaker_endpoint
     type: string
