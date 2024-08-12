@@ -64,16 +64,19 @@ def validate_instruct_request(data: dict) -> InstructRequest:
     return InstructRequest(**data)
 
 def save_to_s3(output) -> str:
-    local_file_name = f'{uuid.uuid4()}.wav'
+    local_file_name = f'{uuid.uuid4()}.mp3'
     buffer = io.BytesIO()
-    torchaudio.save(buffer, output, 22050, format='wav')
+
+    # soundfile doesn't support M4A and MP3, so we use "sox_io"
+    torchaudio.set_audio_backend("sox_io")
+    torchaudio.save(buffer, output, 22050, format='mp3')
     
     s3_key = f'{S3_Prefix}{local_file_name}'
     s3_client.put_object(
         Body=buffer.getvalue(),
         Bucket=BUCKET,
         Key=s3_key,
-        ContentType='audio/wav'
+        ContentType='audio/mp3'
     )
     return f"s3://{BUCKET}/{s3_key}"
 

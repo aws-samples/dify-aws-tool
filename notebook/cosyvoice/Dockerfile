@@ -11,6 +11,7 @@ COPY code /opt/program
 RUN apt-get update -y
 RUN apt-get -y install git unzip git-lfs
 RUN apt-get -y install sox libsox-dev
+
 RUN git lfs install
 RUN git clone https://www.modelscope.cn/iic/${MODEL_NAME}.git ${MODEL_DIR}
 
@@ -18,6 +19,7 @@ RUN git clone --recursive https://github.com/FunAudioLLM/CosyVoice.git
 
 RUN pip3 install orjson
 RUN pip3 install boto3
+RUN pip3 install ffmpeg-python
 RUN cd CosyVoice && pip3 install -r requirements.txt
 
 RUN ls
