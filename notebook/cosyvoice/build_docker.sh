@@ -9,7 +9,7 @@ case "$model_name" in
         ;;
 esac
     
-algorithm_name=cosyvoice
+algorithm_name=$(echo $model_name | tr '[:upper:]' '[:lower:]')
 
 account=$(aws sts get-caller-identity --query Account --output text)
 
