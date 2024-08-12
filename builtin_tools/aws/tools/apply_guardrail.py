@@ -1,7 +1,7 @@
 import boto3
 import json
 import logging
-from typing import Any, Dict, Union, List
+from typing import Any, Union
 from pydantic import BaseModel, Field
 from botocore.exceptions import BotoCoreError
 
@@ -21,8 +21,8 @@ class GuardrailParameters(BaseModel):
 class ApplyGuardrailTool(BuiltinTool):
     def _invoke(self,
                 user_id: str,
-                tool_parameters: Dict[str, Any]
-                ) -> Union[ToolInvokeMessage, List[ToolInvokeMessage]]:
+                tool_parameters: dict[str, Any]
+                ) -> Union[ToolInvokeMessage, list[ToolInvokeMessage]]:
         """
         Invoke the ApplyGuardrail tool
         """
