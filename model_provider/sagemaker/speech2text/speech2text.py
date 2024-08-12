@@ -1,3 +1,7 @@
+import boto3
+import logging
+import json
+
 from typing import IO, Optional, Any
 
 from core.model_runtime.entities.common_entities import I18nObject
@@ -13,6 +17,8 @@ from core.model_runtime.errors.invoke import (
 from core.model_runtime.errors.validate import CredentialsValidateFailedError
 from core.model_runtime.model_providers.__base.speech2text_model import Speech2TextModel
 from core.model_runtime.model_providers.sagemaker.sagemaker import generate_presigned_url
+
+logger = logging.getLogger(__name__)
 
 class SageMakerSpeech2TextModel(Speech2TextModel):
     """
@@ -59,7 +65,7 @@ class SageMakerSpeech2TextModel(Speech2TextModel):
 
             s3_prefix='dify/speech2text/'
             sagemaker_endpoint = credentials.get('sagemaker_endpoint')
-            bucket = credentials.get('bucket_name', 'sagemaker-us-east-1-687752207838')
+            bucket = credentials.get('audio_s3_cache_bucket')
 
             s3_presign_url = generate_presigned_url(self.s3_client, file, bucket, s3_prefix)
             payload = {
@@ -74,8 +80,6 @@ class SageMakerSpeech2TextModel(Speech2TextModel):
             json_str = response_model['Body'].read().decode('utf8')
             json_obj = json.loads(json_str)
             asr_text = json_obj['text']
-            logger.exception(f"asr_text: {asr_text}")
-
         except Exception as e:
             logger.exception(f'Exception {e}, line : {line}')
 
