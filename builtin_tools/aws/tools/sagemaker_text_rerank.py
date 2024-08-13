@@ -1,7 +1,8 @@
-import boto3
 import json
-
 from typing import Any, Union
+
+import boto3
+
 from core.tools.entities.tool_entities import ToolInvokeMessage
 from core.tools.tool.builtin_tool import BuiltinTool
 
@@ -77,9 +78,7 @@ class SageMakerReRankTool(BuiltinTool):
             sorted_candidate_docs = sorted(candidate_docs, key=lambda x: x['score'], reverse=True)
 
             line = 9
-            results_str = json.dumps(sorted_candidate_docs[:self.topk], ensure_ascii=False)
-            return self.create_text_message(text=results_str)
+            return [ self.create_json_message(res) for res in sorted_candidate_docs[:self.topk] ]
             
         except Exception as e:
             return self.create_text_message(f'Exception {str(e)}, line : {line}')
-    
