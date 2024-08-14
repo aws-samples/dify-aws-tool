@@ -1,0 +1,873 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Claude3 Code Translation
+kind: app
+version: 0.1.0
+workflow:
+  environment_variables: []
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1720505581749-source-1720506191043-target
+      selected: false
+      source: '1720505581749'
+      sourceHandle: source
+      target: '1720506191043'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: 1720508367130-source-1720580108806-target
+      selected: false
+      source: '1720508367130'
+      sourceHandle: source
+      target: '1720580108806'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: code
+      id: 1720580108806-source-1720580885073-target
+      selected: false
+      source: '1720580108806'
+      sourceHandle: source
+      target: '1720580885073'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: end
+      id: 1720580885073-source-1720582990256-target
+      selected: false
+      source: '1720580885073'
+      sourceHandle: source
+      target: '1720582990256'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: tool
+      id: 1720506191043-source-1723619551968-target
+      source: '1720506191043'
+      sourceHandle: source
+      target: '1723619551968'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1723619551968-source-1720508367130-target
+      source: '1723619551968'
+      sourceHandle: source
+      target: '1720508367130'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: "\u9700\u8981\u7FFB\u8BD1\u7684\u4EE3\u7801\u6587\u4EF6\u5185\u5BB9"
+          max_length: 33024
+          options: []
+          required: true
+          type: paragraph
+          variable: code_to_translate
+        - label: "\u76F8\u5173\u4F9D\u8D56\u5E93\u7684\u4EE3\u7801\u5185\u5BB9"
+          max_length: 33024
+          options: []
+          required: false
+          type: paragraph
+          variable: related_files_content
+        - label: "\u5F85\u7FFB\u8BD1\u6587\u4EF6\u7684\u6587\u4EF6\u540D"
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: code_file_name
+        - label: "\u6E90\u4EE3\u7801\u8BED\u8A00(\u4F8B\u5982Python)"
+          max_length: 48
+          options:
+          - python
+          - java
+          required: true
+          type: select
+          variable: src_lang
+        - label: "\u76EE\u6807\u7F16\u7A0B\u8BED\u8A00\uFF08\u4F8B\u5982Java\uFF09"
+          max_length: 48
+          options:
+          - java
+          - python
+          required: true
+          type: select
+          variable: dest_lang
+      height: 194
+      id: '1720505581749'
+      position:
+        x: 30
+        y: 301.5
+      positionAbsolute:
+        x: 30
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            stop:
+            - '```'
+            temperature: 0.1
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 2e5e4e13-2974-440b-9ee5-c015d9aae4ba
+          role: system
+          text: "# Role\n\u4F60\u63A5\u4E0B\u6765cosplay\u4E00\u4E2A\u4E13\u4E1A\u7684\
+            \u7A0B\u5E8F\u733F\uFF0C\u7CBE\u901Apython java go \u7B49\u591A\u79CD\u8BED\
+            \u8A00\u3002\n\n# Task\n\u4F60\u7684\u4EFB\u52A1\u662F\u5E2E\u52A9\u6211\
+            \u5C06\u9879\u76EE\u7684\u7F16\u7A0B\u8BED\u8A00\u4ECE{{#1720505581749.src_lang#}}\u7FFB\
+            \u8BD1\u5230{{#1720505581749.dest_lang#}}\u3002\u4F46\u662F\u7531\u4E8E\
+            \u8F93\u51FA\u957F\u5EA6\u9650\u5236\uFF0C\u4F60\u9700\u8981\u5206\u4E24\
+            \u6B21\u56DE\u590D\u6765\u751F\u6210\u5B8C\u6574\u7684\u4EE3\u7801\u3002\
+            \n\n\u7B2C\u4E00\u6B21\u56DE\u590D\u7684\u76EE\u7684\u662F\u751F\u6210\
+            \u4EE3\u7801\u4E3B\u4F53\u7ED3\u6784\uFF0C\u4F46\u5BF9\u4E8E\u4E2D\u7684\
+            \u7C7B\u3001\u51FD\u6570\uFF0C\u4F60\u53EA\u9700\u8981\u7ED9\u51FA\u5BF9\
+            \u5E94\u7684\u7B7E\u540D\u5373\u53EF\uFF0C\u4E0D\u8981\u7ED9\u51FA\u5177\
+            \u4F53\u5B9E\u73B0\u3002\n\u6CE8\u610F\u5206\u6790\u76F8\u5173\u4EE3\u7801\
+            \u6587\u4EF6\uFF0C\u5E76\u636E\u6B64\u5E2E\u4F60\u8BC6\u522B\u5185\u7F6E\
+            \u4F9D\u8D56\u5E93\u548C\u81EA\u5B9A\u4E49\u4F9D\u8D56\uFF0C\u5728\u4F60\
+            \u7684\u56DE\u590D\u4E2D\uFF0C\u4E0D\u8981\u9057\u6F0Fimport\u5BF9\u5E94\
+            \u7684\u5E93\u3002\n\n# \u76F8\u5173\u4EE3\u7801\u6587\u4EF6\n\u5982\u4E0B\
+            \u662F\u53EF\u80FD\u4E0E\u539F\u59CB\u4EE3\u7801\u6709\u5173\u7684\u6587\
+            \u4EF6(\u53EF\u80FD\u4E3A\u7A7A)\u3002\n{{#1720505581749.related_files_content#}}\n\
+            \n# \u8F93\u51FA\u683C\u5F0F\n\n## \u7B2C\u4E00\u6B21\u8F93\u51FA\n\u8F93\
+            \u51FA\u91C7\u7528YAML\u683C\u5F0F\uFF0C\u5176\u4E2D`type`\u7684\u53D6\
+            \u503C\u53CA\u5B9A\u4E49\u5982\u4E0B: \n- `import`\u8868\u793A\u4F9D\u8D56\
+            \u5305\u5F15\u5165\u4EE3\u7801\n- `class`\u8868\u793A\u7C7B\u5B9A\u4E49\
+            \uFF0C\u6CE8\u610Fjava\u53EA\u5141\u8BB8\u6709\u4E00\u4E2A\u9876\u5C42\
+            \u7C7B(\u901A\u5E38\u662F\u4E0E\u6587\u4EF6\u540C\u540D\u7684\u7C7B)\u662F\
+            public\u7684\uFF0C\u5176\u4F59\u9876\u5C42\u7C7B\u4E0D\u53EF\u4EE5\u4F7F\
+            \u7528public\u4FEE\u9970\u3002\n- `function`\u8868\u793A\u51FD\u6570\u5B9A\
+            \u4E49\uFF0C\u6BCF\u4E2A\u51FD\u6570\u90FD\u6709\u81EA\u5DF1\u7684\u7B7E\
+            \u540D\n- `literal`\u8868\u793A\u4E0D\u5305\u542B\u5728\u4EFB\u4F55\u51FD\
+            \u6570\u6216\u7C7B\u4E2D\u7684\u4EE3\u7801\u884C\uFF0C\u5982\u679C\u5B58\
+            \u5728\uFF0C\u5219\u9700\u8981\u7ED9\u51FA\u5B8C\u6574\u76EE\u6807\u8BED\
+            \u8A00\u7684\u4EE3\u7801\u3002main \u51FD\u6570\u4E2D\u7684\u5185\u5BB9\
+            \u4E0D\u8981\u653E\u5728\u8FD9\u91CC\u3002\n\n### \u9650\u5236\n- `type`\u7684\
+            \u987A\u5E8F\u9700\u8981\u4E25\u683C\u6309\u7167\u76EE\u6807\u7FFB\u8BD1\
+            \u4EE3\u7801\u7684\u5D4C\u5957\u5173\u7CFB\u53CA\u987A\u5E8F\u6392\u5217\
+            \uFF0C`type` \u4E0D\u53EF\u4EE5\u4E3A\u5176\u4ED6\u503C\uFF0C\u8F93\u51FA\
+            \u5FC5\u987B\u8981\u6EE1\u8DB3YAML\u683C\u5F0F\u7684\u6709\u6548\u6027\
+            \u3002\n- \u751F\u6210\u7684\u4EE3\u7801\u5FC5\u987B\u8981\u7B26\u5408\
+            \u76EE\u6807\u8BED\u8A00{{#1720505581749.dest_lang#}}\u7684\u8BED\u6CD5\
+            \u89C4\u5219\uFF0C\u4E0D\u8981\u653E\u9519\u51FD\u6570\u7684\u4F4D\u7F6E\
+            \u3002\u5982\u679C\u7C7B\u4E2D\u5C5E\u6027\u9700\u8981\u5728\u6B64\u7C7B\
+            \u5916\u4F7F\u7528\uFF0C\u5219\u8981\u5B9A\u4E49\u76F8\u5173\u7684\u5C5E\
+            \u6027\u8BBF\u95EE\u5668\u3002\n- `cls_attr` \u4E2D\u7684 `need_public_getter`\
+            \ \u8868\u793A\u662F\u5426\u9700\u8981\u751F\u6210public\u7684getter\u65B9\
+            \u6CD5\uFF0C\u5982\u679C\u6B64\u5C5E\u6027\u88AB\u8DE8\u7C7B\u8BBF\u95EE\
+            \uFF0C\u5219\u5FC5\u987B\u4E3Atrue\u3002\n### \u7B2C\u4E00\u6B21\u56DE\
+            \u590D\u7684\u7ED3\u6784\u793A\u4F8B\n```yaml\nout_file_name: <outfile.ext>\n\
+            thinking: | \n  your thinking if any, better not exceeds 80 words.\n{dest_lang}:\n\
+            \    - type: import\n      codes: |\n        import java.util.ArrayList\n\
+            \        ...\n    - type: literal\n      codes: |\n        int a = 0;\n\
+            \        ...\n    - type: class\n      name: Main\n      signature: public\
+            \ static void main(String[] args) # \u5FC5\u987B\n      attributes: #\
+            \ \u5FC5\u987B\uFF0C\u9664\u975E\u6B64\u7C7B\u4E0D\u5305\u542B\u4EFB\u4F55\
+            \u5C5E\u6027\n        - type: cls_attr\n          signature: private int\
+            \ a;\n          need_public_getter: true | false\n        - type: inst_attr\n\
+            \          signature: String str;\n        - type: function\n        \
+            \  name: incr\n          signature: static int incr(int a, int b)\n  \
+            \      - type: function\n          name: main # this is required for the\
+            \ main class\n          signature: public static void main(String[] args)\
+            \ \n        - type: class\n          name: Foo\n          signature: public\
+            \ class Foo\n        - ...\n    - ...\n```\n\n\u6CE8\u610F\uFF0C\u4F60\
+            \u4E0D\u9700\u8981\u7ED9\u51FA\u4EFB\u4F55\u89E3\u91CA\uFF0C\u53EA\u9700\
+            \u8981\u7ED9\u51FA\u4EE3\u7801\u4E3B\u4F53\u5373\u53EF\u3002\n\n### \u7B2C\
+            \u4E00\u6B21\u56DE\u590D\u7684\u793A\u4F8B(python -> java)\n\u8F93\u5165\
+            \uFF1A\n- \u6587\u4EF6\u540D: dog.py\n```python\nimport time\n\ncurrent_time\
+            \ = time.time()\n\ndef my_func(a):\n    return a + 1\n\nclass Dog:\n \
+            \   species = \"Canis familiaris\"\n\n    def __init__(self, name, age):\n\
+            \        self.name = name\n        self.age = age\n\n    def description(self):\n\
+            \        return self.name + \"is \" + self.age + \" years old\"\n\n  \
+            \  def speak(self, sound):\n        return self.name + \"says \" + sound\n\
+            \nmiles = Dog(\"Miles\", 4)\n\nprint(miles.description())  # Output: Miles\
+            \ is 4 years old\n\nprint(\"Miles is a \" + miles.species)  # Output:\
+            \ Miles is a Canis familiaris\n```\n\n\u8F93\u51FA\uFF1A\n```yaml\nout_file_name:\
+            \ Dog.java\nthinking: | \n  your thinking ...\njava:\n    - type: import\n\
+            \      codes: |\n        import java.time.Instant;\n\n    - type: class\n\
+            \      name: Dog\n      signature: public class Dog\n      attributes:\n\
+            \        - type: cls_attr\n          signature: static String species\
+            \ = \"Canis familiaris\";\n          need_public_getter: false\n     \
+            \   - type: inst_attr\n          signature: String name;\n        - type:\
+            \ inst_attr\n          signature: Int age;\n        - type: function\n\
+            \          name: Dog\n          signature: Dog(String name, int age)\n\
+            \        - type: function\n          name: description\n          signature:\
+            \ String description()\n        - type: function\n          name: speak\n\
+            \          signature: String speak(String sound)\n        - type: function\n\
+            \          name: main\n          signature: public static void main(String[]\
+            \ args)\n```\n\n## \u7B2C\u4E8C\u6B21\u8F93\u51FA\n\u5728\u7B2C\u4E8C\u6B21\
+            \u8F93\u51FA\u4E2D\uFF0C\u6211\u4F1A\u8BA9\u4F60\u8F93\u51FA\u4E00\u4E2A\
+            \u6216\u8005\u591A\u4E2A\u7279\u5B9A\u7684\u7C7B\u6216\u8005\u51FD\u6570\
+            \u7684\u5B8C\u6574\u5B9E\u73B0\uFF0C\u76F4\u63A5\u7ED9\u51FA\u4EE3\u7801\
+            \u5373\u53EF\uFF0C\u65E0\u9700\u89E3\u91CA\uFF1B\u4E14\u7B2C\u4E00\u6B21\
+            \u751F\u6210\u7ED3\u679C\u4E2D\u6392\u5728\u6B64\u7C7B/\u51FD\u6570\u4E4B\
+            \u524D\u7684\u4EE3\u7801\u90FD\u5DF2\u7ECF\u751F\u6210\u4E86\uFF0C\u4F60\
+            \u4E0D\u8981\u91CD\u590D\u751F\u6210\u3002\n\u4F60\u9700\u8981\u7B49\u5230\
+            \u6211\u7684\u6307\u4EE4\u624D\u80FD\u8F93\u51FA\u7B2C\u4E8C\u6B21\u54CD\
+            \u5E94\u3002\n\n# \u9650\u5236\n\u65E0\u8BBA\u662F\u7B2C\u51E0\u6B21\u56DE\
+            \u590D\uFF0C\u4F60\u90FD\u8981\u8BA4\u771F\u601D\u8003\uFF0C\u4E0D\u53EF\
+            \u4EE5\u5927\u610F\u6216\u8005\u5306\u5FD9\u7ED9\u51FA\u6CA1\u6709\u6DF1\
+            \u601D\u719F\u8651\u7684\u4EE3\u7801\u3002"
+        - id: 067b610f-6234-4f0d-bf20-9c7d86e7562d
+          role: user
+          text: "# \u539F\u59CB\u4EE3\u7801\n- input_file_name: {{#1720505581749.code_file_name#}}\n\
+            \n```{{#1720505581749.src_lang#}}\n{{#1720505581749.code_to_translate#}}\n\
+            ```"
+        - id: e6ece9cd-4b04-42d6-870a-350a9cfcdcf6
+          role: assistant
+          text: '```yaml'
+        selected: false
+        title: "LLM-\u751F\u6210\u76EE\u6807\u4EE3\u7801\u7B7E\u540D"
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      height: 98
+      id: '1720506191043'
+      position:
+        x: 334
+        y: 301.5
+      positionAbsolute:
+        x: 334
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef extract_fn_cls(text: str, dest_lang:str) -> dict:\n\
+          \    resp = json.loads(text)['json']\n    out_file_name = resp['out_file_name']\n\
+          \    signatures = [\n        item['signature'] for item in resp[dest_lang]\
+          \ if item['type'] in ['function', 'class']\n    ]\n    return {\n      \
+          \  # \"out_file_name\": out_file_name,\n        \"resp\": resp,\n      \
+          \  \"signatures\": signatures,\n    }\n\ndef main(text:str, dest_lang:str):\n\
+          \    return extract_fn_cls(text, dest_lang)"
+        code_language: python3
+        desc: ''
+        outputs:
+          resp:
+            children: null
+            type: object
+          signatures:
+            children: null
+            type: array[string]
+        selected: false
+        title: "Code - \u62BD\u53D6\u7C7B/\u51FD\u6570\u7B7E\u540D"
+        type: code
+        variables:
+        - value_selector:
+          - '1723619551968'
+          - text
+          variable: text
+        - value_selector:
+          - '1720505581749'
+          - dest_lang
+          variable: dest_lang
+      height: 54
+      id: '1720508367130'
+      position:
+        x: 942
+        y: 301.5
+      positionAbsolute:
+        x: 942
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        height: 203
+        iterator_selector:
+        - '1720508367130'
+        - signatures
+        output_selector:
+        - '1720580171037'
+        - text
+        output_type: array[string]
+        selected: false
+        startNodeType: llm
+        start_node_id: '1720580171037'
+        title: "Iteration - \u751F\u6210\u6BCF\u4E2A\u51FD\u6570/\u7C7B\u7684\u4EE3\
+          \u7801"
+        type: iteration
+        width: 377
+      height: 203
+      id: '1720580108806'
+      position:
+        x: 1205.1032497490164
+        y: 377.6119244726321
+      positionAbsolute:
+        x: 1205.1032497490164
+        y: 377.6119244726321
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 377
+      zIndex: 1
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        isIterationStart: true
+        iteration_id: '1720580108806'
+        model:
+          completion_params:
+            stop:
+            - '```'
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-sonnet-20240229-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 4741625b-505f-462d-b851-9aef4eab5fcd
+          role: system
+          text: "# Role\n\u4F60\u63A5\u4E0B\u6765cosplay\u4E00\u4E2A\u4E13\u4E1A\u7684\
+            \u7A0B\u5E8F\u733F\uFF0C\u7CBE\u901Apython java go \u7B49\u591A\u79CD\u8BED\
+            \u8A00\u3002\n\n# Task\n\u4F60\u7684\u4EFB\u52A1\u662F\u5E2E\u52A9\u6211\
+            \u5C06\u9879\u76EE\u7684\u7F16\u7A0B\u8BED\u8A00\u4ECE{{#1720505581749.src_lang#}}\u7FFB\
+            \u8BD1\u5230{{#1720505581749.dest_lang#}}\u3002\u4F46\u662F\u7531\u4E8E\
+            \u8F93\u51FA\u957F\u5EA6\u9650\u5236\uFF0C\u4F60\u9700\u8981\u5206\u4E24\
+            \u6B21\u56DE\u590D\u6765\u751F\u6210\u5B8C\u6574\u7684\u4EE3\u7801\u3002\
+            \n\n\u7B2C\u4E00\u6B21\u56DE\u590D\u7684\u76EE\u7684\u662F\u751F\u6210\
+            \u4EE3\u7801\u4E3B\u4F53\u7ED3\u6784\uFF0C\u4F46\u5BF9\u4E8E\u4E2D\u7684\
+            \u7C7B\u3001\u51FD\u6570\uFF0C\u4F60\u53EA\u9700\u8981\u7ED9\u51FA\u5BF9\
+            \u5E94\u7684\u7B7E\u540D\u5373\u53EF\uFF0C\u4E0D\u8981\u7ED9\u51FA\u5177\
+            \u4F53\u5B9E\u73B0\u3002\n\u6CE8\u610F\u5206\u6790\u76F8\u5173\u4EE3\u7801\
+            \u6587\u4EF6\uFF0C\u5E76\u636E\u6B64\u5E2E\u4F60\u8BC6\u522B\u5185\u7F6E\
+            \u4F9D\u8D56\u5E93\u548C\u81EA\u5B9A\u4E49\u4F9D\u8D56\uFF0C\u5728\u4F60\
+            \u7684\u56DE\u590D\u4E2D\uFF0C\u4E0D\u8981\u9057\u6F0Fimport\u5BF9\u5E94\
+            \u7684\u5E93\u3002\n\n# \u76F8\u5173\u4EE3\u7801\u6587\u4EF6\n\u5982\u4E0B\
+            \u662F\u53EF\u80FD\u4E0E\u539F\u59CB\u4EE3\u7801\u6709\u5173\u7684\u6587\
+            \u4EF6(\u53EF\u80FD\u4E3A\u7A7A)\u3002\n{{#1720505581749.related_files_content#}}\n\
+            \n# \u8F93\u51FA\u683C\u5F0F\n\n## \u7B2C\u4E00\u6B21\u8F93\u51FA\n\u8F93\
+            \u51FA\u91C7\u7528YAML\u683C\u5F0F\uFF0C\u5176\u4E2D`type`\u7684\u53D6\
+            \u503C\u53CA\u5B9A\u4E49\u5982\u4E0B: \n- `import`\u8868\u793A\u4F9D\u8D56\
+            \u5305\u5F15\u5165\u4EE3\u7801\n- `class`\u8868\u793A\u7C7B\u5B9A\u4E49\
+            \uFF0C\u6CE8\u610Fjava\u53EA\u5141\u8BB8\u6709\u4E00\u4E2A\u9876\u5C42\
+            \u7C7B(\u901A\u5E38\u662F\u4E0E\u6587\u4EF6\u540C\u540D\u7684\u7C7B)\u662F\
+            public\u7684\uFF0C\u5176\u4F59\u9876\u5C42\u7C7B\u4E0D\u53EF\u4EE5\u4F7F\
+            \u7528public\u4FEE\u9970\u3002\n- `function`\u8868\u793A\u51FD\u6570\u5B9A\
+            \u4E49\uFF0C\u6BCF\u4E2A\u51FD\u6570\u90FD\u6709\u81EA\u5DF1\u7684\u7B7E\
+            \u540D\n- `literal`\u8868\u793A\u4E0D\u5305\u542B\u5728\u4EFB\u4F55\u51FD\
+            \u6570\u6216\u7C7B\u4E2D\u7684\u4EE3\u7801\u884C\uFF0C\u5982\u679C\u5B58\
+            \u5728\uFF0C\u5219\u9700\u8981\u7ED9\u51FA\u5B8C\u6574\u76EE\u6807\u8BED\
+            \u8A00\u7684\u4EE3\u7801\u3002main \u51FD\u6570\u4E2D\u7684\u5185\u5BB9\
+            \u4E0D\u8981\u653E\u5728\u8FD9\u91CC\u3002\n\n### \u9650\u5236\n- `type`\u7684\
+            \u987A\u5E8F\u9700\u8981\u4E25\u683C\u6309\u7167\u76EE\u6807\u7FFB\u8BD1\
+            \u4EE3\u7801\u7684\u5D4C\u5957\u5173\u7CFB\u53CA\u987A\u5E8F\u6392\u5217\
+            \uFF0C`type` \u4E0D\u53EF\u4EE5\u4E3A\u5176\u4ED6\u503C\uFF0C\u8F93\u51FA\
+            \u5FC5\u987B\u8981\u6EE1\u8DB3YAML\u683C\u5F0F\u7684\u6709\u6548\u6027\
+            \u3002\n- \u751F\u6210\u7684\u4EE3\u7801\u5FC5\u987B\u8981\u7B26\u5408\
+            \u76EE\u6807\u8BED\u8A00{{#1720505581749.dest_lang#}}\u7684\u8BED\u6CD5\
+            \u89C4\u5219\uFF0C\u4E0D\u8981\u653E\u9519\u51FD\u6570\u7684\u4F4D\u7F6E\
+            \u3002\u5982\u679C\u7C7B\u4E2D\u5C5E\u6027\u9700\u8981\u5728\u6B64\u7C7B\
+            \u5916\u4F7F\u7528\uFF0C\u5219\u8981\u5B9A\u4E49\u76F8\u5173\u7684\u5C5E\
+            \u6027\u8BBF\u95EE\u5668\u3002\n- `cls_attr` \u4E2D\u7684 `need_public_getter`\
+            \ \u8868\u793A\u662F\u5426\u9700\u8981\u751F\u6210public\u7684getter\u65B9\
+            \u6CD5\uFF0C\u5982\u679C\u6B64\u5C5E\u6027\u88AB\u8DE8\u7C7B\u8BBF\u95EE\
+            \uFF0C\u5219\u5FC5\u987B\u4E3Atrue\u3002\n### \u7B2C\u4E00\u6B21\u56DE\
+            \u590D\u7684\u7ED3\u6784\u793A\u4F8B\n```yaml\nout_file_name: <outfile.ext>\n\
+            thinking: | \n  your thinking if any, better not exceeds 80 words.\n{dest_lang}:\n\
+            \    - type: import\n      codes: |\n        import java.util.ArrayList\n\
+            \        ...\n    - type: literal\n      codes: |\n        int a = 0;\n\
+            \        ...\n    - type: class\n      name: Main\n      signature: public\
+            \ static void main(String[] args) # \u5FC5\u987B\n      attributes: #\
+            \ \u5FC5\u987B\uFF0C\u9664\u975E\u6B64\u7C7B\u4E0D\u5305\u542B\u4EFB\u4F55\
+            \u5C5E\u6027\n        - type: cls_attr\n          signature: private int\
+            \ a;\n          need_public_getter: true | false\n        - type: inst_attr\n\
+            \          signature: String str;\n        - type: function\n        \
+            \  name: incr\n          signature: static int incr(int a, int b)\n  \
+            \      - type: function\n          name: main # this is required for the\
+            \ main class\n          signature: public static void main(String[] args)\
+            \ \n        - type: class\n          name: Foo\n          signature: public\
+            \ class Foo\n        - ...\n    - ...\n```\n\n\u6CE8\u610F\uFF0C\u4F60\
+            \u4E0D\u9700\u8981\u7ED9\u51FA\u4EFB\u4F55\u89E3\u91CA\uFF0C\u53EA\u9700\
+            \u8981\u7ED9\u51FA\u4EE3\u7801\u4E3B\u4F53\u5373\u53EF\u3002\n\n### \u7B2C\
+            \u4E00\u6B21\u56DE\u590D\u7684\u793A\u4F8B(python -> java)\n\u8F93\u5165\
+            \uFF1A\n- \u6587\u4EF6\u540D: dog.py\n```python\nimport time\n\ncurrent_time\
+            \ = time.time()\n\ndef my_func(a):\n    return a + 1\n\nclass Dog:\n \
+            \   species = \"Canis familiaris\"\n\n    def __init__(self, name, age):\n\
+            \        self.name = name\n        self.age = age\n\n    def description(self):\n\
+            \        return self.name + \"is \" + self.age + \" years old\"\n\n  \
+            \  def speak(self, sound):\n        return self.name + \"says \" + sound\n\
+            \nmiles = Dog(\"Miles\", 4)\n\nprint(miles.description())  # Output: Miles\
+            \ is 4 years old\n\nprint(\"Miles is a \" + miles.species)  # Output:\
+            \ Miles is a Canis familiaris\n```\n\n\u8F93\u51FA\uFF1A\n```yaml\nout_file_name:\
+            \ Dog.java\nthinking: | \n  your thinking ...\njava:\n    - type: import\n\
+            \      codes: |\n        import java.time.Instant;\n\n    - type: class\n\
+            \      name: Dog\n      signature: public class Dog\n      attributes:\n\
+            \        - type: cls_attr\n          signature: static String species\
+            \ = \"Canis familiaris\";\n          need_public_getter: false\n     \
+            \   - type: inst_attr\n          signature: String name;\n        - type:\
+            \ inst_attr\n          signature: Int age;\n        - type: function\n\
+            \          name: Dog\n          signature: Dog(String name, int age)\n\
+            \        - type: function\n          name: description\n          signature:\
+            \ String description()\n        - type: function\n          name: speak\n\
+            \          signature: String speak(String sound)\n        - type: function\n\
+            \          name: main\n          signature: public static void main(String[]\
+            \ args)\n```\n\n## \u7B2C\u4E8C\u6B21\u8F93\u51FA\n\u5728\u7B2C\u4E8C\u6B21\
+            \u8F93\u51FA\u4E2D\uFF0C\u6211\u4F1A\u8BA9\u4F60\u8F93\u51FA\u4E00\u4E2A\
+            \u6216\u8005\u591A\u4E2A\u7279\u5B9A\u7684\u7C7B\u6216\u8005\u51FD\u6570\
+            \u7684\u5B8C\u6574\u5B9E\u73B0\uFF0C\u76F4\u63A5\u7ED9\u51FA\u4EE3\u7801\
+            \u5373\u53EF\uFF0C\u65E0\u9700\u89E3\u91CA\uFF1B\u4E14\u7B2C\u4E00\u6B21\
+            \u751F\u6210\u7ED3\u679C\u4E2D\u6392\u5728\u6B64\u7C7B/\u51FD\u6570\u4E4B\
+            \u524D\u7684\u4EE3\u7801\u90FD\u5DF2\u7ECF\u751F\u6210\u4E86\uFF0C\u4F60\
+            \u4E0D\u8981\u91CD\u590D\u751F\u6210\u3002\n\u4F60\u9700\u8981\u7B49\u5230\
+            \u6211\u7684\u6307\u4EE4\u624D\u80FD\u8F93\u51FA\u7B2C\u4E8C\u6B21\u54CD\
+            \u5E94\u3002\n\n# \u9650\u5236\n\u65E0\u8BBA\u662F\u7B2C\u51E0\u6B21\u56DE\
+            \u590D\uFF0C\u4F60\u90FD\u8981\u8BA4\u771F\u601D\u8003\uFF0C\u4E0D\u53EF\
+            \u4EE5\u5927\u610F\u6216\u8005\u5306\u5FD9\u7ED9\u51FA\u6CA1\u6709\u6DF1\
+            \u601D\u719F\u8651\u7684\u4EE3\u7801\u3002"
+        - id: d4bc0226-67ce-411e-a44d-d7154ed15ef2
+          role: user
+          text: "# \u539F\u59CB\u4EE3\u7801\n- input_file_name: {{#1720505581749.code_file_name#}}\n\
+            \n\n```{{#1720505581749.src_lang#}}\n\n{{#1720505581749.code_to_translate#}}\n\
+            ```"
+        - id: e2e530d6-35f9-4588-b448-772cae738195
+          role: assistant
+          text: '```yaml
+
+            {{#1720506191043.text#}}
+
+            ```'
+        - id: 7c3b0f56-47cb-4bef-8e8b-abe44638fc83
+          role: user
+          text: "\u53EA\u9700\u7ED9\u51FA {{#1720580108806.item#}} \u7684\u5B8C\u6574\
+            \u4EE3\u7801\uFF0C\u4E0D\u8981\u91CD\u590D\u5F15\u5165\u4F9D\u8D56\u3002\
+            \u76F4\u63A5\u7ED9\u51FA\u4EE3\u7801\u5185\u5BB9\uFF0C\u4E0D\u8981\u89E3\
+            \u91CA\u3002"
+        - id: 59bbf386-14a1-420b-98b4-c04e6bde9a23
+          role: assistant
+          text: '```{{#1720505581749.dest_lang#}}'
+        selected: false
+        title: "LLM - \u751F\u6210\u51FD\u6570/\u7C7B\u7684\u4EE3\u7801"
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      extent: parent
+      height: 98
+      id: '1720580171037'
+      parentId: '1720580108806'
+      position:
+        x: 117
+        y: 85
+      positionAbsolute:
+        x: 1322.1032497490164
+        y: 462.6119244726321
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1001
+    - data:
+        code: "\ndef main(resp:dict, sig_impl: list[str], dest_lang:str) -> dict:\n\
+          \    sig_impl_idx = 0\n    for item in resp[dest_lang]:\n        _type =\
+          \ item['type']\n        if _type in ['function', 'class']:\n           \
+          \ item['codes'] = sig_impl[sig_impl_idx]\n            sig_impl_idx += 1\n\
+          \n    final_code = '\\n'.join([item['codes'] for item in resp[dest_lang]])\n\
+          \n    return {\n        \"final_code\": final_code,\n        \"resp\": resp,\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          final_code:
+            children: null
+            type: string
+          resp:
+            children: null
+            type: object
+        selected: false
+        title: "Code - \u5408\u5E76\u7FFB\u8BD1\u7ED3\u679C"
+        type: code
+        variables:
+        - value_selector:
+          - '1720580108806'
+          - output
+          variable: sig_impl
+        - value_selector:
+          - '1720508367130'
+          - resp
+          variable: resp
+        - value_selector:
+          - '1720505581749'
+          - dest_lang
+          variable: dest_lang
+      height: 54
+      id: '1720580885073'
+      position:
+        x: 1683
+        y: 301.5
+      positionAbsolute:
+        x: 1683
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: "\u8F93\u51FA\u7FFB\u8BD1\u7ED3\u679C"
+        outputs:
+        - value_selector:
+          - '1720580885073'
+          - final_code
+          variable: final_code
+        selected: false
+        title: End
+        type: end
+      height: 118
+      id: '1720582990256'
+      position:
+        x: 1987
+        y: 301.5
+      positionAbsolute:
+        x: 1987
+        y: 301.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 714
+        selected: false
+        showAuthor: true
+        text: "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":1,\"\
+          mode\":\"normal\",\"style\":\"\",\"text\":\"\u793A\u4F8B\u53C2\u6570\uFF1A\
+          \u9700\u8981\u7FFB\u8BD1\u7684\u4EE3\u7801\u6587\u4EF6\u5185\u5BB9\",\"\
+          type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"\
+          indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":1},{\"children\"\
+          :[],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\"\
+          :0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"import requests\",\"type\"\
+          :\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\"\
+          :0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\"\
+          :\"from utils import Food\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\",\"format\":\"\
+          \",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"def send_request():\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\"\
+          :\"normal\",\"style\":\"\",\"text\":\"    response = requests.get(\\\"https://www.example.com\\\
+          \")\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\"\
+          :\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"    print(response.status_code)\",\"type\":\"text\",\"version\"\
+          :1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\"\
+          ,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\"\
+          :0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\"\
+          :\"\",\"text\":\"def foo():\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\"\
+          :\"normal\",\"style\":\"\",\"text\":\"    print(\\\"This is foo\\\")\",\"\
+          type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"\
+          indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\"\
+          :\"    x = 42\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\"\
+          ,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\"\
+          :0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\"\
+          :\"\",\"text\":\"    return x\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\",\"format\":\"\
+          \",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"class Bar:\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\"\
+          :\"normal\",\"style\":\"\",\"text\":\"    def __init__(self):\",\"type\"\
+          :\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\"\
+          :0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\"\
+          :\"        self.value = 0\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\",\"format\":\"\
+          \",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"    def increment(self):\",\"type\":\"text\",\"version\":1}],\"\
+          direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\"\
+          :0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"        self.value += 1\"\
+          ,\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\"\
+          ,\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\"\
+          :\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\"\
+          :0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"def main():\"\
+          ,\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\"\
+          ,\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"    f = foo()\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\"\
+          :\"normal\",\"style\":\"\",\"text\":\"    print(f)\",\"type\":\"text\",\"\
+          version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\"\
+          :\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\":[],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\"\
+          :\"normal\",\"style\":\"\",\"text\":\"    b = Bar()\",\"type\":\"text\"\
+          ,\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\"\
+          :\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\"\
+          :0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"    b.increment()\"\
+          ,\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\"\
+          ,\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"    print(b.value)\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\",\"format\":\"\
+          \",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"    send_request()\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\",\"format\":\"\
+          \",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"    Food().eat()\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\",\"format\":\"\
+          \",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"if __name__ == \\\"__main__\\\":\",\"type\":\"text\",\"version\"\
+          :1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\"\
+          :0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"    main()\",\"type\":\"\
+          text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\"\
+          :0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\"\
+          ,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\"\
+          :0}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\"\
+          ,\"version\":1}}"
+        theme: blue
+        title: ''
+        type: ''
+        width: 288
+      height: 714
+      id: '1720587427200'
+      position:
+        x: -549.7499726708537
+        y: 18.858251348773365
+      positionAbsolute:
+        x: -549.7499726708537
+        y: 18.858251348773365
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 288
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 263
+        selected: false
+        showAuthor: true
+        text: "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":1,\"\
+          mode\":\"normal\",\"style\":\"\",\"text\":\"\u793A\u4F8B\u53C2\u6570\uFF1A\
+          \u76F8\u5173\u4F9D\u8D56\u5E93\u4EE3\u7801\u5185\u5BB9\",\"type\":\"text\"\
+          ,\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\"\
+          :\"paragraph\",\"version\":1,\"textFormat\":1},{\"children\":[],\"direction\"\
+          :null,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"\
+          textFormat\":0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\"\
+          ,\"style\":\"\",\"text\":\"utils.py:\",\"type\":\"text\",\"version\":1}],\"\
+          direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\"\
+          :0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"```\",\"type\":\"text\"\
+          ,\"version\":1}],\"direction\":null,\"format\":\"\",\"indent\":0,\"type\"\
+          :\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\"\
+          :0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"class Food:\"\
+          ,\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\"\
+          ,\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"    def __init__(self) -> None:\",\"type\":\"text\",\"version\"\
+          :1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\"\
+          :0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"        pass\",\"type\"\
+          :\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\"\
+          :0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\"\
+          :\"    def eat(self):\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\"\
+          :\"normal\",\"style\":\"\",\"text\":\"        print('eat')\",\"type\":\"\
+          text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\"\
+          :0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\"\
+          :\"    def drink(self):\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\"\
+          :\"normal\",\"style\":\"\",\"text\":\"        print('drink')\",\"type\"\
+          :\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\"\
+          :0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\"\
+          :\"```\",\"type\":\"text\",\"version\":1}],\"direction\":null,\"format\"\
+          :\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0}],\"\
+          direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\"\
+          :1}}"
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 252
+      height: 263
+      id: '17205874960550'
+      position:
+        x: -256.9200850883209
+        y: 18.858251348773365
+      positionAbsolute:
+        x: -256.9200850883209
+        y: 18.858251348773365
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 252
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 133
+        selected: false
+        showAuthor: true
+        text: "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"\
+          mode\":\"normal\",\"style\":\"\",\"text\":\"\u793A\u4F8B\u53C2\u6570\uFF1A\
+          \",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\
+          \",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"\
+          children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\"\
+          ,\"text\":\"- \u5F85\u7FFB\u8BD1\u6587\u4EF6\u540D\uFF1A main.py\",\"type\"\
+          :\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\"\
+          :0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\"\
+          :\"- \u6E90\u4EE3\u7801\u8BED\u8A00: python\",\"type\":\"text\",\"version\"\
+          :1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"format\"\
+          :0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"- \u76EE\u6807\u7F16\u7A0B\
+          \u8BED\u8A00\uFF1A java\",\"type\":\"text\",\"version\":1}],\"direction\"\
+          :\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\"\
+          :1,\"textFormat\":0}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"\
+          type\":\"root\",\"version\":1}}"
+        theme: blue
+        title: '  (2)'
+        type: ''
+        width: 258
+      height: 133
+      id: '17205875187340'
+      position:
+        x: -256.9200850883209
+        y: 292.1662801639156
+      positionAbsolute:
+        x: -256.9200850883209
+        y: 292.1662801639156
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 258
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: LambdaYamlToJson
+        tool_configurations:
+          aws_region: us-east-1
+          lambda_name: yaml_to_json
+        tool_label: LambdaYamlToJson
+        tool_name: lambda_yaml_to_json
+        tool_parameters:
+          yaml_content:
+            type: mixed
+            value: '{{#1720506191043.text#}}'
+        type: tool
+      height: 116
+      id: '1723619551968'
+      position:
+        x: 613.2106478137489
+        y: 471.1258560284327
+      positionAbsolute:
+        x: 613.2106478137489
+        y: 471.1258560284327
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 621.5259486494784
+      y: 69.81477216127871
+      zoom: 0.8729132533667718

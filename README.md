@@ -31,7 +31,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | DSL Name                    | Description                                           | Link                                                  | Dependency                      | Owner                           |
 | --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------- |
 | Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | [ybalbert](ybalbert@amazon.com) |
-| Code_translate              | Code Transform between different Program Language     | Coming                                                |                                 | [binc](binc@amazon.com)         |
+| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)        | Tool(LambdaYamlToJson)          | [binc](binc@amazon.com)         |
 | Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](basic_rag_sample.yml)                           | Tool(Rerank)                    | [ybalbert](ybalbert@amazon.com) |
 | Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](andrew_translation_agent.yml)                   |                                 | [chuanxie](chuanxie@amazon.com) |
 
@@ -44,6 +44,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | [amyli](amyli@amazon.com)       |
 | Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
 | Image Translation Tool    | PAAS      | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
+| LambdaYamlToJson          | PAAS      | Convert YAML into JSON                                       | [README](./notebook/deploy_lambda_yaml_to_json.md)           | [binc](binc@amazon.com)      |
 
 #### Model_Provider
 
