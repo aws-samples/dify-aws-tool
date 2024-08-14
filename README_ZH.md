@@ -28,29 +28,31 @@
 
 #### 工作流 
 
-| 名称                        | 描述                                        | Link                                                  | 依赖                            | 负责人              |
-| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------- |
-| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | ybalbert@amazon.com |
-| Code_translate              | 不同代码种类之间的翻译工作流                | Coming                                                |                                 | binc@amazon.com     |
-| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](basic_rag_sample.yml)                           | Tool(Rerank)                    | ybalbert@amazon.com |
-| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](andrew_translation_agent.yml)                   |                                 | chuanxie@amazon.com |
+| 名称                        | 描述                                        | Link                                                  | 依赖                            | 负责人                          |
+| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------- |
+| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | [ybalbert](ybalbert@amazon.com) |
+| Code_translate              | 不同代码种类之间的翻译工作流                | Coming                                                |                                 | [binc](binc@amazon.com)         |
+| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](basic_rag_sample.yml)                           | Tool(Rerank)                    | [ybalbert](ybalbert@amazon.com) |
+| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](andrew_translation_agent.yml)                   |                                 | [ybalbert](ybalbert@amazon.com) |
 
 #### 内置工具
 
-| 工具名称                  | 工具类型 | 描述                                                         | 部署文档                                                     | 负责人              |
-| ------------------------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
-| Rerank                    | PAAS     | 文本相似性排序                                               | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
-| Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 |                                                              | amyli@amazon.com    |
+| 工具名称                  | 工具类型 | 描述                                                         | 部署文档                                                     | 负责人                          |
+| ------------------------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------- |
+| Rerank                    | PAAS     | 文本相似性排序                                               | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| TTS                       | PAAS     | 语音合成                                                     | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
+| Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 |                                                              | [amyli](amyli@amazon.com)       |
+| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
+| Image Translation Tool    | PAAS     | 翻译图片上的文字                                             | Comming                                                      | [tanqy](tangqy@amazon.com)      |
 
 #### 模型提供商
 
-| 模型名称         | 模型类型            | 部署文档                                                     | 负责人              |
-| ---------------- | ------------------- | ------------------------------------------------------------ | ------------------- |
-| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
-| CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | ybalbert@amazon.com |
-| SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | ybalbert@amazon.com |
+| 模型名称         | 模型类型            | 部署文档                                                     | 负责人                          |
+| ---------------- | ------------------- | ------------------------------------------------------------ | ------------------------------- |
+| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
+| SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 
 
 
@@ -72,9 +74,9 @@
    
 3. 安装代码
    ```bash
+   # 请注意，很多模型和工具已经被默认集成到Dify，无需额外安装
    mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
-   # SageMaker Model Provider已经被默认集成到Dify，无需额外安装，所以注释下面一句命令
-   # mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+   mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
    ```
    
 4. 构建新镜像

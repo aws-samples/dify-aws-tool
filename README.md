@@ -28,29 +28,31 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 #### Workflow 
 
-| DSL Name                    | Description                                           | Link                                                  | Dependency                      | Owner               |
-| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------- |
-| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | ybalbert@amazon.com |
-| Code_translate              | Code Transform between different Program Language     | Coming                                                |                                 | binc@amazon.com     |
-| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](basic_rag_sample.yml)                           | Tool(Rerank)                    | ybalbert@amazon.com |
-| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](andrew_translation_agent.yml)                   |                                 | chuanxie@amazon.com |
+| DSL Name                    | Description                                           | Link                                                  | Dependency                      | Owner                           |
+| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------- |
+| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | [ybalbert](ybalbert@amazon.com) |
+| Code_translate              | Code Transform between different Program Language     | Coming                                                |                                 | [binc](binc@amazon.com)         |
+| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](basic_rag_sample.yml)                           | Tool(Rerank)                    | [ybalbert](ybalbert@amazon.com) |
+| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](andrew_translation_agent.yml)                   |                                 | [chuanxie](chuanxie@amazon.com) |
 
 #### Builtin_Tools
 
-| Tool Name                 | Tool Type | Description                                                  | Deploy_doc                                                   | Owner               |
-| ------------------------- | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
-| Rerank                    | PAAS      | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | ybalbert@amazon.com |
-| Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | amyli@amazon.com    |
+| Tool Name                 | Tool Type | Description                                                  | Deploy_doc                                                   | Owner                           |
+| ------------------------- | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------- |
+| Rerank                    | PAAS      | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| TTS                       | PAAS      | Speech  synthesis Tool                                       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
+| Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | [amyli](amyli@amazon.com)       |
+| Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
+| Image Translation Tool    | PAAS      | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
 
 #### Model_Provider
 
-| Model Name       | model_type          | Deploy_doc                                                   | Owner               |
-| ---------------- | ------------------- | ------------------------------------------------------------ | ------------------- |
-| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | ybalbert@amazon.com |
-| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | ybalbert@amazon.com |
-| CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | ybalbert@amazon.com |
-| SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | ybalbert@amazon.com |
+| Model Name       | model_type          | Deploy_doc                                                   | Owner                           |
+| ---------------- | ------------------- | ------------------------------------------------------------ | ------------------------------- |
+| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
+| SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 
 
 
@@ -70,9 +72,9 @@ In addition to the reference code, you can also refer to the [Dify official guid
    
 3. intall code
    ```bash
+   # Part of models and tools have been integrated with dify already, no extra installation needed
    mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
-   # SageMaker Model Provider has been integrated with Dify，no extra installation needed
-   # mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
+   mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
    ```
    
 4. build image
