@@ -1,7 +1,7 @@
 import boto3
 import json
 import logging
-from typing import Any, Dict, Union, List
+from typing import Any, Union
 from pydantic import BaseModel, Field
 from botocore.exceptions import BotoCoreError
 
@@ -11,18 +11,27 @@ from core.tools.tool.builtin_tool import BuiltinTool
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+def get_current_region():
+    try:
+        response = requests.get('http://169.254.169.254/latest/meta-data/placement/region', timeout=1)
+        if response.status_code == 200:
+            return response.text
+    except requests.RequestException:
+        logger.warning("Unable to retrieve region from EC2 metadata. Falling back to default.")
+    return "us-east-1"  # Default region if unable to retrieve
+
 class GuardrailParameters(BaseModel):
     guardrail_id: str = Field(..., description="The identifier of the guardrail")
     guardrail_version: str = Field(..., description="The version of the guardrail")
     source: str = Field(..., description="The source of the content")
     text: str = Field(..., description="The text to apply the guardrail to")
-    aws_region: str = Field(default="us-east-1", description="AWS region for the Bedrock client")
+    aws_region: str = Field(default_factory=get_current_region, description="AWS region for the Bedrock client")
 
 class ApplyGuardrailTool(BuiltinTool):
     def _invoke(self,
                 user_id: str,
-                tool_parameters: Dict[str, Any]
-                ) -> Union[ToolInvokeMessage, List[ToolInvokeMessage]]:
+                tool_parameters: dict[str, Any]
+                ) -> Union[ToolInvokeMessage, list[ToolInvokeMessage]]:
         """
         Invoke the ApplyGuardrail tool
         """
