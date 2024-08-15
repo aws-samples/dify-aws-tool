@@ -1,6 +1,7 @@
 import boto3
 import json
 import logging
+import requests
 from typing import Any, Union
 from pydantic import BaseModel, Field
 from botocore.exceptions import BotoCoreError
