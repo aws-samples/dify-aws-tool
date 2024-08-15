@@ -16,7 +16,7 @@ class GuardrailParameters(BaseModel):
     guardrail_version: str = Field(..., description="The version of the guardrail")
     source: str = Field(..., description="The source of the content")
     text: str = Field(..., description="The text to apply the guardrail to")
-    aws_region: str = Field(default="us-east-1", description="AWS region for the Bedrock client")
+    aws_region: str = Field(..., description="AWS region for the Bedrock client")
 
 class ApplyGuardrailTool(BuiltinTool):
     def _invoke(self,
