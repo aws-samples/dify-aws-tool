@@ -31,7 +31,7 @@
 | 名称                        | 描述                                        | Link                                                  | 依赖                            | 负责人                                           |
 | --------------------------- | ------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------------------------ |
 | Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | [ybalbert](ybalbert@amazon.com)                  |
-| Code_translate              | 不同代码种类之间的翻译工作流                | Coming                                                |                                 | [binc](binc@amazon.com)                          |
+| Code_translate              | 不同代码种类之间的翻译工作流                | [DSL](./workflow/claude3_code_translation.yml)     |                                 | [binc](binc@amazon.com)                          |
 | Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)                    | [ybalbert](ybalbert@amazon.com)                  |
 | Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](./workflow/andrew_translation_agent.yml)        |                                 | [ybalbert](ybalbert@amazon.com)                  |
 | rag_based_bot_with_tts      | 基于RAG能语音回答的Bot                      | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)                       | [ybalbert](ybalbert@amazon.com)                  |
