@@ -1,0 +1,395 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: dify-workflow-design-v3
+kind: app
+version: 0.1.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1723526583282-source-1723526606263-target
+      source: '1723526583282'
+      sourceHandle: source
+      target: '1723526606263'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1723533864970-source-llm-target
+      source: '1723533864970'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1723539105594-source-1723533864970-target
+      source: '1723539105594'
+      sourceHandle: source
+      target: '1723533864970'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1723526606263-source-1723539935951-target
+      source: '1723526606263'
+      sourceHandle: source
+      target: '1723539935951'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: tool
+      id: 1723539935951-source-1723539105594-target
+      source: '1723539935951'
+      sourceHandle: source
+      target: '1723539105594'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: tool
+      id: llm-source-1723547679190-target
+      source: llm
+      sourceHandle: source
+      target: '1723547679190'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: answer
+      id: 1723547679190-source-answer-target
+      source: '1723547679190'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1723526583282'
+      position:
+        x: 148
+        y: 282
+      positionAbsolute:
+        x: 148
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1723533864970'
+          - output
+        desc: ''
+        memory:
+          query_prompt_template: '<query>{{#sys.query#}}</query>
+
+
+
+            <reference_doc>
+
+            {{#1723533864970.output#}}
+
+            </reference_doc>
+
+
+            Here are your reply:
+
+            <reply>'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            stop:
+            - </reply>
+            temperature: 0.7
+          mode: completion
+          name: mistral.mistral-large-2402-v1:0
+          provider: bedrock
+        prompt_template:
+          edition_type: basic
+          text: '你是一名小学语文老师，请根据查找到的引用来回答，以亲切的态度和语言来回答学生的问题。
+
+
+            下面是查找到的知识引用
+
+            <search_results>
+
+            {{#1723533864970.output#}}
+
+            </search_results>
+
+
+            Human: {{#sys.query#}}
+
+
+            Assistant:'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: llm
+      position:
+        x: 1792
+        y: 282
+      positionAbsolute:
+        x: 1792
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1723547679190.text#}}'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 107
+      id: answer
+      position:
+        x: 2480
+        y: 282
+      positionAbsolute:
+        x: 2480
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: duckduckgo
+        provider_name: duckduckgo
+        provider_type: builtin
+        selected: false
+        title: DuckDuckGo Search
+        tool_configurations:
+          max_results: 5
+          require_summary: 0
+          result_type: text
+        tool_label: DuckDuckGo Search
+        tool_name: ddgo_search
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 142
+      id: '1723526606263'
+      position:
+        x: 526
+        y: 282
+      positionAbsolute:
+        x: 526
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: "{% for item in search_results[:1] %}\n### Chunk {{ loop.index }}.\
+          \ \n#### {{ item.get('title') }}\n\n##### Content\n{{ item.get('content')\
+          \ | replace('\\n', '\\n\\n') }}\n\n---\n{% endfor %}"
+        title: Template
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1723539105594'
+          - json
+          variable: search_results
+      height: 54
+      id: '1723533864970'
+      position:
+        x: 1485
+        y: 282
+      positionAbsolute:
+        x: 1485
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: SagemakerRerank
+        tool_configurations:
+          aws_region: us-east-1
+          sagemaker_endpoint: bge-reranker-v2-m3-2024-08-13-08-53-10-242-endpoint
+          topk: 5
+        tool_label: SagemakerRerank
+        tool_name: sagemaker_text_rerank
+        tool_parameters:
+          candidate_texts:
+            type: mixed
+            value: '{{#1723539935951.result#}}'
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 142
+      id: '1723539105594'
+      position:
+        x: 1185
+        y: 282
+      positionAbsolute:
+        x: 1185
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(search_results: list[object]) -> dict:\n  \
+          \  result_list = []\n    for result in search_results:\n        item = {\n\
+          \            \"title\" : result['title'],\n            \"content\" : result['body']\n\
+          \        }\n        result_list.append(item)\n\n    result_list_str = json.dumps(result_list,\
+          \ ensure_ascii=False)\n    \n    return {\n        \"result\": result_list_str\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1723526606263'
+          - json
+          variable: search_results
+      height: 54
+      id: '1723539935951'
+      position:
+        x: 885
+        y: 282
+      positionAbsolute:
+        x: 885
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: SagemakerTTS
+        tool_configurations:
+          aws_region: us-east-1
+          sagemaker_endpoint: 687752207838-cosyvoice-300m-endpoint
+          tts_infer_type: CloneVoice_CrossLingual
+          voice: null
+        tool_label: SagemakerTTS
+        tool_name: sagemaker_tts
+        tool_parameters:
+          mock_voice_audio:
+            type: mixed
+            value: https://github.com/aws-samples/dify-aws-tool/raw/yuanbo/notebook/cosyvoice/happy.wav
+          mock_voice_text:
+            type: mixed
+            value: ''
+          tts_text:
+            type: mixed
+            value: '{{#llm.text#}}'
+          voice_instruct_prompt:
+            type: mixed
+            value: ''
+        type: tool
+      height: 168
+      id: '1723547679190'
+      position:
+        x: 2180
+        y: 282
+      positionAbsolute:
+        x: 2180
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -339.43946063153385
+      y: 22.794028039246825
+      zoom: 0.7830282323718425

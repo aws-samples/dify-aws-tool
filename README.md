@@ -28,12 +28,14 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 #### Workflow 
 
-| DSL Name                    | Description                                           | Link                                                  | Dependency                      | Owner                           |
-| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------- |
-| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | [ybalbert](ybalbert@amazon.com) |
-| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)        | Tool(LambdaYamlToJson)          | [binc](binc@amazon.com)         |
-| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](basic_rag_sample.yml)                           | Tool(Rerank)                    | [ybalbert](ybalbert@amazon.com) |
-| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](andrew_translation_agent.yml)                   |                                 | [chuanxie](chuanxie@amazon.com) |
+| DSL Name                    | Description                                           | Link                                                  | Dependency                      | Owner                                            |
+| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------------------------ |
+| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | [ybalbert](ybalbert@amazon.com)                  |
+| Code_translate              | Code Transform between different Program Language     | Coming                                                |                                 | [binc](binc@amazon.com)                          |
+| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)                    | [ybalbert](ybalbert@amazon.com)                  |
+| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](./workflow/andrew_translation_agent.yml)        |                                 | [chuanxie](chuanxie@amazon.com)                  |
+| rag_based_bot_with_tts      | Rag based bot which can answer with voice             | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)                       | [ybalbert](ybalbert@amazon.com)                  |
+| Marketing-copywriter        | marketing copywriter                                  | [DSL](./workflow/marketing-copywriting.yml)           |                                 | [Lyson Ober](https://www.youtube.com/@lysonober) |
 
 #### Builtin_Tools
 
@@ -44,7 +46,6 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | [amyli](amyli@amazon.com)       |
 | Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
 | Image Translation Tool    | PAAS      | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
-| LambdaYamlToJson          | PAAS      | Convert YAML into JSON                                       | [README](./notebook/deploy_lambda_yaml_to_json.md)           | [binc](binc@amazon.com)      |
 
 #### Model_Provider
 
