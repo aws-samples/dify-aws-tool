@@ -47,14 +47,10 @@ model_credential_schema:
         zh_Hans: 选择对话类型
         en_US: Select completion mode
       options:
-        - value: completion
-          label:
-            en_US: Completion
-            zh_Hans: 补全
         - value: chat
           label:
             en_US: Chat
-            zh_Hans: 对话
+            zh_Hans: Chat
     - variable: sagemaker_endpoint
       label:
         en_US: sagemaker endpoint
