@@ -46,7 +46,7 @@ from core.model_runtime.model_providers.__base.large_language_model import Large
 
 logger = logging.getLogger(__name__)
 
-def inference(predictor, messages:List[Dict[str,Any]], params:Dict[str,Any], model_name='', stream=False):
+def inference(predictor, messages:List[Dict[str,Any]], params:Dict[str,Any], stop:list, stream=False):
     """
     根据给定的模型名称和端点名称，对消息进行推理。
     
@@ -67,14 +67,14 @@ def inference(predictor, messages:List[Dict[str,Any]], params:Dict[str,Any], mod
     """
     payload = {
         "model" : params.get('model_name'),
-        "stop" : params.get('stop'),
+        "stop" : stop,
         "messages": messages,
         "stream" : stream,
         "max_tokens" : params.get('max_new_tokens', params.get('max_tokens', 2048)),
         "temperature" : params.get('temperature', 0.1),
         "top_p" : params.get('top_p', 0.9),
-
     }
+
     if not stream:
         response = predictor.predict(payload)
         return response
@@ -234,8 +234,9 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
                 serializer=serializers.JSONSerializer(),
             )
 
+
         messages:List[Dict[str,Any]] = [ {"role": p.role.value, "content": p.content} for p in prompt_messages ]
-        response = inference(predictor=self.predictor, messages=messages, params=model_parameters, stream=stream)
+        response = inference(predictor=self.predictor, messages=messages, params=model_parameters, stop=stop, stream=stream)
 
         if stream:
             if tools and len(tools) > 0:
