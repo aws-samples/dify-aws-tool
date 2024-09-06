@@ -51,10 +51,13 @@
 
 | 模型名称         | 模型类型            | 部署文档                                                     | 负责人                          |
 | ---------------- | ------------------- | ------------------------------------------------------------ | ------------------------------- |
+| 任何开源模型     | SageMaker\LLM       | [Model_hub](https://github.com/aws-samples/llm_model_hub)    | [ybalbert](ybalbert@amazon.com) |
 | Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 | Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 | CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
 | SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+
+**[注意]：Dify的SageMaker LLM Provider 可以支持大多数开源模型。我们建议您使用  [Model_hub](https://github.com/aws-samples/llm_model_hub). 来部署这些模型。它非常简单易用，支持无代码方式进行模型微调和部署。**
 
 
 

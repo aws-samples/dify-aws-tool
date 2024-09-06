@@ -51,10 +51,13 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 | Model Name       | model_type          | Deploy_doc                                                   | Owner                           |
 | ---------------- | ------------------- | ------------------------------------------------------------ | ------------------------------- |
+| Any Model        | SageMaker\LLM       | [Model_hub](https://github.com/aws-samples/llm_model_hub)    | [ybalbert](ybalbert@amazon.com) |
 | Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 | Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 | CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
 | SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+
+**[Attention]： The Dify provider of SageMaker\LLM can support most open-source models. We recommend you to reploy these models using [Model_hub](https://github.com/aws-samples/llm_model_hub). It's very easy and convenient which supports model fine-tuning and deployment with no-code approach**
 
 
 
