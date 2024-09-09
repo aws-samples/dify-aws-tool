@@ -1,14 +1,13 @@
-import re
 import json
 import logging
+import re
 from collections.abc import Generator, Iterator
-from typing import Any, Optional, Union, Dict, List, cast
-from sagemaker import Predictor
-from sagemaker import serializers, deserializers
-from sagemaker.session import Session
-# from openai.types.chat import ChatCompletion, ChatCompletionChunk
+from typing import Any, Optional, Union, cast
 
+# from openai.types.chat import ChatCompletion, ChatCompletionChunk
 import boto3
+from sagemaker import Predictor, serializers
+from sagemaker.session import Session
 
 from core.model_runtime.entities.llm_entities import LLMMode, LLMResult, LLMResultChunk, LLMResultChunkDelta
 from core.model_runtime.entities.message_entities import (
@@ -22,17 +21,8 @@ from core.model_runtime.entities.message_entities import (
     ToolPromptMessage,
     UserPromptMessage,
 )
-from core.model_runtime.errors.invoke import (
-    InvokeAuthorizationError,
-    InvokeBadRequestError,
-    InvokeConnectionError,
-    InvokeError,
-    InvokeRateLimitError,
-    InvokeServerUnavailableError,
-)
 from core.model_runtime.entities.model_entities import (
     AIModelEntity,
-    DefaultParameterName,
     FetchFrom,
     I18nObject,
     ModelFeature,
@@ -41,40 +31,45 @@ from core.model_runtime.entities.model_entities import (
     ParameterRule,
     ParameterType,
 )
+from core.model_runtime.errors.invoke import (
+    InvokeAuthorizationError,
+    InvokeBadRequestError,
+    InvokeConnectionError,
+    InvokeError,
+    InvokeRateLimitError,
+    InvokeServerUnavailableError,
+)
 from core.model_runtime.errors.validate import CredentialsValidateFailedError
 from core.model_runtime.model_providers.__base.large_language_model import LargeLanguageModel
 
 logger = logging.getLogger(__name__)
 
-def inference(predictor, messages:List[Dict[str,Any]], params:Dict[str,Any], model_name='', stream=False):
-    """
-    根据给定的模型名称和端点名称，对消息进行推理。
-    
-    参数:
-    predictor (str): 模型推理器。
-    tokenizer (str): 模型的tokenizer。
-    messages (List[Dict[str,Any]]): 需要进行推理的消息列表。
+def inference(predictor, messages:list[dict[str,Any]], params:dict[str,Any], stop:list, stream=False):
+    """    
+    params:
+    predictor : Sagemaker Predictor 
+    messages (List[Dict[str,Any]]): message list。
                 messages = [
-                {"role": "system", "content":"请始终用中文回答"},
-                {"role": "user", "content": "你是谁？你是干嘛的"},
+                {"role": "system", "content":"please answer in Chinese"},
+                {"role": "user", "content": "who are you? what are you doing?"},
             ]
-    params (Dict[str,Any]): 传递给预测器的额外参数。
-    stream (bool): 指定是否使用流式推理，默认为False。
+    params (Dict[str,Any]): model parameters for LLM。
+    stream (bool): False by default。
     
-    返回:
-    如果stream为False，返回推理的结果列表。
-    如果stream为True，返回处理流式推理输出的函数。
+    response:
+    result of inference if stream is False
+    Iterator of Chunks if stream is True
     """
     payload = {
         "model" : params.get('model_name'),
-        "stop" : params.get('stop'),
+        "stop" : stop,
         "messages": messages,
         "stream" : stream,
         "max_tokens" : params.get('max_new_tokens', params.get('max_tokens', 2048)),
         "temperature" : params.get('temperature', 0.1),
         "top_p" : params.get('top_p', 0.9),
-
     }
+
     if not stream:
         response = predictor.predict(payload)
         return response
@@ -102,16 +97,6 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         if len(resp_str) == 0:
             raise InvokeServerUnavailableError("Empty response")
 
-        # assistant_message = resp.choices[0].message
-
-        # convert tool call to assistant message tool call
-        # tool_calls = assistant_message.tool_calls
-        # assistant_prompt_message_tool_calls = self._extract_response_tool_calls(tool_calls if tool_calls else [])
-        # function_call = assistant_message.function_call
-        # if function_call:
-        #     assistant_prompt_message_tool_calls += [self._extract_response_function_call(function_call)]
-
-        # transform assistant message to prompt message
         assistant_prompt_message = AssistantPromptMessage(
             content=resp_str,
             tool_calls=[]
@@ -234,8 +219,9 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
                 serializer=serializers.JSONSerializer(),
             )
 
-        messages:List[Dict[str,Any]] = [ {"role": p.role.value, "content": p.content} for p in prompt_messages ]
-        response = inference(predictor=self.predictor, messages=messages, params=model_parameters, stream=stream)
+
+        messages:list[dict[str,Any]] = [ {"role": p.role.value, "content": p.content} for p in prompt_messages ]
+        response = inference(predictor=self.predictor, messages=messages, params=model_parameters, stop=stop, stream=stream)
 
         if stream:
             if tools and len(tools) > 0:
@@ -451,7 +437,7 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
             )
         ]
 
-        completion_type = LLMMode.value_of(credentials["mode"])
+        completion_type = LLMMode.value_of(credentials["mode"]).value
 
         features = []
 
