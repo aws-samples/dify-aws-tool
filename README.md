@@ -128,7 +128,9 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 ## How to deploy SageMaker Endpoint
 
-If you want to add your Embedding/Rerank model to Dify Sagemaker Model Provider, you should deploy them by yourself in AWS/SageMaker at first.  Please see the [Guide](./notebook/how_to_deploy.md).
+If you want to add your LLM/Embedding/Rerank/ASR/TTS model to Dify Sagemaker Model Provider, you should deploy them by yourself in AWS/SageMaker at first.  
+Please refer the corresponding [notebook](https://github.com/aws-samples/dify-aws-tool#model_provider) to deploy.
+
 
 
 

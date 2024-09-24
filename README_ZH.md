@@ -130,10 +130,11 @@
 
 ## 如何部署SageMaker推理端点
 
-如果您想将您的 Embedding/Rerank 模型添加到 Dify Sagemaker Model Provider,您应该首先在 Amazon SageMaker 中自行部署它们。详细参见[指引](./notebook/how_to_deploy.md).
-
-
+如果您想将您的 LLM/Embedding/Rerank/ASR/TTS 模型添加到Dify Sagemaker Model Provider, 您应该首先在 Amazon SageMaker 中自行部署它们。
+请参见对应的[notebook](https://github.com/aws-samples/dify-aws-tool#model_provider)去部署。
 
 ## 目标受众
 - Dify / AWS 用户
 - 生成式 AI 开发者
+
+
