@@ -14,7 +14,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 ## Prerequisites
 
-- Dify Environment (The community edition can be deployed on AWS with one click using [Cloudformation](./dify.yaml))
+- Dify Environment (It can be deployed on AWS with one click using Cloudformation Template - [dify.yaml](./dify.yaml))
 
 - AWS Account and AWS Experience
 
