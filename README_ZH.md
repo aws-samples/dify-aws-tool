@@ -14,7 +14,7 @@
 
 ## 前置条件
 
-- Dify 环境
+- Dify 环境 (AWS上可以通过[Cloudformation](./dify.yaml)一键部署社区版)
 
 - AWS 账户和 AWS 使用经验
 

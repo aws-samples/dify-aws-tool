@@ -1,0 +1,241 @@
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: VPC settings
+        Parameters:
+          - IPv4CIDR
+    ParameterLabels:
+      IPv4CIDR:
+        default: The Prefix of IPv4 CIDR
+Parameters:
+  IPv4CIDR:
+    Type: String
+    Default: "10.1"
+    AllowedPattern: ^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$
+    Description: The subnet CIDR prefix, such as 10.1, defaults to a subnet mask of /16.
+Resources:
+  VPC:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      Parameters:
+        IPv4CIDR:
+          Ref: IPv4CIDR
+      TemplateURL: https://aws-gcr-solutions.s3.amazonaws.com/WCH-TEST/trackingemailengagement/template/ThreeLayerSubnets.template.json
+    Metadata:
+      aws:cdk:path: DifyOnAws/VPC
+  PublicSecurityGroupfrom000008081FBE316:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: 0.0.0.0/0
+      Description: from 0.0.0.0/0:80
+      FromPort: 80
+      GroupId:
+        Fn::GetAtt:
+          - VPC
+          - Outputs.PublicSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 80
+    Metadata:
+      aws:cdk:path: DifyOnAws/PublicSecurityGroup/from 0.0.0.0_0:80
+  SageMakerNotebookIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 
+                - sagemaker.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+      Policies:
+        - PolicyName: S3FullAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: 's3:*'
+                Resource: '*'
+  IamInstanceProfileRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/AmazonSSMManagedInstanceCore
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/AmazonSageMakerFullAccess
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/ComprehendFullAccess
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/AmazonBedrockFullAccess
+    Metadata:
+      aws:cdk:path: DifyOnAws/IamInstanceProfileRole/Resource
+  IamInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - Ref: IamInstanceProfileRole
+    Metadata:
+      aws:cdk:path: DifyOnAws/IamInstanceProfile
+  InstallationInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      IamInstanceProfile:
+        Fn::Select:
+          - 1
+          - Fn::Split:
+              - /
+              - Fn::GetAtt:
+                  - IamInstanceProfile
+                  - Arn
+      ImageId: "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-arm64}}"
+      InstanceType: c7g.xlarge
+      SecurityGroupIds:
+        - Fn::GetAtt:
+            - VPC
+            - Outputs.PublicSecurityGroupId
+      SubnetId:
+        Fn::Select:
+          - 0
+          - Fn::Split:
+              - ","
+              - Fn::GetAtt:
+                  - VPC
+                  - Outputs.PublicSubnetIds
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 50
+            VolumeType: gp3
+      UserData:
+        Fn::Base64: |-
+          #!/bin/bash
+
+           yum install git docker -y && systemctl start docker && systemctl enable docker && curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && git clone -b 0.8.3 --depth 1 https://github.com/langgenius/dify.git && cd dify/docker && docker-compose up -d
+      Tags:
+        - Key: Name
+          Value: dify-server
+    DependsOn:
+      - IamInstanceProfile
+    Metadata:
+      aws:cdk:path: DifyOnAws/InstallationInstance
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/02Puw7CMAxFv4U9NSUs7B1QJ6ryASikLnIfceUkIFT13+lDlZiufM+RZWs4nS+QHszHJ7Zqk46eMN6Dsa3KalcYMT0GFDXzx2g7jlXN0ptA7GAWNhOthnGZ0Eah8L0KxyF3L0HvlzW588E4i5Mi08NYcodLveeOC+GaOpwmVaLnKHaltxiGGFb/r83YVbRcMSnHFULjj2+tIZ1faTxRItEF6hHKLX9WWVqb5wAAAA==
+    Metadata:
+      aws:cdk:path: DifyOnAws/CDKMetadata/Default
+    Condition: CDKMetadataAvailable
+Outputs:
+  Host:
+    Description: Host
+    Value:
+      Fn::Join:
+        - ""
+        - - http://
+          - Fn::GetAtt:
+              - InstallationInstance
+              - PublicIp
+          - :80
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - af-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - il-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
