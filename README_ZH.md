@@ -28,14 +28,15 @@
 
 #### 工作流 
 
-| 名称                        | 描述                                        | Link                                                  | 依赖                            | 负责人                                           |
-| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------------------------ |
-| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | [ybalbert](ybalbert@amazon.com)                  |
-| Code_translate              | 不同代码种类之间的翻译工作流                | [DSL](./workflow/claude3_code_translation.yml)     |                                 | [binc](binc@amazon.com)                          |
-| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)                    | [ybalbert](ybalbert@amazon.com)                  |
-| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](./workflow/andrew_translation_agent.yml)        |                                 | [ybalbert](ybalbert@amazon.com)                  |
-| rag_based_bot_with_tts      | 基于RAG能语音回答的Bot                      | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)                       | [ybalbert](ybalbert@amazon.com)                  |
-| Marketing-copywriter        | 营销文案一条龙                              | [DSL](./workflow/marketing-copywriting.yml)           |                                 | [Lyson Ober](https://www.youtube.com/@lysonober) |
+| 名称                        | 描述                                        | Link                                                  | 依赖           | 负责人                                           |
+| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | -------------- | ------------------------------------------------ |
+| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(专词映射) | [ybalbert](ybalbert@amazon.com)                  |
+| Code_translate              | 不同代码种类之间的翻译工作流                | [DSL](./workflow/claude3_code_translation.yml)        |                | [binc](binc@amazon.com)                          |
+| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)   | [ybalbert](ybalbert@amazon.com)                  |
+| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](./workflow/andrew_translation_agent.yml)        |                | [ybalbert](ybalbert@amazon.com)                  |
+| rag_based_bot_with_tts      | 基于RAG能语音回答的Bot                      | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)      | [ybalbert](ybalbert@amazon.com)                  |
+| Marketing-copywriter        | 营销文案一条龙                              | [DSL](./workflow/marketing-copywriting.yml)           |                | [Lyson Ober](https://www.youtube.com/@lysonober) |
+| Simple_Kimi                 | 简易自制Kimi                                | [DSL](./workflow/simple_kimi.yml)                     |                | [ybalbert](ybalbert@amazon.com)                  |
 
 #### 内置工具
 
@@ -136,5 +137,4 @@
 ## 目标受众
 - Dify / AWS 用户
 - 生成式 AI 开发者
-
 

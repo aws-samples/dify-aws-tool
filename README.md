@@ -28,14 +28,15 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 #### Workflow 
 
-| DSL Name                    | Description                                           | Link                                                  | Dependency                      | Owner                                            |
-| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------------------------ |
-| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_multilingual_mapping) | [ybalbert](ybalbert@amazon.com)                  |
-| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)   |                                 | [binc](binc@amazon.com)                          |
-| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)                    | [ybalbert](ybalbert@amazon.com)                  |
-| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](./workflow/andrew_translation_agent.yml)        |                                 | [chuanxie](chuanxie@amazon.com)                  |
-| rag_based_bot_with_tts      | Rag based bot which can answer with voice             | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)                       | [ybalbert](ybalbert@amazon.com)                  |
-| Marketing-copywriter        | marketing copywriter                                  | [DSL](./workflow/marketing-copywriting.yml)           |                                 | [Lyson Ober](https://www.youtube.com/@lysonober) |
+| DSL Name                    | Description                                           | Link                                                  | Dependency         | Owner                                            |
+| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------ | ------------------------------------------------ |
+| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_mapping) | [ybalbert](ybalbert@amazon.com)                  |
+| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)        |                    | [binc](binc@amazon.com)                          |
+| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)       | [ybalbert](ybalbert@amazon.com)                  |
+| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](./workflow/andrew_translation_agent.yml)        |                    | [chuanxie](chuanxie@amazon.com)                  |
+| rag_based_bot_with_tts      | Rag based bot which can answer with voice             | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)          | [ybalbert](ybalbert@amazon.com)                  |
+| Marketing-copywriter        | marketing copywriter                                  | [DSL](./workflow/marketing-copywriting.yml)           |                    | [Lyson Ober](https://www.youtube.com/@lysonober) |
+| Simple_Kimi                 | Customized KIMI app                                   | [DSL](./workflow/simple_kimi.yml)                     |                    | [ybalbert](ybalbert@amazon.com)                  |
 
 #### Builtin_Tools
 
