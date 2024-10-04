@@ -20,7 +20,7 @@ workflow:
         - remote_url
     opening_statement: ''
     retriever_resource:
-      enabled: true
+      enabled: false
     sensitive_word_avoidance:
       enabled: false
     speech_to_text:
@@ -393,9 +393,7 @@ workflow:
           variable_selector: []
         desc: ''
         memory:
-          query_prompt_template: '{{#1727357872178.output#}}
-
-            {{#sys.query#}}'
+          query_prompt_template: '{{#sys.query#}}'
           role_prefix:
             assistant: ''
             user: ''
@@ -412,7 +410,7 @@ workflow:
         - id: 44bec0ca-86b2-434d-bf4e-64f3ecbf27a3
           role: system
           text: '{{#1726108148263.role_def#}}'
-        selected: false
+        selected: true
         title: Claude3.5
         type: llm
         variables: []
@@ -428,7 +426,7 @@ workflow:
       positionAbsolute:
         x: 2491.468258905301
         y: 396.4566151400424
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -1234,7 +1232,7 @@ workflow:
       positionAbsolute:
         x: 1585.3147087675145
         y: 239.7277119275338
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -1320,6 +1318,6 @@ workflow:
       type: custom
       width: 244
     viewport:
-      x: 89.79853866526082
-      y: 204.35452087726316
-      zoom: 0.25
+      x: -808.1044943343895
+      y: -84.33611432705106
+      zoom: 0.8265231086465435
