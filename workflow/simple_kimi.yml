@@ -1,9 +1,9 @@
 app:
-  description: Kimi快速简易实现
+  description: simple-kimi
   icon: 🤖
   icon_background: '#FFEAD5'
   mode: advanced-chat
-  name: 简易Kimi
+  name: simple-kimi
   use_icon_as_answer_icon: false
 kind: app
 version: 0.1.2
@@ -12,12 +12,27 @@ workflow:
   environment_variables: []
   features:
     file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      - document
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: true
       image:
-        enabled: true
+        enabled: false
         number_limits: 3
         transfer_methods:
         - local_file
         - remote_url
+      number_limits: 1
     opening_statement: ''
     retriever_resource:
       enabled: false
@@ -54,17 +69,6 @@ workflow:
       source: '1726108148263'
       sourceHandle: source
       target: '1727357893396'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: if-else
-        targetType: tool
-      id: 1727357893396-true-1727357843831-target
-      source: '1727357893396'
-      sourceHandle: 'true'
-      target: '1727357843831'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -175,17 +179,6 @@ workflow:
       source: '1727438463965'
       sourceHandle: source
       target: '1727438742998'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: if-else
-        targetType: llm
-      id: 1727357893396-false-llm-target
-      source: '1727357893396'
-      sourceHandle: 'false'
-      target: llm
       targetHandle: target
       type: custom
       zIndex: 0
@@ -354,6 +347,150 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: template-transform
+      id: 1729777092216-source-1729777162616-target
+      source: '1729777092216'
+      sourceHandle: source
+      target: '1729777162616'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1729777162616-source-llm-target
+      selected: false
+      source: '1729777162616'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: document-extractor
+      id: 1729777763543-source-1729777092216-target
+      source: '1729777763543'
+      sourceHandle: source
+      target: '1729777092216'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1727357893396-true-1729777900959-target
+      source: '1727357893396'
+      sourceHandle: 'true'
+      target: '1729777900959'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: tool
+      id: 1729777900959-source-1727357843831-target
+      source: '1729777900959'
+      sourceHandle: source
+      target: '1727357843831'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1729778442989-source-1729778610477-target
+      source: '1729778442989'
+      sourceHandle: source
+      target: '1729778610477'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: llm
+      id: 1729778350970-source-1729778654959-target
+      source: '1729778350970'
+      sourceHandle: source
+      target: '1729778654959'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1729778654959-source-1729778683728-target
+      source: '1729778654959'
+      sourceHandle: source
+      target: '1729778683728'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1727357893396-a924b44a-824a-4912-924e-268e87240447-1729781189640-target
+      source: '1727357893396'
+      sourceHandle: a924b44a-824a-4912-924e-268e87240447
+      target: '1729781189640'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: list-operator
+      id: 1729781189640-true-1729778350970-target
+      source: '1729781189640'
+      sourceHandle: 'true'
+      target: '1729778350970'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: list-operator
+      id: 1729781189640-ddf6ba30-c72f-4f06-b783-af77419acf30-1729777695485-target
+      source: '1729781189640'
+      sourceHandle: ddf6ba30-c72f-4f06-b783-af77419acf30
+      target: '1729777695485'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: list-operator
+      id: 1729781189640-5ff411e5-2162-41de-80de-b51902a2380f-1729777763543-target
+      source: '1729781189640'
+      sourceHandle: 5ff411e5-2162-41de-80de-b51902a2380f
+      target: '1729777763543'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: llm
+      id: 1729777695485-source-1729778442989-target
+      source: '1729777695485'
+      sourceHandle: source
+      target: '1729778442989'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         desc: ''
@@ -365,6 +502,7 @@ workflow:
           max_length: 48
           options:
           - 开启
+          - 关闭
           required: false
           type: select
           variable: web_search
@@ -377,11 +515,11 @@ workflow:
       height: 116
       id: '1726108148263'
       position:
-        x: 37.447946515793205
-        y: 282.4357228928009
+        x: 30
+        y: 287
       positionAbsolute:
-        x: 37.447946515793205
-        y: 282.4357228928009
+        x: 30
+        y: 287
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -393,12 +531,17 @@ workflow:
           variable_selector: []
         desc: ''
         memory:
-          query_prompt_template: '{{#sys.query#}}'
+          query_prompt_template: '{{#1729777092216.text#}}
+
+
+            {{#sys.query#}}
+
+            '
           role_prefix:
             assistant: ''
             user: ''
           window:
-            enabled: false
+            enabled: true
             size: 10
         model:
           completion_params:
@@ -409,23 +552,26 @@ workflow:
         prompt_template:
         - id: 44bec0ca-86b2-434d-bf4e-64f3ecbf27a3
           role: system
-          text: '{{#1726108148263.role_def#}}'
-        selected: true
-        title: Claude3.5
+          text: '{{#1726108148263.role_def#}}, 结合上面文档内容回答问题'
+        selected: false
+        title: LLM 10
         type: llm
         variables: []
         vision:
           configs:
             detail: high
-          enabled: true
+            variable_selector:
+            - '1729777695485'
+            - result
+          enabled: false
       height: 98
       id: llm
       position:
-        x: 2491.468258905301
-        y: 396.4566151400424
+        x: 1845.5706294573988
+        y: 1217.5
       positionAbsolute:
-        x: 2491.468258905301
-        y: 396.4566151400424
+        x: 1845.5706294573988
+        y: 1217.5
       selected: true
       sourcePosition: right
       targetPosition: left
@@ -438,14 +584,14 @@ workflow:
         title: 直接回复
         type: answer
         variables: []
-      height: 107
+      height: 103
       id: answer
       position:
-        x: 2826.8058453389567
-        y: 396.4566151400424
+        x: 2141.1412589147976
+        y: 1217.5
       positionAbsolute:
-        x: 2826.8058453389567
-        y: 396.4566151400424
+        x: 2141.1412589147976
+        y: 1217.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -471,11 +617,11 @@ workflow:
       height: 116
       id: '1727357843831'
       position:
-        x: 695.235752944209
-        y: 42.55802293634201
+        x: 942
+        y: 287
       positionAbsolute:
-        x: 695.235752944209
-        y: 42.55802293634201
+        x: 942
+        y: 287
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -494,18 +640,29 @@ workflow:
             - web_search
           id: 'true'
           logical_operator: and
+        - case_id: a924b44a-824a-4912-924e-268e87240447
+          conditions:
+          - comparison_operator: contains
+            id: 0199f62e-073d-4bc0-a905-398775ffde75
+            value: 关闭
+            varType: string
+            variable_selector:
+            - '1726108148263'
+            - web_search
+          id: a924b44a-824a-4912-924e-268e87240447
+          logical_operator: and
         desc: ''
         selected: false
         title: 条件分支
         type: if-else
-      height: 126
+      height: 174
       id: '1727357893396'
       position:
-        x: 407.75370395021037
-        y: 282.4357228928009
+        x: 334
+        y: 287
       positionAbsolute:
-        x: 407.75370395021037
-        y: 282.4357228928009
+        x: 334
+        y: 287
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -535,11 +692,11 @@ workflow:
       height: 54
       id: '1727437551868'
       position:
-        x: 977.3147087675145
-        y: -117.49689586046397
+        x: 1246
+        y: 287
       positionAbsolute:
-        x: 977.3147087675145
-        y: -117.49689586046397
+        x: 1246
+        y: 287
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -566,11 +723,11 @@ workflow:
       height: 116
       id: '1727437724068'
       position:
-        x: 1281.3147087675145
-        y: -117.49689586046397
+        x: 1550
+        y: 287
       positionAbsolute:
-        x: 1281.3147087675145
-        y: -117.49689586046397
+        x: 1550
+        y: 287
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -597,11 +754,11 @@ workflow:
       height: 54
       id: '1727437739002'
       position:
-        x: 1585.3147087675145
-        y: -117.49689586046397
+        x: 1854
+        y: 287
       positionAbsolute:
-        x: 1585.3147087675145
-        y: -117.49689586046397
+        x: 1854
+        y: 287
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -639,15 +796,15 @@ workflow:
         vision:
           configs:
             detail: high
-          enabled: true
+          enabled: false
       height: 98
       id: '1727437833517'
       position:
-        x: 2193.3147087675143
-        y: -117.49689586046397
+        x: 2462
+        y: 287
       positionAbsolute:
-        x: 2193.3147087675143
-        y: -117.49689586046397
+        x: 2462
+        y: 287
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -678,11 +835,11 @@ workflow:
       height: 54
       id: '1727438089651'
       position:
-        x: 1889.3147087675145
-        y: -117.49689586046397
+        x: 2158
+        y: 287
       positionAbsolute:
-        x: 1889.3147087675145
-        y: -117.49689586046397
+        x: 2158
+        y: 287
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -712,11 +869,11 @@ workflow:
       height: 54
       id: '1727438265117'
       position:
-        x: 977.3147087675145
-        y: -0.9507322194134389
+        x: 1246
+        y: 443
       positionAbsolute:
-        x: 977.3147087675145
-        y: -0.9507322194134389
+        x: 1246
+        y: 443
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -743,11 +900,11 @@ workflow:
       height: 116
       id: '1727438331868'
       position:
-        x: 1281.3147087675145
-        y: -0.9507322194134389
+        x: 1550
+        y: 443
       positionAbsolute:
-        x: 1281.3147087675145
-        y: -0.9507322194134389
+        x: 1550
+        y: 443
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -774,11 +931,11 @@ workflow:
       height: 54
       id: '1727438349664'
       position:
-        x: 1585.3147087675145
-        y: -0.9507322194134389
+        x: 1854
+        y: 443
       positionAbsolute:
-        x: 1585.3147087675145
-        y: -0.9507322194134389
+        x: 1854
+        y: 443
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -809,11 +966,11 @@ workflow:
       height: 54
       id: '1727438463965'
       position:
-        x: 1889.3147087675145
-        y: -0.9507322194134389
+        x: 2158
+        y: 443
       positionAbsolute:
-        x: 1889.3147087675145
-        y: -0.9507322194134389
+        x: 2158
+        y: 443
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -850,15 +1007,15 @@ workflow:
         vision:
           configs:
             detail: high
-          enabled: true
+          enabled: false
       height: 98
       id: '1727438742998'
       position:
-        x: 2193.3147087675143
-        y: -0.9507322194134389
+        x: 2462
+        y: 443
       positionAbsolute:
-        x: 2193.3147087675143
-        y: -0.9507322194134389
+        x: 2462
+        y: 443
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -931,15 +1088,15 @@ workflow:
         vision:
           configs:
             detail: high
-          enabled: true
+          enabled: false
       height: 98
       id: '1727438962981'
       position:
-        x: 2491.468258905301
-        y: 55.081916490947464
+        x: 2766
+        y: 443
       positionAbsolute:
-        x: 2491.468258905301
-        y: 55.081916490947464
+        x: 2766
+        y: 443
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -952,14 +1109,14 @@ workflow:
         title: 直接回复 2
         type: answer
         variables: []
-      height: 107
+      height: 103
       id: '1727439130548'
       position:
-        x: 2826.8058453389567
-        y: 55.081916490947464
+        x: 3070
+        y: 443
       positionAbsolute:
-        x: 2826.8058453389567
-        y: 55.081916490947464
+        x: 3070
+        y: 443
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -989,11 +1146,11 @@ workflow:
       height: 54
       id: '17274404793180'
       position:
-        x: 977.3147087675145
-        y: 126.44199132886882
+        x: 1246
+        y: 599
       positionAbsolute:
-        x: 977.3147087675145
-        y: 126.44199132886882
+        x: 1246
+        y: 599
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1020,11 +1177,11 @@ workflow:
       height: 116
       id: '17274405419030'
       position:
-        x: 1281.3147087675145
-        y: 126.44199132886882
+        x: 1550
+        y: 599
       positionAbsolute:
-        x: 1281.3147087675145
-        y: 126.44199132886882
+        x: 1550
+        y: 599
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1051,11 +1208,11 @@ workflow:
       height: 54
       id: '17274405777680'
       position:
-        x: 1585.3147087675145
-        y: 126.44199132886882
+        x: 1854
+        y: 599
       positionAbsolute:
-        x: 1585.3147087675145
-        y: 126.44199132886882
+        x: 1854
+        y: 599
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1086,11 +1243,11 @@ workflow:
       height: 54
       id: '17274406200850'
       position:
-        x: 1889.3147087675145
-        y: 126.44199132886882
+        x: 2158
+        y: 599
       positionAbsolute:
-        x: 1889.3147087675145
-        y: 126.44199132886882
+        x: 2158
+        y: 599
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1127,15 +1284,15 @@ workflow:
         vision:
           configs:
             detail: high
-          enabled: true
+          enabled: false
       height: 98
       id: '17274406581560'
       position:
-        x: 2193.3147087675143
-        y: 126.44199132886882
+        x: 2462
+        y: 599
       positionAbsolute:
-        x: 2193.3147087675143
-        y: 126.44199132886882
+        x: 2462
+        y: 599
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1165,11 +1322,11 @@ workflow:
       height: 54
       id: '17274407417220'
       position:
-        x: 977.3147087675145
-        y: 239.7277119275338
+        x: 1246
+        y: 755
       positionAbsolute:
-        x: 977.3147087675145
-        y: 239.7277119275338
+        x: 1246
+        y: 755
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1196,11 +1353,11 @@ workflow:
       height: 116
       id: '17274407666060'
       position:
-        x: 1281.3147087675145
-        y: 239.7277119275338
+        x: 1550
+        y: 755
       positionAbsolute:
-        x: 1281.3147087675145
-        y: 239.7277119275338
+        x: 1550
+        y: 755
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1227,11 +1384,11 @@ workflow:
       height: 54
       id: '17274408191900'
       position:
-        x: 1585.3147087675145
-        y: 239.7277119275338
+        x: 1854
+        y: 755
       positionAbsolute:
-        x: 1585.3147087675145
-        y: 239.7277119275338
+        x: 1854
+        y: 755
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1262,11 +1419,11 @@ workflow:
       height: 54
       id: '17274408457890'
       position:
-        x: 1889.3147087675145
-        y: 239.7277119275338
+        x: 2158
+        y: 755
       positionAbsolute:
-        x: 1889.3147087675145
-        y: 239.7277119275338
+        x: 2158
+        y: 755
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1303,21 +1460,403 @@ workflow:
         vision:
           configs:
             detail: high
-          enabled: true
+          enabled: false
       height: 98
       id: '17274408929240'
       position:
-        x: 2193.3147087675143
-        y: 239.7277119275338
+        x: 2462
+        y: 755
       positionAbsolute:
-        x: 2193.3147087675143
-        y: 239.7277119275338
+        x: 2462
+        y: 755
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - '1729777763543'
+        - first_record
+      height: 94
+      id: '1729777092216'
+      position:
+        x: 1235.4632868217484
+        y: 1217.5
+      positionAbsolute:
+        x: 1235.4632868217484
+        y: 1217.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{% for item in my_list %}
+
+          <docs>
+
+          <doc id="{{ loop.index }}">
+
+          {{ item }}
+
+          </doc>
+
+          </docs>
+
+          {% endfor %}'
+        title: template
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1729777092216'
+          - text
+          variable: my_list
+      height: 54
+      id: '1729777162616'
+      position:
+        x: 1543.6779720930494
+        y: 1217.5
+      positionAbsolute:
+        x: 1543.6779720930494
+        y: 1217.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        filter_by:
+          conditions:
+          - comparison_operator: in
+            key: type
+            value:
+            - image
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: Image
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 94
+      id: '1729777695485'
+      position:
+        x: 942
+        y: 1067.5
+      positionAbsolute:
+        x: 942
+        y: 1067.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        filter_by:
+          conditions:
+          - comparison_operator: in
+            key: type
+            value:
+            - document
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: true
+          size: 2
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: Doc
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 94
+      id: '1729777763543'
+      position:
+        x: 942
+        y: 1217.5
+      positionAbsolute:
+        x: 942
+        y: 1217.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 开始搜索...
+        desc: ''
+        selected: false
+        title: intermediate_reply
+        type: answer
+        variables: []
+      height: 100
+      id: '1729777900959'
+      position:
+        x: 638
+        y: 287
+      positionAbsolute:
+        x: 638
+        y: 287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        filter_by:
+          conditions:
+          - comparison_operator: <
+            key: size
+            value: '1'
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: No-File
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 94
+      id: '1729778350970'
+      position:
+        x: 942
+        y: 915.5
+      positionAbsolute:
+        x: 942
+        y: 915.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: ''
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20241022-v2:0
+          provider: bedrock
+        prompt_template:
+        - id: 716255c3-9cca-4fd7-943d-bcb8946c3aca
+          role: system
+          text: '{{#1726108148263.role_def#}}'
+        selected: false
+        title: LLM 9
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1729777695485'
+            - result
+          enabled: true
+      height: 98
+      id: '1729778442989'
+      position:
+        x: 1257.079373644609
+        y: 1067.5
+      positionAbsolute:
+        x: 1257.079373644609
+        y: 1067.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1729778442989.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 4
+        type: answer
+        variables: []
+      height: 103
+      id: '1729778610477'
+      position:
+        x: 1550
+        y: 1067.5
+      positionAbsolute:
+        x: 1550
+        y: 1067.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20241022-v2:0
+          provider: bedrock
+        prompt_template:
+        - id: deeb4fd7-f7da-48bd-a1f7-e0efc6a59888
+          role: system
+          text: '{{#1726108148263.role_def#}}'
+        - id: 8fe07dab-ee0b-417e-8dec-843748f94c5a
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: LLM 8
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1729778654959'
+      position:
+        x: 1246
+        y: 915.5
+      positionAbsolute:
+        x: 1246
+        y: 915.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1729778654959.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 5
+        type: answer
+        variables: []
+      height: 103
+      id: '1729778683728'
+      position:
+        x: 1550
+        y: 915.5
+      positionAbsolute:
+        x: 1550
+        y: 915.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: empty
+            id: 738a2218-18af-480a-8201-1f51d5a4bfdb
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 'true'
+          logical_operator: and
+        - case_id: ddf6ba30-c72f-4f06-b783-af77419acf30
+          conditions:
+          - comparison_operator: contains
+            id: ca5005a5-ed74-4867-9a1d-722b2ba71375
+            sub_variable_condition:
+              case_id: e1030080-d7c9-40d0-941e-0cd30bf90649
+              conditions:
+              - comparison_operator: in
+                id: f4fe6e5b-c2bf-42d3-8d75-5f83939486e0
+                key: type
+                value:
+                - image
+                varType: string
+              logical_operator: and
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          logical_operator: and
+        - case_id: 5ff411e5-2162-41de-80de-b51902a2380f
+          conditions:
+          - comparison_operator: contains
+            id: 0beb1d49-3f80-488f-a3b5-5b5e10a29e0b
+            sub_variable_condition:
+              case_id: d556ca9a-6562-4a88-aa37-fb646669d02d
+              conditions:
+              - comparison_operator: in
+                id: 6d195fa2-b71e-4bf8-8bc2-ef51fecf21d4
+                key: type
+                value:
+                - document
+                varType: string
+              logical_operator: and
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 3
+        type: if-else
+      height: 270
+      id: '1729781189640'
+      position:
+        x: 638
+        y: 884.3429042124184
+      positionAbsolute:
+        x: 638
+        y: 884.3429042124184
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     viewport:
-      x: -808.1044943343895
-      y: -84.33611432705106
-      zoom: 0.8265231086465435
+      x: -279.45131219085033
+      y: -270.58303849226945
+      zoom: 0.5051550272336403
