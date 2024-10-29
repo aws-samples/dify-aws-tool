@@ -1,15 +1,15 @@
 identity:
-  name: content_moderation
+  name: chinese_toxicity_detector
   author: AWS
   label:
-    en_US: Content Moderation
-    zh_Hans: 内容审核
+    en_US: Chinese Toxicity Detector
+    zh_Hans: 中文有害内容检测
   icon: icon.svg
 description:
   human:
-    en_US: A tool for content moderation
-    zh_Hans: 内容审核工具
-  llm: A tool that checks if content is safe for work
+    en_US: A tool to detect Chinese toxicity
+    zh_Hans: 检测中文有害内容的工具
+  llm: A tool that checks if Chinese content is safe for work
 parameters:
   - name: sagemaker_endpoint
     type: string
