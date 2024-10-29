@@ -40,13 +40,14 @@
 
 #### 内置工具
 
-| 工具名称                  | 工具类型 | 描述                                                         | 部署文档                                                     | 负责人                          |
-| ------------------------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------- |
-| Rerank                    | PAAS     | 文本相似性排序                                               | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
-| TTS                       | PAAS     | 语音合成                                                     | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
+| 工具名称                      | 工具类型 | 描述                                                                 | 部署文档                                                     | 负责人                             |
+|---------------------------| -------- |--------------------------------------------------------------------| ------------------------------------------------------------ |---------------------------------|
+| Rerank                    | PAAS     | 文本相似性排序                                                            | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| TTS                       | PAAS     | 语音合成                                                               | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
 | Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 |                                                              | [amyli](amyli@amazon.com)       |
-| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
-| Image Translation Tool    | PAAS     | 翻译图片上的文字                                             | Comming                                                      | [tanqy](tangqy@amazon.com)      |
+| Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                                          | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
+| Image Translation Tool    | PAAS     | 翻译图片上的文字                                                           | Comming                                                      | [tanqy](tangqy@amazon.com)      |
+| Chinese Toxicity Detector | PAAS     | 中文有害内容检测                                                           | Comming                                                      | [ychchen](ychchen@amazon.com)   |
 
 #### 模型提供商
 

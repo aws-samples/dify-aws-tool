@@ -40,13 +40,14 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 #### Builtin_Tools
 
-| Tool Name                 | Tool Type | Description                                                  | Deploy_doc                                                   | Owner                           |
-| ------------------------- | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------- |
-| Rerank                    | PAAS      | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
-| TTS                       | PAAS      | Speech  synthesis Tool                                       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
-| Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | [amyli](amyli@amazon.com)       |
-| Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
-| Image Translation Tool    | PAAS      | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
+| Tool Name                 | Tool Type  | Description                                                  | Deploy_doc                                                   | Owner                           |
+| ------------------------- |------------| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------- |
+| Rerank                    | PAAS       | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| TTS                       | PAAS       | Speech  synthesis Tool                                       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
+| Bedrock Guardrails        | SAAS       | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | [amyli](amyli@amazon.com)       |
+| Term_multilingual_mapping | PAAS       | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
+| Image Translation Tool    | PAAS       | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
+| Chinese Toxicity Detector | PAAS       | A tool to detect Chinese toxicity                             | Comming                                                      | [ychchen](ychchen@amazon.com)   |
 
 #### Model_Provider
 
