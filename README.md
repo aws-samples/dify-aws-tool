@@ -39,7 +39,6 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Simple_Kimi                 | Customized KIMI app                                   | [DSL](./workflow/simple_kimi.yml)                     |                    | [ybalbert](ybalbert@amazon.com)                  |
 
 #### Builtin_Tools
-
 | Tool Name                 | Tool Type  | Description                                                  | Deploy_doc                                                   | Owner                           |
 | ------------------------- |------------| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------- |
 | Rerank                    | PAAS       | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
@@ -48,6 +47,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Term_multilingual_mapping | PAAS       | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
 | Image Translation Tool    | PAAS       | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
 | Chinese Toxicity Detector | PAAS       | A tool to detect Chinese toxicity                             | Comming                                                      | [ychchen](ychchen@amazon.com)   |
+| Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        | Just drag and use it                                                      | [river xie](chuanxie@amazon.com)      |
 
 #### Model_Provider
 
