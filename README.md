@@ -47,6 +47,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Bedrock Guardrails        | SAAS      | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | [amyli](amyli@amazon.com)       |
 | Term_multilingual_mapping | PAAS      | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
 | Image Translation Tool    | PAAS      | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
+| Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        | Just drag and use it                                                      | [river xie](chuanxie@amazon.com)      |
 
 #### Model_Provider
 

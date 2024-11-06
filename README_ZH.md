@@ -47,6 +47,7 @@
 | Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 |                                                              | [amyli](amyli@amazon.com)       |
 | Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                            | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
 | Image Translation Tool    | PAAS     | 翻译图片上的文字                                             | Comming                                                      | [tanqy](tangqy@amazon.com)      |
+| Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                           | 直接使用即可                                                      | [river xie](chuanxie@amazon.com)      |
 
 #### 模型提供商
 
