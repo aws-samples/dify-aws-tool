@@ -48,6 +48,7 @@
 | Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                                          | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
 | Image Translation Tool    | PAAS     | 翻译图片上的文字                                                           | Comming                                                      | [tanqy](tangqy@amazon.com)      |
 | Chinese Toxicity Detector | PAAS     | 中文有害内容检测                                                           | Comming                                                      | [ychchen](ychchen@amazon.com)   |
+| Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                           | 直接使用即可                                                      | [river xie](chuanxie@amazon.com)      |
 
 #### 模型提供商
 
