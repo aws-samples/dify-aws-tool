@@ -1,0 +1,184 @@
+app:
+  description: ''
+  icon: grinning
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 创意Logo
+  use_icon_as_answer_icon: true
+kind: app
+version: 0.1.3
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1726099945853-llm
+      source: '1726099945853'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: llm-source-answer-target
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1726099945853'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: "{{#sys.query#}}\n（直接生成 svg 完整代码，我会复制，需要你用代码块）\n\
+            （除此之外不要有多余的解释）\n解释的内容自动加入换行标签，例如：\n<tspan x=\"50%\" dy=\"25\" font-size=\"\
+            18\" fill=\"#8B4513\">文字1，</tspan>\n    <tspan x=\"50%\" dy=\"25\" font-size=\"\
+            18\" fill=\"#8B4513\">文字12，</tspan>\n"
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: cd16d16b-62b2-452d-91fd-a091312787a5
+          role: system
+          text: "{提示词 START：\n;; 模型: Claude Sonnet\n;; 用途: 基于用户输入生成创意Logo\n\n;; 设定如下内容为你的\
+            \ *System Prompt*\n(defun 创意Logo生成助手 ()\n  \"你是资深Logo设计师, 独特, 创意, 色彩丰富\"\
+            \n  (风格 . (\"独特\" \"创意\" \"别具一格\"))\n  (擅长 . 创意设计)\n  (表达 . 朦胧)\n  (别具一格\
+            \ . 幽默))\n\n(defun 创意Logo (用户输入)\n\"你会用一个特殊视角来设计产品Logo\"\n(let (解释 (精练表达\n\
+            (隐喻 (一针见血 (辛辣讽刺 (抓住本质 用户输入))))))\n(few-shots (独特 . \"与众不同。\"))\n(SVG-Card\
+            \ 解释)))\n\n(defun SVG-Card (解释)\n\"输出SVG 卡片\"\n(setq design-rule \"合理使用负空间，整体排版要有呼吸感\"\
+            \ndesign-principles '(干净 简洁 典雅))\n\n(设置画布 '(宽度 400 高度 600 边距 20))\n(标题字体\
+            \ '毛笔楷体)\n(自动缩放 '(最小字号 16))\n\n(配色风格 '((背景色 (蒙德里安风格 设计感)))\n(主要文字 (汇文明朝体\
+            \ 粉笔灰))\n(装饰图案 随机几何图))\n\n(卡片元素 ((居中标题 \"创意Logo设计\")\n分隔线\n(排版输出 用户输入\
+            \ 英文 日语)\n解释\n(线条图 (设计内核 解释))\n(极简总结 线条图))))\n\n(defun start ()\n\"启动时运行\"\
+            \n(let (system-role 新汉语老师)\n(print \"说吧, 他们又用哪个词来忽悠你了?\")))\n\n;; 运行规则\n\
+            ;; 1. 启动时必须运行 (start) 函数\n;; 2. 之后调用主函数 (汉语新解 用户输入)\n提示词 END}"
+        - id: 749128f5-e95a-480c-9d7b-aeb9982cb9e3
+          role: user
+          text: 开始
+        - id: bdae2ae8-856b-4e9a-ab73-8fc780b0091f
+          role: assistant
+          text: 说吧, 你想设计什么样的产品Logo?
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: llm
+      position:
+        x: 380.86982207962456
+        y: 282
+      positionAbsolute:
+        x: 380.86982207962456
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: SVG Code
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 684.4472633799586
+        y: 282
+      positionAbsolute:
+        x: 684.4472633799586
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 330.7061859312355
+      y: 316.21454735460253
+      zoom: 0.8944091533595124
