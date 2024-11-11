@@ -6,7 +6,7 @@ app:
   name: simple-kimi
   use_icon_as_answer_icon: false
 kind: app
-version: 0.1.2
+version: 0.1.3
 workflow:
   conversation_variables: []
   environment_variables: []
@@ -26,6 +26,13 @@ workflow:
       - local_file
       - remote_url
       enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
       image:
         enabled: false
         number_limits: 3
@@ -58,28 +65,6 @@ workflow:
       source: llm
       sourceHandle: source
       target: answer
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: start
-        targetType: if-else
-      id: 1726108148263-source-1727357893396-target
-      source: '1726108148263'
-      sourceHandle: source
-      target: '1727357893396'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: tool
-        targetType: code
-      id: 1727357843831-source-1727437551868-target
-      source: '1727357843831'
-      sourceHandle: source
-      target: '1727437551868'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -118,28 +103,6 @@ workflow:
       zIndex: 0
     - data:
         isInIteration: false
-        sourceType: template-transform
-        targetType: llm
-      id: 1727438089651-source-1727437833517-target
-      source: '1727438089651'
-      sourceHandle: source
-      target: '1727437833517'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: tool
-        targetType: code
-      id: 1727357843831-source-1727438265117-target
-      source: '1727357843831'
-      sourceHandle: source
-      target: '1727438265117'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
         sourceType: code
         targetType: tool
       id: 1727438265117-source-1727438331868-target
@@ -173,34 +136,12 @@ workflow:
       zIndex: 0
     - data:
         isInIteration: false
-        sourceType: template-transform
-        targetType: llm
-      id: 1727438463965-source-1727438742998-target
-      source: '1727438463965'
-      sourceHandle: source
-      target: '1727438742998'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
         sourceType: llm
         targetType: answer
       id: 1727438962981-source-1727439130548-target
       source: '1727438962981'
       sourceHandle: source
       target: '1727439130548'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: tool
-        targetType: code
-      id: 1727357843831-source-17274404793180-target
-      source: '1727357843831'
-      sourceHandle: source
-      target: '17274404793180'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -239,28 +180,6 @@ workflow:
       zIndex: 0
     - data:
         isInIteration: false
-        sourceType: template-transform
-        targetType: llm
-      id: 17274406200850-source-17274406581560-target
-      source: '17274406200850'
-      sourceHandle: source
-      target: '17274406581560'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: tool
-        targetType: code
-      id: 1727357843831-source-17274407417220-target
-      source: '1727357843831'
-      sourceHandle: source
-      target: '17274407417220'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
         sourceType: code
         targetType: tool
       id: 17274407417220-source-17274407666060-target
@@ -289,61 +208,6 @@ workflow:
       source: '17274408191900'
       sourceHandle: source
       target: '17274408457890'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: template-transform
-        targetType: llm
-      id: 17274408457890-source-17274408929240-target
-      source: '17274408457890'
-      sourceHandle: source
-      target: '17274408929240'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: llm
-        targetType: llm
-      id: 1727437833517-source-1727438962981-target
-      source: '1727437833517'
-      sourceHandle: source
-      target: '1727438962981'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: llm
-        targetType: llm
-      id: 1727438742998-source-1727438962981-target
-      source: '1727438742998'
-      sourceHandle: source
-      target: '1727438962981'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: llm
-        targetType: llm
-      id: 17274406581560-source-1727438962981-target
-      source: '17274406581560'
-      sourceHandle: source
-      target: '1727438962981'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: llm
-        targetType: llm
-      id: 17274408929240-source-1727438962981-target
-      source: '17274408929240'
-      sourceHandle: source
-      target: '1727438962981'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -389,17 +253,6 @@ workflow:
       source: '1727357893396'
       sourceHandle: 'true'
       target: '1729777900959'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: answer
-        targetType: tool
-      id: 1729777900959-source-1727357843831-target
-      source: '1729777900959'
-      sourceHandle: source
-      target: '1727357843831'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -491,6 +344,160 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1727357893396-false-1730860337573-target
+      source: '1727357893396'
+      sourceHandle: 'false'
+      target: '1730860337573'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1726108148263-source-1727357893396-target
+      source: '1726108148263'
+      sourceHandle: source
+      target: '1727357893396'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: 1730860337573-source-1730860548544-target
+      source: '1730860337573'
+      sourceHandle: source
+      target: '1730860548544'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1730860548544-true-1729777900959-target
+      source: '1730860548544'
+      sourceHandle: 'true'
+      target: '1729777900959'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1730860548544-false-1729781189640-target
+      source: '1730860548544'
+      sourceHandle: 'false'
+      target: '1729781189640'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: tool
+      id: 1729777900959-source-1731030018613-target
+      source: '1729777900959'
+      sourceHandle: source
+      target: '1731030018613'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1731030018613-source-1727437551868-target
+      source: '1731030018613'
+      sourceHandle: source
+      target: '1727437551868'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1731030018613-source-1727438265117-target
+      source: '1731030018613'
+      sourceHandle: source
+      target: '1727438265117'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1731030018613-source-17274404793180-target
+      source: '1731030018613'
+      sourceHandle: source
+      target: '17274404793180'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1731030018613-source-17274407417220-target
+      source: '1731030018613'
+      sourceHandle: source
+      target: '17274407417220'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1727438089651-source-1727438962981-target
+      source: '1727438089651'
+      sourceHandle: source
+      target: '1727438962981'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1727438463965-source-1727438962981-target
+      source: '1727438463965'
+      sourceHandle: source
+      target: '1727438962981'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: llm
+      id: 17274406200850-source-1727438962981-target
+      source: '17274406200850'
+      sourceHandle: source
+      target: '1727438962981'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: llm
+      id: 17274408457890-source-1727438962981-target
+      source: '17274408457890'
+      sourceHandle: source
+      target: '1727438962981'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         desc: ''
@@ -516,11 +523,11 @@ workflow:
       id: '1726108148263'
       position:
         x: 30
-        y: 287
+        y: 286.5
       positionAbsolute:
         x: 30
-        y: 287
-      selected: false
+        y: 286.5
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -567,12 +574,12 @@ workflow:
       height: 98
       id: llm
       position:
-        x: 1845.5706294573988
-        y: 1217.5
+        x: 2462
+        y: 1153.5
       positionAbsolute:
-        x: 1845.5706294573988
-        y: 1217.5
-      selected: true
+        x: 2462
+        y: 1153.5
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -587,41 +594,11 @@ workflow:
       height: 103
       id: answer
       position:
-        x: 2141.1412589147976
-        y: 1217.5
+        x: 2766
+        y: 1151.5
       positionAbsolute:
-        x: 2141.1412589147976
-        y: 1217.5
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        desc: ''
-        provider_id: duckduckgo
-        provider_name: duckduckgo
-        provider_type: builtin
-        selected: false
-        title: DuckDuckGo 搜索
-        tool_configurations:
-          max_results: 5
-          require_summary: 0
-        tool_label: DuckDuckGo 搜索
-        tool_name: ddgo_search
-        tool_parameters:
-          query:
-            type: mixed
-            value: '{{#sys.query#}}'
-        type: tool
-      height: 116
-      id: '1727357843831'
-      position:
-        x: 942
-        y: 287
-      positionAbsolute:
-        x: 942
-        y: 287
+        x: 2766
+        y: 1151.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -659,22 +636,26 @@ workflow:
       id: '1727357893396'
       position:
         x: 334
-        y: 287
+        y: 286.5
       positionAbsolute:
         x: 334
-        y: 287
+        y: 286.5
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        code: "\ndef main(search_results) -> dict:\n    return {\n        \"url\"\
-          : search_results[0].get('href'),\n        \"title\" : search_results[0].get('title'),\n\
-          \    }"
+        code: "\ndef main(search_results) -> dict:\n    return {\n        \"title\"\
+          \ : search_results[0]['organic_results'][0].get('title'),\n        \"url\"\
+          : search_results[0]['organic_results'][0].get('link'),\n        \"snippet\"\
+          \ : search_results[0]['organic_results'][0].get('snippet')\n    }"
         code_language: python3
         desc: ''
         outputs:
+          snippet:
+            children: null
+            type: string
           title:
             children: null
             type: string
@@ -686,17 +667,17 @@ workflow:
         type: code
         variables:
         - value_selector:
-          - '1727357843831'
+          - '1731030018613'
           - json
           variable: search_results
       height: 54
       id: '1727437551868'
       position:
-        x: 1246
-        y: 287
+        x: 1854
+        y: 286.5
       positionAbsolute:
-        x: 1246
-        y: 287
+        x: 1854
+        y: 286.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -723,11 +704,11 @@ workflow:
       height: 116
       id: '1727437724068'
       position:
-        x: 1550
-        y: 287
+        x: 2158
+        y: 286.5
       positionAbsolute:
-        x: 1550
-        y: 287
+        x: 2158
+        y: 286.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -754,57 +735,11 @@ workflow:
       height: 54
       id: '1727437739002'
       position:
-        x: 1854
-        y: 287
-      positionAbsolute:
-        x: 1854
-        y: 287
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        context:
-          enabled: false
-          variable_selector: []
-        desc: ''
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: us.anthropic.claude-3-5-sonnet-20240620-v1:0
-          provider: bedrock
-        prompt_template:
-        - id: 8e28a37e-4e99-44dd-b9cb-7712b910e79a
-          role: system
-          text: '{{#1726108148263.role_def#}}'
-        - id: 43589275-f03e-4965-a8fe-ef344109e70c
-          role: user
-          text: '{{#1727438089651.output#}}
-
-            --------------
-
-            请参考上面相关的内容来回答问题，回答最后可以附带上参考的web链接，以[title](link)的markdown形式给出, 如果找到问题，可以直接输出"缺乏信息，无法回答"
-
-
-            {{#sys.query#}}'
-        selected: false
-        title: LLM 1
-        type: llm
-        variables: []
-        vision:
-          configs:
-            detail: high
-          enabled: false
-      height: 98
-      id: '1727437833517'
-      position:
         x: 2462
-        y: 287
+        y: 286.5
       positionAbsolute:
         x: 2462
-        y: 287
+        y: 286.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -813,10 +748,8 @@ workflow:
     - data:
         desc: ''
         selected: false
-        template: 'Title: [{{ title }}]({{ url }})
-
-
-          {{ content }}'
+        template: "{\n    \"Title\" : {{ title }},\n    \"URL\" : {{ url }},\n   \
+          \ \"snippet\" : {{ snippet }},\n    \"content\" : {{ content }}\n}"
         title: 模板转换 1
         type: template-transform
         variables:
@@ -830,28 +763,36 @@ workflow:
           variable: url
         - value_selector:
           - '1727437551868'
-          - title
+          - snippet
           variable: title
+        - value_selector:
+          - '1727437551868'
+          - snippet
+          variable: snippet
       height: 54
       id: '1727438089651'
       position:
-        x: 2158
-        y: 287
+        x: 2766
+        y: 286.5
       positionAbsolute:
-        x: 2158
-        y: 287
+        x: 2766
+        y: 286.5
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        code: "\ndef main(search_results) -> dict:\n    return {\n        \"url\"\
-          : search_results[1].get('href'),\n        \"title\" : search_results[1].get('title'),\n\
-          \    }"
+        code: "\ndef main(search_results) -> dict:\n    return {\n        \"title\"\
+          \ : search_results[0]['organic_results'][1].get('title'),\n        \"url\"\
+          : search_results[0]['organic_results'][1].get('link'),\n        \"snippet\"\
+          \ : search_results[0]['organic_results'][1].get('snippet'),\n    }"
         code_language: python3
         desc: ''
         outputs:
+          snippet:
+            children: null
+            type: string
           title:
             children: null
             type: string
@@ -863,17 +804,17 @@ workflow:
         type: code
         variables:
         - value_selector:
-          - '1727357843831'
+          - '1731030018613'
           - json
           variable: search_results
       height: 54
       id: '1727438265117'
       position:
-        x: 1246
-        y: 443
+        x: 1854
+        y: 441.5
       positionAbsolute:
-        x: 1246
-        y: 443
+        x: 1854
+        y: 441.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -900,11 +841,11 @@ workflow:
       height: 116
       id: '1727438331868'
       position:
-        x: 1550
-        y: 443
+        x: 2158
+        y: 441.5
       positionAbsolute:
-        x: 1550
-        y: 443
+        x: 2158
+        y: 441.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -931,11 +872,11 @@ workflow:
       height: 54
       id: '1727438349664'
       position:
-        x: 1854
-        y: 443
+        x: 2462
+        y: 441.5
       positionAbsolute:
-        x: 1854
-        y: 443
+        x: 2462
+        y: 441.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -944,16 +885,14 @@ workflow:
     - data:
         desc: ''
         selected: false
-        template: 'Title: [{{ title }}]({{ url }})
-
-
-          {{ content }}'
+        template: "{\n    \"Title\" : {{ title }},\n    \"URL\" : {{ url }},\n   \
+          \ \"snippet\" : {{ snippet }},\n    \"content\" : {{ content }}\n}"
         title: 模板转换 2
         type: template-transform
         variables:
         - value_selector:
           - '1727438265117'
-          - title
+          - snippet
           variable: title
         - value_selector:
           - '1727438265117'
@@ -963,59 +902,18 @@ workflow:
           - '1727438349664'
           - result
           variable: content
+        - value_selector:
+          - '1727438265117'
+          - snippet
+          variable: snippet
       height: 54
       id: '1727438463965'
       position:
-        x: 2158
-        y: 443
+        x: 2766
+        y: 441.5
       positionAbsolute:
-        x: 2158
-        y: 443
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        context:
-          enabled: false
-          variable_selector: []
-        desc: ''
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: us.anthropic.claude-3-5-sonnet-20240620-v1:0
-          provider: bedrock
-        prompt_template:
-        - id: fa182396-ae58-41d8-b3e3-57edc1a8c68b
-          role: system
-          text: '{{#1726108148263.role_def#}}'
-        - id: 6f32e58b-2e97-4fd8-9596-285f43ed5475
-          role: user
-          text: '{{#1727438463965.output#}}
-
-            --------------
-
-            请参考上面相关的内容来回答问题，回答最后可以附带上参考的web链接，以[title](link)的markdown形式给出, 如果找到问题，可以直接输出"缺乏信息，无法回答"
-
-            {{#sys.query#}}'
-        selected: false
-        title: LLM 2
-        type: llm
-        variables: []
-        vision:
-          configs:
-            detail: high
-          enabled: false
-      height: 98
-      id: '1727438742998'
-      position:
-        x: 2462
-        y: 443
-      positionAbsolute:
-        x: 2462
-        y: 443
+        x: 2766
+        y: 441.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1035,52 +933,52 @@ workflow:
         prompt_template:
         - id: 21458af2-ffc5-4488-9470-3a4ad579b1ce
           role: system
-          text: '{{#1726108148263.role_def#}}{'
+          text: '{{#1726108148263.role_def#}}，请参考提供搜索的内容回答问题'
         - id: 35e1bbae-cfe5-478c-8b66-757348116763
           role: user
-          text: '针对下面的问题
+          text: '<search_result>
 
-            <query>
+            [
 
-            {{#sys.query#}}
+            {{#1727438089651.output#}},
 
-            </query>
+            {{#1727438463965.output#}},
 
+            {{#17274406200850.output#}},
 
-            有如下候选回答
+            {{#17274408457890.output#}}
 
-            <candidate>
+            ]
 
-            <answer-1>
-
-            {{#1727437833517.text#}}
-
-            </answer-1>
-
-            <answer-2>
-
-            {{#1727438742998.text#}}
-
-            </answer-2>
-
-            <answer-3>
-
-            {{#17274406581560.text#}}
-
-            </answer-3>
-
-            <answer-4>
-
-            {{#17274408929240.text#}}
-
-            </answer-4>
-
-            </candidate>
+            </search_result>
 
 
-            请综合上面的内容，或者筛选最靠谱的回答作为最终的回答。如果采用了某候选回答的内容，请附上对应的markdown参考链接，以[title](url)的形式。直接给出回答，不用透露你综合了多个答案。
+            ## Answer Format Example
 
-            '
+            $PLACEHOLDER_ANSWER$
+
+
+            参考链接：
+
+            1.  [Title](URL)
+
+            2. [Title](URL)
+
+            ...
+
+
+            ## Requirement：
+
+            1. 有些候选答案可能由于网页403无法获取的原因，无法直接回答， 忽略这些即可。
+
+            2. 直接给出回答，不用透露你综合了多个答案。
+
+            3. 如果采用了某搜索结果的内容，在Refernce部分按照序号，按照序号输出这个URL，以markdown的格式，如[title](url)。
+
+            4. 如果搜索结果中的Title过于冗长，直接输出URL也可以
+
+
+            {{#sys.query#}}'
         selected: false
         title: LLM_Final
         type: llm
@@ -1092,11 +990,11 @@ workflow:
       height: 98
       id: '1727438962981'
       position:
-        x: 2766
-        y: 443
+        x: 3232.5714285714284
+        y: 510.07142857142856
       positionAbsolute:
-        x: 2766
-        y: 443
+        x: 3232.5714285714284
+        y: 510.07142857142856
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1112,23 +1010,27 @@ workflow:
       height: 103
       id: '1727439130548'
       position:
-        x: 3070
-        y: 443
+        x: 3570.8571428571427
+        y: 510.07142857142856
       positionAbsolute:
-        x: 3070
-        y: 443
+        x: 3570.8571428571427
+        y: 510.07142857142856
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        code: "\ndef main(search_results) -> dict:\n    return {\n        \"url\"\
-          : search_results[2].get('href'),\n        \"title\" : search_results[2].get('title'),\n\
-          \    }"
+        code: "\ndef main(search_results) -> dict:\n    return {\n        \"title\"\
+          \ : search_results[0]['organic_results'][2].get('title'),\n        \"url\"\
+          : search_results[0]['organic_results'][2].get('link'),\n        \"snippet\"\
+          \ : search_results[0]['organic_results'][2].get('snippet')\n    }"
         code_language: python3
         desc: ''
         outputs:
+          snippet:
+            children: null
+            type: string
           title:
             children: null
             type: string
@@ -1140,17 +1042,17 @@ workflow:
         type: code
         variables:
         - value_selector:
-          - '1727357843831'
+          - '1731030018613'
           - json
           variable: search_results
       height: 54
       id: '17274404793180'
       position:
-        x: 1246
-        y: 599
+        x: 1854
+        y: 596.5
       positionAbsolute:
-        x: 1246
-        y: 599
+        x: 1854
+        y: 596.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1177,11 +1079,11 @@ workflow:
       height: 116
       id: '17274405419030'
       position:
-        x: 1550
-        y: 599
+        x: 2158
+        y: 596.5
       positionAbsolute:
-        x: 1550
-        y: 599
+        x: 2158
+        y: 596.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1208,11 +1110,11 @@ workflow:
       height: 54
       id: '17274405777680'
       position:
-        x: 1854
-        y: 599
+        x: 2462
+        y: 596.5
       positionAbsolute:
-        x: 1854
-        y: 599
+        x: 2462
+        y: 596.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1221,16 +1123,14 @@ workflow:
     - data:
         desc: ''
         selected: false
-        template: 'Title: [{{ title }}]({{ url }})
-
-
-          {{ content }}'
+        template: "{\n    \"Title\" : {{ title }},\n    \"URL\" : {{ url }},\n   \
+          \ \"snippet\" : {{ snippet }},\n    \"content\" : {{ content }}\n}"
         title: 模板转换 3
         type: template-transform
         variables:
         - value_selector:
           - '17274404793180'
-          - title
+          - snippet
           variable: title
         - value_selector:
           - '17274404793180'
@@ -1240,71 +1140,34 @@ workflow:
           - '17274405777680'
           - result
           variable: content
+        - value_selector:
+          - '17274404793180'
+          - snippet
+          variable: snippet
       height: 54
       id: '17274406200850'
       position:
-        x: 2158
-        y: 599
+        x: 2766
+        y: 596.5
       positionAbsolute:
-        x: 2158
-        y: 599
+        x: 2766
+        y: 596.5
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        context:
-          enabled: false
-          variable_selector: []
-        desc: ''
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: us.anthropic.claude-3-5-sonnet-20240620-v1:0
-          provider: bedrock
-        prompt_template:
-        - id: fa182396-ae58-41d8-b3e3-57edc1a8c68b
-          role: system
-          text: '{{#1726108148263.role_def#}}'
-        - id: 6f32e58b-2e97-4fd8-9596-285f43ed5475
-          role: user
-          text: '{{#17274406200850.output#}}
-
-            --------------
-
-            请参考上面相关的内容来回答问题，回答最后可以附带上参考的web链接，以[title](link)的markdown形式给出, 如果找到问题，可以直接输出"缺乏信息，无法回答"
-
-            {{#sys.query#}}'
-        selected: false
-        title: LLM 3
-        type: llm
-        variables: []
-        vision:
-          configs:
-            detail: high
-          enabled: false
-      height: 98
-      id: '17274406581560'
-      position:
-        x: 2462
-        y: 599
-      positionAbsolute:
-        x: 2462
-        y: 599
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "\ndef main(search_results) -> dict:\n    return {\n        \"url\"\
-          : search_results[3].get('href'),\n        \"title\" : search_results[3].get('title'),\n\
-          \    }"
+        code: "\ndef main(search_results) -> dict:\n    return {\n        \"title\"\
+          \ : search_results[0]['organic_results'][3].get('title'),\n        \"url\"\
+          : search_results[0]['organic_results'][3].get('link'),\n        \"snippet\"\
+          \ : search_results[0]['organic_results'][3].get('snippet')\n    }"
         code_language: python3
         desc: ''
         outputs:
+          snippet:
+            children: null
+            type: string
           title:
             children: null
             type: string
@@ -1316,17 +1179,17 @@ workflow:
         type: code
         variables:
         - value_selector:
-          - '1727357843831'
+          - '1731030018613'
           - json
           variable: search_results
       height: 54
       id: '17274407417220'
       position:
-        x: 1246
-        y: 755
+        x: 1854
+        y: 751.5
       positionAbsolute:
-        x: 1246
-        y: 755
+        x: 1854
+        y: 751.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1353,11 +1216,11 @@ workflow:
       height: 116
       id: '17274407666060'
       position:
-        x: 1550
-        y: 755
+        x: 2158
+        y: 751.5
       positionAbsolute:
-        x: 1550
-        y: 755
+        x: 2158
+        y: 751.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1384,11 +1247,11 @@ workflow:
       height: 54
       id: '17274408191900'
       position:
-        x: 1854
-        y: 755
+        x: 2462
+        y: 751.5
       positionAbsolute:
-        x: 1854
-        y: 755
+        x: 2462
+        y: 751.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1397,16 +1260,14 @@ workflow:
     - data:
         desc: ''
         selected: false
-        template: 'Title: [{{ title }}]({{ url }})
-
-
-          {{ content }}'
+        template: "{\n    \"Title\" : {{ title }},\n    \"URL\" : {{ url }},\n   \
+          \ \"snippet\" : {{ snippet }},\n    \"content\" : {{ content }}\n}"
         title: 模板转换 4
         type: template-transform
         variables:
         - value_selector:
           - '17274407417220'
-          - title
+          - snippet
           variable: title
         - value_selector:
           - '17274407417220'
@@ -1416,59 +1277,18 @@ workflow:
           - '17274408191900'
           - result
           variable: content
+        - value_selector:
+          - '17274407417220'
+          - snippet
+          variable: snippet
       height: 54
       id: '17274408457890'
       position:
-        x: 2158
-        y: 755
+        x: 2766
+        y: 751.5
       positionAbsolute:
-        x: 2158
-        y: 755
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        context:
-          enabled: false
-          variable_selector: []
-        desc: ''
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: us.anthropic.claude-3-5-sonnet-20240620-v1:0
-          provider: bedrock
-        prompt_template:
-        - id: fa182396-ae58-41d8-b3e3-57edc1a8c68b
-          role: system
-          text: '{{#1726108148263.role_def#}}'
-        - id: 6f32e58b-2e97-4fd8-9596-285f43ed5475
-          role: user
-          text: '{{#17274408457890.output#}}
-
-            --------------
-
-            请参考上面相关的内容来回答问题，回答最后可以附带上参考的web链接，以[title](link)的markdown形式给出, 如果找到问题，可以直接输出"缺乏信息，无法回答"
-
-            {{#sys.query#}}'
-        selected: false
-        title: LLM 4
-        type: llm
-        variables: []
-        vision:
-          configs:
-            detail: high
-          enabled: false
-      height: 98
-      id: '17274408929240'
-      position:
-        x: 2462
-        y: 755
-      positionAbsolute:
-        x: 2462
-        y: 755
+        x: 2766
+        y: 751.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1486,11 +1306,11 @@ workflow:
       height: 94
       id: '1729777092216'
       position:
-        x: 1235.4632868217484
-        y: 1217.5
+        x: 1854
+        y: 1155.5
       positionAbsolute:
-        x: 1235.4632868217484
-        y: 1217.5
+        x: 1854
+        y: 1155.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1522,11 +1342,11 @@ workflow:
       height: 54
       id: '1729777162616'
       position:
-        x: 1543.6779720930494
-        y: 1217.5
+        x: 2158
+        y: 1206.5
       positionAbsolute:
-        x: 1543.6779720930494
-        y: 1217.5
+        x: 2158
+        y: 1206.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1559,11 +1379,11 @@ workflow:
       height: 94
       id: '1729777695485'
       position:
-        x: 942
-        y: 1067.5
+        x: 1550
+        y: 1051.5
       positionAbsolute:
-        x: 942
-        y: 1067.5
+        x: 1550
+        y: 1051.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1596,18 +1416,21 @@ workflow:
       height: 94
       id: '1729777763543'
       position:
-        x: 942
-        y: 1217.5
+        x: 1550
+        y: 1186.5
       positionAbsolute:
-        x: 942
-        y: 1217.5
+        x: 1550
+        y: 1186.5
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        answer: 开始搜索...
+        answer: '开始搜索...
+
+
+          '
         desc: ''
         selected: false
         title: intermediate_reply
@@ -1616,11 +1439,11 @@ workflow:
       height: 100
       id: '1729777900959'
       position:
-        x: 638
-        y: 287
+        x: 1246
+        y: 286.5
       positionAbsolute:
-        x: 638
-        y: 287
+        x: 1246
+        y: 286.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1652,11 +1475,11 @@ workflow:
       height: 94
       id: '1729778350970'
       position:
-        x: 942
-        y: 915.5
+        x: 1550
+        y: 910.5
       positionAbsolute:
-        x: 942
-        y: 915.5
+        x: 1550
+        y: 910.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1699,11 +1522,11 @@ workflow:
       height: 98
       id: '1729778442989'
       position:
-        x: 1257.079373644609
-        y: 1067.5
+        x: 1854
+        y: 1018.5
       positionAbsolute:
-        x: 1257.079373644609
-        y: 1067.5
+        x: 1854
+        y: 1018.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1719,11 +1542,11 @@ workflow:
       height: 103
       id: '1729778610477'
       position:
-        x: 1550
-        y: 1067.5
+        x: 2158
+        y: 1047.5
       positionAbsolute:
-        x: 1550
-        y: 1067.5
+        x: 2158
+        y: 1047.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1756,11 +1579,11 @@ workflow:
       height: 98
       id: '1729778654959'
       position:
-        x: 1246
-        y: 915.5
+        x: 1854
+        y: 877.5
       positionAbsolute:
-        x: 1246
-        y: 915.5
+        x: 1854
+        y: 877.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1776,11 +1599,11 @@ workflow:
       height: 103
       id: '1729778683728'
       position:
-        x: 1550
-        y: 915.5
+        x: 2158
+        y: 906.5
       positionAbsolute:
-        x: 1550
-        y: 915.5
+        x: 2158
+        y: 906.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1818,6 +1641,7 @@ workflow:
             variable_selector:
             - sys
             - files
+          id: ddf6ba30-c72f-4f06-b783-af77419acf30
           logical_operator: and
         - case_id: 5ff411e5-2162-41de-80de-b51902a2380f
           conditions:
@@ -1838,6 +1662,7 @@ workflow:
             variable_selector:
             - sys
             - files
+          id: 5ff411e5-2162-41de-80de-b51902a2380f
           logical_operator: and
         desc: ''
         selected: false
@@ -1846,17 +1671,126 @@ workflow:
       height: 270
       id: '1729781189640'
       position:
+        x: 1246
+        y: 814.5
+      positionAbsolute:
+        x: 1246
+        y: 814.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            stop:
+            - </category>
+            temperature: 0.7
+          mode: chat
+          name: us.anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 2f0f0390-0372-451c-ad0c-ad859b76b0af
+          role: system
+          text: '这是一个判断问题是否需要搜索实时信息的任务。请按照以下步骤进行:
+
+
+            1. 仔细分析问题,看看它是否可能随时间变化而需要搜索最新信息。
+
+            2. 如果问题确实需要搜索实时信息来获取最新答案,请回答"Yes"。
+
+            3. 如果问题不需要搜索实时信息,因为答案是永久不变的,请回答"No"。
+
+            4. 把你的答案输出到<category>和</category>之间'
+        - id: faf064e8-f465-4400-a3b7-562e1f5edaac
+          role: user
+          text: <question>{{#sys.query#}}</question>
+        - id: 2e71437d-78cb-4e07-ab18-3bd2bcdeb4df
+          role: assistant
+          text: <category>
+        selected: false
+        title: LLM 9
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1730860337573'
+      position:
         x: 638
-        y: 884.3429042124184
+        y: 992
       positionAbsolute:
         x: 638
-        y: 884.3429042124184
+        y: 992
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 1d4748fe-7be3-4281-af82-349b2d8bda55
+            value: 'Yes'
+            varType: string
+            variable_selector:
+            - '1730860337573'
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 3
+        type: if-else
+      height: 126
+      id: '1730860548544'
+      position:
+        x: 942
+        y: 992
+      positionAbsolute:
+        x: 942
+        y: 992
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: google
+        provider_name: google
+        provider_type: builtin
+        selected: false
+        title: 谷歌搜索
+        tool_configurations: {}
+        tool_label: 谷歌搜索
+        tool_name: google_search
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 54
+      id: '1731030018613'
+      position:
+        x: 1555.7142857142858
+        y: 286.5
+      positionAbsolute:
+        x: 1555.7142857142858
+        y: 286.5
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     viewport:
-      x: -279.45131219085033
-      y: -270.58303849226945
-      zoom: 0.5051550272336403
+      x: -759.1986799398655
+      y: -156.93444479722274
+      zoom: 0.8262469597714619
