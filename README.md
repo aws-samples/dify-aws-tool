@@ -26,7 +26,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 ***[Attention]：We welcome contributions of more workflows, SageMaker models, and built-in tools. You can fork this repository and submit a merge request, please also update README.md, you need to add a new row to the corresponding table***
 
-#### Workflow 
+#### Workflow([Demo Page](./workflow/README.md))
 
 | DSL Name                    | Description                                           | Link                                                  | Dependency         | Owner                                                        |
 | --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------ | ------------------------------------------------------------ |
