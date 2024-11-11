@@ -28,15 +28,16 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 #### Workflow 
 
-| DSL Name                    | Description                                           | Link                                                  | Dependency         | Owner                                            |
-| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------ | ------------------------------------------------ |
-| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_mapping) | [ybalbert](ybalbert@amazon.com)                  |
-| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)        |                    | [binc](binc@amazon.com)                          |
-| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)       | [ybalbert](ybalbert@amazon.com)                  |
-| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](./workflow/andrew_translation_agent.yml)        |                    | [chuanxie](chuanxie@amazon.com)                  |
-| rag_based_bot_with_tts      | Rag based bot which can answer with voice             | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)          | [ybalbert](ybalbert@amazon.com)                  |
-| Marketing-copywriter        | marketing copywriter                                  | [DSL](./workflow/marketing-copywriting.yml)           |                    | [Lyson Ober](https://www.youtube.com/@lysonober) |
-| Simple_Kimi                 | Customized KIMI app                                   | [DSL](./workflow/simple_kimi.yml)                     |                    | [ybalbert](ybalbert@amazon.com)                  |
+| DSL Name                    | Description                                           | Link                                                  | Dependency         | Owner                                                        |
+| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------ | ------------------------------------------------------------ |
+| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_mapping) | [ybalbert](ybalbert@amazon.com)                              |
+| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)        |                    | [binc](binc@amazon.com)                                      |
+| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)       | [ybalbert](ybalbert@amazon.com)                              |
+| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](./workflow/andrew_translation_agent.yml)        |                    | [chuanxie](chuanxie@amazon.com)                              |
+| rag_based_bot_with_tts      | Rag based bot which can answer with voice             | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)          | [ybalbert](ybalbert@amazon.com)                              |
+| Marketing-copywriter        | marketing copywriter                                  | [DSL](./workflow/marketing-copywriting.yml)           |                    | [Lyson Ober](https://www.youtube.com/@lysonober)             |
+| Simple_Kimi                 | Customized KIMI app                                   | [DSL](./workflow/simple_kimi.yml)                     |                    | [ybalbert](ybalbert@amazon.com)                              |
+| SVG_Designer                | SVG Designer                                          | [DSL](./workflow/svg_designer.yml)                    |                    | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
 
 #### Builtin_Tools
 | Tool Name                 | Tool Type  | Description                                                  | Deploy_doc                                                   | Owner                           |
@@ -47,7 +48,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Term_multilingual_mapping | PAAS       | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
 | Image Translation Tool    | PAAS       | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
 | Chinese Toxicity Detector | PAAS       | A tool to detect Chinese toxicity                             | Comming                                                      | [ychchen](ychchen@amazon.com)   |
-| Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        | Just drag and use it                                                      | [river xie](chuanxie@amazon.com)      |
+| Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        |                                                       | [river xie](chuanxie@amazon.com)      |
 
 #### Model_Provider
 
