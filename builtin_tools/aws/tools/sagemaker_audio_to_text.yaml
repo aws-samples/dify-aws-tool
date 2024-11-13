@@ -29,7 +29,7 @@ parameters:
       en_US: Audio file
       zh_Hans: 音频文件
     human_description:
-      en_US: Audio file to be transcribed (supported formats: wav, mp3, flac)
+      en_US: Audio file to be transcribed(wav, mp3, flac)
       zh_Hans: 需要转录的音频文件（支持格式：wav, mp3, flac）
     llm_description: Audio file to be transcribed
     form: form
