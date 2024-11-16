@@ -21,18 +21,18 @@ parameters:
       en_US: SageMaker endpoint for Whisper model transcription
       zh_Hans: Whisper模型转录服务的SageMaker端点
     llm_description: SageMaker endpoint for Whisper model transcription
-    form: form
-  - name: audio_file
-    type: file
+    form: llm
+  - name: file_url
+    type: string
     required: true
     label:
-      en_US: Audio file
-      zh_Hans: 音频文件
+      en_US: video or audio file url for transcribe
+      zh_Hans: 语音文件url
     human_description:
-      en_US: Audio file to be transcribed(wav, mp3, flac)
-      zh_Hans: 需要转录的音频文件（支持格式：wav, mp3, flac）
-    llm_description: Audio file to be transcribed
-    form: form
+      en_US: audio file url for transcribe
+      zh_Hans: 语音文件url
+    llm_description: video or audio file url for transcribe
+    form: llm
   - name: aws_region
     type: string
     required: false
@@ -43,4 +43,4 @@ parameters:
       en_US: Region of SageMaker endpoint
       zh_Hans: SageMaker端点所在的region
     llm_description: Region of SageMaker endpoint
-    form: form
+    form: llm
