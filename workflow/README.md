@@ -47,9 +47,6 @@
 
 ## Workflow Demo Video
 
-<div align="center">
-  <video width="640" height="360" controls>
-    <source src="./mp4/tts_asr.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+**1. ASR & TTS Demo**
+
+https://github.com/user-attachments/assets/cdd1cae1-e8b7-421b-b915-840b516541c3
