@@ -1,4 +1,4 @@
-## Workflow Demo List
+## Workflow Demo GIF
 
 <table>
   <tr>
@@ -44,3 +44,9 @@
     <td><img src="./gif/code_translation.gif" alt="GIF 7"></td>
   </tr>
 </table>
+
+## Workflow Demo Video
+
+**1. ASR & TTS Demo**
+
+https://github.com/user-attachments/assets/cdd1cae1-e8b7-421b-b915-840b516541c3
