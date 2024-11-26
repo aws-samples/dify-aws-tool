@@ -31,4 +31,10 @@
   <tr>
     <td><img src="./gif/education.gif" alt="GIF 5"></td>
   </tr>
+  <tr>
+    <th>Code Translation</th>
+  </tr>
+  <tr>
+    <td><img src="./gif/code_translation.gif" alt="GIF 6"></td>
+  </tr>
 </table>
