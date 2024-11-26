@@ -38,6 +38,7 @@
 | Marketing-copywriter        | 营销文案一条龙                              | [DSL](./workflow/marketing-copywriting.yml)           |                | [Lyson Ober](https://www.youtube.com/@lysonober)             |
 | Simple_Kimi                 | 简易自制Kimi                                | [DSL](./workflow/simple_kimi.yml)                     |                | [ybalbert](ybalbert@amazon.com)                              |
 | SVG_Designer                | SVG 图标设计师                              | [DSL](./workflow/svg_designer.yml)                    |                | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
+| Education_Question_Gen      | 教育场景 - 试题生成器                       | [DSL](./workflow/edu_question_gen.yml)                |                | [chuanxie](chuanxie@amazon.com)                              |
 
 #### 内置工具
 
