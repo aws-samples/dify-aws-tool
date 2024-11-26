@@ -39,6 +39,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Simple_Kimi                 | Customized KIMI app                                   | [DSL](./workflow/simple_kimi.yml)                     |                    | [ybalbert](ybalbert@amazon.com)                              |
 | SVG_Designer                | SVG Designer                                          | [DSL](./workflow/svg_designer.yml)                    |                    | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
 | Education_Question_Gen      | Education Question Generator                          | [DSL](./workflow/edu_question_gen.yml)                |                    | [chuanxie](chuanxie@amazon.com)                              |
+| Apply_guardrails            | Apply guardrails for chatbot                          | [DSL](./workflow/apply_guardrails.yml)                |                    | [amyli](amyli@amazon.com)                                    |
 
 #### Builtin_Tools
 | Tool Name                 | Tool Type  | Description                                                  | Deploy_doc                                                   | Owner                           |
