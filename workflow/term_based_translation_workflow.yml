@@ -1,18 +1,44 @@
 app:
   description: ''
-  icon: "\U0001F916"
+  icon: 🤖
   icon_background: '#FFEAD5'
   mode: workflow
   name: term_based_translation
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.3
 workflow:
+  conversation_variables: []
+  environment_variables: []
   features:
     file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
       image:
         enabled: false
         number_limits: 3
         transfer_methods:
         - local_file
         - remote_url
+      number_limits: 3
     opening_statement: ''
     retriever_resource:
       enabled: false
@@ -98,7 +124,7 @@ workflow:
           required: true
           type: text-input
           variable: DEST_LANG
-      height: 142
+      height: 140
       id: '1718697368665'
       position:
         x: 13.189266906560533
@@ -110,7 +136,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         outputs:
@@ -121,7 +147,7 @@ workflow:
         selected: false
         title: End
         type: end
-      height: 90
+      height: 88
       id: '1718861663614'
       position:
         x: 1186.6594653059126
@@ -129,16 +155,16 @@ workflow:
       positionAbsolute:
         x: 1186.6594653059126
         y: 195.5517100956796
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "import json\n\ndef main(json_str: str) -> dict:\n    obj = json.loads(json_str)\n\
-          \    mappings = []\n    for item in obj['term_mapping']:\n        mappings.append(\"\
-          {}->{}\".format(item[0], item[1]))\n\n    return { \"mappings\" : mappings\
-          \ }\n"
+          \    mappings = []\n    for item in obj['translations'][0]['term_mapping']:\n\
+          \        mappings.append(\"{}->{}\".format(item[0], item[1]))\n\n    return\
+          \ { \"mappings\" : mappings }\n"
         code_language: python3
         desc: ''
         outputs:
@@ -153,7 +179,7 @@ workflow:
           - '1719466553831'
           - text
           variable: json_str
-      height: 54
+      height: 52
       id: '1719384909889'
       position:
         x: 614.3810339244203
@@ -165,7 +191,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         provider_id: aws
@@ -174,8 +200,9 @@ workflow:
         selected: false
         title: LambdaTranslateTool
         tool_configurations:
-          aws_region: us-west-2
+          aws_region: ap-southeast-1
           dest_lang: EN
+          dictionary_name: Genshin
           lambda_name: translate_tool
           model_id: anthropic.claude-3-sonnet-20240229-v1:0
           request_type: term_mapping
@@ -183,11 +210,17 @@ workflow:
         tool_label: LambdaTranslateTool
         tool_name: lambda_translate_utils
         tool_parameters:
+          dest_lang:
+            type: mixed
+            value: '{{#1718697368665.DEST_LANG#}}'
+          src_lang:
+            type: mixed
+            value: '{{#1718697368665.SRC_LANG#}}'
           text_content:
             type: mixed
             value: '{{#1718697368665.src_content#}}'
         type: tool
-      height: 220
+      height: 244
       id: '1719466553831'
       position:
         x: 331.0310967743519
@@ -199,7 +232,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: true
@@ -249,7 +282,7 @@ workflow:
           configs:
             detail: high
           enabled: false
-      height: 98
+      height: 96
       id: '1719828630202'
       position:
         x: 897.1833267096131
@@ -257,12 +290,40 @@ workflow:
       positionAbsolute:
         x: 897.1833267096131
         y: 195.5517100956796
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
+    - data:
+        author: ybalbert@amazon.com
+        desc: ''
+        height: 386
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"##
+          输入示例：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"src_content:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":1,"mode":"normal","style":"","text":"奇怪的渔人吐司","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"可以达到下面效果，队伍中所有角色防御力提高88点，持续300秒。多人游戏时，仅对自己的角色生效。《原神手游》","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"赤魔王","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"图鉴，","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"赤魔王","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"能捉吗","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"src_lang:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"zh-cn","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"dest-lang:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"en-us","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"##
+          前置条件","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"1.
+          需要部署了专词映射的方案","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"2.
+          dify所在的ec2或者容器有对应的权限","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 279
+      height: 386
+      id: '1732618538146'
+      position:
+        x: 19.902658070077223
+        y: 399.3564646466241
+      positionAbsolute:
+        x: 19.902658070077223
+        y: 399.3564646466241
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 279
     viewport:
-      x: -15.672408226222728
-      y: 91.08244480623426
+      x: 75.85066836416536
+      y: 327.90399016446327
       zoom: 0.8937360945994681

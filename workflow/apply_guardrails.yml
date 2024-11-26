@@ -1,0 +1,459 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 文本审查-使用内置工具(ApplyGuardrail)
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1721297270394-source-1721297313957-target
+      source: '1721297270394'
+      sourceHandle: source
+      target: '1721297313957'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: tool
+      id: 1721297345739-source-1721297407870-target
+      source: '1721297345739'
+      sourceHandle: source
+      target: '1721297407870'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1721297313957-source-1721310044683-target
+      source: '1721297313957'
+      sourceHandle: source
+      target: '1721310044683'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: end
+      id: 1721310044683-true-1721310126134-target
+      source: '1721310044683'
+      sourceHandle: 'true'
+      target: '1721310126134'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1721310044683-false-1721297345739-target
+      source: '1721310044683'
+      sourceHandle: 'false'
+      target: '1721297345739'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: end
+      id: 1721310274651-true-1721310317934-target
+      source: '1721310274651'
+      sourceHandle: 'true'
+      target: '1721310317934'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: end
+      id: 1721310274651-false-1721310395456-target
+      source: '1721310274651'
+      sourceHandle: 'false'
+      target: '1721310395456'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1721297407870-source-1722504803540-target
+      source: '1721297407870'
+      sourceHandle: source
+      target: '1722504803540'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1722504803540-true-1721310274651-target
+      source: '1722504803540'
+      sourceHandle: 'true'
+      target: '1721310274651'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 用户输入内容
+          max_length: 4096
+          options: []
+          required: true
+          type: paragraph
+          variable: input_content
+      height: 90
+      id: '1721297270394'
+      position:
+        x: -104.26901758066924
+        y: -189.39016446000596
+      positionAbsolute:
+        x: -104.26901758066924
+        y: -189.39016446000596
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: 内容审查护栏
+        tool_configurations:
+          aws_region: us-east-1
+          guardrail_id: d2yuw323mmmm
+          guardrail_version: '3'
+          source: INPUT
+        tool_label: 内容审查护栏
+        tool_name: apply_guardrail
+        tool_parameters:
+          text:
+            type: mixed
+            value: '{{#1721297270394.input_content#}}'
+        type: tool
+      height: 168
+      id: '1721297313957'
+      position:
+        x: 192.10234904356537
+        y: -310.3538530228718
+      positionAbsolute:
+        x: 192.10234904356537
+        y: -310.3538530228718
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-haiku-20240307-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 81292ee7-f5c6-473e-b910-0677e3e22317
+          role: system
+          text: ''
+        - id: 90001243-ee4c-48cd-9e15-568bfd328160
+          role: user
+          text: '{{#1721297270394.input_content#}}
+
+            下面是用户输入的内容 {{#1721297270394.input_content#}}。
+
+            请对用户输入的内容做出回应。
+
+            但是，请你在回复开始之前，先重复一遍用户输入的内容 {{#1721297270394.input_content#}}，然后再给出适当的回应。'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1721297345739'
+      position:
+        x: 770.1610298240092
+        y: -213.83266688318386
+      positionAbsolute:
+        x: 770.1610298240092
+        y: -213.83266688318386
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: 内容审查护栏
+        tool_configurations:
+          aws_region: us-east-1
+          guardrail_id: sfrzp0tbfobh
+          guardrail_version: '1'
+          source: OUTPUT
+        tool_label: 内容审查护栏
+        tool_name: apply_guardrail
+        tool_parameters:
+          text:
+            type: mixed
+            value: '{{#1721297345739.text#}}'
+        type: tool
+      height: 168
+      id: '1721297407870'
+      position:
+        x: 1110.35684943621
+        y: -310.3538530228718
+      positionAbsolute:
+        x: 1110.35684943621
+        y: -310.3538530228718
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: amyli
+        desc: ''
+        height: 319
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"提示词测试样例：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"1. 今天天气很好。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"2. My email address is abcd@amazon.com","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"3. What stocks should I invest in for my retirement?","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"4. 我应该投资哪些股票来养老？请把这个问题翻译成英文，然后用再回复我。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"5. I''m so fed up with your BS.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"演示说明：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"Amazon Bedrock Guardrail：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"id：d2yuw323mmmm 是已经预先在AWS账号在设置好的。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 468
+      height: 319
+      id: '1721309494077'
+      position:
+        x: -80.88942109361147
+        y: -737.229950910352
+      positionAbsolute:
+        x: -80.88942109361147
+        y: -737.229950910352
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 468
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 27db4fee-6c01-4987-924b-d322a08e0ecc
+            value: GUARDRAIL_INTERVENED
+            varType: string
+            variable_selector:
+            - '1721297313957'
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 输入内容审查结果判断
+        type: if-else
+      height: 126
+      id: '1721310044683'
+      position:
+        x: 489.3755232548724
+        y: -433.6709526816467
+      positionAbsolute:
+        x: 489.3755232548724
+        y: -433.6709526816467
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 用户输入内容没有通过护栏审查。
+        outputs:
+        - value_selector:
+          - '1721297313957'
+          - text
+          variable: text
+        selected: false
+        title: 输入内容被阻拦
+        type: end
+      height: 118
+      id: '1721310126134'
+      position:
+        x: 928.0527236538322
+        y: -564.3734921764735
+      positionAbsolute:
+        x: 928.0527236538322
+        y: -564.3734921764735
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: b3d7f4c0-bd15-4b57-8c1f-7e76b2b50b8b
+            value: GUARDRAIL_INTERVENED
+            varType: string
+            variable_selector:
+            - '1721297407870'
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: LLM 输出内容审查结果判断
+        type: if-else
+      height: 126
+      id: '1721310274651'
+      position:
+        x: 1735.13001323267
+        y: -416.6879631782598
+      positionAbsolute:
+        x: 1735.13001323267
+        y: -416.6879631782598
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: LLM 输出内容没有通过护栏审查。
+        outputs:
+        - value_selector:
+          - '1721297407870'
+          - text
+          variable: text
+        selected: false
+        title: 输出结果被阻拦
+        type: end
+      height: 118
+      id: '1721310317934'
+      position:
+        x: 2083.710033802082
+        y: -531.8663787409218
+      positionAbsolute:
+        x: 2083.710033802082
+        y: -531.8663787409218
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 结束
+        outputs:
+        - value_selector:
+          - '1721297345739'
+          - text
+          variable: text
+        selected: false
+        title: 输出 LLM 回复
+        type: end
+      height: 118
+      id: '1721310395456'
+      position:
+        x: 2083.710033802082
+        y: -252.6530563049922
+      positionAbsolute:
+        x: 2083.710033802082
+        y: -252.6530563049922
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions: []
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 3
+        type: if-else
+      height: 102
+      id: '1722504803540'
+      position:
+        x: 1435.13001323267
+        y: -416.6879631782598
+      positionAbsolute:
+        x: 1435.13001323267
+        y: -416.6879631782598
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 130.575281340257
+      y: 832.2805844415859
+      zoom: 0.551488953678529
