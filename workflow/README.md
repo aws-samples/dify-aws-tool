@@ -43,4 +43,15 @@
   <tr>
     <td><img src="./gif/code_translation.gif" alt="GIF 7"></td>
   </tr>
+  <tr>
+    <th>ASR & TTS</th>
+  </tr>
+  <tr>
+    <td>
+      <video width="640" height="360" controls>
+        <source src="./mp4/tts_asr.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+  </td>
+  </tr>
 </table>
