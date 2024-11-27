@@ -84,3 +84,4 @@ parameters:
       en_US: 'JSON formatted filter conditions for metadata (e.g., {"cholesterol": {"$lt": 10}})'
       zh_Hans: '元数据的JSON格式过滤条件（例如，{"cholesterol": {"$lt": 10}}）'
       pt_BR: 'JSON formatted filter conditions for metadata (e.g., {"cholesterol": {"$lt": 10}})'
+    form: form
