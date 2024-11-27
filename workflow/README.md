@@ -31,3 +31,7 @@ https://github.com/user-attachments/assets/5dd2812a-42fd-4edb-8404-2d979042c8eb
 **8. ASR & TTS Demo**
 
 https://github.com/user-attachments/assets/cdd1cae1-e8b7-421b-b915-840b516541c3
+
+**9. Amazon Bedrock Retrieval Demo**
+
+https://github.com/user-attachments/assets/b54311d9-6bc2-4e2f-ac54-a7c3b594284d
