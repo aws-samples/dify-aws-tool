@@ -51,6 +51,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Image Translation Tool    | PAAS       | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
 | Chinese Toxicity Detector | PAAS       | A tool to detect Chinese toxicity                             | Comming                                                      | [ychchen](ychchen@amazon.com)   |
 | Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        |                                                       | [river xie](chuanxie@amazon.com)      |
+| Bedrock Retriever         | PAAS     | A tool for retrieving relevant information from Amazon Bedrock Knowledge Base    | Comming                                                      | [ychchen](ychchen@amazon.com)   |
 
 #### Model_Provider
 

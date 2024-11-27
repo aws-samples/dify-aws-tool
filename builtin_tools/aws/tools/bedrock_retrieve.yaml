@@ -81,7 +81,7 @@ parameters:
       zh_Hans: 元数据过滤器 
       pt_BR: Metadata Filter 
     human_description:
-      en_US: 'JSON formatted filter conditions for metadata (e.g., {"greaterThan": {"aaa": 10}})'
-      zh_Hans: '元数据的JSON格式过滤条件（例如，{"greaterThan": {"aaa": 10}}）'
-      pt_BR: 'JSON formatted filter conditions for metadata (e.g., {"greaterThan": {"aaa": 10}})'
+      en_US: 'JSON formatted filter conditions for metadata (e.g., {"greaterThan": {"key: "aaa", "value": 10}})'
+      zh_Hans: '元数据的JSON格式过滤条件（例如，{{"greaterThan": {"key: "aaa", "value": 10}}）'
+      pt_BR: 'JSON formatted filter conditions for metadata (e.g., {"greaterThan": {"key: "aaa", "value": 10}})'
     form: form
