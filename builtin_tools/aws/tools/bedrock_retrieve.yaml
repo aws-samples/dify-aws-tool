@@ -2,9 +2,9 @@ identity:
   name: bedrock_retrieve
   author: AWS
   label:
-    en_US: BedrockRetrieve
+    en_US: Bedrock Retrieve
     zh_Hans: Bedrock检索
-    pt_BR: BedrockRetrieve
+    pt_BR: Bedrock Retrieve
   icon: icon.svg
 
 description:
