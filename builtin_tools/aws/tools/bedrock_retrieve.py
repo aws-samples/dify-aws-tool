@@ -13,18 +13,27 @@ class BedrockRetrieveTool(BuiltinTool):
     knowledge_base_id: str = None
     topk: int = None
 
-    def _bedrock_retrieve(self, query_input: str, knowledge_base_id: str, num_results: int):
+    def _bedrock_retrieve(self, query_input: str, knowledge_base_id: str, num_results: int,
+                          metadata_filter: dict = None):
         try:
+            retrieval_query = {
+                'text': query_input
+            }
+
+            retrieval_configuration = {
+                'vectorSearchConfiguration': {
+                    'numberOfResults': num_results
+                }
+            }
+
+            # 如果有元数据过滤条件，则添加到检索配置中
+            if metadata_filter:
+                retrieval_configuration['filter'] = metadata_filter
+
             response = self.bedrock_client.retrieve(
                 knowledgeBaseId=knowledge_base_id,
-                retrievalQuery={
-                    'text': query_input
-                },
-                retrievalConfiguration={
-                    'vectorSearchConfiguration': {
-                        'numberOfResults': num_results
-                    }
-                }
+                retrievalQuery=retrieval_query,
+                retrievalConfiguration=retrieval_configuration
             )
 
             results = []
@@ -71,11 +80,16 @@ class BedrockRetrieveTool(BuiltinTool):
             if not query:
                 return self.create_text_message("Please input query")
 
+            # 获取元数据过滤条件（如果存在）
+            metadata_filter_str = tool_parameters.get("metadata_filter", None)
+            metadata_filter = json.loads(metadata_filter_str) if metadata_filter_str else None
+
             line = 4
             retrieved_docs = self._bedrock_retrieve(
                 query_input=query,
                 knowledge_base_id=self.knowledge_base_id,
-                num_results=self.topk
+                num_results=self.topk,
+                metadata_filter=metadata_filter  # 将元数据过滤条件传递给检索方法
             )
 
             line = 5
@@ -97,3 +111,8 @@ class BedrockRetrieveTool(BuiltinTool):
 
         if not parameters.get("query"):
             raise ValueError("query is required")
+
+        # 可选：可以验证元数据过滤条件是否为有效的 JSON 字符串（如果提供）
+        metadata_filter_str = parameters.get("metadata_filter")
+        if metadata_filter_str and not isinstance(json.loads(metadata_filter_str), dict):
+            raise ValueError("metadata_filter must be a valid JSON object")
