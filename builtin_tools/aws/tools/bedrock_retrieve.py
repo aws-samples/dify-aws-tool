@@ -28,7 +28,7 @@ class BedrockRetrieveTool(BuiltinTool):
 
             # 如果有元数据过滤条件，则添加到检索配置中
             if metadata_filter:
-                retrieval_configuration['filter'] = metadata_filter
+                retrieval_configuration['vectorSearchConfiguration']['filter'] = metadata_filter
 
             response = self.bedrock_client.retrieve(
                 knowledgeBaseId=knowledge_base_id,
