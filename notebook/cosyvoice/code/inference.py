@@ -118,28 +118,35 @@ class CosyVoiceService():
         return self.cosyvoice.list_avaliable_spks()
 
     def predict_fn(self, request):
-        model_output = None
+        audio_chunks = []
+        
         if isinstance(request, SftRequest):
             logging.info('sft_request inference request')
-            model_output = self.cosyvoice.inference_sft(request.tts_text, request.role)
+            for i, j in enumerate(self.cosyvoice.inference_sft(request.tts_text, request.role, stream=False)):
+                audio_chunks.append(j['tts_speech'])
         elif isinstance(request, ZeroShotRequest):
             audio_buff = get_audio(url=request.prompt_audio)
             prompt_speech_16k = load_wav(audio_buff, 16000)
             if request.prompt_text:
                 logging.info('zero_shot_request inference request')
-                model_output = self.cosyvoice.inference_zero_shot(request.tts_text, request.prompt_text, prompt_speech_16k)
+                for i, j in enumerate(self.cosyvoice.inference_zero_shot(request.tts_text, request.prompt_text, prompt_speech_16k, stream=False)):
+                    audio_chunks.append(j['tts_speech'])
+                    # s3_uri = save_to_s3(i, j['tts_speech'], 22050)
+                    # s3_uri_list.append(s3_uri)
             else:
                 logging.info('cross_lingual_request inference request')
-                model_output = self.cosyvoice.inference_cross_lingual(request.tts_text, prompt_speech_16k)
+                for i, j in enumerate(self.cosyvoice.inference_cross_lingual(request.tts_text, prompt_speech_16k, stream=False)):
+                    audio_chunks.append(j['tts_speech'])
         elif isinstance(request, InstructRequest):
             logging.info('instruct_request inference request')
-            model_output = self.cosyvoice.inference_instruct(request.tts_text, request.role, request.instruct_text)
+            for i, j in enumerate(self.cosyvoice.inference_instruct(request.tts_text, request.role, request.instruct_text, stream=False)):
+                audio_chunks.append(j['tts_speech'])
         else:
             raise RuntimeError(f"invalid type of request: {type(request)}")
 
-        if model_output:
-            tts_audio = model_output['tts_speech']
-            s3_uri = save_to_s3(tts_audio)
+        if audio_chunks:
+            full_audio = torch.cat(audio_chunks, dim=1)
+            s3_uri = save_to_s3(full_audio)
             s3_presign_url = generate_presigned_url(s3_uri)
             return s3_uri, s3_presign_url
         else:
