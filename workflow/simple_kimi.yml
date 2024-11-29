@@ -236,17 +236,6 @@ workflow:
       zIndex: 0
     - data:
         isInIteration: false
-        sourceType: list-operator
-        targetType: document-extractor
-      id: 1729777763543-source-1729777092216-target
-      source: '1729777763543'
-      sourceHandle: source
-      target: '1729777092216'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
         sourceType: if-else
         targetType: answer
       id: 1727357893396-true-1729777900959-target
@@ -269,17 +258,6 @@ workflow:
       zIndex: 0
     - data:
         isInIteration: false
-        sourceType: list-operator
-        targetType: llm
-      id: 1729778350970-source-1729778654959-target
-      source: '1729778350970'
-      sourceHandle: source
-      target: '1729778654959'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
         sourceType: llm
         targetType: answer
       id: 1729778654959-source-1729778683728-target
@@ -297,50 +275,6 @@ workflow:
       source: '1727357893396'
       sourceHandle: a924b44a-824a-4912-924e-268e87240447
       target: '1729781189640'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: if-else
-        targetType: list-operator
-      id: 1729781189640-true-1729778350970-target
-      source: '1729781189640'
-      sourceHandle: 'true'
-      target: '1729778350970'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: if-else
-        targetType: list-operator
-      id: 1729781189640-ddf6ba30-c72f-4f06-b783-af77419acf30-1729777695485-target
-      source: '1729781189640'
-      sourceHandle: ddf6ba30-c72f-4f06-b783-af77419acf30
-      target: '1729777695485'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: if-else
-        targetType: list-operator
-      id: 1729781189640-5ff411e5-2162-41de-80de-b51902a2380f-1729777763543-target
-      source: '1729781189640'
-      sourceHandle: 5ff411e5-2162-41de-80de-b51902a2380f
-      target: '1729777763543'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        sourceType: list-operator
-        targetType: llm
-      id: 1729777695485-source-1729778442989-target
-      source: '1729777695485'
-      sourceHandle: source
-      target: '1729778442989'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -498,6 +432,72 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: list-operator
+      id: 1729781189640-true-1731377053023-target
+      source: '1729781189640'
+      sourceHandle: 'true'
+      target: '1731377053023'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: llm
+      id: 1731377053023-source-1729778654959-target
+      source: '1731377053023'
+      sourceHandle: source
+      target: '1729778654959'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: list-operator
+      id: 1729781189640-ddf6ba30-c72f-4f06-b783-af77419acf30-1731377116920-target
+      source: '1729781189640'
+      sourceHandle: ddf6ba30-c72f-4f06-b783-af77419acf30
+      target: '1731377116920'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: llm
+      id: 1731377116920-source-1729778442989-target
+      source: '1731377116920'
+      sourceHandle: source
+      target: '1729778442989'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: list-operator
+      id: 1729781189640-5ff411e5-2162-41de-80de-b51902a2380f-1731377168392-target
+      source: '1729781189640'
+      sourceHandle: 5ff411e5-2162-41de-80de-b51902a2380f
+      target: '1731377168392'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: document-extractor
+      id: 1731377168392-source-1729777092216-target
+      source: '1731377168392'
+      sourceHandle: source
+      target: '1729777092216'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         desc: ''
@@ -519,7 +519,7 @@ workflow:
           required: false
           type: paragraph
           variable: role_def
-      height: 116
+      height: 114
       id: '1726108148263'
       position:
         x: 30
@@ -527,11 +527,11 @@ workflow:
       positionAbsolute:
         x: 30
         y: 286.5
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
@@ -549,7 +549,7 @@ workflow:
             user: ''
           window:
             enabled: true
-            size: 10
+            size: 5
         model:
           completion_params:
             temperature: 0.7
@@ -571,7 +571,7 @@ workflow:
             - '1729777695485'
             - result
           enabled: false
-      height: 98
+      height: 96
       id: llm
       position:
         x: 2462
@@ -583,7 +583,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#llm.text#}}'
         desc: ''
@@ -591,7 +591,7 @@ workflow:
         title: 直接回复
         type: answer
         variables: []
-      height: 103
+      height: 101
       id: answer
       position:
         x: 2766
@@ -603,7 +603,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -632,7 +632,7 @@ workflow:
         selected: false
         title: 条件分支
         type: if-else
-      height: 174
+      height: 172
       id: '1727357893396'
       position:
         x: 334
@@ -644,7 +644,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(search_results) -> dict:\n    return {\n        \"title\"\
           \ : search_results[0]['organic_results'][0].get('title'),\n        \"url\"\
@@ -670,7 +670,7 @@ workflow:
           - '1731030018613'
           - json
           variable: search_results
-      height: 54
+      height: 52
       id: '1727437551868'
       position:
         x: 1854
@@ -682,7 +682,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         provider_id: webscraper
@@ -701,7 +701,7 @@ workflow:
             type: mixed
             value: '{{#1727437551868.url#}}'
         type: tool
-      height: 116
+      height: 114
       id: '1727437724068'
       position:
         x: 2158
@@ -713,7 +713,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(crawl_result) -> str:\n    idx = crawl_result.find(\"TEXT:\\\
           n\\n\")\n    start_idx = idx + len(\"TEXT:\\n\\n\")\n    return {\n    \
@@ -732,7 +732,7 @@ workflow:
           - '1727437724068'
           - text
           variable: crawl_result
-      height: 54
+      height: 52
       id: '1727437739002'
       position:
         x: 2462
@@ -744,7 +744,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         selected: false
@@ -769,7 +769,7 @@ workflow:
           - '1727437551868'
           - snippet
           variable: snippet
-      height: 54
+      height: 52
       id: '1727438089651'
       position:
         x: 2766
@@ -781,7 +781,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(search_results) -> dict:\n    return {\n        \"title\"\
           \ : search_results[0]['organic_results'][1].get('title'),\n        \"url\"\
@@ -807,7 +807,7 @@ workflow:
           - '1731030018613'
           - json
           variable: search_results
-      height: 54
+      height: 52
       id: '1727438265117'
       position:
         x: 1854
@@ -819,7 +819,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         provider_id: webscraper
@@ -838,7 +838,7 @@ workflow:
             type: mixed
             value: '{{#1727438265117.url#}}'
         type: tool
-      height: 116
+      height: 114
       id: '1727438331868'
       position:
         x: 2158
@@ -850,7 +850,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(crawl_result) -> str:\n    idx = crawl_result.find(\"TEXT:\\\
           n\\n\")\n    start_idx = idx + len(\"TEXT:\\n\\n\")\n    return {\n    \
@@ -869,7 +869,7 @@ workflow:
           - '1727438331868'
           - text
           variable: crawl_result
-      height: 54
+      height: 52
       id: '1727438349664'
       position:
         x: 2462
@@ -881,7 +881,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         selected: false
@@ -906,7 +906,7 @@ workflow:
           - '1727438265117'
           - snippet
           variable: snippet
-      height: 54
+      height: 52
       id: '1727438463965'
       position:
         x: 2766
@@ -918,25 +918,14 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
           variable_selector: []
         desc: ''
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
-          provider: bedrock
-        prompt_template:
-        - id: 21458af2-ffc5-4488-9470-3a4ad579b1ce
-          role: system
-          text: '{{#1726108148263.role_def#}}，请参考提供搜索的内容回答问题'
-        - id: 35e1bbae-cfe5-478c-8b66-757348116763
-          role: user
-          text: '<search_result>
+        memory:
+          query_prompt_template: '<search_result>
 
             [
 
@@ -979,6 +968,22 @@ workflow:
 
 
             {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 21458af2-ffc5-4488-9470-3a4ad579b1ce
+          role: system
+          text: '{{#1726108148263.role_def#}}，请参考提供搜索的内容回答问题'
         selected: false
         title: LLM_Final
         type: llm
@@ -987,7 +992,7 @@ workflow:
           configs:
             detail: high
           enabled: false
-      height: 98
+      height: 96
       id: '1727438962981'
       position:
         x: 3232.5714285714284
@@ -999,7 +1004,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1727438962981.text#}}'
         desc: ''
@@ -1007,7 +1012,7 @@ workflow:
         title: 直接回复 2
         type: answer
         variables: []
-      height: 103
+      height: 101
       id: '1727439130548'
       position:
         x: 3570.8571428571427
@@ -1019,7 +1024,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(search_results) -> dict:\n    return {\n        \"title\"\
           \ : search_results[0]['organic_results'][2].get('title'),\n        \"url\"\
@@ -1045,7 +1050,7 @@ workflow:
           - '1731030018613'
           - json
           variable: search_results
-      height: 54
+      height: 52
       id: '17274404793180'
       position:
         x: 1854
@@ -1057,7 +1062,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         provider_id: webscraper
@@ -1076,7 +1081,7 @@ workflow:
             type: mixed
             value: '{{#17274404793180.url#}}'
         type: tool
-      height: 116
+      height: 114
       id: '17274405419030'
       position:
         x: 2158
@@ -1088,7 +1093,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(crawl_result) -> str:\n    idx = crawl_result.find(\"TEXT:\\\
           n\\n\")\n    start_idx = idx + len(\"TEXT:\\n\\n\")\n    return {\n    \
@@ -1107,7 +1112,7 @@ workflow:
           - '17274405419030'
           - text
           variable: crawl_result
-      height: 54
+      height: 52
       id: '17274405777680'
       position:
         x: 2462
@@ -1119,7 +1124,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         selected: false
@@ -1144,7 +1149,7 @@ workflow:
           - '17274404793180'
           - snippet
           variable: snippet
-      height: 54
+      height: 52
       id: '17274406200850'
       position:
         x: 2766
@@ -1156,7 +1161,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(search_results) -> dict:\n    return {\n        \"title\"\
           \ : search_results[0]['organic_results'][3].get('title'),\n        \"url\"\
@@ -1182,7 +1187,7 @@ workflow:
           - '1731030018613'
           - json
           variable: search_results
-      height: 54
+      height: 52
       id: '17274407417220'
       position:
         x: 1854
@@ -1194,7 +1199,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         provider_id: webscraper
@@ -1213,7 +1218,7 @@ workflow:
             type: mixed
             value: '{{#17274407417220.url#}}'
         type: tool
-      height: 116
+      height: 114
       id: '17274407666060'
       position:
         x: 2158
@@ -1225,7 +1230,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(crawl_result) -> str:\n    idx = crawl_result.find(\"TEXT:\\\
           n\\n\")\n    start_idx = idx + len(\"TEXT:\\n\\n\")\n    return {\n    \
@@ -1244,7 +1249,7 @@ workflow:
           - '17274407666060'
           - text
           variable: crawl_result
-      height: 54
+      height: 52
       id: '17274408191900'
       position:
         x: 2462
@@ -1256,7 +1261,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         selected: false
@@ -1281,7 +1286,7 @@ workflow:
           - '17274407417220'
           - snippet
           variable: snippet
-      height: 54
+      height: 52
       id: '17274408457890'
       position:
         x: 2766
@@ -1293,7 +1298,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         is_array_file: false
@@ -1301,9 +1306,9 @@ workflow:
         title: 文档提取器
         type: document-extractor
         variable_selector:
-        - '1729777763543'
+        - '1731377168392'
         - first_record
-      height: 94
+      height: 92
       id: '1729777092216'
       position:
         x: 1854
@@ -1315,7 +1320,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         selected: false
@@ -1339,93 +1344,19 @@ workflow:
           - '1729777092216'
           - text
           variable: my_list
-      height: 54
+      height: 52
       id: '1729777162616'
       position:
         x: 2158
-        y: 1206.5
+        y: 1208.4216261554986
       positionAbsolute:
         x: 2158
-        y: 1206.5
+        y: 1208.4216261554986
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
-    - data:
-        desc: ''
-        filter_by:
-          conditions:
-          - comparison_operator: in
-            key: type
-            value:
-            - image
-          enabled: true
-        item_var_type: file
-        limit:
-          enabled: false
-          size: 10
-        order_by:
-          enabled: false
-          key: ''
-          value: asc
-        selected: false
-        title: Image
-        type: list-operator
-        var_type: array[file]
-        variable:
-        - sys
-        - files
-      height: 94
-      id: '1729777695485'
-      position:
-        x: 1550
-        y: 1051.5
-      positionAbsolute:
-        x: 1550
-        y: 1051.5
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        desc: ''
-        filter_by:
-          conditions:
-          - comparison_operator: in
-            key: type
-            value:
-            - document
-          enabled: true
-        item_var_type: file
-        limit:
-          enabled: true
-          size: 2
-        order_by:
-          enabled: false
-          key: ''
-          value: asc
-        selected: false
-        title: Doc
-        type: list-operator
-        var_type: array[file]
-        variable:
-        - sys
-        - files
-      height: 94
-      id: '1729777763543'
-      position:
-        x: 1550
-        y: 1186.5
-      positionAbsolute:
-        x: 1550
-        y: 1186.5
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
+      width: 243
     - data:
         answer: '开始搜索...
 
@@ -1436,7 +1367,7 @@ workflow:
         title: intermediate_reply
         type: answer
         variables: []
-      height: 100
+      height: 98
       id: '1729777900959'
       position:
         x: 1246
@@ -1448,43 +1379,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
-    - data:
-        desc: ''
-        filter_by:
-          conditions:
-          - comparison_operator: <
-            key: size
-            value: '1'
-          enabled: true
-        item_var_type: file
-        limit:
-          enabled: false
-          size: 10
-        order_by:
-          enabled: false
-          key: ''
-          value: asc
-        selected: false
-        title: No-File
-        type: list-operator
-        var_type: array[file]
-        variable:
-        - sys
-        - files
-      height: 94
-      id: '1729778350970'
-      position:
-        x: 1550
-        y: 910.5
-      positionAbsolute:
-        x: 1550
-        y: 910.5
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
@@ -1497,7 +1392,7 @@ workflow:
             user: ''
           window:
             enabled: true
-            size: 10
+            size: 5
         model:
           completion_params:
             temperature: 0.7
@@ -1516,10 +1411,10 @@ workflow:
           configs:
             detail: high
             variable_selector:
-            - '1729777695485'
+            - '1731377116920'
             - result
           enabled: true
-      height: 98
+      height: 96
       id: '1729778442989'
       position:
         x: 1854
@@ -1531,7 +1426,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1729778442989.text#}}'
         desc: ''
@@ -1539,7 +1434,7 @@ workflow:
         title: 直接回复 4
         type: answer
         variables: []
-      height: 103
+      height: 101
       id: '1729778610477'
       position:
         x: 2158
@@ -1551,12 +1446,20 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
           variable_selector: []
         desc: ''
+        memory:
+          query_prompt_template: ''
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
         model:
           completion_params:
             temperature: 0.7
@@ -1567,16 +1470,13 @@ workflow:
         - id: deeb4fd7-f7da-48bd-a1f7-e0efc6a59888
           role: system
           text: '{{#1726108148263.role_def#}}'
-        - id: 8fe07dab-ee0b-417e-8dec-843748f94c5a
-          role: user
-          text: '{{#sys.query#}}'
         selected: false
         title: LLM 8
         type: llm
         variables: []
         vision:
           enabled: false
-      height: 98
+      height: 96
       id: '1729778654959'
       position:
         x: 1854
@@ -1588,7 +1488,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1729778654959.text#}}'
         desc: ''
@@ -1596,7 +1496,7 @@ workflow:
         title: 直接回复 5
         type: answer
         variables: []
-      height: 103
+      height: 101
       id: '1729778683728'
       position:
         x: 2158
@@ -1608,7 +1508,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -1668,7 +1568,7 @@ workflow:
         selected: false
         title: 条件分支 3
         type: if-else
-      height: 270
+      height: 268
       id: '1729781189640'
       position:
         x: 1246
@@ -1680,7 +1580,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
@@ -1719,7 +1619,7 @@ workflow:
         variables: []
         vision:
           enabled: false
-      height: 98
+      height: 96
       id: '1730860337573'
       position:
         x: 638
@@ -1731,7 +1631,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -1749,7 +1649,7 @@ workflow:
         selected: false
         title: 条件分支 3
         type: if-else
-      height: 126
+      height: 124
       id: '1730860548544'
       position:
         x: 942
@@ -1761,7 +1661,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         provider_id: google
@@ -1777,7 +1677,7 @@ workflow:
             type: mixed
             value: '{{#sys.query#}}'
         type: tool
-      height: 54
+      height: 52
       id: '1731030018613'
       position:
         x: 1555.7142857142858
@@ -1789,8 +1689,127 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
+    - data:
+        desc: ''
+        extract_by:
+          enabled: false
+          serial: '1'
+        filter_by:
+          conditions:
+          - comparison_operator: <
+            key: size
+            value: '1'
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: No File
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 92
+      id: '1731377053023'
+      position:
+        x: 1550
+        y: 877.5
+      positionAbsolute:
+        x: 1550
+        y: 877.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        extract_by:
+          enabled: false
+          serial: '1'
+        filter_by:
+          conditions:
+          - comparison_operator: in
+            key: type
+            value:
+            - image
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: Image
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 92
+      id: '1731377116920'
+      position:
+        x: 1544.7896063058697
+        y: 1018.5
+      positionAbsolute:
+        x: 1544.7896063058697
+        y: 1018.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        extract_by:
+          enabled: true
+          serial: '1'
+        filter_by:
+          conditions:
+          - comparison_operator: in
+            key: type
+            value:
+            - document
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 2
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: Doc
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 92
+      id: '1731377168392'
+      position:
+        x: 1544.7896063058697
+        y: 1163.761316338092
+      positionAbsolute:
+        x: 1544.7896063058697
+        y: 1163.761316338092
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
     viewport:
-      x: -759.1986799398655
-      y: -156.93444479722274
-      zoom: 0.8262469597714619
+      x: 23.29870050654813
+      y: 254.79112021695698
+      zoom: 0.5506812666085218
