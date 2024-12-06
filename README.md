@@ -41,7 +41,10 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Education_Question_Gen      | Education Question Generator                          | [DSL](./workflow/edu_question_gen.yml)                |                    | [chuanxie](chuanxie@amazon.com)                              |
 | Apply_guardrails            | Apply guardrails for chatbot                          | [DSL](./workflow/apply_guardrails.yml)                |                    | [amyli](amyli@amazon.com)                                    |
 
+You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
+
 #### Builtin_Tools
+
 | Tool Name                 | Tool Type  | Description                                                  | Deploy_doc                                                   | Owner                           |
 | ------------------------- |------------| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------- |
 | Rerank                    | PAAS       | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |

@@ -41,6 +41,8 @@
 | Education_Question_Gen      | 教育场景 - 试题生成器                       | [DSL](./workflow/edu_question_gen.yml)                |                | [chuanxie](chuanxie@amazon.com)                              |
 | Apply_guardrails            | 应用安全防范的聊天工作流                    | [DSL](./workflow/apply_guardrails.yml)                |                | [amyli](amyli@amazon.com)                                    |
 
+更多工作流可以关注社区网站：[dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
+
 #### 内置工具
 
 | 工具名称                      | 工具类型 | 描述                                                                 | 部署文档                                                     | 负责人                             |
