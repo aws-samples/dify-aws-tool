@@ -55,6 +55,7 @@ You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.
 | Chinese Toxicity Detector | PAAS       | A tool to detect Chinese toxicity                             | Comming                                                      | [ychchen](ychchen@amazon.com)   |
 | Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        |                                                       | [river xie](chuanxie@amazon.com)      |
 | Bedrock Retriever         | PAAS     | A tool for retrieving relevant information from Amazon Bedrock Knowledge Base    | Comming                                                      | [ychchen](ychchen@amazon.com)   |
+| S3 Operator | SAAS | Read and write content in S3 buckets, with ability to return presigned URLs | | [ybalbert](ybalbert@amazon.com) |
 
 #### Model_Provider
 

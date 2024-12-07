@@ -55,6 +55,7 @@
 | Chinese Toxicity Detector | PAAS     | 中文有害内容检测                                                          | Comming                                                      | [ychchen](ychchen@amazon.com)   |
 | Transcribe Tool           | SAAS     | AWS transcribe service tool (ASR)                                 |                                                    | [river xie](chuanxie@amazon.com)      |
 | Bedrock Retriever         | PAAS     | Amazon Bedrock知识库检索工具                                             | Comming                                                      | [ychchen](ychchen@amazon.com)   |
+| S3 Operator | SAAS | 读写S3中bucket的内容，可以返回presignURL | | [ybalbert](ybalbert@amazon.com) |
 
 #### 模型提供商
 
