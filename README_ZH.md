@@ -28,18 +28,19 @@
 
 #### 工作流 ([Demo页面](./workflow/README.md))
 
-| 名称                        | 描述                                        | Link                                                  | 依赖           | 负责人                                                       |
-| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | -------------- | ------------------------------------------------------------ |
-| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(专词映射) | [ybalbert](ybalbert@amazon.com)                              |
-| Code_translate              | 不同代码种类之间的翻译工作流                | [DSL](./workflow/claude3_code_translation.yml)        |                | [binc](binc@amazon.com)                                      |
-| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)   | [ybalbert](ybalbert@amazon.com)                              |
-| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](./workflow/andrew_translation_agent.yml)        |                | [ybalbert](ybalbert@amazon.com)                              |
-| rag_based_bot_with_tts      | 基于RAG能语音回答的Bot                      | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)      | [ybalbert](ybalbert@amazon.com)                              |
-| Marketing-copywriter        | 营销文案一条龙                              | [DSL](./workflow/marketing-copywriting.yml)           |                | [Lyson Ober](https://www.youtube.com/@lysonober)             |
-| Simple_Kimi                 | 简易自制Kimi                                | [DSL](./workflow/simple_kimi.yml)                     |                | [ybalbert](ybalbert@amazon.com)                              |
-| SVG_Designer                | SVG 图标设计师                              | [DSL](./workflow/svg_designer.yml)                    |                | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
-| Education_Question_Gen      | 教育场景 - 试题生成器                       | [DSL](./workflow/edu_question_gen.yml)                |                | [chuanxie](chuanxie@amazon.com)                              |
-| Apply_guardrails            | 应用安全防范的聊天工作流                    | [DSL](./workflow/apply_guardrails.yml)                |                | [amyli](amyli@amazon.com)                                    |
+| 名称                        | 描述                                        | Link                                                  | 依赖                                                         | 负责人                                                       |
+| --------------------------- | ------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Term_based_translate        | 集成了专词映射的翻译工作流                  | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(专词映射)                                               | [ybalbert](ybalbert@amazon.com)                              |
+| Code_translate              | 不同代码种类之间的翻译工作流                | [DSL](./workflow/claude3_code_translation.yml)        |                                                              | [binc](binc@amazon.com)                                      |
+| Basic_RAG_Sample            | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)                                                 | [ybalbert](ybalbert@amazon.com)                              |
+| Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent                 | [DSL](./workflow/andrew_translation_agent.yml)        |                                                              | [ybalbert](ybalbert@amazon.com)                              |
+| rag_based_bot_with_tts      | 基于RAG能语音回答的Bot                      | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)                                                    | [ybalbert](ybalbert@amazon.com)                              |
+| Marketing-copywriter        | 营销文案一条龙                              | [DSL](./workflow/marketing-copywriting.yml)           |                                                              | [Lyson Ober](https://www.youtube.com/@lysonober)             |
+| Simple_Kimi                 | 简易自制Kimi                                | [DSL](./workflow/simple_kimi.yml)                     |                                                              | [ybalbert](ybalbert@amazon.com)                              |
+| SVG_Designer                | SVG 图标设计师                              | [DSL](./workflow/svg_designer.yml)                    |                                                              | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
+| Education_Question_Gen      | 教育场景 - 试题生成器                       | [DSL](./workflow/edu_question_gen.yml)                |                                                              | [chuanxie](chuanxie@amazon.com)                              |
+| Apply_guardrails            | 应用安全防范的聊天工作流                    | [DSL](./workflow/apply_guardrails.yml)                |                                                              | [amyli](amyli@amazon.com)                                    |
+| LLM-Finetuning-Dataflow     | LLM微调数据合成工作流                       | [DSL](./workflow/LLM-Finetuning-Dataflow-dify)        | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com)                                |
 
 更多工作流可以关注社区网站：[dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
@@ -51,10 +52,10 @@
 | TTS                       | PAAS     | 语音合成                                                              | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
 | Bedrock Guardrails        | SAAS     | 文本审核工具，通过 Amazon Bedrock Guardrail 上提供的独立评估API ApplyGuardrail 来实现。 |                                                              | [amyli](amyli@amazon.com)       |
 | Term_multilingual_mapping | PAAS     | 切词/获取专词映射                                                         | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
-| Image Translation Tool    | PAAS     | 翻译图片上的文字                                                          | Comming                                                      | [tanqy](tangqy@amazon.com)      |
-| Chinese Toxicity Detector | PAAS     | 中文有害内容检测                                                          | Comming                                                      | [ychchen](ychchen@amazon.com)   |
+| Image Translation Tool    | PAAS     | 翻译图片上的文字                                                          | Coming                                                      | [tanqy](tangqy@amazon.com)      |
+| Chinese Toxicity Detector | PAAS     | 中文有害内容检测                                                          | Coming                                                      | [ychchen](ychchen@amazon.com)   |
 | Transcribe Tool           | SAAS     | AWS transcribe service tool (ASR)                                 |                                                    | [river xie](chuanxie@amazon.com)      |
-| Bedrock Retriever         | PAAS     | Amazon Bedrock知识库检索工具                                             | Comming                                                      | [ychchen](ychchen@amazon.com)   |
+| Bedrock Retriever         | PAAS     | Amazon Bedrock知识库检索工具                                             |                                                       | [ychchen](ychchen@amazon.com)   |
 | S3 Operator | SAAS | 读写S3中bucket的内容，可以返回presignURL | | [ybalbert](ybalbert@amazon.com) |
 
 #### 模型提供商

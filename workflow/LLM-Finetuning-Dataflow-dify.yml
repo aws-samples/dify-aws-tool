@@ -1,0 +1,842 @@
+app:
+  description: 输入一个网页实现文章内容的仿写和改写
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: ai-dataflow
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: iteration
+      id: 1719046777534-source-1719046938333-target
+      selected: false
+      source: '1719046777534'
+      sourceHandle: source
+      target: '1719046938333'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: llm
+      id: 17190386712500-source-1719040452162-target
+      selected: false
+      source: '17190386712500'
+      sourceHandle: source
+      target: '1719040452162'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1719046938333'
+        sourceType: code
+        targetType: tool
+      id: 1719051705186-source-1719052020538-target
+      selected: false
+      source: '1719051705186'
+      sourceHandle: source
+      target: '1719052020538'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1719046938333'
+        sourceType: tool
+        targetType: llm
+      id: 1719052020538-source-1719052032351-target
+      selected: false
+      source: '1719052020538'
+      sourceHandle: source
+      target: '1719052032351'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: template-transform
+      id: 1719046938333-source-1719054341069-target
+      selected: false
+      source: '1719046938333'
+      sourceHandle: source
+      target: '1719054341069'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1719054341069-source-1719047399639-target
+      selected: false
+      source: '1719054341069'
+      sourceHandle: source
+      target: '1719047399639'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: parameter-extractor
+      id: 1719062922068-source-1719046777534-target
+      selected: false
+      source: '1719062922068'
+      sourceHandle: source
+      target: '1719046777534'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1719046938333'
+        sourceType: iteration-start
+        targetType: code
+      id: 1719046938333start0-source-1719051705186-target
+      selected: false
+      source: 1719046938333start0
+      sourceHandle: source
+      target: '1719051705186'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: parameter-extractor
+      id: 1730382926315-source-17190386712500-target
+      source: '1730382926315'
+      sourceHandle: source
+      target: '17190386712500'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: code
+      id: 1719061373860-true-1719062922068-target
+      selected: false
+      source: '1719061373860'
+      sourceHandle: 'true'
+      target: '1719062922068'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1718957126125-source-1730382996445-target
+      source: '1718957126125'
+      sourceHandle: source
+      target: '1730382996445'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1730382996445-source-1730382926315-target
+      source: '1730382996445'
+      sourceHandle: source
+      target: '1730382926315'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: 1719040452162-source-1719061373860-target
+      source: '1719040452162'
+      sourceHandle: source
+      target: '1719061373860'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 17303834316570-source-1730383403211-target
+      source: '17303834316570'
+      sourceHandle: source
+      target: '1730383403211'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: template-transform
+      id: 1719061373860-false-17303834316570-target
+      source: '1719061373860'
+      sourceHandle: 'false'
+      target: '17303834316570'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: true
+        title: 开始
+        type: start
+        variables:
+        - label: 是否数据增强
+          max_length: 48
+          options:
+          - 'YES'
+          - 'NO'
+          required: true
+          type: select
+          variable: is_enhance
+        - label: contextstring
+          max_length: 256
+          options: []
+          required: false
+          type: paragraph
+          variable: contextstring
+      height: 116
+      id: '1718957126125'
+      position:
+        x: 117.6813736891504
+        y: 480.98317300694873
+      positionAbsolute:
+        x: 117.6813736891504
+        y: 480.98317300694873
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: '请对以下内容进行清洗，。请避免包含文章内容无关的信息，例如：html标签、页头、页尾。请对清洗后的信息进行markdown的格式输出。请对抽取的完整正文进行智能分段并保留原文的配图信息。
+
+
+
+          ### 约束条件
+
+          1.文本信息中如果有明显的标题信息请直接抽取，不需要自定义生成或加工
+
+          2.文本的正文内容请尊重原本描述抽取，不需要自定义生成或加工
+
+          3.关键词将用作图片多模态检索，请不要包含无意义的词组或短语。
+
+          4.请完整抽取原文内容，并保持段落排版
+
+          5.请过滤版权信息、编辑、作者、来源、转载以及与原文内容无关的信息
+
+
+
+          ### 抓取内容如下：
+
+          ```
+
+          {{#1730382926315.result#}}
+
+          ```'
+        model:
+          completion_params:
+            temperature: 1
+          mode: completion
+          name: meta.llama3-1-8b-instruct-v1:0
+          provider: bedrock
+        parameters:
+        - description: 原文标题
+          name: title
+          required: true
+          type: string
+        - description: 原文完整内容
+          name: content
+          required: false
+          type: string
+        - description: 关键词信息
+          name: keywords
+          required: true
+          type: string
+        query:
+        - '1730382926315'
+        - result
+        reasoning_mode: prompt
+        selected: false
+        title: 检查清洗是否生效 (LLM)
+        type: parameter-extractor
+        variables: []
+      height: 98
+      id: '17190386712500'
+      position:
+        x: 1036.6304561522873
+        y: 480.98317300694873
+      positionAbsolute:
+        x: 1036.6304561522873
+        y: 480.98317300694873
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 1.2
+          mode: completion
+          name: meta.llama3-1-8b-instruct-v1:0
+          provider: bedrock
+        prompt_template:
+          edition_type: basic
+          text: 'Here is the chat histories between human and assistant, inside <histories></histories>
+            XML tags.
+
+
+            <histories>
+
+            {{#histories#}}
+
+            </histories>
+
+
+
+            Human: {{#sys.query#}}
+
+
+            Assistant:'
+        selected: false
+        title: 数据格式化
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1719040452162'
+      position:
+        x: 1418.4767194284534
+        y: 480.98317300694873
+      positionAbsolute:
+        x: 1418.4767194284534
+        y: 480.98317300694873
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: "请分析文章的内容结构，将文本划分为一个或多个语义完整的章节，每个节不少于400字。并为每个章节生成若干个用于检索图片的关键词或描述，多个关键词使用逗号进行分割。输出结构为json\n\
+          Example:{\n    \"sections\": [\n        {\n           ”keywords“: ”关键词或描述字符串“,\n\
+          \           ”section“: \"章节内容1\"\n        },\n        {\n           ”keywords“:\
+          \ ”关键词或描述字符串“,\n           ”section“: \"章节内容2\"\n        },\n         {\n\
+          \           ”keywords“: ”关键词或描述字符串“,\n           ”section“: \"章节内容2\"\n\
+          \        }\n    ]\n}\n"
+        model:
+          completion_params:
+            temperature: 1
+          mode: completion
+          name: meta.llama3-1-405b-instruct-v1:0
+          provider: bedrock
+        parameters:
+        - description: 多个文章段落
+          name: sections
+          required: true
+          type: array[object]
+        query:
+        - '1719040452162'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: 段落拆分
+        type: parameter-extractor
+        variables: []
+      height: 98
+      id: '1719046777534'
+      position:
+        x: 895.5423007156742
+        y: 758.661445377106
+      positionAbsolute:
+        x: 895.5423007156742
+        y: 758.661445377106
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        height: 202
+        iterator_selector:
+        - '1719046777534'
+        - sections
+        output_selector:
+        - '1719052032351'
+        - text
+        output_type: array[string]
+        selected: false
+        startNodeType: code
+        start_node_id: 1719046938333start0
+        title: 迭代
+        type: iteration
+        width: 982
+      height: 202
+      id: '1719046938333'
+      position:
+        x: 509.44394693357435
+        y: 917.1523153498515
+      positionAbsolute:
+        x: 509.44394693357435
+        y: 917.1523153498515
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 982
+      zIndex: 1
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1719054341069'
+          - output
+          variable: answer
+        selected: false
+        title: 结束 2
+        type: end
+      height: 90
+      id: '1719047399639'
+      position:
+        x: 1234.2627058724395
+        y: 1195.0474727202297
+      positionAbsolute:
+        x: 1234.2627058724395
+        y: 1195.0474727202297
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(item: dict) -> dict:\n    return {\n        \"section\"\
+          :  item[\"section\"]\n    }\n"
+        code_language: python3
+        desc: ''
+        isInIteration: true
+        isIterationStart: true
+        iteration_id: '1719046938333'
+        outputs:
+          keywords:
+            children: null
+            type: string
+          section:
+            children: null
+            type: string
+        selected: false
+        title: 提取种子数据
+        type: code
+        variables:
+        - value_selector:
+          - '1719046938333'
+          - item
+          variable: item
+      extent: parent
+      height: 54
+      id: '1719051705186'
+      parentId: '1719046938333'
+      position:
+        x: 115.12594916603143
+        y: 85
+      positionAbsolute:
+        x: 624.5698960996058
+        y: 1002.1523153498515
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1001
+    - data:
+        desc: ''
+        isInIteration: true
+        iteration_id: '1719046938333'
+        provider_id: 2ebe9c1d-46ef-4735-93f1-e901de242584
+        provider_name: imageSearch
+        provider_type: workflow
+        selected: false
+        title: 种子数据有效性判断
+        tool_configurations: {}
+        tool_label: imageSearch
+        tool_name: imageSearch
+        tool_parameters:
+          n:
+            type: constant
+            value: '2'
+          need_llm:
+            type: constant
+            value: '0'
+          q:
+            type: mixed
+            value: '{{#1719051705186.keywords#}}'
+        type: tool
+      extent: parent
+      height: 54
+      id: '1719052020538'
+      parentId: '1719046938333'
+      position:
+        x: 420
+        y: 86.99999997125929
+      positionAbsolute:
+        x: 929.4439469335744
+        y: 1004.1523153211108
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1719046938333'
+        model:
+          completion_params:
+            temperature: 1
+          mode: completion
+          name: meta.llama3-1-8b-instruct-v1:0
+          provider: bedrock
+        prompt_template:
+          edition_type: basic
+          text: '请根据下面的例子，生成20条类似的指令-回答对，涵盖不同类型的任务，如问答、分析、写作等。生成的数据应符合以下要求：
+
+            1. 指令应该用中文陈述，长度在1-2句话
+
+            2. 可以包含一个可选的上下文输入，提供指令所需的背景信息
+
+            3. 回答应该由根据指令生成，力求完整、准确、简洁
+
+            4. 数据格式为：
+
+            {"instruction": "指令", "input": "上下文（选填）", "output": "回答"}
+
+
+            种子例子：
+
+            {{#1719051705186.section#}}
+
+            请根据以上要求生成20条指令数据。'
+        selected: false
+        title: 基于种子数据增强(LLM)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      extent: parent
+      height: 98
+      id: '1719052032351'
+      parentId: '1719046938333'
+      position:
+        x: 723
+        y: 85
+      positionAbsolute:
+        x: 1232.4439469335744
+        y: 1002.1523153498515
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        selected: false
+        template: "{% for section in output %}\r\n\r\n{{ section }}\r\n\r\n----------------------------------\r\
+          \n\r\n{% endfor %}"
+        title: 输出数据
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1719046938333'
+          - output
+          variable: output
+      height: 54
+      id: '1719054341069'
+      position:
+        x: 630.773665632953
+        y: 1195.0474727202297
+      positionAbsolute:
+        x: 630.773665632953
+        y: 1195.0474727202297
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 01acd2a3-876d-426f-847f-5b4cf40689c9
+            value: 'YES'
+            varType: string
+            variable_selector:
+            - '1718957126125'
+            - is_enhance
+          id: 'true'
+          logical_operator: and
+        conditions:
+        - comparison_operator: '='
+          id: '1719061385545'
+          value: '1'
+          variable_selector:
+          - '1719061181576'
+          - crawl_empty
+        desc: ''
+        logical_operator: and
+        selected: false
+        title: 数据路由
+        type: if-else
+      height: 126
+      id: '1719061373860'
+      position:
+        x: 127.35028948498712
+        y: 726.5347642281183
+      positionAbsolute:
+        x: 127.35028948498712
+        y: 726.5347642281183
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(content: str) -> dict:\n    if len(content) <= 400:\n  \
+          \      return {\"single_section\": \"是\"}\n    return {\"single_section\"\
+          : \"否\"}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          single_section:
+            children: null
+            type: string
+        selected: false
+        title: 是否单条
+        type: code
+        variables:
+        - value_selector:
+          - '17190400701430'
+          - content
+          variable: content
+      height: 54
+      id: '1719062922068'
+      position:
+        x: 519.1121106757217
+        y: 758.661445377106
+      positionAbsolute:
+        x: 519.1121106757217
+        y: 758.661445377106
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1719046938333start0
+      parentId: '1719046938333'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 533.4439469335744
+        y: 985.1523153498515
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        code: "import re\n\ndef clean_text(text):\n    *# 移除多余的空白字符*\n    text = re.sub(r'\\\
+          \\\\\\s+', ' ', text).strip()\n    *# 纠正常见的拼写错误*\n    text = text.replace('teh',\
+          \ 'the').replace('dont', \"don't\")\n    *# 移除URL*\n    text = re.sub(r'http\\\
+          \\\\\\S+', '', text)\n    return text\n\n*# 使用示例*\ndirty_text = \"teh quick\
+          \  brown fox   dont jump over <http://example.com> lazy dog\"\nclean_text\
+          \ = clean_text(dirty_text)\nprint(clean_text)\n*# 输出: \"the quick brown\
+          \ fox don't jump over lazy dog\"*"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 数据清洗
+        type: code
+        variables:
+        - value_selector:
+          - '1730382996445'
+          - result
+          variable: arg1
+      height: 54
+      id: '1730382926315'
+      position:
+        x: 740.1425295120637
+        y: 480.98317300694873
+      positionAbsolute:
+        x: 740.1425295120637
+        y: 480.98317300694873
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - fdb1445d-354f-432c-a7ff-5920495bea48
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: amazon.titan-embed-text-v1
+              embedding_provider_name: bedrock
+              vector_weight: 1
+        query_variable_selector:
+        - '1718957126125'
+        - contextstring
+        retrieval_mode: multiple
+        selected: false
+        title: 数据获取
+        type: knowledge-retrieval
+      height: 92
+      id: '1730382996445'
+      position:
+        x: 446.30463751162154
+        y: 480.98317300694873
+      positionAbsolute:
+        x: 446.30463751162154
+        y: 480.98317300694873
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs: []
+        selected: false
+        title: 结束 3
+        type: end
+      height: 54
+      id: '1730383403211'
+      position:
+        x: 663.6818418628161
+        y: 1349.0055598209601
+      positionAbsolute:
+        x: 663.6818418628161
+        y: 1349.0055598209601
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: "{% for section in output %}\r\n\r\n{{ section }}\r\n\r\n----------------------------------\r\
+          \n\r\n{% endfor %}"
+        title: 输出数据集
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1719046938333'
+          - output
+          variable: output
+      height: 54
+      id: '17303834316570'
+      position:
+        x: 127.35028948498712
+        y: 1349.0055598209601
+      positionAbsolute:
+        x: 127.35028948498712
+        y: 1349.0055598209601
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 306.9755319444355
+      y: -105.590228395248
+      zoom: 0.5602936130874837
