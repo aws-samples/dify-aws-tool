@@ -28,18 +28,19 @@ In addition to the reference code, you can also refer to the [Dify official guid
 
 #### Workflow([Demo Page](./workflow/README.md))
 
-| DSL Name                    | Description                                           | Link                                                  | Dependency         | Owner                                                        |
-| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------ | ------------------------------------------------------------ |
-| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_mapping) | [ybalbert](ybalbert@amazon.com)                              |
-| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)        |                    | [binc](binc@amazon.com)                                      |
-| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)       | [ybalbert](ybalbert@amazon.com)                              |
-| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](./workflow/andrew_translation_agent.yml)        |                    | [chuanxie](chuanxie@amazon.com)                              |
-| rag_based_bot_with_tts      | Rag based bot which can answer with voice             | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)          | [ybalbert](ybalbert@amazon.com)                              |
-| Marketing-copywriter        | marketing copywriter                                  | [DSL](./workflow/marketing-copywriting.yml)           |                    | [Lyson Ober](https://www.youtube.com/@lysonober)             |
-| Simple_Kimi                 | Customized KIMI app                                   | [DSL](./workflow/simple_kimi.yml)                     |                    | [ybalbert](ybalbert@amazon.com)                              |
-| SVG_Designer                | SVG Designer                                          | [DSL](./workflow/svg_designer.yml)                    |                    | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
-| Education_Question_Gen      | Education Question Generator                          | [DSL](./workflow/edu_question_gen.yml)                |                    | [chuanxie](chuanxie@amazon.com)                              |
-| Apply_guardrails            | Apply guardrails for chatbot                          | [DSL](./workflow/apply_guardrails.yml)                |                    | [amyli](amyli@amazon.com)                                    |
+| DSL Name                    | Description                                           | Link                                                  | Dependency                                                   | Owner                                                        |
+| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_mapping)                                           | [ybalbert](ybalbert@amazon.com)                              |
+| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)        |                                                              | [binc](binc@amazon.com)                                      |
+| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)                                                 | [ybalbert](ybalbert@amazon.com)                              |
+| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](./workflow/andrew_translation_agent.yml)        |                                                              | [chuanxie](chuanxie@amazon.com)                              |
+| rag_based_bot_with_tts      | Rag based bot which can answer with voice             | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)                                                    | [ybalbert](ybalbert@amazon.com)                              |
+| Marketing-copywriter        | marketing copywriter                                  | [DSL](./workflow/marketing-copywriting.yml)           |                                                              | [Lyson Ober](https://www.youtube.com/@lysonober)             |
+| Simple_Kimi                 | Customized KIMI app                                   | [DSL](./workflow/simple_kimi.yml)                     |                                                              | [ybalbert](ybalbert@amazon.com)                              |
+| SVG_Designer                | SVG Designer                                          | [DSL](./workflow/svg_designer.yml)                    |                                                              | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
+| Education_Question_Gen      | Education Question Generator                          | [DSL](./workflow/edu_question_gen.yml)                |                                                              | [chuanxie](chuanxie@amazon.com)                              |
+| Apply_guardrails            | Apply guardrails for chatbot                          | [DSL](./workflow/apply_guardrails.yml)                |                                                              | [amyli](amyli@amazon.com)                                    |
+| LLM-Finetuning-Dataflow     | LLM Fine-tuning Data Synthesis Workflow               | [DSL](./workflow/LLM-Finetuning-Dataflow-dify)        | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com)                                |
 
 You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
@@ -52,9 +53,9 @@ You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.
 | Bedrock Guardrails        | SAAS       | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | [amyli](amyli@amazon.com)       |
 | Term_multilingual_mapping | PAAS       | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
 | Image Translation Tool    | PAAS       | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
-| Chinese Toxicity Detector | PAAS       | A tool to detect Chinese toxicity                             | Comming                                                      | [ychchen](ychchen@amazon.com)   |
+| Chinese Toxicity Detector | PAAS       | A tool to detect Chinese toxicity                             | Coming                                                      | [ychchen](ychchen@amazon.com)   |
 | Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        |                                                       | [river xie](chuanxie@amazon.com)      |
-| Bedrock Retriever         | PAAS     | A tool for retrieving relevant information from Amazon Bedrock Knowledge Base    | Comming                                                      | [ychchen](ychchen@amazon.com)   |
+| Bedrock Retriever         | PAAS     | A tool for retrieving relevant information from Amazon Bedrock Knowledge Base    |                                                       | [ychchen](ychchen@amazon.com)   |
 | S3 Operator | SAAS | Read and write content in S3 buckets, with ability to return presigned URLs | | [ybalbert](ybalbert@amazon.com) |
 
 #### Model_Provider
