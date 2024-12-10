@@ -313,13 +313,11 @@ class NovaReelTool(BuiltinTool):
         try:
             response = s3_client.get_object(Bucket=bucket, Key=key)
             video_content = response['Body'].read()
-            return [self.create_text_message(
-                f"Video is available at: {video_path}/output.mp4"
-            ), self.create_blob_message(
+            return self.create_blob_message(
                 blob=video_content,
                 meta={"mime_type": "video/mp4"},
                 save_as="output.mp4"
-            )]
+            )
         except Exception as e:
             logger.error(f"Error downloading video: {str(e)}", exc_info=True)
             return self.create_text_message(
