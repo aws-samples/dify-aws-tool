@@ -1,9 +1,10 @@
 identity:
   name: nova_canvas
-  author: Dify
+  author: AWS
   label:
-    en_US: AWS Bedrock Nova Canvas Image Generation Tool
-    zh_Hans: AWS Bedrock Nova Canvas 图像生成工具
+    en_US: AWS Bedrock Nova Canvas
+    zh_Hans: AWS Bedrock Nova Canvas
+  icon: icon.svg
 description:
   human:
     en_US: A tool for generating and modifying images using AWS Bedrock's Nova Canvas model. Supports text-to-image, color-guided generation, image variation, inpainting, outpainting, and background removal. Input parameters reference https://docs.aws.amazon.com/nova/latest/userguide/image-gen-req-resp-structure.html

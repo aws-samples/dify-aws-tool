@@ -1,0 +1,465 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: videoGenerate
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.4
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1733840696178-llm
+      source: '1733840696178'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: answer
+      id: 1733841541737-source-answer-target
+      source: '1733841541737'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: llm-source-1733842606636-target
+      source: llm
+      sourceHandle: source
+      target: '1733842606636'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: if-else
+      id: 1733842606636-source-1733842734067-target
+      source: '1733842606636'
+      sourceHandle: source
+      target: '1733842734067'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1733842734067-false-1733841541737-target
+      source: '1733842734067'
+      sourceHandle: 'false'
+      target: '1733841541737'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1733842734067-true-1733842783521-target
+      source: '1733842734067'
+      sourceHandle: 'true'
+      target: '1733842783521'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1733842783521-source-1733843117866-target
+      source: '1733842783521'
+      sourceHandle: source
+      target: '1733843117866'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1733840696178'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            max_new_tokens: 5000
+            temperature: 0.7
+          mode: chat
+          name: amazon.nova-pro-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: e227ada0-6760-4701-8577-caa1ab76ff89
+          role: system
+          text: "You are an video generation tool assistant. Based on the {{#context#}}\
+            \ content, perform the following tasks and output in JSON format:\nIdentify\
+            \ the task type. Supported task types include: GENERATE_VIDEO. If no task\
+            \ for generating images is detected, set task_type to CONVERSATION in\
+            \ the JSON\nIdentify the user's prompt and optimize it according to prompting\
+            \ best practices.\nIdentify the input image S3 URI path of the image input\
+            \ by the user. Replace with an empty string in JSON if no S3 URI is detected.\n\
+            Identify whether the user needs an asynchronous output task or a synchronous\
+            \ wait for task completion. If no synchronous/asynchronous intent is detected,\
+            \ set async_mode to True in the JSON.\nBelow is a reference for the output\
+            \ JSON format:\n{\n    \"task_type\": \"Whether to run generate video\
+            \ or just conversation\",\n    \"prompt\": \"Video generation prompt\"\
+            ,\n    \"image_input_s3uri\": \"s3 uri for input image\",\n    \"async_mode\"\
+            : \"Whether to run in async mode or sync mode\"\n}\nIt's best to phrase\
+            \ your prompt as if it were an image caption or summary of the video rather\
+            \ than a command or conversation. You may want to include details about\
+            \ the subject, action, environment, lighting, style, and camera motion.\n\
+            When writing a video generation prompt, be mindful of the following requirements\
+            \ and best practices:\nPrompts must be no longer than 512 characters.\n\
+            If you'd like to influence camera movement, you will get the best results\
+            \ if you place camera movement descriptions at the start or end of your\
+            \ prompt.\nDo not use negation words like \"no\", \"not\", \"without\"\
+            , and so on The model doesn't understand negation in a prompt and attempting\
+            \ to use negation will result in the opposite of what you intend. For\
+            \ example, a prompt that includes \"pan across a fruit basket with no\
+            \ bananas\" will actually signal to the model to include bananas.\nWhen\
+            \ the output you get from a prompt is close to what you want but not quite\
+            \ perfect, try the following techniques one at a time in turn to refine\
+            \ your result:\n  4.1 Using a consistent seed value, make small changes\
+            \ to your prompt and re-run the prompt. This allows you to better understand\
+            \ how your prompt wording affects the output, allowing you to iteratively\
+            \ improve your results in a controlled way.\n  4.2 Once the prompt has\
+            \ been refined to your liking, generate more variations using the same\
+            \ prompt but a different seed value. It is often useful to generate multiple\
+            \ variations of an video by running the sample prompt with different seeds\
+            \ in order to find that perfect video clip.\nHere are some example prompts\
+            \ to get you started with video generation.\nPrompt: \"Cinematic dolly\
+            \ shot of a juicy cheeseburger with melting cheese, fries, and a condensation-covered\
+            \ cola on a worn diner table. Natural lighting, visible steam and droplets.\
+            \ 4k, photorealistic, shallow depth of field\"\nPrompt: \"Arc shot on\
+            \ a salad with dressing, olives and other vegetables; 4k; Cinematic;\"\
+            \nPrompt: \"First person view of a motorcycle riding through the forest\
+            \ road.\"\nPrompt: \"Closeup of a large seashell in the sand. Gentle waves\
+            \ flow around the shell. Camera zoom in.\"\nPrompt: \"Clothes hanging\
+            \ on a thread to dry, windy; sunny day; 4k; Cinematic; highest quality;\"\
+            \nPrompt: \"Slow cam of a man middle age; 4k; Cinematic; in a sunny day;\
+            \ peaceful; highest quality; dolly in;\"\nPrompt: \"A mushroom drinking\
+            \ a cup of coffee while sitting on a couch, photorealistic.\"\nThere are\
+            \ two primary approaches you can leverage when using images as input for\
+            \ video generation.\nIf your goal is to add camera motion to bring a static\
+            \ image to life, you can rely on the image itself to convey the subject\
+            \ and visual style while using the text prompt to describe only the camera\
+            \ motion. (See Camera controls for more on prompting camera movement.)"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: llm
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1733841541737.text#}}
+
+          {{#1733841541737.files#}}'
+        desc: ''
+        selected: false
+        title: 'Video response '
+        type: answer
+        variables: []
+      height: 121
+      id: answer
+      position:
+        x: 1660
+        y: 406
+      positionAbsolute:
+        x: 1660
+        y: 406
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: AWS Bedrock Nova Reel Video Generation Tool
+        tool_configurations:
+          aws_region: us-east-1
+          dimension: 1280x720
+          duration: 6
+          fps: 24
+          seed: 0
+          video_output_s3uri: s3://alex-bedrock-nova-video/dify/
+        tool_label: AWS Bedrock Nova Reel Video Generation Tool
+        tool_name: nova_reel
+        tool_parameters:
+          async:
+            type: mixed
+            value: '{{#1733842606636.async_mode#}}'
+          image_input_s3uri:
+            type: mixed
+            value: '{{#1733842606636.image_input_s3uri#}}'
+          prompt:
+            type: mixed
+            value: '{{#1733842606636.prompt#}}'
+        type: tool
+      height: 220
+      id: '1733841541737'
+      position:
+        x: 1323
+        y: 406
+      positionAbsolute:
+        x: 1323
+        y: 406
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: us.anthropic.claude-3-5-sonnet-20241022-v2:0
+          provider: bedrock
+        parameters:
+        - description: Whether to run generate video or just conversation
+          name: task_type
+          required: false
+          type: string
+        - description: Video generation prompt
+          name: prompt
+          required: false
+          type: string
+        - description: s3 uri for input image
+          name: image_input_s3uri
+          required: false
+          type: string
+        - description: Whether to run in async mode or sync mode
+          name: async_mode
+          required: false
+          type: number
+        query:
+        - llm
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: Parameter Extractor
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1733842606636'
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: d494fd10-9001-4ab0-b22c-d0734c543262
+            value: CONVERSATION
+            varType: string
+            variable_selector:
+            - '1733842606636'
+            - task_type
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 126
+      id: '1733842734067'
+      position:
+        x: 980
+        y: 282
+      positionAbsolute:
+        x: 980
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_new_tokens: 5000
+            temperature: 0.7
+          mode: chat
+          name: amazon.nova-lite-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: aaa407a7-4e29-4698-83b3-597046233cc2
+          role: system
+          text: 'You are an video generation tool assistant designed to help users
+            with tips on generating video using the Amazon Nova Reel model. You support
+            generating video through natural language descriptions and by inputting
+            the S3 URI of an image along with a natural language description. Users
+            can input to either synchronously wait for the video output or asynchronously
+            wait. If choosing to synchronously wait for the video output, it will
+            take approximately 5-6 minutes. If opting for asynchronous waiting, an
+            invocationArn will be returned. Users can use the AWS Bedrock SDK to obtain
+            the task execution status, the task defaults to asynchronous. When users
+            are unsure how to describe their video generation requests, you provide
+            examples based on best practices. Additionally, you send them reference
+            links.
+
+            Reference link: https://docs.aws.amazon.com/nova/latest/userguide/prompting-video-generation.html
+
+            Input examples:
+
+            My image is stored at s3://bucket_name/file_path. Dynamic handheld shot:
+            the dog looks to the left as colored holiday lights on its body blink
+            rhythmically
+
+            First person view of a motorcycle riding through the forest road. Synchronously
+            output the video to me.'
+        - id: 19b41044-cb53-4922-8a13-b5301276650e
+          role: user
+          text: '{{#sys.query#}}'
+        selected: true
+        title: Conversation LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1733842783521'
+      position:
+        x: 1323
+        y: 265
+      positionAbsolute:
+        x: 1323
+        y: 265
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1733842783521.text#}}'
+        desc: ''
+        selected: false
+        title: Conversation response
+        type: answer
+        variables: []
+      height: 103
+      id: '1733843117866'
+      position:
+        x: 1660
+        y: 265
+      positionAbsolute:
+        x: 1660
+        y: 265
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -1298.6944384161839
+      y: 31.453875797933847
+      zoom: 0.9835020740262541
