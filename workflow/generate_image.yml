@@ -3,7 +3,11 @@ app:
   icon: 🤖
   icon_background: '#FFEAD5'
   mode: advanced-chat
+<<<<<<< HEAD
   name: imageGenerate
+=======
+  name: generateImage
+>>>>>>> 5ce9460 (add nova canvas for generate image)
   use_icon_as_answer_icon: false
 kind: app
 version: 0.1.4
@@ -62,6 +66,7 @@ workflow:
       zIndex: 0
     - data:
         isInIteration: false
+<<<<<<< HEAD
         sourceType: tool
         targetType: answer
       id: 1733816016377-source-1733816025258-target
@@ -73,6 +78,8 @@ workflow:
       zIndex: 0
     - data:
         isInIteration: false
+=======
+>>>>>>> 5ce9460 (add nova canvas for generate image)
         sourceType: llm
         targetType: parameter-extractor
       id: 1733815955000-source-1733815987744-target
@@ -85,6 +92,7 @@ workflow:
     - data:
         isInIteration: false
         sourceType: parameter-extractor
+<<<<<<< HEAD
         targetType: if-else
       id: 1733815987744-source-1733831028208-target
       source: '1733815987744'
@@ -111,18 +119,33 @@ workflow:
       id: 1733831028208-false-1733816016377-target
       source: '1733831028208'
       sourceHandle: 'false'
+=======
+        targetType: tool
+      id: 1733815987744-source-1733816016377-target
+      source: '1733815987744'
+      sourceHandle: source
+>>>>>>> 5ce9460 (add nova canvas for generate image)
       target: '1733816016377'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
+<<<<<<< HEAD
         sourceType: llm
         targetType: answer
       id: 1733831086053-source-1733831766427-target
       source: '1733831086053'
       sourceHandle: source
       target: '1733831766427'
+=======
+        sourceType: tool
+        targetType: answer
+      id: 1733816016377-source-1733816025258-target
+      source: '1733816016377'
+      sourceHandle: source
+      target: '1733816025258'
+>>>>>>> 5ce9460 (add nova canvas for generate image)
       targetHandle: target
       type: custom
       zIndex: 0
@@ -136,10 +159,17 @@ workflow:
       height: 54
       id: '1733708334946'
       position:
+<<<<<<< HEAD
         x: 57.2449953430816
         y: 564
       positionAbsolute:
         x: 57.2449953430816
+=======
+        x: 166.83553610180672
+        y: 564
+      positionAbsolute:
+        x: 166.83553610180672
+>>>>>>> 5ce9460 (add nova canvas for generate image)
         y: 564
       selected: false
       sourcePosition: right
@@ -166,6 +196,7 @@ workflow:
           text: "You are an image generation tool assistant. Based on the {{#context#}}\
             \ content, perform the following tasks and output in JSON format:\n1.\
             \ Identify the task type. Supported task types include: TEXT_IMAGE, COLOR_GUIDED_GENERATION,\
+<<<<<<< HEAD
             \ IMAGE_VARIATION, INPAINTING, OUTPAINTING, BACKGROUND_REMOVAL. If no\
             \ task for generating images is detected, set task_type to CONVERSATION\
             \ in the JSON\n2. Identify the user's prompt and optimize it according\
@@ -223,6 +254,74 @@ workflow:
             \ the same prompt but a different seed value. It is often useful to generate\
             \ multiple variations of an image by running the sample prompt with different\
             \ seeds in order to find that perfect output image."
+=======
+            \ IMAGE_VARIATION, INPAINTING, OUTPAINTING, BACKGROUND_REMOVAL\n2. Identify\
+            \ the user's prompt and optimize it according to prompting best practices.\n\
+            3. Identify the user's negative prompt and optimize it according to prompting\
+            \ best practices. Replace with an empty string in JSON if no negative\
+            \ prompt is detected.\n4. Identify the user's mask prompt and optimize\
+            \ it according to prompting best practices. Replace with an empty string\
+            \ in JSON if no mask prompt is detected.\n5. Identify the S3 URI path\
+            \ of the image input by the user. Replace with an empty string in JSON\
+            \ if no S3 URI is detected.\nBelow is a reference for the output JSON\
+            \ format:\n{\n    \"task_type\": \"image generation task type\", \n  \
+            \  \"prompt\": \"Image generation prompt\",\n    \"negative_prompt\":\
+            \ \"Things you don't want in the generated image\",\n    \"mask_prompt\"\
+            : \"allows you to use natural language to describe the elements within\
+            \ an image that you want to change (in the case of inpainting) or to remain\
+            \ untouched (in the case of outpainting)\",\n    \"s3_uri\": \"s3 uri\
+            \ for input image\"\n}\n\nBelow is a reference for the explanation of\
+            \ task types:\n1. TEXT_IMAGE: Input a text prompt and generate a new image\
+            \ as output. The generated image captures the concepts described by the\
+            \ text prompt.\n2. IMAGE_VARIATION: Uses image and an optional prompt\
+            \ as input. It generates a new image that preserves the content of the\
+            \ input image, but varies its style and background.\n3. INPAINTING: Uses\
+            \ an image and a segmentation mask as input (either from the user or estimated\
+            \ by the model) and reconstructs the region within the mask. Use inpainting\
+            \ to remove masked elements and replace them with background pixels.\n\
+            4. OUTPAINTING: Uses an image and a segmentation mask as input (either\
+            \ from the user or estimated by the model) and generates new pixels that\
+            \ seamlessly extend the region. Use precise outpainting to preserve the\
+            \ pixels of the masked image when extending the image to the boundaries.\
+            \ Use default outpainting to extend the pixels of the masked image to\
+            \ the image boundaries based on segmentation settings.\n5. BACKGROUND_REMOVAL:\
+            \ Automatically identifies multiple objects in the input image and removes\
+            \ the background. The output image has a transparent background.\n6. COLOR_GUIDED_GENERATION:\
+            \ You can provide a list of hex color codes along with a prompt. A range\
+            \ of 1 to 10 hex codes can be provided. The image returned will incorporate\
+            \ the color palette provided by the user.\n\nBelow are prompting best\
+            \ practices:\nPrompts must be no longer than 1024 characters. For very\
+            \ long prompts, place the least important details of your prompt near\
+            \ the end.\nDo not use negation words like \"no\", \"not\", \"without\"\
+            , and so on in your prompt. The model doesn't understand negation in a\
+            \ prompt and attempting to use negation will result in the opposite of\
+            \ what you intend. For example, a prompt such as \"a fruit basket with\
+            \ no bananas\" will actually signal the model to include bananas. Instead,\
+            \ you can use a negative prompt, via the negativeText parameter, to specify\
+            \ any objects or characteristics that you want to exclude from the image.\
+            \ For example \"bananas\".\nAs with prompts, omit negation words from\
+            \ your negative prompts.\nWhen the output you get from a prompt is close\
+            \ to what you want but not quite perfect, try the following techniques\
+            \ one at a time in turn to refine your result:\nUsing a consistent seed\
+            \ value, make small changes to your prompt or negative prompt and re-run\
+            \ the prompt. This allows you to better understand how your prompt wording\
+            \ affects the output, allowing you to iteratively improve your results\
+            \ in a controlled way.\nOnce the prompt has been refined to your liking,\
+            \ generate more variations using the same prompt but a different seed\
+            \ value. It is often useful to generate multiple variations of an image\
+            \ by running the sample prompt with different seeds in order to find that\
+            \ perfect output image.\n\nBelow are examples of prompting:\nExample 1:\
+            \ Stock photo\nPrompt: realistic editorial photo of female teacher standing\
+            \ at a blackboard with a warm smile\nNegative Prompt: crossed arms\nExample\
+            \ 2: Story illustration\nPrompt: whimsical and ethereal soft-shaded story\
+            \ illustration: A woman in a large hat stands at the ship's railing looking\
+            \ out across the ocean\nNegative Prompt: clouds, waves\nExample 3: Pre-visualization\
+            \ for TV and film production\nPrompt: drone view of a dark river winding\
+            \ through a stark Iceland landscape, cinematic quality\nExample 4: Fashion\
+            \ or editorial content\nPrompt: A cool looking stylish man in an orange\
+            \ jacket, dark skin, wearing reflective glasses. Shot from slightly low\
+            \ angle, face and chest in view, aqua blue sleek building shapes in background."
+>>>>>>> 5ce9460 (add nova canvas for generate image)
         - id: c1b526f6-13ef-4116-941b-2ff5b4badb21
           role: user
           text: '{{#sys.query#}}'
@@ -235,10 +334,17 @@ workflow:
       height: 98
       id: '1733815955000'
       position:
+<<<<<<< HEAD
         x: 357.422069502661
         y: 564
       positionAbsolute:
         x: 357.422069502661
+=======
+        x: 470.8355361018067
+        y: 564
+      positionAbsolute:
+        x: 470.8355361018067
+>>>>>>> 5ce9460 (add nova canvas for generate image)
         y: 564
       selected: false
       sourcePosition: right
@@ -251,7 +357,11 @@ workflow:
           completion_params:
             temperature: 0.7
           mode: chat
+<<<<<<< HEAD
           name: amazon.nova-lite-v1:0
+=======
+          name: amazon.nova-pro-v1:0
+>>>>>>> 5ce9460 (add nova canvas for generate image)
           provider: bedrock
         parameters:
         - description: Image generation prompts
@@ -263,7 +373,11 @@ workflow:
           required: false
           type: string
         - description: Input image s3 uri
+<<<<<<< HEAD
           name: image_input_s3uri
+=======
+          name: s3_uri
+>>>>>>> 5ce9460 (add nova canvas for generate image)
           required: false
           type: string
         - description: image generation task type
@@ -289,10 +403,17 @@ workflow:
       height: 98
       id: '1733815987744'
       position:
+<<<<<<< HEAD
         x: 647.404674754452
         y: 564
       positionAbsolute:
         x: 647.404674754452
+=======
+        x: 774.8355361018067
+        y: 564
+      positionAbsolute:
+        x: 774.8355361018067
+>>>>>>> 5ce9460 (add nova canvas for generate image)
         y: 564
       selected: false
       sourcePosition: right
@@ -304,14 +425,21 @@ workflow:
         provider_id: aws
         provider_name: aws
         provider_type: builtin
+<<<<<<< HEAD
         selected: true
+=======
+        selected: false
+>>>>>>> 5ce9460 (add nova canvas for generate image)
         title: AWS Bedrock Nova Canvas
         tool_configurations:
           aws_region: us-east-1
           cfg_scale: 8
           colors: null
           height: 1024
+<<<<<<< HEAD
           image_output_s3uri: s3://alex-bedrock-nova-image/dify/
+=======
+>>>>>>> 5ce9460 (add nova canvas for generate image)
           mask_prompt: null
           negative_prompt: ''
           outpainting_mode: DEFAULT
@@ -323,12 +451,15 @@ workflow:
         tool_label: AWS Bedrock Nova Canvas
         tool_name: nova_canvas
         tool_parameters:
+<<<<<<< HEAD
           image_input_s3uri:
             type: mixed
             value: '{{#1733815987744.image_input_s3uri#}}'
           image_output_s3uri:
             type: mixed
             value: ''
+=======
+>>>>>>> 5ce9460 (add nova canvas for generate image)
           mask_prompt:
             type: mixed
             value: '{{#1733815987744.mask_prompt#}}'
@@ -340,11 +471,16 @@ workflow:
             value: '{{#1733815987744.prompt#}}'
           s3_uri:
             type: mixed
+<<<<<<< HEAD
             value: '{{#1733815987744.image_input_s3uri#}}'
+=======
+            value: '{{#1733815987744.s3_uri#}}'
+>>>>>>> 5ce9460 (add nova canvas for generate image)
           task_type:
             type: mixed
             value: '{{#1733815987744.task_type#}}'
         type: tool
+<<<<<<< HEAD
       height: 402
       id: '1733816016377'
       position:
@@ -353,6 +489,16 @@ workflow:
       positionAbsolute:
         x: 1242.6615886197167
         y: 723.2885766841935
+=======
+      height: 376
+      id: '1733816016377'
+      position:
+        x: 1078.8355361018066
+        y: 564
+      positionAbsolute:
+        x: 1078.8355361018066
+        y: 564
+>>>>>>> 5ce9460 (add nova canvas for generate image)
       selected: true
       sourcePosition: right
       targetPosition: left
@@ -364,12 +510,17 @@ workflow:
           {{#1733816016377.files#}}'
         desc: ''
         selected: false
+<<<<<<< HEAD
         title: Image Response
+=======
+        title: 直接回复
+>>>>>>> 5ce9460 (add nova canvas for generate image)
         type: answer
         variables: []
       height: 121
       id: '1733816025258'
       position:
+<<<<<<< HEAD
         x: 1582.9019884171535
         y: 723.2885766841935
       positionAbsolute:
@@ -404,12 +555,19 @@ workflow:
         y: 564
       positionAbsolute:
         x: 936.1129713927697
+=======
+        x: 1382.8355361018066
+        y: 564
+      positionAbsolute:
+        x: 1382.8355361018066
+>>>>>>> 5ce9460 (add nova canvas for generate image)
         y: 564
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
+<<<<<<< HEAD
     - data:
         context:
           enabled: false
@@ -487,3 +645,9 @@ workflow:
       x: -833.9117206589049
       y: -319.1425511504393
       zoom: 0.9936668022073805
+=======
+    viewport:
+      x: -72.42139653775894
+      y: 7.338736323037182
+      zoom: 0.5358867312681551
+>>>>>>> 5ce9460 (add nova canvas for generate image)
