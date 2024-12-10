@@ -1,0 +1,355 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: generateImage
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.4
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1733708334946-source-1733815955000-target
+      source: '1733708334946'
+      sourceHandle: source
+      target: '1733815955000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: 1733815955000-source-1733815987744-target
+      source: '1733815955000'
+      sourceHandle: source
+      target: '1733815987744'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: tool
+      id: 1733815987744-source-1733816016377-target
+      source: '1733815987744'
+      sourceHandle: source
+      target: '1733816016377'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: answer
+      id: 1733816016377-source-1733816025258-target
+      source: '1733816016377'
+      sourceHandle: source
+      target: '1733816025258'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1733708334946'
+      position:
+        x: 166.83553610180672
+        y: 564
+      positionAbsolute:
+        x: 166.83553610180672
+        y: 564
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        model:
+          completion_params:
+            max_new_tokens: 5000
+            temperature: 0.7
+          mode: chat
+          name: amazon.nova-pro-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: bb6cacda-562c-4ac7-aaeb-88088d9f2014
+          role: system
+          text: "You are an image generation tool assistant. Based on the {{#context#}}\
+            \ content, perform the following tasks and output in JSON format:\n1.\
+            \ Identify the task type. Supported task types include: TEXT_IMAGE, COLOR_GUIDED_GENERATION,\
+            \ IMAGE_VARIATION, INPAINTING, OUTPAINTING, BACKGROUND_REMOVAL\n2. Identify\
+            \ the user's prompt and optimize it according to prompting best practices.\n\
+            3. Identify the user's negative prompt and optimize it according to prompting\
+            \ best practices. Replace with an empty string in JSON if no negative\
+            \ prompt is detected.\n4. Identify the user's mask prompt and optimize\
+            \ it according to prompting best practices. Replace with an empty string\
+            \ in JSON if no mask prompt is detected.\n5. Identify the S3 URI path\
+            \ of the image input by the user. Replace with an empty string in JSON\
+            \ if no S3 URI is detected.\nBelow is a reference for the output JSON\
+            \ format:\n{\n    \"task_type\": \"image generation task type\", \n  \
+            \  \"prompt\": \"Image generation prompt\",\n    \"negative_prompt\":\
+            \ \"Things you don't want in the generated image\",\n    \"mask_prompt\"\
+            : \"allows you to use natural language to describe the elements within\
+            \ an image that you want to change (in the case of inpainting) or to remain\
+            \ untouched (in the case of outpainting)\",\n    \"s3_uri\": \"s3 uri\
+            \ for input image\"\n}\n\nBelow is a reference for the explanation of\
+            \ task types:\n1. TEXT_IMAGE: Input a text prompt and generate a new image\
+            \ as output. The generated image captures the concepts described by the\
+            \ text prompt.\n2. IMAGE_VARIATION: Uses image and an optional prompt\
+            \ as input. It generates a new image that preserves the content of the\
+            \ input image, but varies its style and background.\n3. INPAINTING: Uses\
+            \ an image and a segmentation mask as input (either from the user or estimated\
+            \ by the model) and reconstructs the region within the mask. Use inpainting\
+            \ to remove masked elements and replace them with background pixels.\n\
+            4. OUTPAINTING: Uses an image and a segmentation mask as input (either\
+            \ from the user or estimated by the model) and generates new pixels that\
+            \ seamlessly extend the region. Use precise outpainting to preserve the\
+            \ pixels of the masked image when extending the image to the boundaries.\
+            \ Use default outpainting to extend the pixels of the masked image to\
+            \ the image boundaries based on segmentation settings.\n5. BACKGROUND_REMOVAL:\
+            \ Automatically identifies multiple objects in the input image and removes\
+            \ the background. The output image has a transparent background.\n6. COLOR_GUIDED_GENERATION:\
+            \ You can provide a list of hex color codes along with a prompt. A range\
+            \ of 1 to 10 hex codes can be provided. The image returned will incorporate\
+            \ the color palette provided by the user.\n\nBelow are prompting best\
+            \ practices:\nPrompts must be no longer than 1024 characters. For very\
+            \ long prompts, place the least important details of your prompt near\
+            \ the end.\nDo not use negation words like \"no\", \"not\", \"without\"\
+            , and so on in your prompt. The model doesn't understand negation in a\
+            \ prompt and attempting to use negation will result in the opposite of\
+            \ what you intend. For example, a prompt such as \"a fruit basket with\
+            \ no bananas\" will actually signal the model to include bananas. Instead,\
+            \ you can use a negative prompt, via the negativeText parameter, to specify\
+            \ any objects or characteristics that you want to exclude from the image.\
+            \ For example \"bananas\".\nAs with prompts, omit negation words from\
+            \ your negative prompts.\nWhen the output you get from a prompt is close\
+            \ to what you want but not quite perfect, try the following techniques\
+            \ one at a time in turn to refine your result:\nUsing a consistent seed\
+            \ value, make small changes to your prompt or negative prompt and re-run\
+            \ the prompt. This allows you to better understand how your prompt wording\
+            \ affects the output, allowing you to iteratively improve your results\
+            \ in a controlled way.\nOnce the prompt has been refined to your liking,\
+            \ generate more variations using the same prompt but a different seed\
+            \ value. It is often useful to generate multiple variations of an image\
+            \ by running the sample prompt with different seeds in order to find that\
+            \ perfect output image.\n\nBelow are examples of prompting:\nExample 1:\
+            \ Stock photo\nPrompt: realistic editorial photo of female teacher standing\
+            \ at a blackboard with a warm smile\nNegative Prompt: crossed arms\nExample\
+            \ 2: Story illustration\nPrompt: whimsical and ethereal soft-shaded story\
+            \ illustration: A woman in a large hat stands at the ship's railing looking\
+            \ out across the ocean\nNegative Prompt: clouds, waves\nExample 3: Pre-visualization\
+            \ for TV and film production\nPrompt: drone view of a dark river winding\
+            \ through a stark Iceland landscape, cinematic quality\nExample 4: Fashion\
+            \ or editorial content\nPrompt: A cool looking stylish man in an orange\
+            \ jacket, dark skin, wearing reflective glasses. Shot from slightly low\
+            \ angle, face and chest in view, aqua blue sleek building shapes in background."
+        - id: c1b526f6-13ef-4116-941b-2ff5b4badb21
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1733815955000'
+      position:
+        x: 470.8355361018067
+        y: 564
+      positionAbsolute:
+        x: 470.8355361018067
+        y: 564
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: amazon.nova-pro-v1:0
+          provider: bedrock
+        parameters:
+        - description: Image generation prompts
+          name: prompt
+          required: false
+          type: string
+        - description: Things you don't want in the generated image
+          name: negative_prompt
+          required: false
+          type: string
+        - description: Input image s3 uri
+          name: s3_uri
+          required: false
+          type: string
+        - description: image generation task type
+          name: task_type
+          required: false
+          type: string
+        - description: allows you to use natural language to describe the elements
+            within an image that you want to change (in the case of inpainting) or
+            to remain untouched (in the case of outpainting)
+          name: mask_prompt
+          required: false
+          type: string
+        query:
+        - '1733815955000'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1733815987744'
+      position:
+        x: 774.8355361018067
+        y: 564
+      positionAbsolute:
+        x: 774.8355361018067
+        y: 564
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: AWS Bedrock Nova Canvas
+        tool_configurations:
+          aws_region: us-east-1
+          cfg_scale: 8
+          colors: null
+          height: 1024
+          mask_prompt: null
+          negative_prompt: ''
+          outpainting_mode: DEFAULT
+          quality: standard
+          seed: 0
+          similarity_strength: 0.5
+          task_type: BACKGROUND_REMOVAL
+          width: 1024
+        tool_label: AWS Bedrock Nova Canvas
+        tool_name: nova_canvas
+        tool_parameters:
+          mask_prompt:
+            type: mixed
+            value: '{{#1733815987744.mask_prompt#}}'
+          negative_prompt:
+            type: mixed
+            value: '{{#1733815987744.negative_prompt#}}'
+          prompt:
+            type: mixed
+            value: '{{#1733815987744.prompt#}}'
+          s3_uri:
+            type: mixed
+            value: '{{#1733815987744.s3_uri#}}'
+          task_type:
+            type: mixed
+            value: '{{#1733815987744.task_type#}}'
+        type: tool
+      height: 376
+      id: '1733816016377'
+      position:
+        x: 1078.8355361018066
+        y: 564
+      positionAbsolute:
+        x: 1078.8355361018066
+        y: 564
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1733816016377.text#}}
+
+          {{#1733816016377.files#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 121
+      id: '1733816025258'
+      position:
+        x: 1382.8355361018066
+        y: 564
+      positionAbsolute:
+        x: 1382.8355361018066
+        y: 564
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -72.42139653775894
+      y: 7.338736323037182
+      zoom: 0.5358867312681551
