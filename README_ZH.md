@@ -41,6 +41,8 @@
 | Education_Question_Gen      | 教育场景 - 试题生成器                       | [DSL](./workflow/edu_question_gen.yml)                |                                                              | [chuanxie](chuanxie@amazon.com)                              |
 | Apply_guardrails            | 应用安全防范的聊天工作流                    | [DSL](./workflow/apply_guardrails.yml)                |                                                              | [amyli](amyli@amazon.com)                                    |
 | LLM-Finetuning-Dataflow     | LLM微调数据合成工作流                       | [DSL](./workflow/LLM-Finetuning-Dataflow-dify)        | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com)                                |
+| Image Generation Workflow   | 基于Amazon Nova Canvas生成图像              | [DSL](./workflow/generate_image.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
+| Video Generation Workflow   | 基于Amazon Nova Reel生成视频              | [DSL](./workflow/generate_video.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
 
 更多工作流可以关注社区网站：[dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
@@ -57,6 +59,8 @@
 | Transcribe Tool           | SAAS     | AWS transcribe service tool (ASR)                                 |                                                    | [river xie](chuanxie@amazon.com)      |
 | Bedrock Retriever         | PAAS     | Amazon Bedrock知识库检索工具                                             |                                                       | [ychchen](ychchen@amazon.com)   |
 | S3 Operator | SAAS | 读写S3中bucket的内容，可以返回presignURL | | [ybalbert](ybalbert@amazon.com) |
+| AWS Bedrock Nova Canvas | SAAS | 基于Amazon Nova Canvas生成图像 | | [alexwuu](alexwuu@amazon.com) |
+| AWS Bedrock Nova Reel | SAAS | 基于Amazon Nova Reel生成视频 | | [alexwuu](alexwuu@amazon.com) |
 
 #### 模型提供商
 
