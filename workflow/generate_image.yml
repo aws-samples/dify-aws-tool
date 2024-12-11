@@ -182,35 +182,35 @@ workflow:
             \    \"mask_prompt\": \"allows you to use natural language to describe\
             \ the elements within an image that you want to change (in the case of\
             \ inpainting) or to remain untouched (in the case of outpainting)\",\n\
-            \    \"s3_uri\": \"s3 uri for input image\"\n}\n\nBelow is a reference\
-            \ for the explanation of task types:\n1. TEXT_IMAGE: Input a text prompt\
-            \ and generate a new image as output. The generated image captures the\
-            \ concepts described by the text prompt.\n2. IMAGE_VARIATION: Uses image\
-            \ and an optional prompt as input. It generates a new image that preserves\
-            \ the content of the input image, but varies its style and background.\n\
-            3. INPAINTING: Uses an image and a segmentation mask as input (either\
-            \ from the user or estimated by the model) and reconstructs the region\
-            \ within the mask. Use inpainting to remove masked elements and replace\
-            \ them with background pixels.\n4. OUTPAINTING: Uses an image and a segmentation\
-            \ mask as input (either from the user or estimated by the model) and generates\
-            \ new pixels that seamlessly extend the region. Use precise outpainting\
-            \ to preserve the pixels of the masked image when extending the image\
-            \ to the boundaries. Use default outpainting to extend the pixels of the\
-            \ masked image to the image boundaries based on segmentation settings.\n\
-            5. BACKGROUND_REMOVAL: Automatically identifies multiple objects in the\
-            \ input image and removes the background. The output image has a transparent\
-            \ background.\n6. COLOR_GUIDED_GENERATION: You can provide a list of hex\
-            \ color codes along with a prompt. A range of 1 to 10 hex codes can be\
-            \ provided. The image returned will incorporate the color palette provided\
-            \ by the user.\n\nBelow are prompting best practices:\nPrompts must be\
-            \ no longer than 1024 characters. For very long prompts, place the least\
-            \ important details of your prompt near the end.\nDo not use negation\
-            \ words like \"no\", \"not\", \"without\", and so on in your prompt. The\
-            \ model doesn't understand negation in a prompt and attempting to use\
-            \ negation will result in the opposite of what you intend. For example,\
-            \ a prompt such as \"a fruit basket with no bananas\" will actually signal\
-            \ the model to include bananas. Instead, you can use a negative prompt,\
-            \ via the negativeText parameter, to specify any objects or characteristics\
+            \    \"image_input_s3uri\": \"s3 uri for input image\"\n}\n\nBelow is\
+            \ a reference for the explanation of task types:\n1. TEXT_IMAGE: Input\
+            \ a text prompt and generate a new image as output. The generated image\
+            \ captures the concepts described by the text prompt.\n2. IMAGE_VARIATION:\
+            \ Uses image and an optional prompt as input. It generates a new image\
+            \ that preserves the content of the input image, but varies its style\
+            \ and background.\n3. INPAINTING: Uses an image and a segmentation mask\
+            \ as input (either from the user or estimated by the model) and reconstructs\
+            \ the region within the mask. Use inpainting to remove masked elements\
+            \ and replace them with background pixels.\n4. OUTPAINTING: Uses an image\
+            \ and a segmentation mask as input (either from the user or estimated\
+            \ by the model) and generates new pixels that seamlessly extend the region.\
+            \ Use precise outpainting to preserve the pixels of the masked image when\
+            \ extending the image to the boundaries. Use default outpainting to extend\
+            \ the pixels of the masked image to the image boundaries based on segmentation\
+            \ settings.\n5. BACKGROUND_REMOVAL: Automatically identifies multiple\
+            \ objects in the input image and removes the background. The output image\
+            \ has a transparent background.\n6. COLOR_GUIDED_GENERATION: You can provide\
+            \ a list of hex color codes along with a prompt. A range of 1 to 10 hex\
+            \ codes can be provided. The image returned will incorporate the color\
+            \ palette provided by the user.\n\nBelow are prompting best practices:\n\
+            Prompts must be no longer than 1024 characters. For very long prompts,\
+            \ place the least important details of your prompt near the end.\nDo not\
+            \ use negation words like \"no\", \"not\", \"without\", and so on in your\
+            \ prompt. The model doesn't understand negation in a prompt and attempting\
+            \ to use negation will result in the opposite of what you intend. For\
+            \ example, a prompt such as \"a fruit basket with no bananas\" will actually\
+            \ signal the model to include bananas. Instead, you can use a negative\
+            \ prompt, via the negativeText parameter, to specify any objects or characteristics\
             \ that you want to exclude from the image. For example \"bananas\".\n\
             As with prompts, omit negation words from your negative prompts.\nWhen\
             \ the output you get from a prompt is close to what you want but not quite\
@@ -251,7 +251,7 @@ workflow:
           completion_params:
             temperature: 0.7
           mode: chat
-          name: us.anthropic.claude-3-5-sonnet-20241022-v2:0
+          name: amazon.nova-lite-v1:0
           provider: bedrock
         parameters:
         - description: Image generation prompts
@@ -263,7 +263,7 @@ workflow:
           required: false
           type: string
         - description: Input image s3 uri
-          name: s3_uri
+          name: image_input_s3uri
           required: false
           type: string
         - description: image generation task type
@@ -304,13 +304,14 @@ workflow:
         provider_id: aws
         provider_name: aws
         provider_type: builtin
-        selected: false
+        selected: true
         title: AWS Bedrock Nova Canvas
         tool_configurations:
           aws_region: us-east-1
           cfg_scale: 8
           colors: null
           height: 1024
+          image_output_s3uri: s3://alex-bedrock-nova-image/dify/
           mask_prompt: null
           negative_prompt: ''
           outpainting_mode: DEFAULT
@@ -322,6 +323,12 @@ workflow:
         tool_label: AWS Bedrock Nova Canvas
         tool_name: nova_canvas
         tool_parameters:
+          image_input_s3uri:
+            type: mixed
+            value: '{{#1733815987744.image_input_s3uri#}}'
+          image_output_s3uri:
+            type: mixed
+            value: ''
           mask_prompt:
             type: mixed
             value: '{{#1733815987744.mask_prompt#}}'
@@ -333,12 +340,12 @@ workflow:
             value: '{{#1733815987744.prompt#}}'
           s3_uri:
             type: mixed
-            value: '{{#1733815987744.s3_uri#}}'
+            value: '{{#1733815987744.image_input_s3uri#}}'
           task_type:
             type: mixed
             value: '{{#1733815987744.task_type#}}'
         type: tool
-      height: 376
+      height: 402
       id: '1733816016377'
       position:
         x: 1242.6615886197167
@@ -413,7 +420,7 @@ workflow:
             max_new_tokens: 5000
             temperature: 0.7
           mode: chat
-          name: amazon.nova-lite-v1:0
+          name: us.anthropic.claude-3-5-sonnet-20241022-v2:0
           provider: bedrock
         prompt_template:
         - id: 21cee872-86dc-4e15-b80a-474182d58075
@@ -477,6 +484,6 @@ workflow:
       type: custom
       width: 244
     viewport:
-      x: -662.9422628817025
-      y: -21.270398279290816
-      zoom: 0.6657684640542674
+      x: -833.9117206589049
+      y: -319.1425511504393
+      zoom: 0.9936668022073805

@@ -4,6 +4,7 @@ from typing import Union, Any
 from urllib.parse import urlparse
 import logging
 import re
+from datetime import datetime
 
 import boto3
 
@@ -23,8 +24,11 @@ class NovaCanvasTool(BuiltinTool):
         """
         # Get common parameters
         prompt = tool_parameters.get("prompt", "")
+        image_output_s3uri = tool_parameters.get("image_output_s3uri", "").strip()
         if not prompt:
             return self.create_text_message("Please provide a text prompt for image generation.")
+        if not image_output_s3uri or urlparse(image_output_s3uri).scheme != 's3':
+            return self.create_text_message("Please provide an valid S3 URI for image output.")
 
         task_type = tool_parameters.get("task_type", "TEXT_IMAGE")
         aws_region = tool_parameters.get("aws_region", 'us-east-1')
@@ -38,13 +42,13 @@ class NovaCanvasTool(BuiltinTool):
         quality = tool_parameters.get("quality", "standard")
 
         # Handle S3 image if provided
-        s3_uri = tool_parameters.get("s3_uri", "")
+        image_input_s3uri = tool_parameters.get("image_input_s3uri", "")
         if task_type != "TEXT_IMAGE":
-            if not s3_uri or urlparse(s3_uri).scheme != 's3':
+            if not image_input_s3uri or urlparse(image_input_s3uri).scheme != 's3':
                 return self.create_text_message("Please provide a valid S3 URI for image to image generation.")
             
             # Parse S3 URI
-            parsed_uri = urlparse(s3_uri)
+            parsed_uri = urlparse(image_input_s3uri)
             bucket = parsed_uri.netloc
             key = parsed_uri.path.lstrip('/')
 
@@ -162,18 +166,45 @@ class NovaCanvasTool(BuiltinTool):
             if response_body.get("error"):
                 raise Exception(f"Error in model response: {response_body.get('error')}")
             base64_image = response_body.get("images")[0]
+            
+            # Upload to S3 if image_output_s3uri is provided
+            try:
+                # Parse S3 URI for output
+                parsed_uri = urlparse(image_output_s3uri)
+                output_bucket = parsed_uri.netloc
+                output_base_path = parsed_uri.path.lstrip('/')
+                # Generate filename with timestamp
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                output_key = f"{output_base_path}/canvas-output-{timestamp}.png"
+                
+                # Initialize S3 client if not already done
+                s3_client = boto3.client('s3', region_name=aws_region)
+                
+                # Decode base64 image and upload to S3
+                image_data = base64.b64decode(base64_image)
+                s3_client.put_object(
+                    Bucket=output_bucket,
+                    Key=output_key,
+                    Body=image_data,
+                    ContentType='image/png'
+                )
+                logger.info(f"Image uploaded to s3://{output_bucket}/{output_key}")
+            except Exception as e:
+                logger.error(f"Failed to upload image to S3: {str(e)}")
 
             # Return image
-            return self.create_blob_message(
+            return [self.create_text_message(
+                f"Image is available at: s3://{output_bucket}/{output_key}"
+            ), self.create_blob_message(
                 blob=base64.b64decode(base64_image),
                 meta={"mime_type": "image/png"},
                 save_as=self.VariableKey.IMAGE.value
-            )
+            )]
 
         except Exception as e:
             return self.create_text_message(f"Failed to generate image: {str(e)}")
         
-    def _validate_color_string(color_string) -> bool:
+    def _validate_color_string(self, color_string) -> bool:
         color_pattern = r'^#[0-9a-fA-F]{6}(?:-#[0-9a-fA-F]{6})*$'
 
         if re.match(color_pattern, color_string):
@@ -198,10 +229,10 @@ class NovaCanvasTool(BuiltinTool):
                 llm_description="Describe the image you want to generate or how you want to modify the input image"
             ),
             ToolParameter(
-                name="s3_uri",
+                name="image_input_s3uri",
                 label=I18nObject(
-                    en_US="Image s3 uri",
-                    zh_Hans="图片的s3 uri"
+                    en_US="Input image s3 uri",
+                    zh_Hans="输入图片的s3 uri"
                 ),
                 type=ToolParameter.ToolParameterType.STRING,
                 required=False,
@@ -209,6 +240,20 @@ class NovaCanvasTool(BuiltinTool):
                 human_description=I18nObject(
                     en_US="Image to be modified",
                     zh_Hans="想要修改的图片"
+                )
+            ),
+            ToolParameter(
+                name="image_output_s3uri",
+                label=I18nObject(
+                    en_US="Output Image S3 URI",
+                    zh_Hans="输出图片的S3 URI目录"
+                ),
+                type=ToolParameter.ToolParameterType.STRING,
+                required=True,
+                form=ToolParameter.ToolParameterForm.FORM,
+                human_description=I18nObject(
+                    en_US="S3 URI where the generated image should be uploaded",
+                    zh_Hans="生成的图像应该上传到的S3 URI"
                 )
             ),
             ToolParameter(
