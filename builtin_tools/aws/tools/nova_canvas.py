@@ -173,7 +173,7 @@ class NovaCanvasTool(BuiltinTool):
         except Exception as e:
             return self.create_text_message(f"Failed to generate image: {str(e)}")
         
-    def _validate_color_string(color_string):
+    def _validate_color_string(color_string) -> bool:
         color_pattern = r'^#[0-9a-fA-F]{6}(?:-#[0-9a-fA-F]{6})*$'
 
         if re.match(color_pattern, color_string):

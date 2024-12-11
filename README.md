@@ -41,6 +41,8 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Education_Question_Gen      | Education Question Generator                          | [DSL](./workflow/edu_question_gen.yml)                |                                                              | [chuanxie](chuanxie@amazon.com)                              |
 | Apply_guardrails            | Apply guardrails for chatbot                          | [DSL](./workflow/apply_guardrails.yml)                |                                                              | [amyli](amyli@amazon.com)                                    |
 | LLM-Finetuning-Dataflow     | LLM Fine-tuning Data Synthesis Workflow               | [DSL](./workflow/LLM-Finetuning-Dataflow-dify)        | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com)                                |
+| Image Generation Workflow   | Generate images using Amazon Nova Canvas              | [DSL](./workflow/generate_image.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
+| Video Generation Workflow   | Generate videos using Amazon Nova Reel              | [DSL](./workflow/generate_video.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
 
 You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
@@ -57,6 +59,8 @@ You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.
 | Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        |                                                       | [river xie](chuanxie@amazon.com)      |
 | Bedrock Retriever         | PAAS     | A tool for retrieving relevant information from Amazon Bedrock Knowledge Base    |                                                       | [ychchen](ychchen@amazon.com)   |
 | S3 Operator | SAAS | Read and write content in S3 buckets, with ability to return presigned URLs | | [ybalbert](ybalbert@amazon.com) |
+| AWS Bedrock Nova Canvas | SAAS | Generate images using Amazon Nova Canvas | | [alexwuu](alexwuu@amazon.com) |
+| AWS Bedrock Nova Reel | SAAS | Generate videos using Amazon Nova Reel | | [alexwuu](alexwuu@amazon.com) |
 
 #### Model_Provider
 
