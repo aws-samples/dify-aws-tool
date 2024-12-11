@@ -25,6 +25,13 @@ workflow:
       - local_file
       - remote_url
       enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
       image:
         enabled: false
         number_limits: 3
@@ -248,7 +255,7 @@ workflow:
         title: 'Video response '
         type: answer
         variables: []
-      height: 121
+      height: 122
       id: answer
       position:
         x: 1660
@@ -307,7 +314,7 @@ workflow:
           completion_params:
             temperature: 0.7
           mode: chat
-          name: us.anthropic.claude-3-5-sonnet-20241022-v2:0
+          name: amazon.nova-lite-v1:0
           provider: bedrock
         parameters:
         - description: Whether to run generate video or just conversation
@@ -389,7 +396,7 @@ workflow:
             max_new_tokens: 5000
             temperature: 0.7
           mode: chat
-          name: amazon.nova-lite-v1:0
+          name: us.anthropic.claude-3-5-sonnet-20241022-v2:0
           provider: bedrock
         prompt_template:
         - id: aaa407a7-4e29-4698-83b3-597046233cc2
@@ -420,7 +427,7 @@ workflow:
         - id: 19b41044-cb53-4922-8a13-b5301276650e
           role: user
           text: '{{#sys.query#}}'
-        selected: true
+        selected: false
         title: Conversation LLM
         type: llm
         variables: []
@@ -460,6 +467,6 @@ workflow:
       type: custom
       width: 244
     viewport:
-      x: -1298.6944384161839
-      y: 31.453875797933847
+      x: -1096.6944384161839
+      y: -111.54612420206615
       zoom: 0.9835020740262541
