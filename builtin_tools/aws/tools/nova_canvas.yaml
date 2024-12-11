@@ -33,17 +33,28 @@ parameters:
       zh_Hans: 您想要生成或修改的图像的文本描述
     llm_description: Describe the image you want to generate or how you want to modify the input image
     form: llm
-  - name: s3_uri
+  - name: image_input_s3uri
     type: string
     required: false
     label:
-      en_US: Image s3 uri
-      zh_Hans: 图片的s3 uri
+      en_US: Input image s3 uri
+      zh_Hans: 输入图片的s3 uri
     human_description:
       en_US: The input image to modify (required for all modes except TEXT_IMAGE)
       zh_Hans: 要修改的输入图像（除文生图外的所有模式都需要）
     llm_description: The input image you want to modify. Required for all modes except TEXT_IMAGE.
     form: llm
+  - name: image_output_s3uri
+    type: string
+    required: true
+    label:
+      en_US: Output S3 URI
+      zh_Hans: 输出S3 URI
+    human_description:
+      en_US: The S3 URI where the generated image will be saved. If provided, the image will be uploaded with name format canvas-output-{timestamp}.png
+      zh_Hans: 生成的图像将保存到的S3 URI。如果提供，图像将以canvas-output-{timestamp}.png的格式上传
+    llm_description: Optional S3 URI where the generated image will be uploaded. The image will be saved with a timestamp-based filename.
+    form: form
   - name: negative_prompt
     type: string
     required: false
