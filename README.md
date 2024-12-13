@@ -41,8 +41,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Education_Question_Gen      | Education Question Generator                          | [DSL](./workflow/edu_question_gen.yml)                |                                                              | [chuanxie](chuanxie@amazon.com)                              |
 | Apply_guardrails            | Apply guardrails for chatbot                          | [DSL](./workflow/apply_guardrails.yml)                |                                                              | [amyli](amyli@amazon.com)                                    |
 | LLM-Finetuning-Dataflow     | LLM Fine-tuning Data Synthesis Workflow               | [DSL](./workflow/LLM-Finetuning-Dataflow-dify)        | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com)                                |
-| Image Generation Workflow   | Generate images using Amazon Nova Canvas              | [DSL](./workflow/generate_image.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
-| Video Generation Workflow   | Generate videos using Amazon Nova Reel              | [DSL](./workflow/generate_video.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
+| Image/Video Generation Workflow   | Generate images/videos using Amazon Nova Canvas and Reel              | [DSL](./workflow/generate_image_video.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
 
 You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
