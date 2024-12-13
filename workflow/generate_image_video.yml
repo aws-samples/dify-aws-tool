@@ -1,0 +1,840 @@
+app:
+  description: generate image or content
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: contentGenerator
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.4
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1734004223936-llm
+      selected: false
+      source: '1734004223936'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: llm-source-1734004754769-target
+      source: llm
+      sourceHandle: source
+      target: '1734004754769'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1734004754769-true-1734004808445-target
+      source: '1734004754769'
+      sourceHandle: 'true'
+      target: '1734004808445'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1734004754769-7a8074ca-0f75-4a44-8bec-c08752c4afc9-1734005314939-target
+      source: '1734004754769'
+      sourceHandle: 7a8074ca-0f75-4a44-8bec-c08752c4afc9
+      target: '1734005314939'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: 1734005314939-source-1734005421814-target
+      source: '1734005314939'
+      sourceHandle: source
+      target: '1734005421814'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: tool
+      id: 1734005421814-source-1734005428015-target
+      source: '1734005421814'
+      sourceHandle: source
+      target: '1734005428015'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: answer
+      id: 1734005428015-source-1734006298543-target
+      source: '1734005428015'
+      sourceHandle: source
+      target: '1734006298543'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1734004754769-b59aff48-a629-4080-bed6-7401d37f067c-1734006324976-target
+      source: '1734004754769'
+      sourceHandle: b59aff48-a629-4080-bed6-7401d37f067c
+      target: '1734006324976'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: 1734006324976-source-1734006507162-target
+      source: '1734006324976'
+      sourceHandle: source
+      target: '1734006507162'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: tool
+      id: 1734006507162-source-1734006694220-target
+      source: '1734006507162'
+      sourceHandle: source
+      target: '1734006694220'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1734004808445-source-answer-target
+      source: '1734004808445'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: answer
+      id: 1734006694220-source-1734006754493-target
+      source: '1734006694220'
+      sourceHandle: source
+      target: '1734006754493'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1734004223936'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 20
+        model:
+          completion_params:
+            max_new_tokens: 5000
+            temperature: 0.7
+          mode: chat
+          name: amazon.nova-pro-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: eef28b21-cbea-4fae-a24b-85ce13e5200f
+          role: system
+          text: 'You are a friendly artificial intelligence assistant. Your main task
+            is to recognize the user''s intent based on the {{#context#}} content
+            and output the corresponding user intent. Directly output one of the following
+            three intents. Do not output any other content:
+
+            1. CONVERSATION
+
+            2. IMAGE GENERATION
+
+            3. VIDEO GENERATION
+
+
+            Here are the simple explanations corresponding to each intent:
+
+            CONVERSATION: Normal user communication, including questions or other
+            chat information.
+
+            IMAGE GENERATION: Image generation, creating images based on user descriptions
+            or descriptions combined with input images.
+
+            VIDEO GENERATION: Video generation, creating videos based on user descriptions
+            or descriptions combined with input images.'
+        selected: false
+        title: Intent Detection LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: llm
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1734004808445.text#}}'
+        desc: ''
+        selected: false
+        title: Conversation Answer
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 1302
+        y: 158
+      positionAbsolute:
+        x: 1302
+        y: 158
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 1a934a18-227a-4ed6-a5ff-40bf0db38854
+            value: CONVERSATION
+            varType: string
+            variable_selector:
+            - llm
+            - text
+          id: 'true'
+          logical_operator: and
+        - case_id: 7a8074ca-0f75-4a44-8bec-c08752c4afc9
+          conditions:
+          - comparison_operator: contains
+            id: c8d9b00e-67f4-408b-a952-c1fdb7e456a6
+            value: IMAGE
+            varType: string
+            variable_selector:
+            - llm
+            - text
+          id: 7a8074ca-0f75-4a44-8bec-c08752c4afc9
+          logical_operator: and
+        - case_id: b59aff48-a629-4080-bed6-7401d37f067c
+          conditions:
+          - comparison_operator: contains
+            id: 3b5e3df7-1b55-4d7d-8fb1-1be95c365eb0
+            value: VIDEO
+            varType: string
+            variable_selector:
+            - llm
+            - text
+          id: b59aff48-a629-4080-bed6-7401d37f067c
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 222
+      id: '1734004754769'
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            max_new_tokens: 5000
+            temperature: 0.7
+          mode: chat
+          name: amazon.nova-micro-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: b5f06370-07e7-4762-a38e-eeab33897377
+          role: system
+          text: 'You are a friendly artificial intelligence assistant. You can answer
+            any questions from users. If a user wants to generate images or videos,
+            you can inform them that they can use natural language to describe the
+            images or videos they want to generate. Additionally, they can perform
+            image-to-image or image-to-video transformations based on the input image’s
+            S3 URI. If a user’s query is related to generating images or videos, you
+            can provide them with the following reference links:
+
+            Image Generation: https://docs.aws.amazon.com/nova/latest/userguide/image-generation.html
+
+            Video Generation: https://docs.aws.amazon.com/nova/latest/userguide/video-generation.html'
+        selected: false
+        title: Conversation LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1734004808445'
+      position:
+        x: 998
+        y: 158
+      positionAbsolute:
+        x: 998
+        y: 158
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            max_new_tokens: 5000
+            temperature: 0.7
+          mode: chat
+          name: us.anthropic.claude-3-5-sonnet-20241022-v2:0
+          provider: bedrock
+        prompt_template:
+        - id: 1b2fcb3d-b64d-44ea-9fd6-472eff0c7a6b
+          role: system
+          text: "You are an image generation expert. Based on the {{#context#}} content,\
+            \ perform the following tasks and output in JSON format:\n1. Identify\
+            \ the image generation task type. Supported task types include: TEXT_IMAGE,\
+            \ COLOR_GUIDED_GENERATION, IMAGE_VARIATION, INPAINTING, OUTPAINTING, BACKGROUND_REMOVAL.\n\
+            2. Identify the user's prompt and optimize it according to prompting best\
+            \ practices for generate image.\n3. Identify the user's negative prompt\
+            \ and optimize it according to prompting best practices.\n4. Identify\
+            \ the user's mask prompt and optimize it according to prompting best practices.\n\
+            5. Identify the S3 URI path of the image input by the user.\nBelow is\
+            \ a reference for the output JSON format:\n{ \n  \"task_type\": \"Image\
+            \ generation task type\",\n  \"prompt\": \"Image generation prompt\",\n\
+            \  \"negative_prompt\": \"Things you don't want in the generated image\"\
+            ,\n  \"mask_prompt\": \"allows you to use natural language to describe\
+            \ the elements within an image that you want to change (in the task of\
+            \ inpainting) or to remain untouched (in the task of outpainting)\",\n\
+            \  \"s3_uri\": \"Image s3 path to be modify or generation\"\n}\nReplace\
+            \ with an empty string in JSON if no message detected, but prompt can\
+            \ not been empty."
+        selected: false
+        title: Image Generation LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1734005314939'
+      position:
+        x: 998
+        y: 295
+      positionAbsolute:
+        x: 998
+        y: 295
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: amazon.nova-lite-v1:0
+          provider: bedrock
+        parameters:
+        - description: Image generation task type
+          name: task_type
+          required: false
+          type: string
+        - description: Image generation prompt
+          name: prompt
+          required: false
+          type: string
+        - description: Things you don't want in the generated image
+          name: negative_prompt
+          required: false
+          type: string
+        - description: allows you to use natural language to describe the elements
+            within an image that you want to change (in the task of inpainting) or
+            to remain untouched (in the task of outpainting)
+          name: mask_prompt
+          required: false
+          type: string
+        - description: Image s3 path to be modify or generation
+          name: s3_uri
+          required: false
+          type: string
+        query:
+        - '1734005314939'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: Image Parameter Extractor
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1734005421814'
+      position:
+        x: 1302
+        y: 295
+      positionAbsolute:
+        x: 1302
+        y: 295
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: AWS Bedrock Nova Canvas
+        tool_configurations:
+          aws_region: us-east-1
+          cfg_scale: 8
+          colors: null
+          height: 1024
+          image_output_s3uri: s3://alex-bedrock-nova-image/dify/
+          outpainting_mode: DEFAULT
+          quality: standard
+          seed: 0
+          similarity_strength: 0.5
+          width: 1024
+        tool_label: AWS Bedrock Nova Canvas
+        tool_name: nova_canvas
+        tool_parameters:
+          image_input_s3uri:
+            type: mixed
+            value: '{{#1734005421814.s3_uri#}}'
+          mask_prompt:
+            type: mixed
+            value: '{{#1734005421814.mask_prompt#}}'
+          negative_prompt:
+            type: mixed
+            value: '{{#1734005421814.negative_prompt#}}'
+          prompt:
+            type: mixed
+            value: '{{#1734005421814.prompt#}}'
+          task_type:
+            type: mixed
+            value: '{{#1734005421814.task_type#}}'
+        type: tool
+      height: 324
+      id: '1734005428015'
+      position:
+        x: 1609
+        y: 176
+      positionAbsolute:
+        x: 1609
+        y: 176
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1734005428015.files#}}
+
+          {{#1734005428015.text#}}'
+        desc: ''
+        selected: false
+        title: Image Output
+        type: answer
+        variables: []
+      height: 122
+      id: '1734006298543'
+      position:
+        x: 1910
+        y: 295
+      positionAbsolute:
+        x: 1910
+        y: 295
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            max_new_tokens: 5000
+            temperature: 0.7
+          mode: chat
+          name: us.anthropic.claude-3-5-sonnet-20241022-v2:0
+          provider: bedrock
+        prompt_template:
+        - id: 0769ea12-f13f-4ce2-ab41-00e54b728c61
+          role: system
+          text: "You are an video generation expert. Based on the {{#context#}} content,\
+            \ perform the following tasks and output in JSON format:\n1. Identify\
+            \ the user's prompt and optimize it according to prompting best practices\
+            \ for generate image.\n2. Identify the input image S3 URI path of the\
+            \ image input by the user. Replace with an empty string in JSON if no\
+            \ S3 URI is detected.\n3. Identify whether the user needs an asynchronous\
+            \ output task or a synchronous wait for task completion. If no synchronous/asynchronous\
+            \ intent is detected, set async_mode to True in the JSON.\nBelow is a\
+            \ reference for the output JSON format:\n{\n  \"prompt\": \"Video generation\
+            \ prompt\",\n  \"s3_uri\": \"Image s3 path to be modify or generation\"\
+            ,\n  \"async_mode\": \"Whether to run in async mode or sync mode\"\n}"
+        selected: false
+        title: Video Generation LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1734006324976'
+      position:
+        x: 998
+        y: 582
+      positionAbsolute:
+        x: 998
+        y: 582
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: amazon.nova-lite-v1:0
+          provider: bedrock
+        parameters:
+        - description: Video generation prompt
+          name: prompt
+          required: false
+          type: string
+        - description: Image s3 path to be modify or generation
+          name: s3_uri
+          required: false
+          type: string
+        - description: Whether to run in async mode or sync mode
+          name: async_mode
+          required: false
+          type: number
+        query:
+        - '1734006324976'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: Video Parameter Extractor 2
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1734006507162'
+      position:
+        x: 1302
+        y: 582
+      positionAbsolute:
+        x: 1302
+        y: 582
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: AWS Bedrock Nova Reel
+        tool_configurations:
+          aws_region: us-east-1
+          dimension: 1280x720
+          duration: 6
+          fps: 24
+          seed: 0
+          video_output_s3uri: s3://alex-bedrock-nova-video/dify/
+        tool_label: AWS Bedrock Nova Reel
+        tool_name: nova_reel
+        tool_parameters:
+          async:
+            type: mixed
+            value: '{{#1734006507162.async_mode#}}'
+          image_input_s3uri:
+            type: mixed
+            value: '{{#1734006507162.s3_uri#}}'
+          prompt:
+            type: mixed
+            value: '{{#1734006507162.prompt#}}'
+        type: tool
+      height: 220
+      id: '1734006694220'
+      position:
+        x: 1606
+        y: 582
+      positionAbsolute:
+        x: 1606
+        y: 582
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1734006694220.files#}}
+
+          {{#1734006694220.text#}}'
+        desc: ''
+        selected: false
+        title: Video Output
+        type: answer
+        variables: []
+      height: 122
+      id: '1734006754493'
+      position:
+        x: 1910
+        y: 582
+      positionAbsolute:
+        x: 1910
+        y: 582
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: alex
+        desc: ''
+        height: 289
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"输入参考示例:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"1. 正常对话:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"你好","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"今天天气怎么样","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":2}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"2. 生成图片类对话:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"帮我生成一张图片，一颗篮球放在地上。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"将这张图片的背景移除掉。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":2}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"3. 生成视频类对话:","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"帮我生成一段视频，一只小狗躺在沙发上","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"我的图片存储在s3://bucket/image.png上，生成一段视频，让图片中的篮球向右边缓慢的移动","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":2}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 465
+      height: 289
+      id: '1734080529039'
+      position:
+        x: -8.692828472620022
+        y: -46.55551150544039
+      positionAbsolute:
+        x: -8.692828472620022
+        y: -46.55551150544039
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 465
+    - data:
+        author: alex
+        desc: ''
+        height: 135
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"需要配置Output Image S3 URI，用来存储生成后的图片","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"example: s3://bucket_name/image_directory/","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 329
+      height: 135
+      id: '1734080742351'
+      position:
+        x: 1562.30276752528
+        y: -1.5844998855203585
+      positionAbsolute:
+        x: 1562.30276752528
+        y: -1.5844998855203585
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 329
+    - data:
+        author: alex
+        desc: ''
+        height: 124
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"需要配置Output S3 URI，用来存储生成后的视频","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"example: s3://bucket_name/video_directory/","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 324
+      height: 124
+      id: '1734080781466'
+      position:
+        x: 1568.5487413613796
+        y: 837.8743836863201
+      positionAbsolute:
+        x: 1568.5487413613796
+        y: 837.8743836863201
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 324
+    viewport:
+      x: 147.35213585461952
+      y: 248.2684170051773
+      zoom: 0.8005156811739077
