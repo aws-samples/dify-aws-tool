@@ -41,8 +41,7 @@
 | Education_Question_Gen      | 教育场景 - 试题生成器                       | [DSL](./workflow/edu_question_gen.yml)                |                                                              | [chuanxie](chuanxie@amazon.com)                              |
 | Apply_guardrails            | 应用安全防范的聊天工作流                    | [DSL](./workflow/apply_guardrails.yml)                |                                                              | [amyli](amyli@amazon.com)                                    |
 | LLM-Finetuning-Dataflow     | LLM微调数据合成工作流                       | [DSL](./workflow/LLM-Finetuning-Dataflow-dify)        | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com)                                |
-| Image Generation Workflow   | 基于Amazon Nova Canvas生成图像              | [DSL](./workflow/generate_image.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
-| Video Generation Workflow   | 基于Amazon Nova Reel生成视频              | [DSL](./workflow/generate_video.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
+| Image/Video Generation Workflow   | 基于Amazon Nova Canvas和Reel生成图片和视频 | [DSL](./workflow/generate_image_video.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
 
 更多工作流可以关注社区网站：[dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
