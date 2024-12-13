@@ -35,3 +35,7 @@ https://github.com/user-attachments/assets/cdd1cae1-e8b7-421b-b915-840b516541c3
 **9. Amazon Bedrock Retrieval Demo**
 
 https://github.com/user-attachments/assets/b54311d9-6bc2-4e2f-ac54-a7c3b594284d
+
+**10. Bedrock Nova Canvas & Reel**
+
+https://github.com/user-attachments/assets/0412fc51-5c01-4412-814a-2d83d3e86fe7
