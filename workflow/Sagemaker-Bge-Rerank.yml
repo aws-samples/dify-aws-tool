@@ -1,0 +1,201 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Sagemaker-Bge-Rerank
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.4
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1735279745998-source-1735279765486-target
+      source: '1735279745998'
+      sourceHandle: source
+      target: '1735279765486'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: end
+      id: 1735279765486-source-1735280129022-target
+      source: '1735279765486'
+      sourceHandle: source
+      target: '1735280129022'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: query
+          max_length: 4800
+          options: []
+          required: true
+          type: paragraph
+          variable: query
+        - label: candidates
+          max_length: 48000
+          options: []
+          required: true
+          type: paragraph
+          variable: candidates
+      height: 116
+      id: '1735279745998'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: aws
+        provider_name: aws
+        provider_type: builtin
+        selected: false
+        title: SagemakerRerank
+        tool_configurations:
+          aws_region: us-east-1
+          sagemaker_endpoint: bge-reranker-2024-09-18-04-49-47-267-endpoint
+          topk: 3
+        tool_label: SagemakerRerank
+        tool_name: sagemaker_text_rerank
+        tool_parameters:
+          candidate_texts:
+            type: mixed
+            value: '{{#1735279745998.candidates#}}'
+          query:
+            type: mixed
+            value: '{{#1735279745998.query#}}'
+        type: tool
+      height: 142
+      id: '1735279765486'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1735279765486'
+          - json
+          variable: json
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1735280129022'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: ybalbert@amazon.com
+        desc: ''
+        height: 325
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"##
+          query:","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"请问AWS
+          Clean Rooms是多方都会收费吗？","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"##
+          candidates","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"[{\"content\":
+          \"会收费\"},{ \"content\":\"不会收费\"},{\"content\":\"生成式AI(generative AI/Gen
+          AI)是一种AI技术,可以创造新的内容和想法的人工智能，例如图像、视频、文本、代码、音乐等。它利用机器学习模型基于大量数据进行预训练得到的超大模型也即基础模型来提供支持。\"}]","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 249
+      height: 325
+      id: '1735280506103'
+      position:
+        x: 80
+        y: -69
+      positionAbsolute:
+        x: 80
+        y: -69
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 249
+    viewport:
+      x: 242
+      y: 285
+      zoom: 1
