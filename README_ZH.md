@@ -71,7 +71,7 @@
 | CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
 | SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 
-**[注意]：Dify的SageMaker LLM Provider 可以支持大多数开源模型。我们建议您使用  [Model_hub](https://github.com/aws-samples/llm_model_hub). 来部署这些模型。它非常简单易用，支持无代码方式进行模型微调和部署。**
+**[注意]：Dify的SageMaker LLM Provider 可以支持大多数开源模型。我们建议您使用  [Model_hub](https://github.com/aws-samples/llm_model_hub). 来部署这些模型。它非常简单易用，支持无代码方式进行模型微调和部署。如果您不想安装[Model_hub](https://github.com/aws-samples/llm_model_hub)， 也可以参考[指引](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/llm_sagemaker_deploy)通过vllm的方式部署LLM到SageMaker**
 
 
 

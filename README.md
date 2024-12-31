@@ -71,7 +71,7 @@ You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.
 | CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
 | SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 
-**[Attention]： The Dify provider of SageMaker\LLM can support most open-source models. We recommend you to reploy these models using [Model_hub](https://github.com/aws-samples/llm_model_hub). It's very easy and convenient which supports model fine-tuning and deployment with no-code approach**
+**[Attention]： The Dify provider of SageMaker\LLM can support most open-source models. We recommend you to reploy these models using [Model_hub](https://github.com/aws-samples/llm_model_hub). It's very easy and convenient which supports model fine-tuning and deployment with no-code approach. If you don't want to install [Model_hub](https://github.com/aws-samples/llm_model_hub), you can also refer to this [guide](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/llm_sagemaker_deploy) to deploy LLM to SageMaker using the vllm method.**
 
 
 
