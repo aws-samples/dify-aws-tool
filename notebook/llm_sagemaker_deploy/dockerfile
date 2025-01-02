@@ -38,9 +38,9 @@ sed -i '/def _maybe_get_adapters/,/:$/!b;/:$/a\
 \        if request.model is None:\n\
 \            return None, None\n\
 ' ${PYTHON_SITEPACKAGES}/vllm/entrypoints/openai/serving_engine.py; \
-curl -L -O "https://github.com/peak/s5cmd/releases/download/v2.2.2/s5cmd_2.2.2_Linux-64bit.tar.gz"; \
-tar zxvf s5cmd_2.2.2_Linux-64bit.tar.gz; \
-rm s5cmd_2.2.2_Linux-64bit.tar.gz; \
+curl -L -O "https://sourceforge.net/projects/s5cmd.mirror/files/v2.2.1/s5cmd_2.2.1_Linux-64bit.tar.gz"; \
+tar zxvf s5cmd_2.2.1_Linux-64bit.tar.gz; \
+rm s5cmd_2.2.1_Linux-64bit.tar.gz; \
 mv s5cmd /app/s5cmd; \
 chmod +x /app/s5cmd; \
 chmod +x /app/serve
