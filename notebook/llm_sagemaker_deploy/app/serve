@@ -1,0 +1,62 @@
+#!/bin/bash
+
+
+# Set the directory to check
+base_dir="/opt/ml/model/"
+export SAGEMAKER_BIND_TO_PORT=${SAGEMAKER_BIND_TO_PORT:-8080}
+
+# Check if the directory exists
+if [ ! -d "$base_dir" ]; then
+    echo "Error: $base_dir directory does not exist"
+    exit 1
+fi
+
+# Find the first subdirectory in the base directory
+model_dir=$(find "$base_dir" -mindepth 1 -maxdepth 1 -type d -print -quit)
+
+# Check if a subdirectory was found
+if [ -z "$model_dir" ]; then
+    echo "No subdirectory found"
+    exit 0
+else
+    # Set the model_path
+    model_path="$model_dir"
+
+    echo "Found model directory" $model_dir
+    if [ -f "$model_dir/.env" ]; then
+        source $model_dir/.env
+    fi
+
+    if [ -f "$model_dir/start.sh" ]; then
+        # If start.sh file exists, use its content as model_id
+        cd $(dirname "$model_dir/start.sh")
+        echo "Running $model_dir/start.sh"
+        cp $model_dir/start.sh /app/
+        chmod +x /app/start.sh
+        /app/start.sh
+    else
+        if [ -f "$model_dir/model_id" ]; then
+            # If model_id file exists, use its content as model_id
+            model_id=$(cat "$model_dir/model_id")
+            echo "using: $model_id"
+            python3 -m vllm.entrypoints.openai.api_server \
+            --port $SAGEMAKER_BIND_TO_PORT \
+            --trust-remote-code \
+            --model $model_id
+        else
+            # If model_id file doesn't exist, use the directory name
+            model_id=$(basename "$model_dir")
+
+            # Transform model_id format
+            # Remove everything before the first '--' and replace remaining '--' with '/'
+            model_id=$(echo "$model_id" | sed -E 's/^[^-]+-+//; s/--/\//g')
+            echo "model found: $model_id"
+            python3 -m vllm.entrypoints.openai.api_server \
+            --port $SAGEMAKER_BIND_TO_PORT $ \
+            --file_dir $base_dir \
+            --trust-remote-code \
+            --model $model_id
+        fi
+        
+    fi
+fi
