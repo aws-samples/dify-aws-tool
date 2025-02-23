@@ -60,6 +60,7 @@ You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.
 | S3 Operator | SAAS | Read and write content in S3 buckets, with ability to return presigned URLs | | [ybalbert](ybalbert@amazon.com) |
 | AWS Bedrock Nova Canvas | SAAS | Generate images using Amazon Nova Canvas | | [alexwuu](alexwuu@amazon.com) |
 | AWS Bedrock Nova Reel | SAAS | Generate videos using Amazon Nova Reel | | [alexwuu](alexwuu@amazon.com) |
+| OpenSearch Knn Retriever | PAAS | Retrieve from OpenSearch by KNN method | | [ybalbert](ybalbert@amazon.com) |
 
 #### Model_Provider
 

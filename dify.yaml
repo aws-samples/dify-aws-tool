@@ -135,7 +135,7 @@ Resources:
         Fn::Base64: |-
           #!/bin/bash
 
-           yum install git docker -y && systemctl start docker && systemctl enable docker && curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && git clone --depth 1 https://github.com/langgenius/dify.git && cd dify/docker && docker-compose up -d
+           yum install git docker -y && systemctl start docker && systemctl enable docker && curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && git clone --depth 1 -b v0.15.0 https://github.com/langgenius/dify.git && cd dify/docker && docker-compose up -d
       Tags:
         - Key: Name
           Value: dify-server

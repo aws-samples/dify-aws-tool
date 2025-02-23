@@ -60,6 +60,7 @@
 | S3 Operator | SAAS | 读写S3中bucket的内容，可以返回presignURL | | [ybalbert](ybalbert@amazon.com) |
 | AWS Bedrock Nova Canvas | SAAS | 基于Amazon Nova Canvas生成图像 | | [alexwuu](alexwuu@amazon.com) |
 | AWS Bedrock Nova Reel | SAAS | 基于Amazon Nova Reel生成视频 | | [alexwuu](alexwuu@amazon.com) |
+| OpenSearch Knn Retriever | PAAS | 用KNN方法从OpenSearch召回数据 | | [ybalbert](ybalbert@amazon.com) |
 
 #### 模型提供商
 
