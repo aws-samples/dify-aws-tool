@@ -1,0 +1,42 @@
+version: 0.0.1
+type: plugin
+author: aws
+name: aws-tools
+label:
+  en_US: aws-tools
+  ja_JP: aws-tools
+  zh_Hans: aws-tools
+  pt_BR: aws-tools
+description:
+  en_US: the tools based on the aws services
+  ja_JP: the tools based on the aws services
+  zh_Hans: the tools based on the aws services
+  pt_BR: the tools based on the aws services
+icon: icon.svg
+resource:
+  memory: 268435456
+  permission:
+    tool:
+      enabled: true
+    endpoint:
+      enabled: true
+    app:
+      enabled: true
+    storage:
+      enabled: true
+      size: 1048576
+plugins:
+  tools:
+    - provider/aws-tools.yaml
+meta:
+  version: 0.0.1
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: "3.12"
+    entrypoint: main
+created_at: 2025-02-18T09:06:39.980094+08:00
+privacy: PRIVACY.md
+verified: false
