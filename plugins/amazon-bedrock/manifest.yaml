@@ -1,0 +1,41 @@
+version: 0.0.1
+type: plugin
+author: aws
+name: amazon-bedrock
+label:
+  en_US: amazon-bedrock
+  ja_JP: amazon-bedrock
+  zh_Hans: amazon-bedrock
+  pt_BR: amazon-bedrock
+description:
+  en_US: the models of aws bedrock
+  ja_JP: the models of aws bedrock
+  zh_Hans: the models of aws bedrock
+  pt_BR: the models of aws bedrock
+icon: icon_l_en.svg
+resource:
+  memory: 268435456
+  permission:
+    model:
+      enabled: true
+      llm: true
+      text_embedding: true
+      rerank: true
+      tts: false
+      speech2text: false
+      moderation: false
+plugins:
+  models:
+    - provider/amazon-bedrock.yaml
+meta:
+  version: 0.0.1
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: "3.12"
+    entrypoint: main
+created_at: 2025-02-27T17:55:38.29411+08:00
+privacy: PRIVACY.md
+verified: false
