@@ -3,10 +3,10 @@ type: plugin
 author: aws
 name: aws-tools
 label:
-  en_US: aws-tools
-  ja_JP: aws-tools
-  zh_Hans: aws-tools
-  pt_BR: aws-tools
+  en_US: AWS Tools
+  ja_JP: AWS Tools
+  zh_Hans: AWS Tools
+  pt_BR: AWS Tools
 description:
   en_US: the tools based on the aws services
   ja_JP: the tools based on the aws services
