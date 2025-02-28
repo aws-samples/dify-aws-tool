@@ -42,6 +42,7 @@ In addition to the reference code, you can also refer to the [Dify official guid
 | Apply_guardrails            | Apply guardrails for chatbot                          | [DSL](./workflow/apply_guardrails.yml)                |                                                              | [amyli](amyli@amazon.com)                                    |
 | LLM-Finetuning-Dataflow     | LLM Fine-tuning Data Synthesis Workflow               | [DSL](./workflow/LLM-Finetuning-Dataflow-dify)        | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com)                                |
 | Image/Video Generation Workflow   | Generate images/videos using Amazon Nova Canvas and Reel              | [DSL](./workflow/generate_image_video.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
+| EKS Upgrade Planning        | Generate an EKS upgrade plan base on collected EKS cluster info | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) |    | [wxyan](wxyan@amazon.com) |
 
 You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 

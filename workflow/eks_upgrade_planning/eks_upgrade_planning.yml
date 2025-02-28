@@ -1,0 +1,1995 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: EKSUpgrade-Claude
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: tool
+      id: 1738829114561-source-1738829154148-target
+      selected: false
+      source: '1738829114561'
+      sourceHandle: source
+      target: '1738829154148'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1738746410372-true-1738746481043-target
+      selected: false
+      source: '1738746410372'
+      sourceHandle: 'true'
+      target: '1738746481043'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1738739739256-true-1738737651401-target
+      selected: false
+      source: '1738739739256'
+      sourceHandle: 'true'
+      target: '1738737651401'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: tool
+      id: 1738829154148-source-1738829283505-target
+      selected: false
+      source: '1738829154148'
+      sourceHandle: source
+      target: '1738829283505'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: tool
+      id: 1738829283505-source-1738829334787-target
+      selected: false
+      source: '1738829283505'
+      sourceHandle: source
+      target: '1738829334787'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: tool
+      id: 1738830566365-source-1738829114561-target
+      selected: false
+      source: '1738830566365'
+      sourceHandle: source
+      target: '1738829114561'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1738892342718-true-1738892374280-target
+      selected: false
+      source: '1738892342718'
+      sourceHandle: 'true'
+      target: '1738892374280'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: tool
+      id: 1738829334787-source-1738893267024-target
+      selected: false
+      source: '1738829334787'
+      sourceHandle: source
+      target: '1738893267024'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1738917320677-true-1738917344287-target
+      selected: false
+      source: '1738917320677'
+      sourceHandle: 'true'
+      target: '1738917344287'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: tool
+      id: 1738893267024-source-1738917802152-target
+      selected: false
+      source: '1738893267024'
+      sourceHandle: source
+      target: '1738917802152'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1738737651401-source-1739149305955-target
+      selected: false
+      source: '1738737651401'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1738746481043-source-1739149305955-target
+      selected: false
+      source: '1738746481043'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1738811962557-source-1739149305955-target
+      selected: false
+      source: '1738811962557'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1738892374280-source-1739149305955-target
+      selected: false
+      source: '1738892374280'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1738917344287-source-1739149305955-target
+      selected: false
+      source: '1738917344287'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1739149305955-source-1739149794930-target
+      selected: false
+      source: '1739149305955'
+      sourceHandle: source
+      target: '1739149794930'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1739149794930-source-1739150126415-target
+      selected: false
+      source: '1739149794930'
+      sourceHandle: source
+      target: '1739150126415'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1739150126415-source-1739153991387-target
+      selected: false
+      source: '1739150126415'
+      sourceHandle: source
+      target: '1739153991387'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1739153991387-source-1739150556159-target
+      selected: false
+      source: '1739153991387'
+      sourceHandle: source
+      target: '1739150556159'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1739150556159-source-1738738093127-target
+      selected: false
+      source: '1739150556159'
+      sourceHandle: source
+      target: '1738738093127'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: tool
+      id: 1738917802152-source-1739697063474-target
+      selected: false
+      source: '1738917802152'
+      sourceHandle: source
+      target: '1739697063474'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: parameter-extractor
+      id: 1738736958941-source-1740279946479-target
+      selected: false
+      source: '1738736958941'
+      sourceHandle: source
+      target: '1740279946479'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: code
+      id: 1740279946479-source-1738898919776-target
+      selected: false
+      source: '1740279946479'
+      sourceHandle: source
+      target: '1738898919776'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: tool
+      id: 1738898919776-source-1738830566365-target
+      selected: false
+      source: '1738898919776'
+      sourceHandle: source
+      target: '1738830566365'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1739697063474-source-1738739739256-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1738739739256'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1739697063474-source-1738746410372-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1738746410372'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1739697063474-source-1738892342718-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1738892342718'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1739697063474-source-1738917320677-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1738917320677'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1739697063474-source-1738811962557-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1738811962557'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1739697063474-source-1740282694849-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1740282694849'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1740282694849-true-1740282713907-target
+      source: '1740282694849'
+      sourceHandle: 'true'
+      target: '1740282713907'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1740282713907-source-1739149305955-target
+      source: '1740282713907'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 目标EKS版本
+          max_length: 48
+          options:
+          - '1.25'
+          - '1.26'
+          - '1.27'
+          - '1.28'
+          - '1.29'
+          - '1.30'
+          - '1.31'
+          - '1.32'
+          - '1.33'
+          - '1.34'
+          - '1.35'
+          - '1.36'
+          - '1.37'
+          - '1.38'
+          required: true
+          type: select
+          variable: TargetVersion
+        - label: ClusterInfo
+          max_length: 65535
+          options: []
+          required: true
+          type: paragraph
+          variable: ClusterInfo
+      height: 116
+      id: '1738736958941'
+      position:
+        x: 30
+        y: 271
+      positionAbsolute:
+        x: 30
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: deb85e4c-8146-474c-ae67-a813d789d3d5
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS专家，请根据用户提供的的Cluster Health Issues信息，逐步思考并提供详细的，可执行的修复建议。
+
+
+            <参考文档>
+
+            - EKS troubleshooting：{{#1738829114561.text#}}
+
+            - AWS VPC 子网在创建之后无法调整CIDR大小
+
+            </参考文档>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            <要求>
+
+            - 如果集群没有Health Issues，则直接返回无issue
+
+            - 不要提供未经证实的解决办法
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            输出模版（Markdown）：
+
+            ### 问题1
+
+            #### 问题描述：{{问题1描述}}
+
+            #### 解决办法：{{问题1解决办法}}
+
+            ### 问题2
+
+            #### 问题描述：{{问题2描述}}
+
+            #### 解决办法：{{问题2解决办法}}
+
+            ### 问题3
+
+            ...'
+        - id: cc35c8c0-febb-4fa3-b74c-c7d59361d1d8
+          role: user
+          text: Cluster Health Issues:{{#1740279946479.HealthIssues#}}
+        selected: false
+        title: LLM-ClusterHealthIssues
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector: []
+          enabled: false
+      height: 98
+      id: '1738737651401'
+      position:
+        x: 3678
+        y: 271
+      positionAbsolute:
+        x: 3678
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1739150556159'
+          - output
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1738738093127'
+      position:
+        x: 5502
+        y: 575
+      positionAbsolute:
+        x: 5502
+        y: 575
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 2363e3d6-87da-4cc3-9127-254c01d1c5b2
+            value: ''
+            varType: string
+            variable_selector:
+            - '1740279946479'
+            - HealthIssues
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 126
+      id: '1738739739256'
+      position:
+        x: 3374
+        y: 271
+      positionAbsolute:
+        x: 3374
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: c810b1ad-94d2-4a1c-ba6e-aab0ff35e117
+            value: ''
+            varType: string
+            variable_selector:
+            - '1740279946479'
+            - AddonCompIssues
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 2
+        type: if-else
+      height: 126
+      id: '1738746410372'
+      position:
+        x: 3374
+        y: 437
+      positionAbsolute:
+        x: 3374
+        y: 437
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 9b18304c-c672-4f11-aacd-c6835d9ba2ae
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS专家，请根据用户提供的的EKS addons compatibility信息，逐步思考并提供详细的，可执行的升级建议。
+
+
+            <参考文档>
+
+            - EKS Addon升级：{{#1738829154148.text#}}
+
+            </参考文档>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            <要求>
+
+            - 如果集群没有addon compatibility issue，则直接返回无issue
+
+            - 不要提供没有切确来源的解决办法
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            输出模版（Markdown）：
+
+            ### 不兼容的EKS addons
+
+            ...
+
+            ### xx addon 需要升级到 xx 版本
+
+            备份：
+
+            参考AWS CLI命令：
+
+            回退参考命令：
+
+            注意事项（若有）：
+
+            ### xx addon 需要升级到 xx 版本
+
+            备份：
+
+            参考AWS CLI命令：
+
+            回退参考命令：
+
+            注意事项（若有）：
+
+            ...
+
+            ### addon 升级的最佳实践
+
+            建议您把自定义配置配置到EKS Addon的Advanced configuration，避免被覆盖；
+
+            若升级时发生字段冲突，可选择OVERWRITE模式，但请确保您已经把自定义配置同步到Advanced configuration；
+
+            ...'
+        - id: 256f6f96-df16-42a1-83ff-156d8be14d1b
+          role: user
+          text: EKS addons compatibility信息：{{#1740279946479.AddonCompIssues#}}
+        selected: false
+        title: LLM-AddonsCompatibility
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector: []
+          enabled: false
+      height: 98
+      id: '1738746481043'
+      position:
+        x: 3678
+        y: 437
+      positionAbsolute:
+        x: 3678
+        y: 437
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: wxyan
+        desc: ''
+        height: 108
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"临时通过","type":"text","version":1},{"detail":0,"format":3,"mode":"normal","style":"font-size:
+          16px;","text":"代码执行","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"生成集群信息，真实环境下需要通过工具自动查询集群信息。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: yellow
+        title: ''
+        type: ''
+        width: 398
+      height: 108
+      id: '1738807530943'
+      position:
+        x: 334
+        y: 140.00000000000003
+      positionAbsolute:
+        x: 334
+        y: 140.00000000000003
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 398
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: e2c56638-2914-4837-97b8-7eb3fb8abc19
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据用户提供的当前及目标EKS版本信息，逐步思考并制定一份升级前检查建议。
+
+
+            <要求>
+
+            - 提供对注意事项的解析
+
+            - 提供详细的，可操作的检查方法
+
+            - 提供详细的，可操作的应对措施
+
+            - 使用kubent或pluto命令检查API Version
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            - 仅需要考虑>当前版本且<=目标版本的EKS版本的变更
+
+            - 不要考虑新增功能或特性
+
+            - 不要使用kubectl get命令检查API Version
+
+            - 无需提供集群升级操作步骤
+
+            </要求>
+
+
+            <参考文档>
+
+            - Standard version版本信息: {{#1738829283505.text#}}
+
+            - Extended support version版本信息: {{#1738829334787.text#}}
+
+            </参考文档>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            输出模版（Markdown）：
+
+            ### EKS版本变更影响评估
+
+            好的，我将输出EKS版本变更影响评估，但不会包含新增的功能或特性。
+
+            当前EKS集群版本：
+
+            目标EKS集群版本：'
+        - id: 81f86dd1-6bbe-4f05-9e14-6033577830b6
+          role: user
+          text: '当前EKS集群版本：{{#1740279946479.CurrentVersion#}}
+
+            目标EKS集群版本：{{#1738736958941.TargetVersion#}}'
+        selected: true
+        title: LLM-VersionChange
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector: []
+          enabled: false
+      height: 98
+      id: '1738811962557'
+      position:
+        x: 3678
+        y: 575
+      positionAbsolute:
+        x: 3678
+        y: 575
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 网页爬虫-Troubleshooting
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://docs.aws.amazon.com/eks/latest/userguide/troubleshooting.html
+        type: tool
+      height: 141
+      id: '1738829114561'
+      position:
+        x: 1246
+        y: 271
+      positionAbsolute:
+        x: 1246
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 网页爬虫-UpdateAddon
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://docs.aws.amazon.com/eks/latest/userguide/updating-an-add-on.html
+        type: tool
+      height: 141
+      id: '1738829154148'
+      position:
+        x: 1550
+        y: 271
+      positionAbsolute:
+        x: 1550
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 网页爬虫-StandardVersions
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions-standard.html
+        type: tool
+      height: 141
+      id: '1738829283505'
+      position:
+        x: 1854
+        y: 271
+      positionAbsolute:
+        x: 1854
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 网页爬虫-ExtendedVersions
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions-extended.html
+        type: tool
+      height: 141
+      id: '1738829334787'
+      position:
+        x: 2158
+        y: 271
+      positionAbsolute:
+        x: 2158
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 网页爬虫-BestPractices
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://docs.aws.amazon.com/eks/latest/best-practices/cluster-upgrades.html
+        type: tool
+      height: 141
+      id: '1738830566365'
+      position:
+        x: 942
+        y: 271
+      positionAbsolute:
+        x: 942
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: aaef1dc8-5c7b-450f-8afa-310aa0b362fc
+            value: ''
+            varType: string
+            variable_selector:
+            - '1740279946479'
+            - DeprecatedAPIs
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 3
+        type: if-else
+      height: 126
+      id: '1738892342718'
+      position:
+        x: 3374
+        y: 713
+      positionAbsolute:
+        x: 3374
+        y: 713
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 08b14f0b-baca-4ffb-b8c7-283083933c02
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据用户提供的当前及目标EKS版本信息，以及正在使用的Deprecated
+            API versions信息，逐步思考并制定一份API versions更新建议。
+
+
+            <要求>
+
+            - 如果集群没有使用deprecated API，则直接返回无issue
+
+            - API versions迁移的步骤
+
+            - 使用自动化转换工具
+
+            - 不要考虑不相关版本的信息，包括当前版本
+
+            - 不要使用kubectl get命令检查或验证API versions
+
+            - 只需要提供API versions更新建议，不要提供集群版本的升级步骤
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            <参考文档>
+
+            - Kubernetes API migration guide: {{#1738893267024.text#}}
+
+            </参考文档>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            输出模版（Markdown）：
+
+            ### 正在使用的deprecated API version
+
+            ### 使用deprecated API version的client agent
+
+            ### 迁移方法'
+        - id: daabbd6c-2247-4a02-84bc-129b1b357a7a
+          role: user
+          text: 正在使用的Deprecated API versions信息：{{#1740279946479.DeprecatedAPIs#}}
+        selected: false
+        title: LLM-DeprecatedAPIs
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1738892374280'
+      position:
+        x: 3678
+        y: 713
+      positionAbsolute:
+        x: 3678
+        y: 713
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 网页爬虫-APIMigrationGuide
+        tool_configurations:
+          generate_summary: null
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://kubernetes.io/docs/reference/using-api/deprecation-guide/
+        type: tool
+      height: 141
+      id: '1738893267024'
+      position:
+        x: 2462
+        y: 271
+      positionAbsolute:
+        x: 2462
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\n#def main(currentVersion: str, targetVersion: str) -> dict:\n#  \
+          \  return {\n#        \"result\": arg1 + arg2,\n#    }\n\ndef main(currentVersion:\
+          \ str, targetVersion: str) -> dict:\n    # Convert version strings to tuples\
+          \ of integers\n    current = tuple(map(int, currentVersion.split('.')))\n\
+          \    target = tuple(map(int, targetVersion.split('.')))\n    \n    # Validate\
+          \ versions\n    if len(current) != 2 or len(target) != 2:\n        raise\
+          \ ValueError(\"Versions must be in format 'x.y'\")\n    \n    if current\
+          \ >= target:\n        raise ValueError(\"Target version must be greater\
+          \ than current version\")\n    \n    # Generate version list\n    versions\
+          \ = []\n    major, minor = current\n    target_major, target_minor = target\n\
+          \    \n    while (major, minor) < (target_major, target_minor):\n      \
+          \  minor += 1\n        if minor > 99:  # Assuming minor version doesn't\
+          \ exceed 99\n            major += 1\n            minor = 0\n        versions.append(f\"\
+          {major}.{minor}\")\n\n    # Convert list to comma-separated string\n   \
+          \ versions_string = \",\".join(versions)\n    \n    return {\n        \"\
+          versions\": versions_string\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          versions:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行-ValidateVersion
+        type: code
+        variables:
+        - value_selector:
+          - '1740279946479'
+          - CurrentVersion
+          variable: currentVersion
+        - value_selector:
+          - '1738736958941'
+          - TargetVersion
+          variable: targetVersion
+      height: 54
+      id: '1738898919776'
+      position:
+        x: 638
+        y: 271
+      positionAbsolute:
+        x: 638
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: bc981e90-ae7e-4f62-b57b-c39ef8701cf0
+            value: ''
+            varType: string
+            variable_selector:
+            - '1740279946479'
+            - NgList
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 4
+        type: if-else
+      height: 126
+      id: '1738917320677'
+      position:
+        x: 3374
+        y: 879
+      positionAbsolute:
+        x: 3374
+        y: 879
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 1f7ce851-b114-43fa-9177-bc9cbc915ab7
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据用户提供的EKS节点组及Fargate Profile信息，逐步思考并制定一份节点组及Fargate升级步骤。
+
+
+            <要求>
+
+            - 若集群存在节点组，则为每个节点组提供升级命令
+
+            - 若节点组数量超过3个，可以提供指导步骤而无需穷举所有节点组
+
+            - 若集群不存在Fargate profile，则无需提供Fargate升级方法
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            <参考文档>
+
+            - 更新集群的托管式节点组: {{#1738917802152.text#}}
+
+            </参考文档>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            输出模版（Markdown）：
+
+            ### 集群托管节点组列表
+
+            ### 节点组升级方法
+
+            蓝绿方式升级（推荐）
+
+            ...
+
+            原节点组升级
+
+            ...
+
+            ### 节点组升级注意事项
+
+            节点组升级时所有节点会被替换，请确保您没有对节点的依赖配置（例如IP地址）；
+
+            ...
+
+            ### Fargate Pod升级方法
+
+            ### Fargate Pod升级注意事项
+
+            ### 自管理节点升级方法
+
+            若您有使用自管理节点...'
+        - id: 3eb01d6d-93d7-441a-a486-83e7b2c4cb3b
+          role: user
+          text: '托管节点组列表：{{#1740279946479.NgList#}}
+
+            Fargate Profile列表：{{#1740279946479.FgProfileList#}}'
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 5000
+        selected: false
+        title: LLM-Nodegroups
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1738917344287'
+      position:
+        x: 3678
+        y: 879
+      positionAbsolute:
+        x: 3678
+        y: 879
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 网页爬虫-UpdateNodegroup
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html
+        type: tool
+      height: 141
+      id: '1738917802152'
+      position:
+        x: 2766
+        y: 271
+      positionAbsolute:
+        x: 2766
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_p: 0.7
+          mode: chat
+          name: us.amazon.nova-pro-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: f8d9b8e0-d7e4-405a-be7c-f707cbcc317e
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据用户提供的EKS版本信息，整理集群的概要信息。
+
+
+            <要求>
+
+            - 内容清晰，格式规范，可读性强
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            输出模版（Markdown）：
+
+            ## 集群信息
+
+            集群名称：{{#1740279946479.ClusterName#}}
+
+            当前版本：{{#1740279946479.CurrentVersion#}}
+
+            目标版本：{{#1738736958941.TargetVersion#}}
+
+            托管节点组：{{#1740279946479.NgList#}}
+
+            自管理节点组：
+
+            Fargate profile：{{#1740279946479.FgProfileList#}}
+
+
+            ### 备注信息'
+        - id: d6a20682-40f7-4fad-8129-a3b4f95ee1ff
+          role: user
+          text: '当前EKS集群版本：{{#1740279946479.CurrentVersion#}}
+
+            目标EKS集群版本：{{#1738736958941.TargetVersion#}}
+
+            版本偏差信息：{{#1740279946479.VersionSkew#}}'
+        selected: false
+        title: LLM-ClusterInfoSummary
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1739149305955'
+      position:
+        x: 3982
+        y: 575
+      positionAbsolute:
+        x: 3982
+        y: 575
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_p: 0.7
+          mode: chat
+          name: us.amazon.nova-micro-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: f39dfcea-bab8-4368-b0cd-ecf7dec84ece
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据用户提供的当前及目标EKS版本信息，逐步思考并为用户定制一个EKS控制平面版本升级步骤。
+
+
+            <参考文档>
+
+            - 更新EKS Kubernetes版本：{{#1739697063474.text#}}
+
+            - Kubernetes控制平面升级后无法回退
+
+            </参考文档>
+
+
+            <要求>
+
+            - 如果当前及目标EKS版本跨多个次要版本，请提供连续升级步骤
+
+            - 请提供可操作的命令行或控制台操作步骤，命令行请提供参考AWS CLI命令
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            - 无需提供升级前检查的步骤
+
+            - 无需为每个版本提供重复的步骤，简略说明即可
+
+            - 无需提供数据面，插件等其它组件的升级步骤
+
+            </要求>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            输出模版（Markdown）：
+
+            ## 控制面升级
+
+            ...
+
+            ### 注意事项
+
+            Kubernetes 控制面升级成功后无法回退；
+
+            ...
+
+            '
+        - id: 4ce74513-5dc7-4a4a-b2fb-13238efbaf14
+          role: user
+          text: '当前EKS集群版本：{{#1740279946479.CurrentVersion#}}
+
+            目标EKS集群版本：{{#1738736958941.TargetVersion#}}'
+        selected: false
+        title: LLM-CtrPlaneUpgrade
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1739149794930'
+      position:
+        x: 4286
+        y: 575
+      positionAbsolute:
+        x: 4286
+        y: 575
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 8317f9b7-7996-4702-8818-f785c41a178b
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据用户提供的EKS addon列表及版本信息，逐步思考并为用户定制一个详细的EKS
+            addon版本升级文档。
+
+
+            <要求>
+
+            - Kube-proxy需要与目标控制面版本一致
+
+            - 检查其它EKS addons是否需要升级到建议的版本，若有则提供详细的升级步骤
+
+            - 请使用AWS CLI命令
+
+            - 请忽略在{{#1738746481043.text#}}中已提供了升级步骤的EKS addons
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            输出模版（Markdown）：
+
+            ## 插件升级
+
+            '
+        - id: 9cc72872-c9dd-4804-8f37-00b7ed00789e
+          role: user
+          text: EKS addon 信息：{{#1740279946479.AddonList#}}
+        selected: false
+        title: LLM-AddonUpgrade
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1739150126415'
+      position:
+        x: 4590
+        y: 575
+      positionAbsolute:
+        x: 4590
+        y: 575
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '# 集群信息
+
+          {{ ClusterSummary }}
+
+          # 升级前检查
+
+          ## 特定版本变更检查及建议
+
+          {{ ClusterVersion }}
+
+          ## Kubelet和kube-proxy版本对齐
+
+          {{ KubernetesSkew }}
+
+          ## 插件版本兼容性检查及建议
+
+          {{ Addons }}
+
+          ## Kubernetes API version与目标EKS版本的兼容性检查（若有）
+
+          {{ APIVersion }}
+
+          ## 集群健康检查及修复建议（若有）
+
+          {{ ClusterHealth }}
+
+          # 控制面升级
+
+          {{ ControlPlane }}
+
+          # 插件升级
+
+          {{ AddonUpgrade }}
+
+          # 数据面升级
+
+          {{ NodegroupUpgrade }}
+
+          # 测试验证
+
+          {{ Test }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1740279946479'
+          - ClusterName
+          variable: ClusterName
+        - value_selector:
+          - '1740279946479'
+          - CurrentVersion
+          variable: CurrentVersion
+        - value_selector:
+          - '1738736958941'
+          - TargetVersion
+          variable: TargetVersion
+        - value_selector:
+          - '1740279946479'
+          - NgList
+          variable: Nodegroups
+        - value_selector:
+          - '1738737651401'
+          - text
+          variable: ClusterHealth
+        - value_selector:
+          - '1738746481043'
+          - text
+          variable: Addons
+        - value_selector:
+          - '1738811962557'
+          - text
+          variable: ClusterVersion
+        - value_selector:
+          - '1738892374280'
+          - text
+          variable: APIVersion
+        - value_selector:
+          - '1739149794930'
+          - text
+          variable: ControlPlane
+        - value_selector:
+          - '1739150126415'
+          - text
+          variable: AddonUpgrade
+        - value_selector:
+          - '1738917344287'
+          - text
+          variable: NodegroupUpgrade
+        - value_selector:
+          - '1739153991387'
+          - text
+          variable: Test
+        - value_selector:
+          - '1740279946479'
+          - FgProfileList
+          variable: FargateProfiles
+        - value_selector:
+          - '1740282713907'
+          - text
+          variable: KubernetesSkew
+        - value_selector:
+          - '1739149305955'
+          - text
+          variable: ClusterSummary
+      height: 54
+      id: '1739150556159'
+      position:
+        x: 5198
+        y: 575
+      positionAbsolute:
+        x: 5198
+        y: 575
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_p: 0.7
+          mode: chat
+          name: us.amazon.nova-micro-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 9bf9df61-d0ec-46cd-b491-3f25610903b4
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据EKS升级最佳实践，为用户提供一个简略的EKS版本升级后的测试建议。
+
+
+            <要求>
+
+            - 请遵循EKS升级最佳实践
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            输出模版（Markdown）：
+
+            ## 测试验证'
+        - id: d79314aa-0e02-425d-93ee-e610d1d3a0ab
+          role: user
+          text: 好的，我将生成一份针对EKS版本升级的测试建议。
+        selected: false
+        title: LLM-Test
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1739153991387'
+      position:
+        x: 4894
+        y: 575
+      positionAbsolute:
+        x: 4894
+        y: 575
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 网页爬虫-UpdateKubernetes
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html
+        type: tool
+      height: 141
+      id: '1739697063474'
+      position:
+        x: 3070
+        y: 271
+      positionAbsolute:
+        x: 3070
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: ''
+        model:
+          completion_params:
+            temperature: 0.7
+            top_p: 0.7
+          mode: chat
+          name: us.amazon.nova-micro-v1:0
+          provider: bedrock
+        parameters:
+        - description: 集群名称
+          name: ClusterName
+          required: true
+          type: string
+        - description: Current cluster version.
+          name: CurrentVersion
+          required: true
+          type: string
+        - description: AWS region of the EKS cluster.
+          name: Region
+          required: false
+          type: string
+        - description: Kubelet and kube-proxy version skew info.
+          name: VersionSkew
+          required: false
+          type: string
+        - description: EKS addons compatibility issues.
+          name: AddonCompIssues
+          required: false
+          type: string
+        - description: EKS cluster health issues.
+          name: HealthIssues
+          required: false
+          type: string
+        - description: Kubernetes deprecated APIs in use.
+          name: DeprecatedAPIs
+          required: false
+          type: string
+        - description: List of EKS addons and their recommended target versions.
+          name: AddonList
+          required: false
+          type: string
+        - description: List of EKS managed nodegroups.
+          name: NgList
+          required: false
+          type: string
+        - description: List of EKS fargate profiles.
+          name: FgProfileList
+          required: false
+          type: string
+        query:
+        - '1738736958941'
+        - ClusterInfo
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1740279946479'
+      position:
+        x: 334
+        y: 271
+      positionAbsolute:
+        x: 334
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 5c27bae0-e7f0-423f-958a-a28261847488
+            value: ''
+            varType: string
+            variable_selector:
+            - '1740279946479'
+            - VersionSkew
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 5
+        type: if-else
+      height: 126
+      id: '1740282694849'
+      position:
+        x: 3374
+        y: 1045
+      positionAbsolute:
+        x: 3374
+        y: 1045
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_p: 0.7
+          mode: chat
+          name: us.amazon.nova-micro-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: a5a63b55-57df-4a5c-b020-13460812f781
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS专家，请根据用户提供的的Version Skew信息，逐步思考并提供详细的，可执行的kubelet和kube-proxy升级建议。
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            <要求>
+
+            - 如果集群没有version skew issue，则直接返回无issue
+
+            - 请遵循EKS升级最佳实践
+
+            - 不要提供没有切确来源的解决办法
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            输出模版（Markdown）：
+
+            ### Version Skew
+
+            当前 kubelet 与控制面不在同一版本，建议在升级控制面之前更新工作节点版本。。。
+
+            当前 kube-proxy  与控制面不在同一版本，建议在升级控制面之前更新 kube-proxy 版本。。。'
+        - id: 300f8358-a959-45c6-b0aa-f023a30b0477
+          role: user
+          text: 'Version skew info: {{#1740279946479.VersionSkew#}}'
+        selected: false
+        title: LLM-VersionSkew
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1740282713907'
+      position:
+        x: 3678
+        y: 1045
+      positionAbsolute:
+        x: 3678
+        y: 1045
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -2360.2
+      y: -121.99999999999972
+      zoom: 0.7
