@@ -8,10 +8,10 @@ label:
   zh_Hans: Amazon SageMaker
   pt_BR: Amazon SageMaker
 description:
-  en_US: self deployed model provider - Amazon SageMaker
-  ja_JP: self deployed model provider - Amazon SageMaker
-  zh_Hans: self deployed model provider - Amazon SageMaker
-  pt_BR: self deployed model provider - Amazon SageMaker
+  en_US: Self deployed model provider - Amazon SageMaker
+  ja_JP: Self deployed model provider - Amazon SageMaker
+  zh_Hans: Self deployed model provider - Amazon SageMaker
+  pt_BR: Self deployed model provider - Amazon SageMaker
 icon: icon_s_en.png
 resource:
   memory: 268435456

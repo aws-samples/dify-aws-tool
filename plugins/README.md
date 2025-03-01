@@ -4,4 +4,6 @@
 dify plugin package ./aws-tools 
 
 dify plugin package ./sagemaker
+
+dify plugin package ./amazon-bedrock
 ```
