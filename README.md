@@ -1,156 +1,133 @@
 <p align="center">
-    &nbsp<strong>English</strong>&nbsp ｜ <a href="README_ZH.md"><strong>简体中文</strong></a>&nbsp 
+  <h1 align="center">Dify AWS Tool</h1>
+  <p align="center">
+    <a href="README_ZH.md"><strong>简体中文</strong></a> | <strong>English</strong>
+  </p>
 </p>
-<br>
 
-# Dify AWS Tool
+<p align="center">
+  <a href="https://github.com/langgenius/dify">
+    <img src="https://img.shields.io/badge/Powered%20by-Dify-blue" alt="Powered by Dify">
+  </a>
+  <a href="https://aws.amazon.com/">
+    <img src="https://img.shields.io/badge/Platform-AWS-orange" alt="Platform AWS">
+  </a>
+</p>
 
-## Introduction
-This repo provides some sample code to show how to integrate SageMaker Provider and some AWS Service based tools to [Dify](https://github.com/langgenius/dify). 
+## 📑 Table of Contents
 
-In addition to the reference code, you can also refer to the [Dify official guide](https://docs.dify.ai/guides/tools/quick-tool-integration) for more information.
+- [Repository Introduction](#-repository-introduction)
+- [Prerequisites](#️-prerequisites)
+- [Technical Resources](#-technical-resources)
+  - [Workflows](#workflows-demo-page)
+  - [Extension Tools](#extension-tools)
+  - [Model Providers](#model-providers)
+- [Usage Notes](#-usage-notes)
+  - [Getting Help](#getting-help)
+  - [How to Contribute](#how-to-contribute)
+- [Additional Materials](#-additional-materials)
+  - [Demo Videos](#demo-videos)
+  - [Related Blogs/Documents](#related-blogsdocuments)
+  - [Hands-on Labs](#hands-on-labs)
 
+## 📋 Repository Introduction
 
+This repository provides the source code for three plugins in [Dify](https://github.com/langgenius/dify): **Bedrock Model Provider**, **SageMaker Model Provider**, and **AWS Tools**, as well as related workflows and demos for reference by Dify users and AWS users.
 
-## Prerequisites
+## ⚙️ Prerequisites
 
-- Dify Environment (It can be deployed on AWS with one click using Cloudformation Template - [dify.yaml](./dify.yaml))
+- Dify environment (can be deployed with one click using AWS CloudFormation - [dify.yaml](./dify.yaml))
+- AWS account and AWS experience
+- Basic Linux environment experience
 
-- AWS Account and AWS Experience
+## 🧰 Technical Resources
 
-- Basic experience with Linux environments
+### Workflows ([Demo Page](./workflow/README.md))
 
+| Name | Description | Link | Dependencies | Owner |
+|------|-------------|------|-------------|-------|
+| Term_based_translate | Translation workflow with term mapping | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term mapping) | [ybalbert](ybalbert@amazon.com) |
+| Code_translate | Translation workflow between different code types | [DSL](./workflow/claude3_code_translation.yml) | | [binc](binc@amazon.com) |
+| Basic_RAG_Sample | Basic RAG workflow example with custom rerank node | [DSL](./workflow/basic_rag_sample.yml) | Tool(Rerank) | [ybalbert](ybalbert@amazon.com) |
+| Andrewyng/translation-agent | Recreation of Andrew Ng's translate agent | [DSL](./workflow/andrew_translation_agent.yml) | | [ybalbert](ybalbert@amazon.com) |
+| rag_based_bot_with_tts | RAG-based bot with voice response capability | [DSL](./workflow/rag_based_bot_with_tts.yml) | Tool(TTS) | [ybalbert](ybalbert@amazon.com) |
+| Marketing-copywriter | End-to-end marketing copywriting | [DSL](./workflow/marketing-copywriting.yml) | | [Lyson Ober](https://www.youtube.com/@lysonober) |
+| Simple_Kimi | Simple DIY Kimi | [DSL](./workflow/simple_kimi.yml) | | [ybalbert](ybalbert@amazon.com) |
+| SVG_Designer | SVG icon designer | [DSL](./workflow/svg_designer.yml) | | [Li Jigang](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
+| Education_Question_Gen | Education scenario - question generator | [DSL](./workflow/edu_question_gen.yml) | | [chuanxie](chuanxie@amazon.com) |
+| Apply_guardrails | Chat workflow with safety guardrails | [DSL](./workflow/apply_guardrails.yml) | | [amyli](amyli@amazon.com) |
+| LLM-Finetuning-Dataflow | LLM fine-tuning data synthesis workflow | [DSL](./workflow/LLM-Finetuning-Dataflow-dify) | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com) |
+| Image/Video Generation Workflow | Generate images and videos based on Amazon Nova Canvas and Reel | [DSL](./workflow/generate_image_video.yml) | | [alexwuu](alexwuu@amazon.com) |
+| EKS Upgrade Planning | Collect EKS cluster information and generate upgrade plan | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) | | [wxyan](wxyan@amazon.com) |
 
+> 💡 For more workflows, check out community websites: [dify101.com](https://dify101.com/), [difyshare.com](https://difyshare.com/), [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
-## Assets 
+### Extension Tools
 
-***[Attention]：We welcome contributions of more workflows, SageMaker models, and built-in tools. You can fork this repository and submit a merge request, please also update README.md, you need to add a new row to the corresponding table***
+| Tool Name | Tool Type | Description | Deployment Documentation | Owner |
+|-----------|-----------|-------------|--------------------------|-------|
+| Rerank | PAAS | Text similarity ranking | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| TTS | PAAS | Text-to-speech synthesis | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
+| Bedrock Guardrails | SAAS | Text moderation tool implemented through Amazon Bedrock Guardrail's standalone ApplyGuardrail API | | [amyli](amyli@amazon.com) |
+| Term_multilingual_mapping | PAAS | Word segmentation/term mapping | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
+| Image Translation Tool | PAAS | Translate text in images | Coming | [tangqy](tangqy@amazon.com) |
+| Chinese Toxicity Detector | PAAS | Chinese harmful content detection | Coming | [ychchen](ychchen@amazon.com) |
+| Transcribe Tool | SAAS | AWS transcribe service tool (ASR) | | [river xie](chuanxie@amazon.com) |
+| Bedrock Retriever | PAAS | Amazon Bedrock knowledge base retrieval tool | | [ychchen](ychchen@amazon.com) |
+| S3 Operator | SAAS | Read and write S3 bucket content, can return presigned URLs | | [ybalbert](ybalbert@amazon.com) |
+| AWS Bedrock Nova Canvas | SAAS | Generate images based on Amazon Nova Canvas | | [alexwuu](alexwuu@amazon.com) |
+| AWS Bedrock Nova Reel | SAAS | Generate videos based on Amazon Nova Reel | | [alexwuu](alexwuu@amazon.com) |
+| OpenSearch Knn Retriever | PAAS | Retrieve data from OpenSearch using KNN method | | [ybalbert](ybalbert@amazon.com) |
 
-#### Workflow([Demo Page](./workflow/README.md))
+### Model Providers
 
-| DSL Name                    | Description                                           | Link                                                  | Dependency                                                   | Owner                                                        |
-| --------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Term_based_translate        | Translation Workflow with Term mapping Retrieval Tool | [DSL](./workflow/term_based_translation_workflow.yml) | Tool(Term_mapping)                                           | [ybalbert](ybalbert@amazon.com)                              |
-| Code_translate              | Code Transform between different Program Language     | [DSL](./workflow/claude3_code_translation.yml)        |                                                              | [binc](binc@amazon.com)                                      |
-| Basic_RAG_Sample            | simple basic rag workflow with rerank tool            | [DSL](./workflow/basic_rag_sample.yml)                | Tool(Rerank)                                                 | [ybalbert](ybalbert@amazon.com)                              |
-| Andrewyng/translation-agent | Andrew Ng's translate agent.                          | [DSL](./workflow/andrew_translation_agent.yml)        |                                                              | [chuanxie](chuanxie@amazon.com)                              |
-| rag_based_bot_with_tts      | Rag based bot which can answer with voice             | [DSL](./workflow/rag_based_bot_with_tts.yml)          | Tool(TTS)                                                    | [ybalbert](ybalbert@amazon.com)                              |
-| Marketing-copywriter        | marketing copywriter                                  | [DSL](./workflow/marketing-copywriting.yml)           |                                                              | [Lyson Ober](https://www.youtube.com/@lysonober)             |
-| Simple_Kimi                 | Customized KIMI app                                   | [DSL](./workflow/simple_kimi.yml)                     |                                                              | [ybalbert](ybalbert@amazon.com)                              |
-| SVG_Designer                | SVG Designer                                          | [DSL](./workflow/svg_designer.yml)                    |                                                              | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
-| Education_Question_Gen      | Education Question Generator                          | [DSL](./workflow/edu_question_gen.yml)                |                                                              | [chuanxie](chuanxie@amazon.com)                              |
-| Apply_guardrails            | Apply guardrails for chatbot                          | [DSL](./workflow/apply_guardrails.yml)                |                                                              | [amyli](amyli@amazon.com)                                    |
-| LLM-Finetuning-Dataflow     | LLM Fine-tuning Data Synthesis Workflow               | [DSL](./workflow/LLM-Finetuning-Dataflow-dify)        | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com)                                |
-| Image/Video Generation Workflow   | Generate images/videos using Amazon Nova Canvas and Reel              | [DSL](./workflow/generate_image_video.yml)        |  | [alexwuu](alexwuu@amazon.com)               |
-| EKS Upgrade Planning        | Generate an EKS upgrade plan base on collected EKS cluster info | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) |    | [wxyan](wxyan@amazon.com) |
-
-You can find more workflows on: [dify101.com](https://dify101.com/); [difyshare.com](https://difyshare.com/); [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
-
-#### Builtin_Tools
-
-| Tool Name                 | Tool Type  | Description                                                  | Deploy_doc                                                   | Owner                           |
-| ------------------------- |------------| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------- |
-| Rerank                    | PAAS       | Text Similarity Rerank Tool                                  | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
-| TTS                       | PAAS       | Speech  synthesis Tool                                       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
-| Bedrock Guardrails        | SAAS       | Text moderation Tool, implemented through the independent assessment API ApplyGuardrail API provided on Amazon Bedrock Guardrail. |                                                              | [amyli](amyli@amazon.com)       |
-| Term_multilingual_mapping | PAAS       | Word Segment/ Term mapping Retrieval Tool                    | [Repo](https://github.com/ybalbert001/dynamodb-rag/tree/translate) | [ybalbert](ybalbert@amazon.com) |
-| Image Translation Tool    | PAAS       | Translate the text on Image                                  | Coming                                                       | [tanqy](tangqy@amazon.com)      |
-| Chinese Toxicity Detector | PAAS       | A tool to detect Chinese toxicity                             | Coming                                                      | [ychchen](ychchen@amazon.com)   |
-| Transcribe Tool    | PAAS     | AWS transcribe service tool (ASR)                                        |                                                       | [river xie](chuanxie@amazon.com)      |
-| Bedrock Retriever         | PAAS     | A tool for retrieving relevant information from Amazon Bedrock Knowledge Base    |                                                       | [ychchen](ychchen@amazon.com)   |
-| S3 Operator | SAAS | Read and write content in S3 buckets, with ability to return presigned URLs | | [ybalbert](ybalbert@amazon.com) |
-| AWS Bedrock Nova Canvas | SAAS | Generate images using Amazon Nova Canvas | | [alexwuu](alexwuu@amazon.com) |
-| AWS Bedrock Nova Reel | SAAS | Generate videos using Amazon Nova Reel | | [alexwuu](alexwuu@amazon.com) |
-| OpenSearch Knn Retriever | PAAS | Retrieve from OpenSearch by KNN method | | [ybalbert](ybalbert@amazon.com) |
-
-#### Model_Provider
-
-| Model Name       | model_type          | Deploy_doc                                                   | Owner                           |
-| ---------------- | ------------------- | ------------------------------------------------------------ | ------------------------------- |
-| Any Model        | SageMaker\LLM       | [Model_hub](https://github.com/aws-samples/llm_model_hub)    | [ybalbert](ybalbert@amazon.com) |
-| Bge-m3-rerank-v2 | SageMaker\Rerank    | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| Model Name | Model Type | Deployment Documentation | Owner |
+|------------|------------|--------------------------|-------|
+| Any open source LLM | SageMaker\LLM | [Model_hub](https://github.com/aws-samples/llm_model_hub) | [ybalbert](ybalbert@amazon.com) |
+| Bge-m3-rerank-v2 | SageMaker\Rerank | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-reranker-v2-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 | Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
-| CosyVoice        | SageMaker\TTS       | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
-| SenseVoice       | SageMaker\ASR       | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| CosyVoice | SageMaker\TTS | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
+| SenseVoice | SageMaker\ASR | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 
-**[Attention]： The Dify provider of SageMaker\LLM can support most open-source models. We recommend you to reploy these models using [Model_hub](https://github.com/aws-samples/llm_model_hub). It's very easy and convenient which supports model fine-tuning and deployment with no-code approach. If you don't want to install [Model_hub](https://github.com/aws-samples/llm_model_hub), you can also refer to this [guide](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/llm_sagemaker_deploy) to deploy LLM to SageMaker using the vllm method.**
+> **📌 Important Note**
+>
+> Dify's SageMaker LLM Provider can support most open-source models. We recommend using [Model_hub](https://github.com/aws-samples/llm_model_hub) to deploy these models. It's very user-friendly and supports no-code model fine-tuning and deployment. If you don't want to install [Model_hub](https://github.com/aws-samples/llm_model_hub), you can also refer to this [guide](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/llm_sagemaker_deploy) to deploy LLMs to SageMaker using vllm.
+>
+> If you want to add your Embedding/Rerank/ASR/TTS models to the Dify Sagemaker Model Provider, you should first deploy them in Amazon SageMaker. Please refer to the corresponding [notebooks](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook) for deployment.
 
+## 🔧 Usage Notes
 
+### Getting Help
 
-## How to Install
-***Below Script is only for SageMaker Model_provider and AWS Builtin Tools,  you can import workflows from Web Interface.  SageMaker Model_provider has already been integrated in Dify v0.6.15***
-1. Set Env Variable
-   ```bash
-   dify_path=/home/ec2-user/dify #Please set the correct dify install path
-   tag=aws
-   ```
+- Raise issues on the repository's Issues page
+- Consult the internal Lark group
 
-2. download code
-   ```bash
-   cd /home/ec2-user/
-   git clone https://github.com/aws-samples/dify-aws-tool/
-   ```
-   
-3. intall code
-   ```bash
-   # Part of models and tools have been integrated with dify already, no extra installation needed
-   mv ./dify-aws-tool/builtin_tools/aws ${dify_path}/api/core/tools/provider/builtin/
-   mv ./dify-aws-tool/model_provider/sagemaker ${dify_path}/api/core/model_runtime/model_providers/
-   ```
-   
-4. build image
+![qr](./QR_Lark.png)
 
-   ```
-   cd ${dify_path}/api
-   sudo docker build -t dify-api:${tag} .
-   ```
+### How to Contribute
 
-5. Specify the new image for api and worker services
+- Fork this repository and submit a Merge Request
+- Update README.md, adding your work (such as workflows or tools) to the appropriate table
 
-   ```diff
-   # Modify docker/docker-compose.yaml, Please refer the below diff
-   diff --git a/docker/docker-compose.yaml b/docker/docker-compose.yaml
-   index cffaa5a6a..38538e5ca 100644
-   --- a/docker/docker-compose.yaml
-   +++ b/docker/docker-compose.yaml
-   @@ -177,7 +177,7 @@ x-shared-env: &shared-api-worker-env
-    services:
-      # API service
-      api:
-   -    image: langgenius/dify-api:0.6.14
-   +    image: dify-api:aws
-        restart: always
-        environment:
-          # Use the shared environment variables.
-   @@ -197,7 +197,7 @@ services:
-      # worker service
-      # The Celery worker for processing the queue.
-      worker:
-   -    image: langgenius/dify-api:0.6.14
-   +    image: dify-api:aws
-        restart: always
-        environment:
-          # Use the shared environment variables.
-   ```
+## 📚 Additional Materials
 
-5. restart dify 
-   ```bash
-   cd ${dify_path}/docker/
-   sudo docker-compose down
-   sudo docker-compose up -d
-   ```
+### Demo Videos
 
+- [Dify 1.0.0 Release & AWS Plugin Adaptation](https://aws.highspot.com/items/67c2e250ac191e72528d176d?lfrm=rhp.0)
+- [How to Use DeepSeek Models on AWS in Dify? Only 5 Minutes](https://mp.weixin.qq.com/s/psY6m9xUNce4QIyksKvapg)
+- [Dify and Model Hub Integration for Mainstream Open-Source Models](https://mp.weixin.qq.com/s/t023tUS7QGb9CzFK40YVYw)
+- [Dify Native Content Review Extension API Calls Bedrock Guardrail to Build Responsible AI Applications](https://amazon.awsapps.com/workdocs-preview/index.html#/document/1c6e65aa34790cbcbdd74871369ca1b079f2eb5a3d044d614c6cf4f622f56468)
+- [Three Steps to Build Kimi Based on the Latest Bedrock C3.5-V2](https://mp.weixin.qq.com/s/_2obKrn849a6jOxML_8Btw)
+- [AWS Services as Tools Integrated into Dify](https://mp.weixin.qq.com/s/ZZK4Qh0kcnlZHIdO82nVZA)
+- [Dify and SageMaker ASR/TTS Integration](https://mp.weixin.qq.com/s/g2aey251YPk-tekL1uc_nw)
 
+### Related Blogs/Documents
 
-## How to deploy SageMaker Endpoint
+- [Using Amazon Bedrock Guardrail via API Extension in Dify to Add Content Review Safety Guardrails to Chat Applications](https://amzn-chn.feishu.cn/docx/PhNbdiDRDoj8vlxIDjAcKBlVncb)
+- [Integrating Dify and AWS Services for More Flexible Translation Workflows](https://br5879sdns.feishu.cn/docx/Osehd7t5ZocVocxhtQycBHDCnfb)
+- [Using DeepSeek Models on AWS in Dify](https://amzn-chn.feishu.cn/docx/BtLHdxaG5o9xL6xXZcyciZUCn0f)
 
-If you want to add your LLM/Embedding/Rerank/ASR/TTS model to Dify Sagemaker Model Provider, you should deploy them by yourself in AWS/SageMaker at first.  
-Please refer the corresponding [notebook](https://github.com/aws-samples/dify-aws-tool#model_provider) to deploy.
+### Hands-on Labs
 
-
-
-
-## Target Audience
-
-- Dify / AWS User
-- GenAI Developer
+- [Rapidly Build GenAI Apps with Dify](https://catalog.us-east-1.prod.workshops.aws/workshops/2c19fcb1-1f1c-4f52-b759-0ca4d2ae2522/zh-CN)
+- [CDK Deployment Solution for Dify Community Version Based on EKS](https://github.com/aws-samples/solution-for-deploying-dify-on-aws)
