@@ -3,15 +3,15 @@ type: plugin
 author: aws
 name: amazon-bedrock
 label:
-  en_US: amazon-bedrock
-  ja_JP: amazon-bedrock
-  zh_Hans: amazon-bedrock
-  pt_BR: amazon-bedrock
+  en_US: Amazon Bedrock
+  ja_JP: Amazon Bedrock
+  zh_Hans: Amazon Bedrock
+  pt_BR: Amazon Bedrock
 description:
-  en_US: the models of aws bedrock
-  ja_JP: the models of aws bedrock
-  zh_Hans: the models of aws bedrock
-  pt_BR: the models of aws bedrock
+  en_US: The models of Amazon Bedrock
+  ja_JP: The models of Amazon Bedrock
+  zh_Hans: The models of Amazon Bedrock
+  pt_BR: The models of Amazon Bedrock
 icon: icon_l_en.svg
 resource:
   memory: 268435456

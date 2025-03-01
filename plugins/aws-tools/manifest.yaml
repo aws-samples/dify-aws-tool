@@ -8,10 +8,10 @@ label:
   zh_Hans: AWS Tools
   pt_BR: AWS Tools
 description:
-  en_US: the tools based on the aws services
-  ja_JP: the tools based on the aws services
-  zh_Hans: the tools based on the aws services
-  pt_BR: the tools based on the aws services
+  en_US: The tools based on the AWS Services
+  ja_JP: The tools based on the AWS Services
+  zh_Hans: The tools based on the AWS Services
+  pt_BR: The tools based on the AWS Services
 icon: icon.svg
 resource:
   memory: 268435456
