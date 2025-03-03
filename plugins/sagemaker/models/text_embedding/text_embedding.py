@@ -125,7 +125,7 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
             logger.exception(f"Failed to invoke text embedding model, model: {model}, line: {line}")
             raise InvokeError(str(e))
 
-    def get_num_tokens(self, model: str, credentials: dict, texts: list[str]) -> int:
+    def get_num_tokens(self, model: str, credentials: dict, texts: list[str]) -> list[int]:
         """
         Get number of tokens for given prompt messages
 
@@ -134,7 +134,7 @@ class SageMakerEmbeddingModel(TextEmbeddingModel):
         :param texts: texts to embed
         :return:
         """
-        return 0
+        return [0] * len(texts)
 
     def validate_credentials(self, model: str, credentials: dict) -> None:
         """

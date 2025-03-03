@@ -91,7 +91,7 @@ class BedrockTextEmbeddingModel(TextEmbeddingModel):
         # others
         raise ValueError(f"Got unknown model prefix {model_prefix} when handling block response")
 
-    def get_num_tokens(self, model: str, credentials: dict, texts: list[str]) -> int:
+    def get_num_tokens(self, model: str, credentials: dict, texts: list[str]) -> list[int]:
         """
         Get number of tokens for given prompt messages
 
