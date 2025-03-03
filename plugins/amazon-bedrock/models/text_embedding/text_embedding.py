@@ -1,6 +1,7 @@
 import json
 import logging
 import time
+import tiktoken
 from typing import Optional
 
 from botocore.exceptions import (
@@ -99,10 +100,21 @@ class BedrockTextEmbeddingModel(TextEmbeddingModel):
         :param texts: texts to embed
         :return:
         """
-        num_tokens = 0
+        if len(texts) == 0:
+            return []
+
+        try:
+            enc = tiktoken.encoding_for_model(model)
+        except KeyError:
+            enc = tiktoken.get_encoding("cl100k_base")
+
+        total_num_tokens = []
         for text in texts:
-            num_tokens += self._get_num_tokens_by_gpt2(text)
-        return num_tokens
+            # calculate the number of tokens in the encoded text
+            tokenized_text = enc.encode(text)
+            total_num_tokens.append(len(tokenized_text))
+
+        return total_num_tokens
 
     def validate_credentials(self, model: str, credentials: dict) -> None:
         """
