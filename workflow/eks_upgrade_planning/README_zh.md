@@ -20,6 +20,8 @@ EKS升级规划工具由两个主要组件组成：
   - 版本偏差检测(kubelet, kube-proxy)
   - 已弃用API使用检测
   - 节点组和Fargate配置文件信息
+  - 自管理节点和Karpenter节点信息
+  - 自管理插件信息
 
 - **智能升级规划**：
   - 特定版本的升级建议
@@ -56,11 +58,14 @@ EKS升级规划工具由两个主要组件组成：
 - `target_version`：用于兼容性检查的目标EKS版本
 - `--region`（可选）：AWS区域
 - `--profile`（可选）：要使用的AWS配置文件
+- `--connect-k8s` (可选): 连接到 Kubernetes API server 以采集集群内部信息（如自管理节点，插件）
+
+若您在执行脚本时开启了`--connect-k8s`参数，您需要有Kubernetes权限以连接API server。
 
 示例：
 
 ```
-python eks_cluster_info.py my-cluster 1.24 --region us-west-2
+python eks_cluster_info.py my-cluster 1.24 --region us-west-2 --connect-k8s
 ```
 
 ### 步骤2：将收集到的信息与Dify工作流一起使用

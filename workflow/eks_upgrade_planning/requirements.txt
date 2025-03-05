@@ -1,1 +1,2 @@
 boto3>=1.36.26
+kubernetes>=28.1.0

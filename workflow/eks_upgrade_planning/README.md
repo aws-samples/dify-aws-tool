@@ -20,6 +20,8 @@ The EKS Upgrade Planning Tool consists of two main components:
   - Version skew detection (kubelet, kube-proxy)
   - Deprecated API usage detection
   - Nodegroup and Fargate profile information
+  - Self-managed nodes and Karpenter nodes version info
+  - Self-managed addons
 
 - **Intelligent Upgrade Planning**:
   - Version-specific upgrade recommendations
@@ -56,11 +58,14 @@ Run the `eks_cluster_info.py` script with the following parameters:
 - `target_version`: Target EKS version for compatibility checks
 - `--region` (optional): AWS region
 - `--profile` (optional): AWS profile to use
+- `--connect-k8s` (optional): Connect to Kubernetes API server to collect additional information
+
+You will need Kubernetes permissions to run the script with `--connect-k8s`
 
 Example:
 
 ```
-python eks_cluster_info.py my-cluster 1.24 --region us-west-2
+python eks_cluster_info.py my-cluster 1.24 --region us-west-2 --connect-k8s
 ```
 
 ### Step 2: Use the Collected Information with the Dify Workflow

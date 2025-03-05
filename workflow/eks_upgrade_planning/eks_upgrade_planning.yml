@@ -400,23 +400,78 @@ workflow:
       zIndex: 0
     - data:
         isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1740282713907-source-1739149305955-target
+      source: '1740282713907'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
         sourceType: tool
-        targetType: if-else
-      id: 1739697063474-source-1740282694849-target
+        targetType: llm
+      id: 1739697063474-source-1740282713907-target
       source: '1739697063474'
       sourceHandle: source
-      target: '1740282694849'
+      target: '1740282713907'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1739697063474-source-1741150889143-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1741150889143'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
         sourceType: if-else
-        targetType: llm
-      id: 1740282694849-true-1740282713907-target
-      source: '1740282694849'
+        targetType: tool
+      id: 1741150889143-true-1741150948968-target
+      source: '1741150889143'
       sourceHandle: 'true'
-      target: '1740282713907'
+      target: '1741150948968'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1741150889143-true-1741152539351-target
+      source: '1741150889143'
+      sourceHandle: 'true'
+      target: '1741152539351'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1741150948968-source-1741152558912-target
+      source: '1741150948968'
+      sourceHandle: source
+      target: '1741152558912'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1741152539351-source-1741152558912-target
+      source: '1741152539351'
+      sourceHandle: source
+      target: '1741152558912'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -424,8 +479,118 @@ workflow:
         isInIteration: false
         sourceType: llm
         targetType: llm
-      id: 1740282713907-source-1739149305955-target
-      source: '1740282713907'
+      id: 1741152558912-source-1739149305955-target
+      source: '1741152558912'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1739697063474-source-1741154573930-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1741154573930'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1741154573930-true-1741154603526-target
+      source: '1741154573930'
+      sourceHandle: 'true'
+      target: '1741154603526'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1741154573930-true-1741154694084-target
+      source: '1741154573930'
+      sourceHandle: 'true'
+      target: '1741154694084'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1741154603526-source-1741154733224-target
+      source: '1741154603526'
+      sourceHandle: source
+      target: '1741154733224'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1741154694084-source-1741154733224-target
+      source: '1741154694084'
+      sourceHandle: source
+      target: '1741154733224'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: if-else
+      id: 1739697063474-source-1741154944790-target
+      source: '1739697063474'
+      sourceHandle: source
+      target: '1741154944790'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1741154944790-true-1741154988163-target
+      source: '1741154944790'
+      sourceHandle: 'true'
+      target: '1741154988163'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1741154988163-source-1741155317877-target
+      source: '1741154988163'
+      sourceHandle: source
+      target: '1741155317877'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1741154733224-source-1739149305955-target
+      source: '1741154733224'
+      sourceHandle: source
+      target: '1739149305955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1741155317877-source-1739149305955-target
+      source: '1741155317877'
       sourceHandle: source
       target: '1739149305955'
       targetHandle: target
@@ -488,7 +653,7 @@ workflow:
             top_k: 50
             top_p: 0.7
           mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
           provider: bedrock
         prompt_template:
         - id: deb85e4c-8146-474c-ae67-a813d789d3d5
@@ -551,10 +716,10 @@ workflow:
       height: 98
       id: '1738737651401'
       position:
-        x: 3678
+        x: 3982
         y: 271
       positionAbsolute:
-        x: 3678
+        x: 3982
         y: 271
       selected: false
       sourcePosition: right
@@ -574,11 +739,11 @@ workflow:
       height: 90
       id: '1738738093127'
       position:
-        x: 5502
-        y: 575
+        x: 5806
+        y: 713
       positionAbsolute:
-        x: 5502
-        y: 575
+        x: 5806
+        y: 713
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -604,10 +769,10 @@ workflow:
       height: 126
       id: '1738739739256'
       position:
-        x: 3374
+        x: 3678
         y: 271
       positionAbsolute:
-        x: 3374
+        x: 3678
         y: 271
       selected: false
       sourcePosition: right
@@ -634,10 +799,10 @@ workflow:
       height: 126
       id: '1738746410372'
       position:
-        x: 3374
+        x: 3678
         y: 437
       positionAbsolute:
-        x: 3374
+        x: 3678
         y: 437
       selected: false
       sourcePosition: right
@@ -655,7 +820,7 @@ workflow:
             top_k: 50
             top_p: 0.7
           mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
           provider: bedrock
         prompt_template:
         - id: 9b18304c-c672-4f11-aacd-c6835d9ba2ae
@@ -676,6 +841,8 @@ workflow:
             <要求>
 
             - 如果集群没有addon compatibility issue，则直接返回无issue
+
+            - 不要提供移除addon的建议
 
             - 不要提供没有切确来源的解决办法
 
@@ -734,10 +901,10 @@ workflow:
       height: 98
       id: '1738746481043'
       position:
-        x: 3678
+        x: 3982
         y: 437
       positionAbsolute:
-        x: 3678
+        x: 3982
         y: 437
       selected: false
       sourcePosition: right
@@ -745,44 +912,19 @@ workflow:
       type: custom
       width: 244
     - data:
-        author: wxyan
-        desc: ''
-        height: 108
-        selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          16px;","text":"临时通过","type":"text","version":1},{"detail":0,"format":3,"mode":"normal","style":"font-size:
-          16px;","text":"代码执行","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          16px;","text":"生成集群信息，真实环境下需要通过工具自动查询集群信息。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
-        theme: yellow
-        title: ''
-        type: ''
-        width: 398
-      height: 108
-      id: '1738807530943'
-      position:
-        x: 334
-        y: 140.00000000000003
-      positionAbsolute:
-        x: 334
-        y: 140.00000000000003
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom-note
-      width: 398
-    - data:
         context:
           enabled: false
           variable_selector: []
         desc: ''
         model:
           completion_params:
+            reasoning_budget: 10240
+            reasoning_type: true
             temperature: 0.1
             top_k: 50
             top_p: 0.7
           mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
           provider: bedrock
         prompt_template:
         - id: e2c56638-2914-4837-97b8-7eb3fb8abc19
@@ -802,7 +944,7 @@ workflow:
 
             - 除了专业名称、代码、命令行之外，请使用简体中文输出
 
-            - 仅需要考虑>当前版本且<=目标版本的EKS版本的变更
+            - 不要考虑<=当前版本，或者>目标版本的变更
 
             - 不要考虑新增功能或特性
 
@@ -827,19 +969,27 @@ workflow:
 
             输出模版（Markdown）：
 
-            ### EKS版本变更影响评估
-
             好的，我将输出EKS版本变更影响评估，但不会包含新增的功能或特性。
 
             当前EKS集群版本：
 
-            目标EKS集群版本：'
+
+            目标EKS集群版本：
+
+
+            1 EKS 1.x 关键变更
+
+            ...
+
+            2 EKS 1.x 关键变更
+
+            ...'
         - id: 81f86dd1-6bbe-4f05-9e14-6033577830b6
           role: user
           text: '当前EKS集群版本：{{#1740279946479.CurrentVersion#}}
 
             目标EKS集群版本：{{#1738736958941.TargetVersion#}}'
-        selected: true
+        selected: false
         title: LLM-VersionChange
         type: llm
         variables: []
@@ -851,10 +1001,10 @@ workflow:
       height: 98
       id: '1738811962557'
       position:
-        x: 3678
+        x: 3982
         y: 575
       positionAbsolute:
-        x: 3678
+        x: 3982
         y: 575
       selected: true
       sourcePosition: right
@@ -883,7 +1033,7 @@ workflow:
             type: mixed
             value: https://docs.aws.amazon.com/eks/latest/userguide/troubleshooting.html
         type: tool
-      height: 141
+      height: 142
       id: '1738829114561'
       position:
         x: 1246
@@ -918,7 +1068,7 @@ workflow:
             type: mixed
             value: https://docs.aws.amazon.com/eks/latest/userguide/updating-an-add-on.html
         type: tool
-      height: 141
+      height: 142
       id: '1738829154148'
       position:
         x: 1550
@@ -953,7 +1103,7 @@ workflow:
             type: mixed
             value: https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions-standard.html
         type: tool
-      height: 141
+      height: 142
       id: '1738829283505'
       position:
         x: 1854
@@ -988,7 +1138,7 @@ workflow:
             type: mixed
             value: https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions-extended.html
         type: tool
-      height: 141
+      height: 142
       id: '1738829334787'
       position:
         x: 2158
@@ -1023,7 +1173,7 @@ workflow:
             type: mixed
             value: https://docs.aws.amazon.com/eks/latest/best-practices/cluster-upgrades.html
         type: tool
-      height: 141
+      height: 142
       id: '1738830566365'
       position:
         x: 942
@@ -1056,10 +1206,10 @@ workflow:
       height: 126
       id: '1738892342718'
       position:
-        x: 3374
+        x: 3678
         y: 713
       positionAbsolute:
-        x: 3374
+        x: 3678
         y: 713
       selected: false
       sourcePosition: right
@@ -1077,7 +1227,7 @@ workflow:
             top_k: 50
             top_p: 0.7
           mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
           provider: bedrock
         prompt_template:
         - id: 08b14f0b-baca-4ffb-b8c7-283083933c02
@@ -1134,10 +1284,10 @@ workflow:
       height: 98
       id: '1738892374280'
       position:
-        x: 3678
+        x: 3982
         y: 713
       positionAbsolute:
-        x: 3678
+        x: 3982
         y: 713
       selected: false
       sourcePosition: right
@@ -1166,7 +1316,7 @@ workflow:
             type: mixed
             value: https://kubernetes.io/docs/reference/using-api/deprecation-guide/
         type: tool
-      height: 141
+      height: 142
       id: '1738893267024'
       position:
         x: 2462
@@ -1247,10 +1397,10 @@ workflow:
       height: 126
       id: '1738917320677'
       position:
-        x: 3374
+        x: 3678
         y: 879
       positionAbsolute:
-        x: 3374
+        x: 3678
         y: 879
       selected: false
       sourcePosition: right
@@ -1268,7 +1418,7 @@ workflow:
             top_k: 50
             top_p: 0.7
           mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
           provider: bedrock
         prompt_template:
         - id: 1f7ce851-b114-43fa-9177-bc9cbc915ab7
@@ -1283,6 +1433,8 @@ workflow:
             - 若节点组数量超过3个，可以提供指导步骤而无需穷举所有节点组
 
             - 若集群不存在Fargate profile，则无需提供Fargate升级方法
+
+            - 若集群不存在自管理节点或Kapenter节点，则无需提供这两种节点的升级方法
 
             - 除了专业名称、代码、命令行之外，请使用简体中文输出
 
@@ -1303,7 +1455,11 @@ workflow:
 
             ### 集群托管节点组列表
 
-            ### 节点组升级方法
+            1 ...
+
+            2 ...
+
+            ### 托管节点组升级方法
 
             蓝绿方式升级（推荐）
 
@@ -1313,24 +1469,30 @@ workflow:
 
             ...
 
-            ### 节点组升级注意事项
+            ### 自管理节点升级方法
 
-            节点组升级时所有节点会被替换，请确保您没有对节点的依赖配置（例如IP地址）；
+            ### Karpenter节点升级方法
+
+            ### 节点升级注意事项
+
+            节点升级时所有节点会被替换，请确保您没有对节点的依赖配置（例如IP地址）；
+
+            删除旧节点组时需注意...
 
             ...
 
             ### Fargate Pod升级方法
 
-            ### Fargate Pod升级注意事项
-
-            ### 自管理节点升级方法
-
-            若您有使用自管理节点...'
+            ### Fargate Pod升级注意事项'
         - id: 3eb01d6d-93d7-441a-a486-83e7b2c4cb3b
           role: user
           text: '托管节点组列表：{{#1740279946479.NgList#}}
 
-            Fargate Profile列表：{{#1740279946479.FgProfileList#}}'
+            Fargate Profile列表：{{#1740279946479.FgProfileList#}}
+
+            自管理节点信息：{{#1740279946479.SelfManagedNodes#}}
+
+            Karpenter节点信息：{{#1740279946479.KarpenterNodes#}}'
         retry_config:
           max_retries: 3
           retry_enabled: false
@@ -1344,10 +1506,10 @@ workflow:
       height: 98
       id: '1738917344287'
       position:
-        x: 3678
+        x: 3982
         y: 879
       positionAbsolute:
-        x: 3678
+        x: 3982
         y: 879
       selected: false
       sourcePosition: right
@@ -1376,7 +1538,7 @@ workflow:
             type: mixed
             value: https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html
         type: tool
-      height: 141
+      height: 142
       id: '1738917802152'
       position:
         x: 2766
@@ -1397,9 +1559,10 @@ workflow:
         model:
           completion_params:
             temperature: 0.1
+            top_k: 50
             top_p: 0.7
           mode: chat
-          name: us.amazon.nova-pro-v1:0
+          name: anthropic.claude-3-5-sonnet-20241022-v2:0
           provider: bedrock
         prompt_template:
         - id: f8d9b8e0-d7e4-405a-be7c-f707cbcc317e
@@ -1421,29 +1584,56 @@ workflow:
 
             输出模版（Markdown）：
 
-            ## 集群信息
+            ## 节点信息
 
-            集群名称：{{#1740279946479.ClusterName#}}
-
-            当前版本：{{#1740279946479.CurrentVersion#}}
-
-            目标版本：{{#1738736958941.TargetVersion#}}
-
-            托管节点组：{{#1740279946479.NgList#}}
-
-            自管理节点组：
-
-            Fargate profile：{{#1740279946479.FgProfileList#}}
+            集群名称：...
 
 
-            ### 备注信息'
+            当前版本：...
+
+
+            目标版本：...
+
+
+            托管节点组：
+
+            1 ...
+
+            2 ...
+
+            自管理节点：...
+
+
+            Karpenter节点：...
+
+
+            Fargate profile：
+
+            1 ...
+
+            2 ...
+
+
+            ### 总览'
         - id: d6a20682-40f7-4fad-8129-a3b4f95ee1ff
           role: user
-          text: '当前EKS集群版本：{{#1740279946479.CurrentVersion#}}
+          text: '集群名称：{{#1740279946479.ClusterName#}}
+
+            当前EKS集群版本：{{#1740279946479.CurrentVersion#}}
 
             目标EKS集群版本：{{#1738736958941.TargetVersion#}}
 
-            版本偏差信息：{{#1740279946479.VersionSkew#}}'
+            托管节点组列表：{{#1740279946479.NgList#}}
+
+            自管理节点信息：{{#1740279946479.SelfManagedNodes#}}
+
+            Karpenter节点信息：{{#1740279946479.KarpenterNodes#}}
+
+            Fargate profile列表：{{#1740279946479.FgProfileList#}}
+
+            版本偏差信息：{{#1740279946479.VersionSkew#}}
+
+            Kube-proxy版本信息：{{#1740279946479.KubeProxy#}}'
         selected: false
         title: LLM-ClusterInfoSummary
         type: llm
@@ -1453,11 +1643,11 @@ workflow:
       height: 98
       id: '1739149305955'
       position:
-        x: 3982
-        y: 575
+        x: 4286
+        y: 713
       positionAbsolute:
-        x: 3982
-        y: 575
+        x: 4286
+        y: 713
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1471,9 +1661,10 @@ workflow:
         model:
           completion_params:
             temperature: 0.1
+            top_k: 50
             top_p: 0.7
           mode: chat
-          name: us.amazon.nova-micro-v1:0
+          name: anthropic.claude-3-5-sonnet-20241022-v2:0
           provider: bedrock
         prompt_template:
         - id: f39dfcea-bab8-4368-b0cd-ecf7dec84ece
@@ -1512,7 +1703,7 @@ workflow:
 
             输出模版（Markdown）：
 
-            ## 控制面升级
+            ### 升级步骤
 
             ...
 
@@ -1537,11 +1728,11 @@ workflow:
       height: 98
       id: '1739149794930'
       position:
-        x: 4286
-        y: 575
+        x: 4590
+        y: 713
       positionAbsolute:
-        x: 4286
-        y: 575
+        x: 4590
+        y: 713
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1558,24 +1749,25 @@ workflow:
             top_k: 50
             top_p: 0.7
           mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
           provider: bedrock
         prompt_template:
         - id: 8317f9b7-7996-4702-8818-f785c41a178b
           role: system
-          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据用户提供的EKS addon列表及版本信息，逐步思考并为用户定制一个详细的EKS
-            addon版本升级文档。
+          text: '你是一位Kubernetes和Amazon EKS技术专家，请根据用户提供的EKS addon、OpenSource addon、自管理核心addon列表及版本信息，建议用户更新addon版本并提供参考文档链接。
 
 
             <要求>
 
             - Kube-proxy需要与目标控制面版本一致
 
-            - 检查其它EKS addons是否需要升级到建议的版本，若有则提供详细的升级步骤
+            - 其它addons建议更新版本，但不是强制要求
 
-            - 请使用AWS CLI命令
+            - 针对EKS addons，提供兼容版本的AWS CLI检查命令
 
-            - 请忽略在{{#1738746481043.text#}}中已提供了升级步骤的EKS addons
+            - 针对其它addons，提供参考文档链接
+
+            - 请排出AWS Load Balancer Controler, EBS CSI Driver 和 Karpenter
 
             - 除了专业名称、代码、命令行之外，请使用简体中文输出
 
@@ -1587,12 +1779,18 @@ workflow:
 
             输出模版（Markdown）：
 
-            ## 插件升级
-
-            '
+            建议您更新当前集群中的插件到更新的版本...'
         - id: 9cc72872-c9dd-4804-8f37-00b7ed00789e
           role: user
-          text: EKS addon 信息：{{#1740279946479.AddonList#}}
+          text: 'EKS addon 信息：{{#1740279946479.EKSAddonList#}}
+
+            Opensource addon 信息：{{#1740279946479.OpenSourceAddons#}}
+
+            自管理核心addon信息：{{#1740279946479.SelfManagedCoreAddons#}}
+
+            当前集群版本：{{#1740279946479.CurrentVersion#}}
+
+            目标集群版本：{{#1738736958941.TargetVersion#}}'
         selected: false
         title: LLM-AddonUpgrade
         type: llm
@@ -1602,11 +1800,11 @@ workflow:
       height: 98
       id: '1739150126415'
       position:
-        x: 4590
-        y: 575
+        x: 4894
+        y: 713
       positionAbsolute:
-        x: 4590
-        y: 575
+        x: 4894
+        y: 713
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1645,7 +1843,17 @@ workflow:
 
           {{ ControlPlane }}
 
-          # 插件升级
+          # 插件升级（更新建议）
+
+          ## 特定插件更新建议
+
+          {{ LBCUpgrade }}
+
+          {{ KarpenterUpgrade }}
+
+          {{ EBSCSIUpgrade }}
+
+          ## 通用更新建议
 
           {{ AddonUpgrade }}
 
@@ -1719,14 +1927,26 @@ workflow:
           - '1739149305955'
           - text
           variable: ClusterSummary
+        - value_selector:
+          - '1741152558912'
+          - text
+          variable: LBCUpgrade
+        - value_selector:
+          - '1741154733224'
+          - text
+          variable: KarpenterUpgrade
+        - value_selector:
+          - '1741155317877'
+          - text
+          variable: EBSCSIUpgrade
       height: 54
       id: '1739150556159'
       position:
-        x: 5198
-        y: 575
+        x: 5502
+        y: 713
       positionAbsolute:
-        x: 5198
-        y: 575
+        x: 5502
+        y: 713
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1754,6 +1974,8 @@ workflow:
 
             - 请遵循EKS升级最佳实践
 
+            - EKS控制面版本无法回退
+
             - 除了专业名称、代码、命令行之外，请使用简体中文输出
 
             </要求>
@@ -1777,11 +1999,11 @@ workflow:
       height: 98
       id: '1739153991387'
       position:
-        x: 4894
-        y: 575
+        x: 5198
+        y: 713
       positionAbsolute:
-        x: 4894
-        y: 575
+        x: 5198
+        y: 713
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1809,7 +2031,7 @@ workflow:
             type: mixed
             value: https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html
         type: tool
-      height: 141
+      height: 142
       id: '1739697063474'
       position:
         x: 3070
@@ -1827,10 +2049,10 @@ workflow:
         instruction: ''
         model:
           completion_params:
-            temperature: 0.7
-            top_p: 0.7
+            temperature: 0.1
+            top_p: 0.1
           mode: chat
-          name: us.amazon.nova-micro-v1:0
+          name: us.amazon.nova-pro-v1:0
           provider: bedrock
         parameters:
         - description: 集群名称
@@ -1861,8 +2083,8 @@ workflow:
           name: DeprecatedAPIs
           required: false
           type: string
-        - description: List of EKS addons and their recommended target versions.
-          name: AddonList
+        - description: List of EKS Addons.
+          name: EKSAddonList
           required: false
           type: string
         - description: List of EKS managed nodegroups.
@@ -1871,6 +2093,38 @@ workflow:
           type: string
         - description: List of EKS fargate profiles.
           name: FgProfileList
+          required: false
+          type: string
+        - description: Self-managed worker nodes.
+          name: SelfManagedNodes
+          required: false
+          type: string
+        - description: Karpenter worker nodes.
+          name: KarpenterNodes
+          required: false
+          type: string
+        - description: OpenSource addons.
+          name: OpenSourceAddons
+          required: false
+          type: string
+        - description: Self-managed core addons (kube-proxy, coredns, vpccni).
+          name: SelfManagedCoreAddons
+          required: false
+          type: string
+        - description: aws-load-balancer-controller
+          name: AWSLoadBalancerController
+          required: false
+          type: string
+        - description: Karpenter addon
+          name: KarpenterController
+          required: false
+          type: string
+        - description: AWS EBS CSI Driver
+          name: EBSCSIDriver
+          required: false
+          type: string
+        - description: kube-proxy info
+          name: KubeProxy
           required: false
           type: string
         query:
@@ -1897,36 +2151,6 @@ workflow:
       type: custom
       width: 244
     - data:
-        cases:
-        - case_id: 'true'
-          conditions:
-          - comparison_operator: not empty
-            id: 5c27bae0-e7f0-423f-958a-a28261847488
-            value: ''
-            varType: string
-            variable_selector:
-            - '1740279946479'
-            - VersionSkew
-          id: 'true'
-          logical_operator: and
-        desc: ''
-        selected: false
-        title: 条件分支 5
-        type: if-else
-      height: 126
-      id: '1740282694849'
-      position:
-        x: 3374
-        y: 1045
-      positionAbsolute:
-        x: 3374
-        y: 1045
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
         context:
           enabled: false
           variable_selector: []
@@ -1941,7 +2165,7 @@ workflow:
         prompt_template:
         - id: a5a63b55-57df-4a5c-b020-13460812f781
           role: system
-          text: '你是一位Kubernetes和Amazon EKS专家，请根据用户提供的的Version Skew信息，逐步思考并提供详细的，可执行的kubelet和kube-proxy升级建议。
+          text: '你是一位Kubernetes和Amazon EKS专家，请根据用户提供的节点和kube-proxy版本信息，逐步思考并提供节点和kube-proxy的升级建议。
 
 
             <风格>严谨，专业客观</风格>
@@ -1949,11 +2173,13 @@ workflow:
 
             <要求>
 
-            - 如果集群没有version skew issue，则直接返回无issue
+            - 检查当前节点和kube-proxy版本是否与目标Kubernetes版本兼容
+
+            - 请遵循Kubernetes版本偏差策略
 
             - 请遵循EKS升级最佳实践
 
-            - 不要提供没有切确来源的解决办法
+            - 无需提供具体的升级方法
 
             - 除了专业名称、代码、命令行之外，请使用简体中文输出
 
@@ -1964,12 +2190,22 @@ workflow:
 
             ### Version Skew
 
-            当前 kubelet 与控制面不在同一版本，建议在升级控制面之前更新工作节点版本。。。
+            当前存在与目标版本不兼容的节点，建议在升级控制面之前更新工作节点到当前控制面版本。。。
 
-            当前 kube-proxy  与控制面不在同一版本，建议在升级控制面之前更新 kube-proxy 版本。。。'
+            当前 kube-proxy  与目标版本不兼容，建议在升级控制面之前更新 kube-proxy 到当前控制面版本。。。'
         - id: 300f8358-a959-45c6-b0aa-f023a30b0477
           role: user
-          text: 'Version skew info: {{#1740279946479.VersionSkew#}}'
+          text: '当前控制面版本：{{#1740279946479.CurrentVersion#}}
+
+            目标EKS版本：{{#1738736958941.TargetVersion#}}
+
+            自管理节点版本信息：{{#1740279946479.SelfManagedNodes#}}
+
+            Karpenter节点版本信息：{{#1740279946479.KarpenterNodes#}}
+
+            托管节点组版本信息：{{#1740279946479.NgList#}}
+
+            Kube-proxy版本信息：{{#1740279946479.KubeProxy#}}'
         selected: false
         title: LLM-VersionSkew
         type: llm
@@ -1979,17 +2215,474 @@ workflow:
       height: 98
       id: '1740282713907'
       position:
+        x: 3982
+        y: 1017
+      positionAbsolute:
+        x: 3982
+        y: 1017
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 030d9c14-0dc8-430e-856b-ea96ae8346b0
+            value: ''
+            varType: string
+            variable_selector:
+            - '1740279946479'
+            - AWSLoadBalancerController
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支-aws-load-balancer-controller
+        type: if-else
+      height: 126
+      id: '1741150889143'
+      position:
+        x: 3374
+        y: 1155
+      positionAbsolute:
+        x: 3374
+        y: 1155
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        selected: false
+        title: 网页爬虫-LBCInstallation
+        tool_configurations:
+          generate_summary: null
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/docs/deploy/installation.md
+        type: tool
+      height: 116
+      id: '1741150948968'
+      position:
         x: 3678
-        y: 1045
+        y: 1160
       positionAbsolute:
         x: 3678
-        y: 1045
+        y: 1160
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        selected: false
+        title: 网页爬虫-LBCReleaseLogs
+        tool_configurations:
+          generate_summary: null
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases
+        type: tool
+      height: 116
+      id: '1741152539351'
+      position:
+        x: 3678
+        y: 1316
+      positionAbsolute:
+        x: 3678
+        y: 1316
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 22c4584c-01c4-4b96-abc8-c5005005056d
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS专家，请根据用户提供的AWS Load Balancer Controller版本信息，逐步思考并提供AWS
+            Load Balancer Controller的升级建议。
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            <要求>
+
+            - 请遵循EKS升级最佳实践
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            <参考文档>
+
+            - AWS Load Balancer Controller安装手册：{{#1741150948968.text#}}
+
+            - AWS Load Balancer Controller release logs：{{#1741152539351.text#}}
+
+            </参考文档>
+
+
+            输出模版（Markdown）：
+
+            ### AWS Load Balancer Controller 升级建议
+
+            '
+        - id: bda51e69-37c0-4a79-b4dc-d7fc7ac41221
+          role: user
+          text: '当前EKS版本：{{#1740279946479.CurrentVersion#}}
+
+            目标EKS版本：{{#1738736958941.TargetVersion#}}
+
+            AWS Load Balancer Controller信息：{{#1740279946479.AWSLoadBalancerController#}}'
+        selected: false
+        title: LLM-LBCUpgrade
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1741152558912'
+      position:
+        x: 3982
+        y: 1155
+      positionAbsolute:
+        x: 3982
+        y: 1155
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 200e69a5-72d9-40f7-9878-f1c402bcfc0c
+            value: ''
+            varType: string
+            variable_selector:
+            - '1740279946479'
+            - KarpenterController
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支-KarpenterController
+        type: if-else
+      height: 126
+      id: '1741154573930'
+      position:
+        x: 3374
+        y: 1633
+      positionAbsolute:
+        x: 3374
+        y: 1633
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        selected: false
+        title: 网页爬虫-KarpenterCompatibility
+        tool_configurations:
+          generate_summary: null
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://karpenter.sh/docs/upgrading/compatibility/
+        type: tool
+      height: 116
+      id: '1741154603526'
+      position:
+        x: 3678
+        y: 1638
+      positionAbsolute:
+        x: 3678
+        y: 1638
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        selected: false
+        title: 网页爬虫-KarpenterUpgradeGuide
+        tool_configurations:
+          generate_summary: null
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://karpenter.sh/docs/upgrading/upgrade-guide/
+        type: tool
+      height: 116
+      id: '1741154694084'
+      position:
+        x: 3678
+        y: 1794
+      positionAbsolute:
+        x: 3678
+        y: 1794
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: cb245e6a-51e4-4c8a-a9a3-20b215c5957f
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS专家，请根据用户提供的Karpenter Controller版本信息，逐步思考并提供Karpenter
+            Controller的升级建议。
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            <要求>
+
+            - 请遵循EKS升级最佳实践
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            <参考文档>
+
+            - Karpenter Controller版本兼容性信息：{{#1741154603526.text#}}
+
+            - Karpenter Controller升级手册：{{#1741154694084.text#}}
+
+            </参考文档>
+
+
+            输出模版（Markdown）：
+
+            ### Karpenter Controller 升级建议
+
+            '
+        - id: 2fa5a6ba-d585-40dd-ae79-05189ec21ff6
+          role: user
+          text: '当前EKS版本：{{#1740279946479.CurrentVersion#}}
+
+            目标EKS版本：{{#1738736958941.TargetVersion#}}
+
+            Karpenter Controller版本信息：{{#1740279946479.KarpenterController#}}'
+        selected: false
+        title: LLM-KarpenterUpgrade
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1741154733224'
+      position:
+        x: 3982
+        y: 1633
+      positionAbsolute:
+        x: 3982
+        y: 1633
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 54da2ca4-ab4f-4880-aca0-3a31b7f7f765
+            value: ''
+            varType: string
+            variable_selector:
+            - '1740279946479'
+            - EBSCSIDriver
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支-EBSCSIDriver
+        type: if-else
+      height: 126
+      id: '1741154944790'
+      position:
+        x: 3374
+        y: 1467
+      positionAbsolute:
+        x: 3374
+        y: 1467
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        selected: false
+        title: 网页爬虫-EBSCSIChangeLogs
+        tool_configurations:
+          generate_summary: null
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/CHANGELOG.md
+        type: tool
+      height: 116
+      id: '1741154988163'
+      position:
+        x: 3678
+        y: 1472
+      positionAbsolute:
+        x: 3678
+        y: 1472
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+            top_k: 50
+            top_p: 0.7
+          mode: chat
+          name: us.anthropic.claude-3-7-sonnet-20250219-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 0e68b555-3200-4d6e-98ca-c9978e995ec1
+          role: system
+          text: '你是一位Kubernetes和Amazon EKS专家，请根据用户提供的EBS CSI Driver版本信息，逐步思考并提供EBS
+            CSI Driver的升级建议。
+
+
+            <风格>严谨，专业客观</风格>
+
+
+            <要求>
+
+            - 请遵循EKS升级最佳实践
+
+            - 除了专业名称、代码、命令行之外，请使用简体中文输出
+
+            </要求>
+
+
+            <参考文档>
+
+            - EBS CSI Driver Change Logs：{{#1741154988163.text#}}
+
+            </参考文档>
+
+
+            输出模版（Markdown）：
+
+            ### EBS CSI Driver 升级建议
+
+            '
+        - id: f7c87140-d0de-4e26-83b2-991d1131b40b
+          role: user
+          text: '当前EKS版本：{{#1740279946479.CurrentVersion#}}
+
+            目标EKS版本：{{#1738736958941.TargetVersion#}}
+
+            AWS EBS CSI Driver版本信息：{{#1740279946479.EBSCSIDriver#}}'
+        selected: false
+        title: LLM-EBSCSIUpgrade
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1741155317877'
+      position:
+        x: 3982
+        y: 1472
+      positionAbsolute:
+        x: 3982
+        y: 1472
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     viewport:
-      x: -2360.2
-      y: -121.99999999999972
-      zoom: 0.7
+      x: -2207.177953280615
+      y: -136.8382065767048
+      zoom: 0.6435860245075261
