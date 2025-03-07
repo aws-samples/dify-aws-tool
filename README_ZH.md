@@ -37,6 +37,7 @@
 ## ⚙️ 前置条件
 
 - Dify 环境 (可以通过 AWS Cloudformation 一键部署社区版 - [dify.yaml](./dify.yaml))
+  对于生产环境部署, 请参考解决方案样例 [Dify-on-EKS](https://github.com/aws-samples/solution-for-deploying-dify-on-aws)
 - AWS 账户和 AWS 使用经验
 - 基本的 Linux 环境使用经验
 

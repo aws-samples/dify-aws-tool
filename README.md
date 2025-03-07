@@ -37,6 +37,7 @@ This repository provides the source code for three plugins in [Dify](https://git
 ## ⚙️ Prerequisites
 
 - Dify environment (can be deployed with one click using AWS CloudFormation - [dify.yaml](./dify.yaml))
+  For production deployment, please refer to solution example [Dify-on-EKS](https://github.com/aws-samples/solution-for-deploying-dify-on-aws)
 - AWS account and AWS experience
 - Basic Linux environment experience
 
