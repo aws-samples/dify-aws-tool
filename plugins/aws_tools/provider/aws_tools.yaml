@@ -1,10 +1,10 @@
 identity:
   author: aws
-  name: aws-tools
+  name: aws_tools
   label:
-    en_US: aws-tools
+    en_US: aws_tools
     zh_Hans: 亚马逊云科技工具集
-    pt_BR: aws-tools
+    pt_BR: aws_tools
   description:
     en_US: the tools based on the aws services
     zh_Hans: the tools based on the aws services
@@ -27,4 +27,4 @@ tools:
   - tools/transcribe_asr.yaml
 extra:
   python:
-    source: provider/aws-tools.py
+    source: provider/aws_tools.py

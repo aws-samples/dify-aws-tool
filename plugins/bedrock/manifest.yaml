@@ -1,7 +1,11 @@
+<<<<<<< Updated upstream:plugins/amazon-bedrock/manifest.yaml
 version: 0.0.6
+=======
+version: 0.0.7
+>>>>>>> Stashed changes:plugins/bedrock/manifest.yaml
 type: plugin
-author: aws
-name: amazon-bedrock
+author: langgenius
+name: bedrock
 label:
   en_US: Amazon Bedrock
   ja_JP: Amazon Bedrock
@@ -26,9 +30,13 @@ resource:
       moderation: false
 plugins:
   models:
-    - provider/amazon-bedrock.yaml
+    - provider/bedrock.yaml
 meta:
+<<<<<<< Updated upstream:plugins/amazon-bedrock/manifest.yaml
   version: 0.0.6
+=======
+  version: 0.0.1
+>>>>>>> Stashed changes:plugins/bedrock/manifest.yaml
   arch:
     - amd64
     - arm64
