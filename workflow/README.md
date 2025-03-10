@@ -39,3 +39,7 @@ https://github.com/user-attachments/assets/b54311d9-6bc2-4e2f-ac54-a7c3b594284d
 **10. Bedrock Nova Canvas & Reel**
 
 https://github.com/user-attachments/assets/0412fc51-5c01-4412-814a-2d83d3e86fe7
+
+**11. ASR(Transcribe) Demo**
+
+https://github.com/user-attachments/assets/79eee9f1-ae73-4494-a9e7-94897a8e0afc
