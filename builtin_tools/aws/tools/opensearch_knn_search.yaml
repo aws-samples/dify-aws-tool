@@ -19,13 +19,13 @@ parameters:
     type: string
     required: true
     label:
-      en_US: OpenSearch Endpoint(without https://)
-      zh_Hans: OpenSearch 端点(不需要https://)
-      pt_BR: OpenSearch Endpoint(without https://)
+      en_US: OpenSearch Endpoint
+      zh_Hans: OpenSearch 端点
+      pt_BR: OpenSearch Endpoint
     human_description:
-      en_US: OpenSearch Endpoint(without https://)
-      zh_Hans: OpenSearch 端点(不需要https://)
-      pt_BR: OpenSearch Endpoint(without https://)
+      en_US: OpenSearch Endpoint
+      zh_Hans: OpenSearch 端点
+      pt_BR: OpenSearch Endpoint
     llm_description: OpenSearch Endpoint to retrieve from
     form: form
 
@@ -33,13 +33,13 @@ parameters:
     type: string
     required: true
     label:
-      en_US: The target of index name
+      en_US: Target Index Name
       zh_Hans: 目标索引名称
-      pt_BR: The target of index name
+      pt_BR: Target Index Name
     human_description:
-      en_US: The target of index name
+      en_US: Target Index Name
       zh_Hans: 目标索引名称
-      pt_BR: The target of index name
+      pt_BR: Target Index Name
     llm_description: The target of index name
     form: form
 
@@ -47,13 +47,13 @@ parameters:
     type: string
     required: false
     label:
-      en_US: s3 path of image
-      zh_Hans: 查询图像的s3文件路径
-      pt_BR: s3 path of image
+      en_US: Image S3 Path
+      zh_Hans: 图像s3路径
+      pt_BR: Image S3 Path
     human_description:
-      en_US: s3 path of image
-      zh_Hans: 查询图像的s3文件路径
-      pt_BR: s3 path of image
+      en_US: Image S3 Path
+      zh_Hans: 图像s3路径
+      pt_BR: Image S3 Path
     llm_description: s3 path of image
     form: llm
 
@@ -61,42 +61,44 @@ parameters:
     type: string
     required: false
     label:
-      en_US: query text
+      en_US: Query Text
       zh_Hans: 查询文本
-      pt_BR: query text
+      pt_BR: Query Text
     human_description:
-      en_US: query text
+      en_US: Query Text
       zh_Hans: 查询文本
-      pt_BR: query text
+      pt_BR: Query Text
     llm_description: query text
     form: llm
 
   - name: embedding_field
     type: string
     required: true
+    default: pic_emb
     label:
-      en_US: embedding field name
+      en_US: Embedding Field Name
       zh_Hans: 向量字段名称
-      pt_BR: embedding field name
+      pt_BR: Embedding Field Name
     human_description:
-      en_US: embedding field name
+      en_US: Embedding Field Name
       zh_Hans: 向量字段名称
-      pt_BR: embedding field name
+      pt_BR: Embedding Field Name
     llm_description: embedding field name
     form: llm
 
   - name: metadata_fields
     type: string
     required: true
+    default: s3_uri,pic_name
     label:
-      en_US: metadata fields(concated with ,)
-      zh_Hans: 元信息字段名称列表(由,分隔)
-      pt_BR: metadata fields(concated with ,)
+      en_US: Metadata Fields
+      zh_Hans: 元信息字段列表
+      pt_BR: Metadata Fields
     human_description:
-      en_US: metadata fields(concated with ,)
-      zh_Hans: 元信息字段名称列表(由,分隔)
-      pt_BR: metadata fields(concated with ,)
-    llm_description: metadata fields(concated with ,)
+      en_US: metadata fields
+      zh_Hans: 元信息字段列表
+      pt_BR: metadata fields
+    llm_description: metadata fields
     form: llm
 
   - name: topk
@@ -104,13 +106,13 @@ parameters:
     required: false
     form: form
     label:
-      en_US: Limit for results count
-      zh_Hans: 返回结果数量限制
-      pt_BR: Limit for results count
+      en_US: Results Count
+      zh_Hans: 结果数量
+      pt_BR: Results Count
     human_description:
-      en_US: Maximum number of results to return
-      zh_Hans: 最大返回结果数量
-      pt_BR: Maximum number of results to return
+      en_US: Results Count
+      zh_Hans: 结果数量
+      pt_BR: Results Count
     min: 1
     max: 10
     default: 5
@@ -120,11 +122,11 @@ parameters:
     required: true
     label:
       en_US: embedding size
-      zh_Hans: 向量大小
+      zh_Hans: 纬度 
       pt_BR: embedding size
     human_description:
       en_US: embedding size
-      zh_Hans: 向量大小
+      zh_Hans: 纬度
       pt_BR: embedding size
     llm_description: embedding size
     options:
@@ -170,13 +172,13 @@ parameters:
     type: select
     required: true
     label:
-      en_US: embedding model id
+      en_US: Model Id
       zh_Hans: 向量模型ID
-      pt_BR: embedding model id
+      pt_BR: Model Id
     human_description:
-      en_US: embedding model id
+      en_US: Model Id
       zh_Hans: 向量模型ID
-      pt_BR: embedding model id
+      pt_BR: Model Id
     llm_description: embedding model id
     options:
       - value: amazon.titan-embed-image-v1
