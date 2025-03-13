@@ -67,7 +67,6 @@ def inference(predictor, messages: list[dict[str, Any]], params: dict[str, Any],
     Iterator of Chunks if stream is True
     """
     payload = {
-        "model": params.get("model_name"),
         "stop": stop,
         "messages": messages,
         "stream": stream,
