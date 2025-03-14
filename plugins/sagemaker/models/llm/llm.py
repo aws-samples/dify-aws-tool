@@ -91,6 +91,9 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
     sagemaker_session: Any = None
     predictor: Any = None
     sagemaker_endpoint: str | None = None
+    access_key: str = None 
+    secret_key : str = None 
+    aws_region : str = None 
 
     def _handle_chat_generate_response(
         self,
@@ -142,55 +145,74 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         full_response = ""
         buffer = ""
         for chunk_bytes in resp:
-            buffer += chunk_bytes.decode("utf-8")
-            last_idx = 0
-            for match in re.finditer(r"^data:\s*(.+?)(\n\n)", buffer):
-                try:
-                    data = json.loads(match.group(1).strip())
-                    last_idx = match.span()[1]
+            chunk_json_str = chunk_bytes.decode("utf-8")
+            if chunk_json_str.startswith("data: "):
+                chunk_json_str = chunk_json_str[len("data: "):]
 
-                    if "content" in data["choices"][0]["delta"]:
-                        chunk_content = data["choices"][0]["delta"]["content"]
-                        assistant_prompt_message = AssistantPromptMessage(content=chunk_content, tool_calls=[])
+            buffer += chunk_json_str
+            try:
+                data = json.loads(buffer.strip())
+                chunk_content = ''
+                if not hasattr(self, '_reasoning_header_added'):
+                    self._reasoning_header_added = False
 
-                        if data["choices"][0]["finish_reason"] is not None:
-                            temp_assistant_prompt_message = AssistantPromptMessage(content=full_response, tool_calls=[])
-                            prompt_tokens = self._num_tokens_from_messages(messages=prompt_messages, tools=tools)
-                            completion_tokens = self._num_tokens_from_messages(
-                                messages=[temp_assistant_prompt_message], tools=[]
-                            )
-                            usage = self._calc_response_usage(
-                                model=model,
-                                credentials=credentials,
-                                prompt_tokens=prompt_tokens,
-                                completion_tokens=completion_tokens,
-                            )
+                if "reasoning_content" in data["choices"][0]["delta"]:
+                    reasoning_content = data["choices"][0]["delta"]["reasoning_content"]
 
-                            yield LLMResultChunk(
-                                model=model,
-                                prompt_messages=prompt_messages,
-                                system_fingerprint=None,
-                                delta=LLMResultChunkDelta(
-                                    index=0,
-                                    message=assistant_prompt_message,
-                                    finish_reason=data["choices"][0]["finish_reason"],
-                                    usage=usage,
-                                ),
-                            )
-                        else:
-                            yield LLMResultChunk(
-                                model=model,
-                                prompt_messages=prompt_messages,
-                                system_fingerprint=None,
-                                delta=LLMResultChunkDelta(index=0, message=assistant_prompt_message),
-                            )
+                    if not self._reasoning_header_added:
+                        chunk_content = "> **Think:**\n> " + reasoning_content.replace("\n", "\n> ")
+                        self._reasoning_header_added = True
+                    else:
+                        chunk_content = reasoning_content.replace("\n", "\n> ")
 
-                            full_response += chunk_content
-                except (json.JSONDecodeError, KeyError, IndexError) as e:
-                    logger.info("json parse exception, content: {}".format(match.group(1).strip()))
-                    pass
+                elif "content" in data["choices"][0]["delta"]:
+                    chunk_content = data["choices"][0]["delta"]["content"]
 
-            buffer = buffer[last_idx:]
+                    if hasattr(self, '_reasoning_header_added') and self._reasoning_header_added:
+                        delattr(self, '_reasoning_header_added')
+                        chunk_content = "\n\n" + chunk_content
+                else:
+                    continue  
+
+                assistant_prompt_message = AssistantPromptMessage(content=chunk_content, tool_calls=[])
+                if data["choices"][0]["finish_reason"] is not None:
+                    temp_assistant_prompt_message = AssistantPromptMessage(content=full_response, tool_calls=[])
+                    prompt_tokens = self._num_tokens_from_messages(messages=prompt_messages, tools=tools)
+                    completion_tokens = self._num_tokens_from_messages(
+                        messages=[temp_assistant_prompt_message], tools=[]
+                    )
+                    usage = self._calc_response_usage(
+                        model=model,
+                        credentials=credentials,
+                        prompt_tokens=prompt_tokens,
+                        completion_tokens=completion_tokens,
+                    )
+
+                    yield LLMResultChunk(
+                        model=model,
+                        prompt_messages=prompt_messages,
+                        system_fingerprint=None,
+                        delta=LLMResultChunkDelta(
+                            index=0,
+                            message=assistant_prompt_message,
+                            finish_reason=data["choices"][0]["finish_reason"],
+                            usage=usage,
+                        ),
+                    )
+                else:
+                    yield LLMResultChunk(
+                        model=model,
+                        prompt_messages=prompt_messages,
+                        system_fingerprint=None,
+                        delta=LLMResultChunkDelta(index=0, message=assistant_prompt_message),
+                    )
+
+                    full_response += chunk_content
+
+                buffer = ""
+            except (json.JSONDecodeError, KeyError, IndexError) as e:
+                logger.info("json parse exception, content: {}".format(buffer))
+                pass
 
     def _invoke(
         self,
@@ -216,27 +238,28 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         :param user: unique user id
         :return: full response or stream response chunk generator result
         """
+        if self.access_key != credentials.get("aws_access_key_id") or self.secret_key != credentials.get("aws_secret_access_key") or \
+            self.aws_region != credentials.get("aws_region") or self.sagemaker_endpoint != credentials.get("sagemaker_endpoint"):
 
-        if not self.sagemaker_session:
-            access_key = credentials.get("aws_access_key_id")
-            secret_key = credentials.get("aws_secret_access_key")
-            aws_region = credentials.get("aws_region")
+            # All settings are not changed
+            self.access_key = credentials.get("aws_access_key_id")
+            self.secret_key = credentials.get("aws_secret_access_key")
+            self.aws_region = credentials.get("aws_region")
+            self.sagemaker_endpoint = credentials.get("sagemaker_endpoint")
+
             boto_session = None
-            if aws_region:
-                if access_key and secret_key:
+            if self.aws_region:
+                if self.access_key and self.secret_key:
                     boto_session = boto3.Session(
-                        aws_access_key_id=access_key, aws_secret_access_key=secret_key, region_name=aws_region
+                        aws_access_key_id=self.access_key, aws_secret_access_key=self.secret_key, region_name=self.aws_region
                     )
                 else:
-                    boto_session = boto3.Session(region_name=aws_region)
+                    boto_session = boto3.Session(region_name=self.aws_region)
             else:
                 boto_session = boto3.Session()
 
             sagemaker_client = boto_session.client("sagemaker")
             self.sagemaker_session = Session(boto_session=boto_session, sagemaker_client=sagemaker_client)
-
-        if self.sagemaker_endpoint != credentials.get("sagemaker_endpoint"):
-            self.sagemaker_endpoint = credentials.get("sagemaker_endpoint")
             self.predictor = Predictor(
                 endpoint_name=self.sagemaker_endpoint,
                 sagemaker_session=self.sagemaker_session,
