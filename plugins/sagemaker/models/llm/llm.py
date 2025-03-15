@@ -160,17 +160,18 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
                     reasoning_content = data["choices"][0]["delta"]["reasoning_content"]
 
                     if not self._reasoning_header_added:
-                        chunk_content = "> **Think:**\n> " + reasoning_content.replace("\n", "\n> ")
+                        chunk_content = "<think>\n" + reasoning_content
+                        # Record that the marker has been added
                         self._reasoning_header_added = True
                     else:
-                        chunk_content = reasoning_content.replace("\n", "\n> ")
+                        chunk_content = reasoning_content
 
                 elif "content" in data["choices"][0]["delta"]:
                     chunk_content = data["choices"][0]["delta"]["content"]
 
                     if hasattr(self, '_reasoning_header_added') and self._reasoning_header_added:
+                        chunk_content = "\n</think>\n\n" + chunk_content
                         delattr(self, '_reasoning_header_added')
-                        chunk_content = "\n\n" + chunk_content
                 else:
                     continue  
 

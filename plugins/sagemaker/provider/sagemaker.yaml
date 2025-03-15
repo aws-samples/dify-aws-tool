@@ -1,6 +1,6 @@
 provider: sagemaker
 label:
-  en_US: SageMaker
+  en_US: Amazon SageMaker
 icon_small:
   en_US: icon_s_en.png
 icon_large:

@@ -2,9 +2,9 @@ identity:
   author: aws
   name: aws_tools
   label:
-    en_US: aws_tools
+    en_US: AWS Tools
     zh_Hans: 亚马逊云科技工具集
-    pt_BR: aws_tools
+    pt_BR: AWS Tools
   description:
     en_US: the tools based on the aws services
     zh_Hans: the tools based on the aws services
