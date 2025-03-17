@@ -122,6 +122,7 @@ This repository provides the source code for three plugins in [Dify](https://git
 - [Three Steps to Build Kimi Based on the Latest Bedrock C3.5-V2](https://mp.weixin.qq.com/s/_2obKrn849a6jOxML_8Btw)
 - [AWS Services as Tools Integrated into Dify](https://mp.weixin.qq.com/s/ZZK4Qh0kcnlZHIdO82nVZA)
 - [Dify and SageMaker ASR/TTS Integration](https://mp.weixin.qq.com/s/g2aey251YPk-tekL1uc_nw)
+- [EKS Upgrade Planning](https://github.com/user-attachments/assets/0e7250a2-362d-47ae-95d5-b4004f9b30f4)
 
 ### Related Blogs/Documents
 

@@ -123,6 +123,7 @@
 - [三步构建基于最新Bedrock C3.5-V2的Kimi](https://mp.weixin.qq.com/s/_2obKrn849a6jOxML_8Btw)
 - [AWS服务作为工具集成到Dify](https://mp.weixin.qq.com/s/ZZK4Qh0kcnlZHIdO82nVZA)
 - [Dify与SageMaker上的ASR/TTS集成](https://mp.weixin.qq.com/s/g2aey251YPk-tekL1uc_nw)
+- [EKS 版本升级计划文档生成](https://github.com/user-attachments/assets/0e7250a2-362d-47ae-95d5-b4004f9b30f4)
 
 #### 相关Blog/文档
 
