@@ -61,6 +61,7 @@
 | Image/Video Generation Workflow | 基于Amazon Nova Canvas和Reel生成图片和视频 | [DSL](./workflow/generate_image_video.yml) | | [alexwuu](alexwuu@amazon.com) |
 | EKS Upgrade Planning | 采集EKS集群信息并生成EKS集群升级计划 | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) | | [wxyan](wxyan@amazon.com) |
 | ASR_Transcribe | 语音转录文字 | [DSL](./workflow/ASR_Transcribe.yml) | | [ybalbert](ybalbert@amazon.com) |
+| Image(Text)-2-Image Search | 文搜图 & 图搜图 | [DSL](./workflow/opensearch_img_search.yml) | OpenSearch Knn Retriever | [ybalbert](ybalbert@amazon.com) |
 
 > 💡 更多工作流可以关注社区网站：[dify101.com](https://dify101.com/)、[difyshare.com](https://difyshare.com/)、[Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 

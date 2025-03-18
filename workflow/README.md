@@ -43,3 +43,7 @@ https://github.com/user-attachments/assets/0412fc51-5c01-4412-814a-2d83d3e86fe7
 **11. ASR(Transcribe) Demo**
 
 https://github.com/user-attachments/assets/79eee9f1-ae73-4494-a9e7-94897a8e0afc
+
+**12. Image Text Search Demo**
+
+https://github.com/user-attachments/assets/33d342b9-f9e4-49b1-a380-e672a0da0362
