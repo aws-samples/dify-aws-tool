@@ -1,0 +1,895 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: opensearch_img_search
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/aws_tools:0.0.5@3b4ff8201eeed1272aa91e86c6373cca47d739693f2761d53a852bcdbb5657f8
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1742133004752-source-1742133118135-target
+      source: '1742133004752'
+      sourceHandle: source
+      target: '1742133118135'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1742133118135-source-1742276816223-target
+      source: '1742133118135'
+      sourceHandle: source
+      target: '1742276816223'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: tool
+      id: 1742276816223-source-1742276845949-target
+      source: '1742276816223'
+      sourceHandle: source
+      target: '1742276845949'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1742276845949-source-1742276895967-target
+      source: '1742276845949'
+      sourceHandle: source
+      target: '1742276895967'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1742276895967-source-1742133701973-target
+      source: '1742276895967'
+      sourceHandle: source
+      target: '1742133701973'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: s3_uri
+          max_length: 256
+          options: []
+          required: false
+          type: text-input
+          variable: s3_uri
+        - label: query_text
+          max_length: 256
+          options: []
+          required: false
+          type: text-input
+          variable: query_text
+      height: 116
+      id: '1742133004752'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: OpenSearch Endpoint
+            ja_JP: OpenSearch Endpoint
+            pt_BR: OpenSearch Endpoint
+            zh_Hans: OpenSearch 端点
+          label:
+            en_US: OpenSearch Endpoint
+            ja_JP: OpenSearch Endpoint
+            pt_BR: OpenSearch Endpoint
+            zh_Hans: OpenSearch 端点
+          llm_description: OpenSearch Endpoint to retrieve from
+          max: null
+          min: null
+          name: opensearch_endpoint
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Target Index Name
+            ja_JP: Target Index Name
+            pt_BR: Target Index Name
+            zh_Hans: 目标索引名称
+          label:
+            en_US: Target Index Name
+            ja_JP: Target Index Name
+            pt_BR: Target Index Name
+            zh_Hans: 目标索引名称
+          llm_description: The target of index name
+          max: null
+          min: null
+          name: index_name
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Image S3 Path
+            ja_JP: Image S3 Path
+            pt_BR: Image S3 Path
+            zh_Hans: 图像s3路径
+          label:
+            en_US: Image S3 Path
+            ja_JP: Image S3 Path
+            pt_BR: Image S3 Path
+            zh_Hans: 图像s3路径
+          llm_description: s3 path of image
+          max: null
+          min: null
+          name: image_s3_path
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Query Text
+            ja_JP: Query Text
+            pt_BR: Query Text
+            zh_Hans: 查询文本
+          label:
+            en_US: Query Text
+            ja_JP: Query Text
+            pt_BR: Query Text
+            zh_Hans: 查询文本
+          llm_description: query text
+          max: null
+          min: null
+          name: query_text
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: pic_emb
+          form: llm
+          human_description:
+            en_US: Embedding Field Name
+            ja_JP: Embedding Field Name
+            pt_BR: Embedding Field Name
+            zh_Hans: 向量字段名称
+          label:
+            en_US: Embedding Field Name
+            ja_JP: Embedding Field Name
+            pt_BR: Embedding Field Name
+            zh_Hans: 向量字段名称
+          llm_description: embedding field name
+          max: null
+          min: null
+          name: embedding_field
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: s3_uri,pic_name
+          form: llm
+          human_description:
+            en_US: metadata fields
+            ja_JP: metadata fields
+            pt_BR: metadata fields
+            zh_Hans: 元信息字段列表
+          label:
+            en_US: Metadata Fields
+            ja_JP: Metadata Fields
+            pt_BR: Metadata Fields
+            zh_Hans: 元信息字段列表
+          llm_description: metadata fields
+          max: null
+          min: null
+          name: metadata_fields
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 5
+          form: form
+          human_description:
+            en_US: Results Count
+            ja_JP: Results Count
+            pt_BR: Results Count
+            zh_Hans: 结果数量
+          label:
+            en_US: Results Count
+            ja_JP: Results Count
+            pt_BR: Results Count
+            zh_Hans: 结果数量
+          llm_description: ''
+          max: 10
+          min: 1
+          name: topk
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: embedding size
+            ja_JP: embedding size
+            pt_BR: embedding size
+            zh_Hans: 纬度
+          label:
+            en_US: embedding size
+            ja_JP: embedding size
+            pt_BR: embedding size
+            zh_Hans: 纬度
+          llm_description: embedding size
+          max: null
+          min: null
+          name: vector_size
+          options:
+          - label:
+              en_US: '1024'
+              ja_JP: '1024'
+              pt_BR: '1024'
+              zh_Hans: '1024'
+            value: '1024'
+          - label:
+              en_US: '512'
+              ja_JP: '512'
+              pt_BR: '512'
+              zh_Hans: '512'
+            value: '512'
+          - label:
+              en_US: '384'
+              ja_JP: '384'
+              pt_BR: '384'
+              zh_Hans: '384'
+            value: '384'
+          - label:
+              en_US: '256'
+              ja_JP: '256'
+              pt_BR: '256'
+              zh_Hans: '256'
+            value: '256'
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: SEMANTIC
+          form: form
+          human_description:
+            en_US: search type
+            ja_JP: search type
+            pt_BR: search type
+            zh_Hans: 搜索类型
+          label:
+            en_US: search type
+            ja_JP: search type
+            pt_BR: search type
+            zh_Hans: 搜索类型
+          llm_description: search type
+          max: null
+          min: null
+          name: search_type
+          options:
+          - label:
+              en_US: SEMANTIC
+              ja_JP: SEMANTIC
+              pt_BR: SEMANTIC
+              zh_Hans: 语义搜索
+            value: SEMANTIC
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Model Id
+            ja_JP: Model Id
+            pt_BR: Model Id
+            zh_Hans: 向量模型ID
+          label:
+            en_US: Model Id
+            ja_JP: Model Id
+            pt_BR: Model Id
+            zh_Hans: 向量模型ID
+          llm_description: embedding model id
+          max: null
+          min: null
+          name: embedding_model_id
+          options:
+          - label:
+              en_US: amazon.titan-embed-image-v1
+              ja_JP: amazon.titan-embed-image-v1
+              pt_BR: amazon.titan-embed-image-v1
+              zh_Hans: amazon.titan-embed-image-v1
+            value: amazon.titan-embed-image-v1
+          - label:
+              en_US: amazon.titan-embed-text-v1
+              ja_JP: amazon.titan-embed-text-v1
+              pt_BR: amazon.titan-embed-text-v1
+              zh_Hans: amazon.titan-embed-text-v1
+            value: amazon.titan-embed-text-v1
+          - label:
+              en_US: amazon.titan-embed-text-v2:0
+              ja_JP: amazon.titan-embed-text-v2:0
+              pt_BR: amazon.titan-embed-text-v2:0
+              zh_Hans: amazon.titan-embed-text-v2:0
+            value: amazon.titan-embed-text-v2:0
+          - label:
+              en_US: amazon.titan-embed-text-v2:0
+              ja_JP: amazon.titan-embed-text-v2:0
+              pt_BR: amazon.titan-embed-text-v2:0
+              zh_Hans: amazon.titan-embed-text-v2:0
+            value: amazon.titan-embed-text-v2:0
+          - label:
+              en_US: cohere.embed-english-v3
+              ja_JP: cohere.embed-english-v3
+              pt_BR: cohere.embed-english-v3
+              zh_Hans: cohere.embed-english-v3
+            value: cohere.embed-english-v3
+          - label:
+              en_US: cohere.embed-multilingual-v3
+              ja_JP: cohere.embed-multilingual-v3
+              pt_BR: cohere.embed-multilingual-v3
+              zh_Hans: cohere.embed-multilingual-v3
+            value: cohere.embed-multilingual-v3
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS region where the Bedrock Knowledge Base is located
+            ja_JP: AWS region where the Bedrock Knowledge Base is located
+            pt_BR: AWS region where the Bedrock Knowledge Base is located
+            zh_Hans: Bedrock知识库所在的AWS区域
+          label:
+            en_US: AWS Region
+            ja_JP: AWS Region
+            pt_BR: AWS Region
+            zh_Hans: AWS 区域
+          llm_description: AWS region where the Bedrock Knowledge Base is located
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          aws_region: ''
+          embedding_field: ''
+          embedding_model_id: ''
+          image_s3_path: ''
+          index_name: ''
+          metadata_fields: ''
+          opensearch_endpoint: ''
+          query_text: ''
+          search_type: ''
+          topk: ''
+          vector_size: ''
+        provider_id: langgenius/aws_tools/aws_tools
+        provider_name: langgenius/aws_tools/aws_tools
+        provider_type: builtin
+        selected: true
+        title: OpenSearch Retrieve
+        tool_configurations:
+          aws_region: us-west-2
+          embedding_model_id: amazon.titan-embed-image-v1
+          index_name: image-index
+          opensearch_endpoint: https://msr6mnsmxmiohsuy7no8.us-west-2.aoss.amazonaws.com
+          search_type: SEMANTIC
+          topk: 5
+          vector_size: '256'
+        tool_label: OpenSearch Retrieve
+        tool_name: opensearch_retrieve
+        tool_parameters:
+          embedding_field:
+            type: mixed
+            value: pic_emb
+          image_s3_path:
+            type: mixed
+            value: '{{#1742133004752.s3_uri#}}'
+          metadata_fields:
+            type: mixed
+            value: pic_name,s3_uri
+          query_text:
+            type: mixed
+            value: '{{#1742133004752.query_text#}}'
+        type: tool
+      height: 246
+      id: '1742133118135'
+      position:
+        x: 383.96327725505955
+        y: 282
+      positionAbsolute:
+        x: 383.96327725505955
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 412
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"## Embedding Field Name","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"pic_emb","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"## Metadata Fields","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"pic_name,s3_uri","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"## Target Index Name","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"image-index","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"## Embedding Size","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"256","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"## Model Id","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"amazon.titan-embed-image-v1","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"## Region","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"us-west-2","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 282
+      height: 412
+      id: '1742133179072'
+      position:
+        x: 383.96327725505955
+        y: -142.01903258704385
+      positionAbsolute:
+        x: 383.96327725505955
+        y: -142.01903258704385
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 282
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1742276895967'
+          - output
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1742133701973'
+      position:
+        x: 1587.9632772550594
+        y: 282
+      positionAbsolute:
+        x: 1587.9632772550594
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\n\ndef main(arg1) -> dict:\n    top1_retrieve = arg1[0][\"result\"\
+          ][0][\"s3_uri\"]\n    \n    return {\n        \"s3_uri\": top1_retrieve\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          s3_uri:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1742133118135'
+          - json
+          variable: arg1
+      height: 54
+      id: '1742276816223'
+      position:
+        x: 687.9632772550596
+        y: 282
+      positionAbsolute:
+        x: 687.9632772550596
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The text to write
+            ja_JP: The text to write
+            pt_BR: The text to write
+            zh_Hans: 待写入的文本
+          label:
+            en_US: The text to write
+            ja_JP: The text to write
+            pt_BR: The text to write
+            zh_Hans: 待写入的文本
+          llm_description: The text to write
+          max: null
+          min: null
+          name: text_content
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: s3 uri
+            ja_JP: s3 uri
+            pt_BR: s3 uri
+            zh_Hans: s3 uri
+          label:
+            en_US: s3 uri
+            ja_JP: s3 uri
+            pt_BR: s3 uri
+            zh_Hans: s3 uri
+          llm_description: s3 uri
+          max: null
+          min: null
+          name: s3_uri
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: region of bucket
+            ja_JP: region of bucket
+            pt_BR: region of bucket
+            zh_Hans: bucket 所在的region
+          label:
+            en_US: region of bucket
+            ja_JP: region of bucket
+            pt_BR: region of bucket
+            zh_Hans: bucket 所在的region
+          llm_description: region of bucket
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: read
+          form: form
+          human_description:
+            en_US: operation type
+            ja_JP: operation type
+            pt_BR: operation type
+            zh_Hans: 操作类型
+          label:
+            en_US: operation type
+            ja_JP: operation type
+            pt_BR: operation type
+            zh_Hans: 操作类型
+          llm_description: ''
+          max: null
+          min: null
+          name: operation_type
+          options:
+          - label:
+              en_US: read
+              ja_JP: read
+              pt_BR: read
+              zh_Hans: 读
+            value: read
+          - label:
+              en_US: write
+              ja_JP: write
+              pt_BR: write
+              zh_Hans: 写
+            value: write
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Whether to generate a presigned URL for the S3 object
+            ja_JP: Whether to generate a presigned URL for the S3 object
+            pt_BR: Whether to generate a presigned URL for the S3 object
+            zh_Hans: 是否生成S3对象的预签名URL
+          label:
+            en_US: Generate presigned URL
+            ja_JP: Generate presigned URL
+            pt_BR: Generate presigned URL
+            zh_Hans: 生成预签名URL
+          llm_description: ''
+          max: null
+          min: null
+          name: generate_presign_url
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 3600
+          form: form
+          human_description:
+            en_US: Expiration time in seconds for the presigned URL
+            ja_JP: Expiration time in seconds for the presigned URL
+            pt_BR: Expiration time in seconds for the presigned URL
+            zh_Hans: 预签名URL的有效期（秒）
+          label:
+            en_US: Presigned URL expiration time
+            ja_JP: Presigned URL expiration time
+            pt_BR: Presigned URL expiration time
+            zh_Hans: 预签名URL有效期
+          llm_description: ''
+          max: null
+          min: null
+          name: presign_expiry
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        params:
+          aws_region: ''
+          generate_presign_url: ''
+          operation_type: ''
+          presign_expiry: ''
+          s3_uri: ''
+          text_content: ''
+        provider_id: langgenius/aws_tools/aws_tools
+        provider_name: langgenius/aws_tools/aws_tools
+        provider_type: builtin
+        selected: false
+        title: AWS S3 Operator
+        tool_configurations:
+          aws_region: us-west-2
+          generate_presign_url: 1
+          operation_type: read
+          presign_expiry: 3600
+        tool_label: AWS S3 Operator
+        tool_name: s3_operator
+        tool_parameters:
+          s3_uri:
+            type: mixed
+            value: '{{#1742276816223.s3_uri#}}'
+        type: tool
+      height: 168
+      id: '1742276845949'
+      position:
+        x: 987.9632772550596
+        y: 282
+      positionAbsolute:
+        x: 987.9632772550596
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '![图片]({{ arg1 }})'
+        title: Template
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1742276845949'
+          - text
+          variable: arg1
+      height: 54
+      id: '1742276895967'
+      position:
+        x: 1287.9632772550594
+        y: 282
+      positionAbsolute:
+        x: 1287.9632772550594
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 234
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"## query text ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"white car","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"## s3_uri","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"s3://sagemaker-us-west-2-687752207838/imgs/cat_0.png","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
+          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 234
+      id: '1742276951633'
+      position:
+        x: 88.69390467838889
+        y: 20.367409593050496
+      positionAbsolute:
+        x: 88.69390467838889
+        y: 20.367409593050496
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    viewport:
+      x: 37.03048602845911
+      y: 403.87378067592374
+      zoom: 0.691517490287695
