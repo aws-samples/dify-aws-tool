@@ -1,7 +1,7 @@
 <p align="center">
   <h1 align="center">Dify AWS Tool</h1>
   <p align="center">
-    <a href="README_ZH.md"><strong>简体中文</strong></a> | <strong>English</strong>
+    <a href="README_ZH.md"><strong>简体中文</strong></a> | <strong>English</strong> | <a href="README_JA.md"><strong>日本語</strong></a>
   </p>
 </p>
 
@@ -80,7 +80,7 @@ This repository provides the source code for three plugins in [Dify](https://git
 | S3 Operator | SAAS | Read and write S3 bucket content, can return presigned URLs | | [ybalbert](ybalbert@amazon.com) |
 | AWS Bedrock Nova Canvas | SAAS | Generate images based on Amazon Nova Canvas | | [alexwuu](alexwuu@amazon.com) |
 | AWS Bedrock Nova Reel | SAAS | Generate videos based on Amazon Nova Reel | | [alexwuu](alexwuu@amazon.com) |
-| OpenSearch Knn Retriever | PAAS | Retrieve data from OpenSearch using KNN method | | [ybalbert](ybalbert@amazon.com) |
+| OpenSearch Knn Retriever | PAAS | Retrieve data from OpenSearch using KNN method | [Notebook](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/search_img_by_img) | [ybalbert](ybalbert@amazon.com) |
 
 ### Model Providers
 
