@@ -47,3 +47,7 @@ https://github.com/user-attachments/assets/79eee9f1-ae73-4494-a9e7-94897a8e0afc
 **12. Image Text Search Demo**
 
 https://github.com/user-attachments/assets/33d342b9-f9e4-49b1-a380-e672a0da0362
+
+**13. EKS Upgrade Planning**
+
+https://github.com/user-attachments/assets/0e7250a2-362d-47ae-95d5-b4004f9b30f4
