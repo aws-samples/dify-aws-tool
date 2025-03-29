@@ -3,13 +3,13 @@ app:
   icon: 🤖
   icon_background: '#FFEAD5'
   mode: workflow
-  name: opensearch_img_search
+  name: opensearch-img-search
   use_icon_as_answer_icon: false
 dependencies:
 - current_identifier: null
   type: package
   value:
-    plugin_unique_identifier: langgenius/aws_tools:0.0.5@3b4ff8201eeed1272aa91e86c6373cca47d739693f2761d53a852bcdbb5657f8
+    plugin_unique_identifier: langgenius/aws_tools:0.0.6@3765d391c8e9bad2a1e08a274f45309a95ae609a0d7e819c5fb4a7a8a86c974e
 kind: app
 version: 0.1.5
 workflow:
@@ -61,57 +61,87 @@ workflow:
   graph:
     edges:
     - data:
-        isInIteration: false
+        isInLoop: false
         sourceType: start
         targetType: tool
-      id: 1742133004752-source-1742133118135-target
-      source: '1742133004752'
+      id: 1743220905496-source-1743221036318-target
+      source: '1743220905496'
       sourceHandle: source
-      target: '1742133118135'
+      target: '1743221036318'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
+        isInLoop: false
         sourceType: tool
         targetType: code
-      id: 1742133118135-source-1742276816223-target
-      source: '1742133118135'
+      id: 1743221036318-source-1743222911634-target
+      source: '1743221036318'
       sourceHandle: source
-      target: '1742276816223'
+      target: '1743222911634'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
+        isInLoop: false
         sourceType: code
-        targetType: tool
-      id: 1742276816223-source-1742276845949-target
-      source: '1742276816223'
+        targetType: iteration
+      id: 1743222911634-source-1743222968720-target
+      source: '1743222911634'
       sourceHandle: source
-      target: '1742276845949'
+      target: '1743222968720'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
-        isInIteration: false
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1743222968720'
+        sourceType: iteration-start
+        targetType: tool
+      id: 1743222968720start-source-1743222976385-target
+      source: 1743222968720start
+      sourceHandle: source
+      target: '1743222976385'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1743222968720'
         sourceType: tool
         targetType: template-transform
-      id: 1742276845949-source-1742276895967-target
-      source: '1742276845949'
+      id: 1743222976385-source-1743222979465-target
+      source: '1743222976385'
       sourceHandle: source
-      target: '1742276895967'
+      target: '1743222979465'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: template-transform
+      id: 1743222968720-source-1743223035502-target
+      source: '1743222968720'
+      sourceHandle: source
+      target: '1743223035502'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
+        isInLoop: false
         sourceType: template-transform
         targetType: end
-      id: 1742276895967-source-1742133701973-target
-      source: '1742276895967'
+      id: 1743223035502-source-1743223094273-target
+      source: '1743223035502'
       sourceHandle: source
-      target: '1742133701973'
+      target: '1743223094273'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -123,19 +153,19 @@ workflow:
         type: start
         variables:
         - label: s3_uri
-          max_length: 256
+          max_length: 480
           options: []
           required: false
-          type: text-input
+          type: paragraph
           variable: s3_uri
         - label: query_text
-          max_length: 256
+          max_length: 4800
           options: []
           required: false
-          type: text-input
+          type: paragraph
           variable: query_text
-      height: 116
-      id: '1742133004752'
+      height: 115
+      id: '1743220905496'
       position:
         x: 80
         y: 282
@@ -497,13 +527,13 @@ workflow:
         provider_id: langgenius/aws_tools/aws_tools
         provider_name: langgenius/aws_tools/aws_tools
         provider_type: builtin
-        selected: true
+        selected: false
         title: OpenSearch Retrieve
         tool_configurations:
-          aws_region: us-west-2
+          aws_region: us-east-1
           embedding_model_id: amazon.titan-embed-image-v1
           index_name: image-index
-          opensearch_endpoint: https://msr6mnsmxmiohsuy7no8.us-west-2.aoss.amazonaws.com
+          opensearch_endpoint: https://onkuwtjdrqkjif700g83.us-east-1.aoss.amazonaws.com
           search_type: SEMANTIC
           topk: 5
           vector_size: '256'
@@ -515,21 +545,21 @@ workflow:
             value: pic_emb
           image_s3_path:
             type: mixed
-            value: '{{#1742133004752.s3_uri#}}'
+            value: '{{#1743220905496.s3_uri#}}'
           metadata_fields:
             type: mixed
             value: pic_name,s3_uri
           query_text:
             type: mixed
-            value: '{{#1742133004752.query_text#}}'
+            value: '{{#1743220905496.query_text#}}'
         type: tool
-      height: 246
-      id: '1742133118135'
+      height: 245
+      id: '1743221036318'
       position:
-        x: 383.96327725505955
+        x: 426
         y: 282
       positionAbsolute:
-        x: 383.96327725505955
+        x: 426
         y: 282
       selected: true
       sourcePosition: right
@@ -537,101 +567,34 @@ workflow:
       type: custom
       width: 244
     - data:
-        author: ybalbert
-        desc: ''
-        height: 412
-        selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"## Embedding Field Name","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"pic_emb","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"## Metadata Fields","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"pic_name,s3_uri","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"## Target Index Name","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"image-index","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"## Embedding Size","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"256","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"## Model Id","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"amazon.titan-embed-image-v1","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"## Region","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"us-west-2","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
-        theme: blue
-        title: ''
-        type: ''
-        width: 282
-      height: 412
-      id: '1742133179072'
-      position:
-        x: 383.96327725505955
-        y: -142.01903258704385
-      positionAbsolute:
-        x: 383.96327725505955
-        y: -142.01903258704385
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom-note
-      width: 282
-    - data:
-        desc: ''
-        outputs:
-        - value_selector:
-          - '1742276895967'
-          - output
-          variable: result
-        selected: false
-        title: End
-        type: end
-      height: 90
-      id: '1742133701973'
-      position:
-        x: 1587.9632772550594
-        y: 282
-      positionAbsolute:
-        x: 1587.9632772550594
-        y: 282
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "\n\ndef main(arg1) -> dict:\n    top1_retrieve = arg1[0][\"result\"\
-          ][0][\"s3_uri\"]\n    \n    return {\n        \"s3_uri\": top1_retrieve\n\
-          \    }\n"
+        code: "def main(arg1) -> dict:\n    s3_uri_list = [ item['s3_uri'] for item\
+          \ in arg1[0][\"result\"]]\n    scores = [ item['score'] for item in arg1[0][\"\
+          result\"]]\n    return {\n        \"s3_uri_list\": s3_uri_list,\n      \
+          \  \"score_list\": scores\n    }"
         code_language: python3
         desc: ''
         outputs:
-          s3_uri:
+          s3_uri_list:
             children: null
-            type: string
+            type: array[string]
+          score_list:
+            children: null
+            type: array[number]
         selected: false
         title: Code
         type: code
         variables:
         - value_selector:
-          - '1742133118135'
+          - '1743221036318'
           - json
           variable: arg1
-      height: 54
-      id: '1742276816223'
+      height: 53
+      id: '1743222911634'
       position:
-        x: 687.9632772550596
+        x: 730
         y: 282
       positionAbsolute:
-        x: 687.9632772550596
+        x: 730
         y: 282
       selected: false
       sourcePosition: right
@@ -640,7 +603,64 @@ workflow:
       width: 244
     - data:
         desc: ''
+        error_handle_mode: terminated
+        height: 255
+        is_parallel: false
+        iterator_selector:
+        - '1743222911634'
+        - s3_uri_list
+        output_selector:
+        - '1743222979465'
+        - output
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1743222968720start
+        title: Iteration
+        type: iteration
+        width: 692
+      height: 255
+      id: '1743222968720'
+      position:
+        x: 1034
+        y: 282
+      positionAbsolute:
+        x: 1034
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 692
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1743222968720start
+      parentId: '1743222968720'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 1058
+        y: 350
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        isInLoop: false
         is_team_authorization: true
+        iteration_id: '1743222968720'
         output_schema: null
         paramSchemas:
         - auto_generate: null
@@ -812,7 +832,7 @@ workflow:
         selected: false
         title: AWS S3 Operator
         tool_configurations:
-          aws_region: us-west-2
+          aws_region: us-east-1
           generate_presign_url: 1
           operation_type: read
           presign_expiry: 3600
@@ -821,75 +841,118 @@ workflow:
         tool_parameters:
           s3_uri:
             type: mixed
-            value: '{{#1742276816223.s3_uri#}}'
+            value: '{{#1743222968720.item#}}'
+          text_content:
+            type: mixed
+            value: ''
         type: tool
-      height: 168
-      id: '1742276845949'
+      height: 167
+      id: '1743222976385'
+      parentId: '1743222968720'
       position:
-        x: 987.9632772550596
-        y: 282
+        x: 128
+        y: 67
       positionAbsolute:
-        x: 987.9632772550596
-        y: 282
+        x: 1162
+        y: 349
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
+      zIndex: 1002
     - data:
         desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1743222968720'
         selected: false
         template: '![图片]({{ arg1 }})'
         title: Template
         type: template-transform
         variables:
         - value_selector:
-          - '1742276845949'
+          - '1743222976385'
           - text
           variable: arg1
-      height: 54
-      id: '1742276895967'
+      height: 53
+      id: '1743222979465'
+      parentId: '1743222968720'
       position:
-        x: 1287.9632772550594
+        x: 432
+        y: 68
+      positionAbsolute:
+        x: 1466
+        y: 350
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        selected: false
+        template: '| 1| 2|
+
+          |--|--|
+
+          |{{ urls[0] }}|{{ urls[1] }}|
+
+          |{{ score_list[0] }}|{{ score_list[1] }}|
+
+          | 3| 4|
+
+          |{{ urls[2] }}|{{ urls[3] }}|
+
+          |{{ score_list[2] }}|{{ score_list[3] }}|'
+        title: Template 2
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1743222968720'
+          - output
+          variable: urls
+        - value_selector:
+          - '1743222911634'
+          - score_list
+          variable: score_list
+      height: 53
+      id: '1743223035502'
+      position:
+        x: 1786
         y: 282
       positionAbsolute:
-        x: 1287.9632772550594
+        x: 1786
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1743223035502'
+          - output
+          variable: output
+        selected: false
+        title: End
+        type: end
+      height: 89
+      id: '1743223094273'
+      position:
+        x: 2090
+        y: 282
+      positionAbsolute:
+        x: 2090
         y: 282
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
-    - data:
-        author: ybalbert
-        desc: ''
-        height: 234
-        selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"## query text ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"white car","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"## s3_uri","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
-          14px;","text":"s3://sagemaker-us-west-2-687752207838/imgs/cat_0.png","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":"font-size:
-          14px;"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
-        theme: blue
-        title: ''
-        type: ''
-        width: 240
-      height: 234
-      id: '1742276951633'
-      position:
-        x: 88.69390467838889
-        y: 20.367409593050496
-      positionAbsolute:
-        x: 88.69390467838889
-        y: 20.367409593050496
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom-note
-      width: 240
     viewport:
-      x: 37.03048602845911
-      y: 403.87378067592374
-      zoom: 0.691517490287695
+      x: -119
+      y: 114.5
+      zoom: 1
