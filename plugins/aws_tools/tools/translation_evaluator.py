@@ -96,11 +96,11 @@ class TranslationEvalTool(Tool):
                 # 确保下载必要的NLTK资源
                 try:
                     #nltk.data.find('tokenizers/punkt')
-                    #nltk.data.find('wordnet')
+                    nltk.data.find('wordnet')
                     nltk.data.find('omw-1.4')
                 except LookupError:
                     #nltk.download('punkt')
-                    #nltk.download('wordnet')
+                    nltk.download('wordnet')
                     nltk.download('omw-1.4') 
                 self.init_state= True
 
