@@ -62,6 +62,7 @@ This repository provides the source code for three plugins in [Dify](https://git
 | EKS Upgrade Planning | Collect EKS cluster information and generate upgrade plan | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) | | [wxyan](wxyan@amazon.com) |
 | ASR_Transcribe | Transcribe audio to text | [DSL](./workflow/ASR_Transcribe.yml) | | [ybalbert](ybalbert@amazon.com) |
 | Image(Text)-2-Image Search | Image2Image & Text2Image Search | [DSL](./workflow/opensearch_img_search.yml) | OpenSearch Knn Retriever | [ybalbert](ybalbert@amazon.com) |
+| MCP Server Integration  | MCP Server Integration Demo | [DSL](./workflow/mcp_server_integration.yml) |  | [ybalbert](ybalbert@amazon.com) |
 
 > 💡 For more workflows, check out community websites: [dify101.com](https://dify101.com/), [difyshare.com](https://difyshare.com/), [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 

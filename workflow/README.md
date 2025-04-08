@@ -51,3 +51,7 @@ https://github.com/user-attachments/assets/33d342b9-f9e4-49b1-a380-e672a0da0362
 **13. EKS Upgrade Planning**
 
 https://github.com/user-attachments/assets/0e7250a2-362d-47ae-95d5-b4004f9b30f4
+
+**14. Integration of MCP server**
+
+https://github.com/user-attachments/assets/bb6a4d2a-57f4-4009-853d-5f0618b8b97a

@@ -62,6 +62,7 @@
 | EKS Upgrade Planning | EKSクラスター情報を収集しアップグレード計画を生成 | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) | | [wxyan](wxyan@amazon.com) |
 | ASR_Transcribe | 音声をテキストに変換 | [DSL](./workflow/ASR_Transcribe.yml) | | [ybalbert](ybalbert@amazon.com) |
 | Image(Text)-2-Image Search | 画像検索（テキストから画像、画像から画像） | [DSL](./workflow/opensearch_img_search.yml) | OpenSearch Knn Retriever | [ybalbert](ybalbert@amazon.com) |
+| MCP サーバー統合 | MCP サーバー統合デモ | [DSL](./workflow/mcp_server_integration.yml) |  | [ybalbert](ybalbert@amazon.com) |
 
 > 💡 より多くのワークフローについては、コミュニティサイトをご覧ください: [dify101.com](https://dify101.com/)、[difyshare.com](https://difyshare.com/)、[Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
