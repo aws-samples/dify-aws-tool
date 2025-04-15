@@ -60,6 +60,8 @@
 | LLM-Finetuning-Dataflow | LLMファインチューニングデータ合成ワークフロー | [DSL](./workflow/LLM-Finetuning-Dataflow-dify) | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com) |
 | Image/Video Generation Workflow | Amazon Nova CanvasとReelに基づく画像と動画の生成 | [DSL](./workflow/generate_image_video.yml) | | [alexwuu](alexwuu@amazon.com) |
 | EKS Upgrade Planning | EKSクラスター情報を収集しアップグレード計画を生成 | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) | | [wxyan](wxyan@amazon.com) |
+| Amazon S3 powered DMS with chatbot Capabilities| Nextcloud 統合のための RAG ベースのボット | [DSL](./workflow/rag_based_chatbot_for_nextcloud.yml) | | [tanzhuaz](tanzhuaz@amazon.com) |
+| チャットボット機能を備えた Amazon S3 で動作する DMS | Nextcloud 統合のための RAG ベースのボット | DSL（ドメイン固有言語） | | [tanzhuaz（tanzhuaz@amazon.com）] |
 | ASR_Transcribe | 音声をテキストに変換 | [DSL](./workflow/ASR_Transcribe.yml) | | [ybalbert](ybalbert@amazon.com) |
 | Image(Text)-2-Image Search | 画像検索（テキストから画像、画像から画像） | [DSL](./workflow/opensearch_img_search.yml) | OpenSearch Knn Retriever | [ybalbert](ybalbert@amazon.com) |
 | MCP サーバー統合 | MCP サーバー統合デモ | [DSL](./workflow/mcp_server_integration.yml) |  | [ybalbert](ybalbert@amazon.com) |

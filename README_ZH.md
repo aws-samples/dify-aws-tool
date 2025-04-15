@@ -60,6 +60,7 @@
 | LLM-Finetuning-Dataflow | LLM微调数据合成工作流 | [DSL](./workflow/LLM-Finetuning-Dataflow-dify) | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com) |
 | Image/Video Generation Workflow | 基于Amazon Nova Canvas和Reel生成图片和视频 | [DSL](./workflow/generate_image_video.yml) | | [alexwuu](alexwuu@amazon.com) |
 | EKS Upgrade Planning | 采集EKS集群信息并生成EKS集群升级计划 | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) | | [wxyan](wxyan@amazon.com) |
+| Bedrock based ChatBot for Nextcloud | 基于Amazon S3 + Bedrock Knowledgebase+Nova Pro的智能网盘 | [DSL](./workflow/rag_based_chatbot_for_nextcloud.yml) | | [tanzhuaz](tanzhuaz@amazon.com) |
 | ASR_Transcribe | 语音转录文字 | [DSL](./workflow/ASR_Transcribe.yml) | | [ybalbert](ybalbert@amazon.com) |
 | Image(Text)-2-Image Search | 文搜图 & 图搜图 | [DSL](./workflow/opensearch_img_search.yml) | OpenSearch Knn Retriever | [ybalbert](ybalbert@amazon.com) |
 | MCP Server 集成  | MCP Server 集成演示 | [DSL](./workflow/mcp_server_integration.yml) |  | [ybalbert](ybalbert@amazon.com) |

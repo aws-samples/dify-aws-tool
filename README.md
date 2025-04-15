@@ -60,6 +60,7 @@ This repository provides the source code for three plugins in [Dify](https://git
 | LLM-Finetuning-Dataflow | LLM fine-tuning data synthesis workflow | [DSL](./workflow/LLM-Finetuning-Dataflow-dify) | [finetuning-on-aws](https://github.com/tsaol/finetuning-on-aws/tree/main) | [caoliuh](caoliuh@amazon.com) |
 | Image/Video Generation Workflow | Generate images and videos based on Amazon Nova Canvas and Reel | [DSL](./workflow/generate_image_video.yml) | | [alexwuu](alexwuu@amazon.com) |
 | EKS Upgrade Planning | Collect EKS cluster information and generate upgrade plan | [DSL](./workflow/eks_upgrade_planning/eks_upgrade_planning.yml) | | [wxyan](wxyan@amazon.com) |
+| Amazon S3 powered DMS with chatbot Capabilities| RAG-based bot for nextcloud integration | [DSL](./workflow/rag_based_chatbot_for_nextcloud.yml) | | [tanzhuaz](tanzhuaz@amazon.com) |
 | ASR_Transcribe | Transcribe audio to text | [DSL](./workflow/ASR_Transcribe.yml) | | [ybalbert](ybalbert@amazon.com) |
 | Image(Text)-2-Image Search | Image2Image & Text2Image Search | [DSL](./workflow/opensearch_img_search.yml) | OpenSearch Knn Retriever | [ybalbert](ybalbert@amazon.com) |
 | MCP Server Integration  | MCP Server Integration Demo | [DSL](./workflow/mcp_server_integration.yml) |  | [ybalbert](ybalbert@amazon.com) |
