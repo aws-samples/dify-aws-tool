@@ -111,7 +111,7 @@ class BedrockRetrieveTool(Tool):
     def _invoke(
         self,
         tool_parameters: dict[str, Any],
-    ) -> Generator[ExtendToolInvokeMessage]:
+    ) -> Generator[ToolInvokeMessage]:
         """
         invoke tools
         """
