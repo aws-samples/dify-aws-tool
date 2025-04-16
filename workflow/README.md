@@ -32,26 +32,30 @@ https://github.com/user-attachments/assets/5dd2812a-42fd-4edb-8404-2d979042c8eb
 
 https://github.com/user-attachments/assets/cdd1cae1-e8b7-421b-b915-840b516541c3
 
-**9. Amazon Bedrock Retrieval Demo**
+**9. Amazon Bedrock Retrieval Demo - 1 **
 
 https://github.com/user-attachments/assets/b54311d9-6bc2-4e2f-ac54-a7c3b594284d
 
-**10. Bedrock Nova Canvas & Reel**
+**10. Amazon Bedrock Retrieval Demo - 2 **
+
+https://github.com/user-attachments/assets/b8b96794-337c-4601-8b6a-5e4906cd4346
+
+**11. Bedrock Nova Canvas & Reel**
 
 https://github.com/user-attachments/assets/0412fc51-5c01-4412-814a-2d83d3e86fe7
 
-**11. ASR(Transcribe) Demo**
+**12. ASR(Transcribe) Demo**
 
 https://github.com/user-attachments/assets/79eee9f1-ae73-4494-a9e7-94897a8e0afc
 
-**12. Image Text Search Demo**
+**13. Image Text Search Demo**
 
 https://github.com/user-attachments/assets/33d342b9-f9e4-49b1-a380-e672a0da0362
 
-**13. EKS Upgrade Planning**
+**14. EKS Upgrade Planning**
 
 https://github.com/user-attachments/assets/0e7250a2-362d-47ae-95d5-b4004f9b30f4
 
-**14. Integration of MCP server**
+**15. Integration of MCP server**
 
 https://github.com/user-attachments/assets/bb6a4d2a-57f4-4009-853d-5f0618b8b97a
