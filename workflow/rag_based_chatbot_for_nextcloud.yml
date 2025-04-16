@@ -1,0 +1,794 @@
+app:
+  description: ''
+  icon: 📑
+  icon_background: '#EFF1F5'
+  mode: advanced-chat
+  name: rag_based_chatbot_for_nextcloud
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/aws_tools:0.0.6@3765d391c8e9bad2a1e08a274f45309a95ae609a0d7e819c5fb4a7a8a86c974e
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/bedrock:0.0.10@e23fcddb79a93f15f73bceaf9e00f1b3558f0e5b188e2f7e543946502083be78
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables:
+  - description: 用户问题
+    id: 99f60009-6dac-488c-a03a-4d0105661357
+    name: userquery
+    selector:
+    - conversation
+    - userquery
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: true
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: true
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: 1711528917469-1711528919501
+      source: '1711528917469'
+      sourceHandle: source
+      target: '1711528919501'
+      targetHandle: target
+      type: custom
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1743844636296-source-1744178634825-target
+      source: '1743844636296'
+      sourceHandle: source
+      target: '1744178634825'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1744178634825-source-1711528917469-target
+      source: '1744178634825'
+      sourceHandle: source
+      target: '1711528917469'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1711528914102-source-1744200503406-target
+      source: '1711528914102'
+      sourceHandle: source
+      target: '1744200503406'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1744200503406-true-1744200595167-target
+      source: '1744200503406'
+      sourceHandle: 'true'
+      target: '1744200595167'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 1744200595167-source-1744200712112-target
+      source: '1744200595167'
+      sourceHandle: source
+      target: '1744200712112'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: tool
+      id: 1744200712112-source-1743844636296-target
+      source: '1744200712112'
+      sourceHandle: source
+      target: '1743844636296'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1744200503406-false-1744201520051-target
+      source: '1744200503406'
+      sourceHandle: 'false'
+      target: '1744201520051'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: tool
+      id: 1744201520051-source-1743844636296-target
+      source: '1744201520051'
+      sourceHandle: source
+      target: '1743844636296'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1711528914102'
+      position:
+        x: -355.80556527439677
+        y: 2496.284280238563
+      positionAbsolute:
+        x: -355.80556527439677
+        y: 2496.284280238563
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1744178634825'
+          - dify_result
+        desc: Invoking large language models to answer questions or process natural
+          language
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 1
+        model:
+          completion_params: {}
+          mode: chat
+          name: amazon.nova-pro-v1:0
+          provider: langgenius/bedrock/bedrock
+        prompt_template:
+        - id: c411248d-d89b-4ddb-ba56-4bb1b501f3dc
+          role: system
+          text: "You are a helpful assistant. \nUse the following context as your\
+            \ learned knowledge, inside <context></context> XML tags.\n<context>\n\
+            {{#1744178634825.kb_result#}}\n</context>\nWhen answer to user:\n- If\
+            \ you don't know, just say that you don't know.\n- If you don't know when\
+            \ you are not sure, ask for clarification.\nAvoid mentioning that you\
+            \ obtained the information from the context.\nAnd answer according to\
+            \ the language of the user's question."
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 150
+      id: '1711528917469'
+      position:
+        x: 1135.672457819407
+        y: 2656.435695330721
+      positionAbsolute:
+        x: 1135.672457819407
+        y: 2656.435695330721
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1711528917469.text#}}'
+        desc: ''
+        selected: true
+        title: Answer
+        type: answer
+        variables: []
+      height: 105
+      id: '1711528919501'
+      position:
+        x: 1589.828326878402
+        y: 2661.5287304776425
+      positionAbsolute:
+        x: 1589.828326878402
+        y: 2661.5287304776425
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS region for the Bedrock service
+            ja_JP: AWS region for the Bedrock service
+            pt_BR: AWS region for the Bedrock service
+            zh_Hans: Bedrock服务的AWS区域
+          label:
+            en_US: AWS Region
+            ja_JP: AWS Region
+            pt_BR: AWS Region
+            zh_Hans: AWS区域
+          llm_description: ''
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS access key ID for authentication (optional)
+            ja_JP: AWS access key ID for authentication (optional)
+            pt_BR: AWS access key ID for authentication (optional)
+            zh_Hans: 用于身份验证的AWS访问密钥ID（可选）
+          label:
+            en_US: AWS Access Key ID
+            ja_JP: AWS Access Key ID
+            pt_BR: AWS Access Key ID
+            zh_Hans: AWS访问密钥ID
+          llm_description: ''
+          max: null
+          min: null
+          name: aws_access_key_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS secret access key for authentication (optional)
+            ja_JP: AWS secret access key for authentication (optional)
+            pt_BR: AWS secret access key for authentication (optional)
+            zh_Hans: 用于身份验证的AWS秘密访问密钥（可选）
+          label:
+            en_US: AWS Secret Access Key
+            ja_JP: AWS Secret Access Key
+            pt_BR: AWS Secret Access Key
+            zh_Hans: AWS秘密访问密钥
+          llm_description: ''
+          max: null
+          min: null
+          name: aws_secret_access_key
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: text
+          form: form
+          human_description:
+            en_US: return a list of json or texts
+            ja_JP: return a list of json or texts
+            pt_BR: return a list of json or texts
+            zh_Hans: 返回一个列表，内容是json还是纯文本
+          label:
+            en_US: result type
+            ja_JP: result type
+            pt_BR: result type
+            zh_Hans: 结果类型
+          llm_description: ''
+          max: null
+          min: null
+          name: result_type
+          options:
+          - label:
+              en_US: JSON
+              ja_JP: JSON
+              pt_BR: JSON
+              zh_Hans: JSON
+            value: json
+          - label:
+              en_US: Text
+              ja_JP: Text
+              pt_BR: Text
+              zh_Hans: 文本
+            value: text
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: ID of the Bedrock Knowledge Base to retrieve from
+            ja_JP: ID of the Bedrock Knowledge Base to retrieve from
+            pt_BR: ID of the Bedrock Knowledge Base to retrieve from
+            zh_Hans: 用于检索的Bedrock知识库ID
+          label:
+            en_US: Bedrock Knowledge Base ID
+            ja_JP: Bedrock Knowledge Base ID
+            pt_BR: Bedrock Knowledge Base ID
+            zh_Hans: Bedrock知识库ID
+          llm_description: ID of the Bedrock Knowledge Base to retrieve from
+          max: null
+          min: null
+          name: knowledge_base_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The search query to retrieve relevant information
+            ja_JP: The search query to retrieve relevant information
+            pt_BR: The search query to retrieve relevant information
+            zh_Hans: 用于检索相关信息的查询语句
+          label:
+            en_US: Query string
+            ja_JP: Query string
+            pt_BR: Query string
+            zh_Hans: 查询语句
+          llm_description: The search query to retrieve relevant information
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 5
+          form: form
+          human_description:
+            en_US: Maximum number of results to return
+            ja_JP: Maximum number of results to return
+            pt_BR: Maximum number of results to return
+            zh_Hans: 最大返回结果数量
+          label:
+            en_US: Limit for results count
+            ja_JP: Limit for results count
+            pt_BR: Limit for results count
+            zh_Hans: 返回结果数量限制
+          llm_description: ''
+          max: 10
+          min: 1
+          name: topk
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: SEMANTIC
+          form: form
+          human_description:
+            en_US: search type
+            ja_JP: search type
+            pt_BR: search type
+            zh_Hans: 搜索类型
+          label:
+            en_US: search type
+            ja_JP: search type
+            pt_BR: search type
+            zh_Hans: 搜索类型
+          llm_description: search type
+          max: null
+          min: null
+          name: search_type
+          options:
+          - label:
+              en_US: SEMANTIC
+              ja_JP: SEMANTIC
+              pt_BR: SEMANTIC
+              zh_Hans: 语义搜索
+            value: SEMANTIC
+          - label:
+              en_US: HYBRID
+              ja_JP: HYBRID
+              pt_BR: HYBRID
+              zh_Hans: 混合搜索
+            value: HYBRID
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: default
+          form: form
+          human_description:
+            en_US: rerank model id
+            ja_JP: rerank model id
+            pt_BR: rerank model id
+            zh_Hans: 重拍模型ID
+          label:
+            en_US: rerank model id
+            ja_JP: rerank model id
+            pt_BR: rerank model id
+            zh_Hans: 重拍模型ID
+          llm_description: rerank model id
+          max: null
+          min: null
+          name: rerank_model_id
+          options:
+          - label:
+              en_US: default
+              ja_JP: default
+              pt_BR: default
+              zh_Hans: 默认
+            value: default
+          - label:
+              en_US: cohere.rerank-v3-5:0
+              ja_JP: cohere.rerank-v3-5:0
+              pt_BR: cohere.rerank-v3-5:0
+              zh_Hans: cohere.rerank-v3-5:0
+            value: cohere.rerank-v3-5:0
+          - label:
+              en_US: amazon.rerank-v1:0
+              ja_JP: amazon.rerank-v1:0
+              pt_BR: amazon.rerank-v1:0
+              zh_Hans: amazon.rerank-v1:0
+            value: amazon.rerank-v1:0
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: 'JSON formatted filter conditions for metadata (e.g., {"greaterThan":
+              {"key: "aaa", "value": 10}})'
+            ja_JP: 'JSON formatted filter conditions for metadata (e.g., {"greaterThan":
+              {"key: "aaa", "value": 10}})'
+            pt_BR: 'JSON formatted filter conditions for metadata (e.g., {"greaterThan":
+              {"key: "aaa", "value": 10}})'
+            zh_Hans: '元数据的JSON格式过滤条件（例如，{{"greaterThan": {"key: "aaa", "value": 10}}）'
+          label:
+            en_US: Metadata Filter
+            ja_JP: Metadata Filter
+            pt_BR: Metadata Filter
+            zh_Hans: 元数据过滤器
+          llm_description: ''
+          max: null
+          min: null
+          name: metadata_filter
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          aws_access_key_id: ''
+          aws_region: ''
+          aws_secret_access_key: ''
+          knowledge_base_id: ''
+          metadata_filter: ''
+          query: ''
+          rerank_model_id: ''
+          result_type: ''
+          search_type: ''
+          topk: ''
+        provider_id: langgenius/aws_tools/aws_tools
+        provider_name: langgenius/aws_tools/aws_tools
+        provider_type: builtin
+        selected: false
+        title: Bedrock检索
+        tool_configurations:
+          aws_access_key_id: '1'
+          aws_region: us-west-2
+          aws_secret_access_key: '2'
+          knowledge_base_id: MAYYHGC999
+          rerank_model_id: default
+          result_type: json
+          search_type: HYBRID
+          topk: 4
+        tool_label: Bedrock检索
+        tool_name: bedrock_retrieve
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#conversation.userquery#}}'
+        type: tool
+      height: 272
+      id: '1743844636296'
+      position:
+        x: 554.1336865256678
+        y: 2458.174081816859
+      positionAbsolute:
+        x: 554.1336865256678
+        y: 2458.174081816859
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nimport os\nimport uuid\nfrom datetime import datetime\n\
+          def remove_before_single_slash(s):\n    s=s.replace(\"s3://\",\"\")\n  \
+          \  i = 0\n    n = len(s)\n    while i < n:\n        if s[i] == '/':\n  \
+          \          # 检查是否是 '//' 的一部分\n            if i > 0 and s[i-1] == '/':\n\
+          \                i += 1  # 跳过 '//'\n            else:\n                #\
+          \ 找到单独的 '/', 返回后面的部分\n                return s[i+1:]\n        i += 1\n \
+          \   return s  # 没有找到单独的 '/', 返回原字符串 \ndef main(input_json) -> dict:\n  \
+          \  result_array = []\n    kb_result =\"\"\n    index = 1\n    for idx, item\
+          \ in enumerate(input_json[0]['results']):\n        # 提取基础字段\n        source_uri\
+          \ = item['metadata']['x-amz-bedrock-kb-source-uri']\n        page_number\
+          \ = item['metadata'].get('x-amz-bedrock-kb-document-page-number', 0)\n \
+          \       data_source_id = item['metadata'].get('x-amz-bedrock-kb-data-source-id',\
+          \ 'NextCloud')\n        score = item.get('score', 0.0)\n        \n     \
+          \   # 生成动态字段\n        document_name = remove_before_single_slash(source_uri)\
+          \  # 去除扩展名\n        \n        # 构建元数据\n        metadata = {\n          \
+          \  \"_source\": \"knowledge\",\n            \"dataset_id\": \"\",\n    \
+          \        \"dataset_name\": \"BedRock知识库\",\n            \"document_id\"\
+          : str(uuid.uuid4()),\n            \"document_name\": document_name,\n  \
+          \          \"document_data_source_type\": data_source_id,\n            \"\
+          segment_id\": str(uuid.uuid4()),\n            \"retriever_from\": \"workflow\"\
+          ,\n            \"score\": round(score, 6),\n            \"segment_hit_count\"\
+          : page_number,  # 示例值递增\n            \"segment_word_count\": len(item['content'].split()),\
+          \  # 计算词数\n            \"segment_position\": page_number,\n            \"\
+          doc_metadata\": {\n                \"tag\": \"nextcloud\",\n           \
+          \     \"source\": \"file_upload\",\n                \"uploader\": \"advantage\"\
+          ,\n                \"upload_date\": int(datetime(2024, 5, 10).timestamp()),\
+          \  # 固定时间戳\n                \"document_name\": document_name,\n        \
+          \        \"last_update_date\": int(datetime(2024, 5, 10).timestamp())\n\
+          \            },\n            \"position\": idx + 1\n        }\n        if\
+          \ item['content'].strip() != \"\" :\n            result_array.append({\n\
+          \                \"content\": item['content'],\n                \"title\"\
+          : f\"{document_name}\",  # 添加默认扩展名\n                \"metadata\": metadata\n\
+          \            })\n            content = item.get(\"content\")\n         \
+          \   kb_result += f\"{index}.{content}\\n\"\n            index += 1\n   \
+          \ return {\"dify_result\": result_array,\"kb_result\" : kb_result}"
+        code_language: python3
+        desc: ''
+        outputs:
+          dify_result:
+            children: null
+            type: array[object]
+          kb_result:
+            children: null
+            type: string
+        selected: false
+        title: dify context
+        type: code
+        variables:
+        - value_selector:
+          - '1743844636296'
+          - json
+          variable: input_json
+      height: 54
+      id: '1744178634825'
+      position:
+        x: 820.9616561955615
+        y: 2682.3042411188017
+      positionAbsolute:
+        x: 820.9616561955615
+        y: 2682.3042411188017
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: ec762055-8dc1-4f23-8147-13ecf27623f8
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 126
+      id: '1744200503406'
+      position:
+        x: -69.48117209639565
+        y: 2504.826394989305
+      positionAbsolute:
+        x: -69.48117209639565
+        y: 2504.826394989305
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: us.amazon.nova-pro-v1:0
+          provider: langgenius/bedrock/bedrock
+        prompt_template:
+        - id: 28a48b24-71dc-4e45-8ed5-792570f15f76
+          role: system
+          text: "You are a friendly artificial intelligence assistant. Your main task\
+            \ is to recognize the user's intent based on the {{#context#}} content\
+            \ and output the corresponding user intent. \nWhen answer to user:\n-\
+            \ If you don't know, just say that you don't know.\n- If you don't know\
+            \ when you are not sure, ask for clarification.\nAvoid mentioning that\
+            \ you obtained the information from the context.\nAnd answer according\
+            \ to the language of the user's question."
+        selected: false
+        title: 图生文
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 90
+      id: '1744200595167'
+      position:
+        x: 68.44503774505955
+        y: 2183.966475252867
+      positionAbsolute:
+        x: 68.44503774505955
+        y: 2183.966475252867
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1744200595167'
+          - text
+          variable_selector:
+          - conversation
+          - userquery
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner
+        type: assigner
+        version: '2'
+      height: 88
+      id: '1744200712112'
+      position:
+        x: 389.30495748149747
+        y: 2253.655507593813
+      positionAbsolute:
+        x: 389.30495748149747
+        y: 2253.655507593813
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - sys
+          - query
+          variable_selector:
+          - conversation
+          - userquery
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 2
+        type: assigner
+        version: '2'
+      height: 88
+      id: '1744201520051'
+      position:
+        x: 277.7846571364474
+        y: 2670.6103691676017
+      positionAbsolute:
+        x: 277.7846571364474
+        y: 2670.6103691676017
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 7.798124586690847
+      y: -1528.2824054453376
+      zoom: 0.7695584344619514
