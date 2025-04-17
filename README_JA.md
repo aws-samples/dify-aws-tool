@@ -52,6 +52,7 @@
 | Basic_RAG_Sample | カスタムリランクノードを含む基本的なRAGワークフロー例 | [DSL](./workflow/basic_rag_sample.yml) | Tool(Rerank) | [ybalbert](ybalbert@amazon.com) |
 | Andrewyng/translation-agent | Andrew Ngの翻訳エージェントの再現 | [DSL](./workflow/andrew_translation_agent.yml) | | [ybalbert](ybalbert@amazon.com) |
 | rag_based_bot_with_tts | 音声応答機能を持つRAGベースのボット | [DSL](./workflow/rag_based_bot_with_tts.yml) | Tool(TTS) | [ybalbert](ybalbert@amazon.com) |
+| s3_rag | シンプルなS3ベースのRAG、ベクターデータベース不要 | [DSL](./workflow/s3_rag.yml) | S3 Operator | [ybalbert](ybalbert@amazon.com) |
 | Marketing-copywriter | エンドツーエンドのマーケティングコピーライティング | [DSL](./workflow/marketing-copywriting.yml) | | [Lyson Ober](https://www.youtube.com/@lysonober) |
 | Simple_Kimi | シンプルなDIY Kimi | [DSL](./workflow/simple_kimi.yml) | | [ybalbert](ybalbert@amazon.com) |
 | SVG_Designer | SVGアイコンデザイナー | [DSL](./workflow/svg_designer.yml) | | [Li Jigang](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |

@@ -52,6 +52,7 @@
 | Basic_RAG_Sample | 最基础的RAG工作流示例，包含自定义rerank节点 | [DSL](./workflow/basic_rag_sample.yml) | Tool(Rerank) | [ybalbert](ybalbert@amazon.com) |
 | Andrewyng/translation-agent | 复刻吴恩达的tranlsate agent | [DSL](./workflow/andrew_translation_agent.yml) | | [ybalbert](ybalbert@amazon.com) |
 | rag_based_bot_with_tts | 基于RAG能语音回答的Bot | [DSL](./workflow/rag_based_bot_with_tts.yml) | Tool(TTS) | [ybalbert](ybalbert@amazon.com) |
+| s3_rag | 简易的基于S3的RAG, 无需向量库 | [DSL](./workflow/s3_rag.yml) | S3 Operator | [ybalbert](ybalbert@amazon.com) |
 | Marketing-copywriter | 营销文案一条龙 | [DSL](./workflow/marketing-copywriting.yml) | | [Lyson Ober](https://www.youtube.com/@lysonober) |
 | Simple_Kimi | 简易自制Kimi | [DSL](./workflow/simple_kimi.yml) | | [ybalbert](ybalbert@amazon.com) |
 | SVG_Designer | SVG 图标设计师 | [DSL](./workflow/svg_designer.yml) | | [李继刚](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |

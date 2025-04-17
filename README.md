@@ -52,6 +52,7 @@ This repository provides the source code for three plugins in [Dify](https://git
 | Basic_RAG_Sample | Basic RAG workflow example with custom rerank node | [DSL](./workflow/basic_rag_sample.yml) | Tool(Rerank) | [ybalbert](ybalbert@amazon.com) |
 | Andrewyng/translation-agent | Recreation of Andrew Ng's translate agent | [DSL](./workflow/andrew_translation_agent.yml) | | [ybalbert](ybalbert@amazon.com) |
 | rag_based_bot_with_tts | RAG-based bot with voice response capability | [DSL](./workflow/rag_based_bot_with_tts.yml) | Tool(TTS) | [ybalbert](ybalbert@amazon.com) |
+| s3_rag | simple s3-based rag, no vector db needed | [DSL](./workflow/s3_rag.yml) | S3 Operator | [ybalbert](ybalbert@amazon.com) |
 | Marketing-copywriter | End-to-end marketing copywriting | [DSL](./workflow/marketing-copywriting.yml) | | [Lyson Ober](https://www.youtube.com/@lysonober) |
 | Simple_Kimi | Simple DIY Kimi | [DSL](./workflow/simple_kimi.yml) | | [ybalbert](ybalbert@amazon.com) |
 | SVG_Designer | SVG icon designer | [DSL](./workflow/svg_designer.yml) | | [Li Jigang](https://waytoagi.feishu.cn/wiki/TRlTwxCFJis292kNAzEc9D4BnvY) |
