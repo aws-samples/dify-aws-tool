@@ -16,16 +16,7 @@ from botocore.exceptions import (  # type: ignore
     UnknownServiceError,
 )
 
-from dify_plugin import LargeLanguageModel
-from dify_plugin.entities import I18nObject
-from dify_plugin.entities.model import (
-    AIModelEntity,
-    FetchFrom,
-    ModelType,
-    PriceConfig,
-)
 from dify_plugin.entities.model.llm import (
-    LLMMode,
     LLMResult,
     LLMResultChunk,
     LLMResultChunkDelta,
@@ -50,9 +41,16 @@ from dify_plugin.errors.model import (
     InvokeRateLimitError,
     InvokeServerUnavailableError,
 )
+from dify_plugin.interfaces.model.openai_compatible.llm import (
+    OAICompatLargeLanguageModel,
+)
+
+
 
 from provider.get_bedrock_client import get_bedrock_client
 from .cache_config import is_cache_supported, get_cache_config
+
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 logger = logging.getLogger(__name__)
@@ -66,7 +64,7 @@ if you are not sure about the structure.
 """  # noqa: E501
 
 
-class BedrockLargeLanguageModel(LargeLanguageModel):
+class BedrockLargeLanguageModel(OAICompatLargeLanguageModel):
     # please refer to the documentation: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
     # TODO There is invoke issue: context limit on Cohere Model, will add them after fixed.
     CONVERSE_API_ENABLED_MODEL_INFO = [
@@ -400,8 +398,9 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             tool_calls: list[AssistantPromptMessage.ToolCall] = []
             tool_use = {}
             reasoning_header_added = False
-
+            is_reasoning_started = False
             for chunk in response["stream"]:
+                logger.info(f"chunk: {chunk}")
                 if "messageStart" in chunk:
                     return_model = model
                 elif "messageStop" in chunk:
@@ -455,77 +454,29 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                     )
                 elif "contentBlockDelta" in chunk:
                     delta = chunk["contentBlockDelta"]["delta"]
-                    if "reasoningContent" in delta:
-                        formatted_reasoning = ''
-                        if "text" in delta["reasoningContent"]:
-                            # Get reasoning content text
-                            reasoning_text = delta["reasoningContent"]["text"] or ""
-
-                            # start point of reasoningContent
-                            if not reasoning_header_added:
-                                formatted_reasoning = "<think>\n" + reasoning_text
-                                reasoning_header_added = True
-                            else:
-                                formatted_reasoning = reasoning_text
-
-                        # end of reasoningContent
-                        elif "signature" in delta["reasoningContent"]: 
-                            formatted_reasoning = '</think>'
-
-                        # Update complete content, although it may not be needed here, but maintains code consistency
-                        full_assistant_content += formatted_reasoning
-
-                        assistant_prompt_message = AssistantPromptMessage(
-                            content=formatted_reasoning
+                    delta_content, is_reasoning_started = self._wrap_thinking_by_reasoning_content(
+                        delta, is_reasoning_started
+                    )
+                    full_assistant_content += delta_content
+                    assistant_prompt_message = AssistantPromptMessage(
+                            content=delta_content
                         )
-                        index = chunk["contentBlockDelta"]["contentBlockIndex"]
-                        yield LLMResultChunk(
-                            model=model,
-                            prompt_messages=prompt_messages,
-                            delta=LLMResultChunkDelta(
-                                index=index + 1,
-                                message=assistant_prompt_message,
-                            ),
-                        )
-                    elif "text" in delta and delta["text"]:
-                        text = delta["text"]
-
-                        full_assistant_content += text
-
-                        assistant_prompt_message = AssistantPromptMessage(
-                            content=text or "",
-                        )
-                        index = chunk["contentBlockDelta"]["contentBlockIndex"]
-                        yield LLMResultChunk(
-                            model=model,
-                            prompt_messages=prompt_messages,
-                            delta=LLMResultChunkDelta(
-                                index=index + 1,
-                                message=assistant_prompt_message,
-                            ),
-                        )
-                    elif "toolUse" in delta:
+                    index = chunk["contentBlockDelta"]["contentBlockIndex"]
+                    if "toolUse" in delta:
                         if "input" not in tool_use:
                             tool_use["input"] = ""
                         tool_use["input"] += delta["toolUse"]["input"]
+                    yield LLMResultChunk(
+                        model=model,
+                        prompt_messages=prompt_messages,
+                        delta=LLMResultChunkDelta(
+                            index=index + 1,
+                            message=assistant_prompt_message,
+                        ),
+                    )
                 elif "contentBlockStop" in chunk:
                     # If reasoning was started but never completed (no text content followed)
                     # we need to close the thinking tag
-                    if reasoning_header_added is False and full_assistant_content.startswith("<think>"):
-                        assistant_prompt_message = AssistantPromptMessage(
-                            content="\n</think>"
-                        )
-                        reasoning_header_added = True
-                        index += 1
-                        yield LLMResultChunk(
-                            model=model,
-                            prompt_messages=prompt_messages,
-                            delta=LLMResultChunkDelta(
-                                index=index + 1,
-                                message=assistant_prompt_message,
-                            ),
-                        )
-                        
                     if "input" in tool_use:
                         tool_call = AssistantPromptMessage.ToolCall(
                             id=tool_use["toolUseId"],
@@ -1177,7 +1128,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         self, model: str, credentials: dict, response: dict, prompt_messages: list[PromptMessage]
     ) -> Generator:
         """
-        Handle llm stream response
+        Handle llm stream response from Bedrock
 
         :param model: model name
         :param credentials: credentials
@@ -1188,6 +1139,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         model_prefix = model.split(".")[0]
         model_name = model.split(".")[1] if len(model.split(".")) > 1 else ""
         
+        # Handle AI21 models which don't provide streaming responses
         if model_prefix == "ai21":
             response_body = json.loads(response.get("body").read().decode("utf-8"))
 
@@ -1206,11 +1158,17 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             )
             return
 
+        # Get the stream from response body
         stream = response.get("body")
         if not stream:
             raise InvokeError("No response body")
 
-        index = -1
+        chunk_index = 0
+        full_assistant_content = ""
+        tools_calls = []
+        finish_reason = None
+        usage = None
+        
         for event in stream:
             chunk = event.get("chunk")
 
@@ -1220,110 +1178,105 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                 raise self._map_client_to_invoke_error(exception_name, full_ex_msg)
 
             payload = json.loads(chunk.get("bytes").decode())
-
+            content_delta = None
+            
+            # Handle different model providers
             if model_prefix == "anthropic":
-                content_delta = payload.get("completion")
+                content_delta = payload.get("completion", "")
                 finish_reason = payload.get("stop_reason")
                 
                 # Extract cache metrics if available in the last chunk
                 if finish_reason and "usage" in payload:
-                    cache_read_tokens = payload["usage"].get("cache_read_input_tokens", 0)
-                    cache_write_tokens = payload["usage"].get("cache_write_input_tokens", 0)
+                    self._log_cache_metrics(model, payload["usage"], "anthropic")
                     
-                    # Always log the metrics for debugging
-                    print(f"[ANTHROPIC STREAM CACHE METRICS] Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
-                    logger.info(f"[ANTHROPIC STREAM CACHE METRICS] Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
-                    
-                    # Print the full usage data for debugging
-                    print(f"[ANTHROPIC STREAM USAGE DATA] {json.dumps(payload['usage'], default=str)}")
-                    
-                    if cache_read_tokens > 0 or cache_write_tokens > 0:
-                        logger.info(f"Cache metrics - Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
-                        if cache_read_tokens > 0:
-                            print(f"[ANTHROPIC STREAM CACHE HIT] {cache_read_tokens} tokens read from cache")
-                            logger.info(f"Cache hit detected - {cache_read_tokens} tokens read from cache")
-                        elif cache_write_tokens > 0:
-                            print(f"[ANTHROPIC STREAM CACHE WRITE] {cache_write_tokens} tokens written to cache")
-                            logger.info(f"Cache write detected - {cache_write_tokens} tokens written to cache")
-            
             elif model_prefix == "amazon" and "nova" in model_name:
                 content_delta = payload.get("output", {}).get("text", "")
                 finish_reason = payload.get("stopReason")
                 
                 # Extract cache metrics if available in the last chunk
                 if finish_reason and "usage" in payload:
-                    cache_read_tokens = payload["usage"].get("cacheReadInputTokens", 0)
-                    cache_write_tokens = payload["usage"].get("cacheWriteInputTokens", 0)
+                    self._log_cache_metrics(model, payload["usage"], "nova")
                     
-                    # Always log the metrics for debugging
-                    print(f"[NOVA STREAM CACHE METRICS] Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
-                    logger.info(f"[NOVA STREAM CACHE METRICS] Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
-                    
-                    # Print the full usage data for debugging
-                    print(f"[NOVA STREAM USAGE DATA] {json.dumps(payload['usage'], default=str)}")
-                    
-                    if cache_read_tokens > 0 or cache_write_tokens > 0:
-                        logger.info(f"Cache metrics - Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
-                        if cache_read_tokens > 0:
-                            print(f"[NOVA STREAM CACHE HIT] {cache_read_tokens} tokens read from cache")
-                            logger.info(f"Cache hit detected - {cache_read_tokens} tokens read from cache")
-                        elif cache_write_tokens > 0:
-                            print(f"[NOVA STREAM CACHE WRITE] {cache_write_tokens} tokens written to cache")
-                            logger.info(f"Cache write detected - {cache_write_tokens} tokens written to cache")
-            
             elif model_prefix == "cohere":
-                content_delta = payload.get("text")
+                content_delta = payload.get("text", "")
                 finish_reason = payload.get("finish_reason")
-
+                
             else:
                 raise ValueError(f"Got unknown model prefix {model_prefix} when handling stream response")
 
-            # transform assistant message to prompt message
-            assistant_prompt_message = AssistantPromptMessage(
-                content=content_delta or "",
+            # Skip empty content
+            if not content_delta:
+                continue
+                
+            # Transform assistant message to prompt message
+            assistant_prompt_message = AssistantPromptMessage(content=content_delta)
+            full_assistant_content += content_delta
+            
+            # Yield chunk
+            yield LLMResultChunk(
+                model=model,
+                prompt_messages=prompt_messages,
+                delta=LLMResultChunkDelta(index=chunk_index, message=assistant_prompt_message),
             )
-            index += 1
-
-            if not finish_reason:
-                yield LLMResultChunk(
-                    model=model,
-                    prompt_messages=prompt_messages,
-                    delta=LLMResultChunkDelta(index=index, message=assistant_prompt_message),
-                )
-
-            else:
-                # get num tokens from metrics in last chunk
+            
+            # Increment chunk index
+            chunk_index += 1
+            
+            # If this is the final chunk with finish reason, yield usage information
+            if finish_reason:
+                # Get token counts from metrics in last chunk
                 prompt_tokens = payload.get("amazon-bedrock-invocationMetrics", {}).get("inputTokenCount", 0)
                 completion_tokens = payload.get("amazon-bedrock-invocationMetrics", {}).get("outputTokenCount", 0)
 
-                # transform usage
+                # Transform usage
                 usage = self._calc_response_usage(model, credentials, prompt_tokens, completion_tokens)
+        
+        # Always yield a final chunk with finish reason and usage
+        yield self._create_final_llm_result_chunk(
+            index=chunk_index,
+            message=AssistantPromptMessage(content=""),
+            finish_reason=finish_reason or "stop",  # Default to "stop" if no finish reason provided
+            usage=usage or self._calc_response_usage(model, credentials, 0, 0),  # Default usage if not provided
+            model=model,
+            credentials=credentials,
+            prompt_messages=prompt_messages,
+            full_content=full_assistant_content,
+        )
 
-                yield LLMResultChunk(
-                    model=model,
-                    prompt_messages=prompt_messages,
-                    delta=LLMResultChunkDelta(
-                        index=index, message=assistant_prompt_message, finish_reason=finish_reason, usage=usage
-                    ),
-                )
-
-    @property
-    def _invoke_error_mapping(self) -> dict[type[InvokeError], list[type[Exception]]]:
+    def _log_cache_metrics(self, model: str, usage_data: dict, provider: str):
         """
-        Map model invoke error to unified error
-        The key is the ermd = genai.GenerativeModel(model) error type thrown to the caller
-        The value is the md = genai.GenerativeModel(model) error type thrown by the model,
-        which needs to be converted into a unified error type for the caller.
-
-        :return: Invoke emd = genai.GenerativeModel(model) error mapping
+        Helper method to log cache metrics
+        
+        :param model: model name
+        :param usage_data: usage data from response
+        :param provider: provider name (anthropic, nova, etc.)
         """
-        return {
-            InvokeConnectionError: [],
-            InvokeServerUnavailableError: [],
-            InvokeRateLimitError: [],
-            InvokeAuthorizationError: [],
-            InvokeBadRequestError: [],
-        }
+        # Normalize key names based on provider
+        if provider == "anthropic":
+            cache_read_tokens = usage_data.get("cache_read_input_tokens", 0)
+            cache_write_tokens = usage_data.get("cache_write_input_tokens", 0)
+        elif provider == "nova":
+            cache_read_tokens = usage_data.get("cacheReadInputTokens", 0)
+            cache_write_tokens = usage_data.get("cacheWriteInputTokens", 0)
+        else:
+            cache_read_tokens = 0
+            cache_write_tokens = 0
+        
+        # Always log the metrics for debugging
+        print(f"[{provider.upper()} STREAM CACHE METRICS] Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
+        logger.info(f"[{provider.upper()} STREAM CACHE METRICS] Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
+        
+        # Print the full usage data for debugging
+        print(f"[{provider.upper()} STREAM USAGE DATA] {json.dumps(usage_data, default=str)}")
+        
+        if cache_read_tokens > 0 or cache_write_tokens > 0:
+            logger.info(f"Cache metrics - Model: {model}, Read: {cache_read_tokens} tokens, Write: {cache_write_tokens} tokens")
+            if cache_read_tokens > 0:
+                print(f"[{provider.upper()} STREAM CACHE HIT] {cache_read_tokens} tokens read from cache")
+                logger.info(f"Cache hit detected - {cache_read_tokens} tokens read from cache")
+            elif cache_write_tokens > 0:
+                print(f"[{provider.upper()} STREAM CACHE WRITE] {cache_write_tokens} tokens written to cache")
+                logger.info(f"Cache write detected - {cache_write_tokens} tokens written to cache")
 
     def _map_client_to_invoke_error(self, error_code: str, error_msg: str) -> type[InvokeError]:
         """
@@ -1351,96 +1304,29 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             return InvokeConnectionError(error_msg)
 
         return InvokeError(error_msg)
+    
+    def _wrap_thinking_by_reasoning_content(self, delta: dict, is_reasoning: bool) -> tuple[str, bool]:
+        """
+        If the reasoning response is from delta.get("reasoning_content"), we wrap
+        it with HTML think tag.
 
-    def _convert_messages_to_anthropic_format(self, messages: list[PromptMessage], enable_cache: bool = False) -> list[dict]:
+        :param delta: delta dictionary from LLM streaming response
+        :param is_reasoning: is reasoning
+        :return: tuple of (processed_content, is_reasoning)
         """
-        Convert messages to Anthropic format with cache_control if enabled
-        
-        :param messages: List of prompt messages
-        :param enable_cache: Whether to enable caching
-        :return: List of messages in Anthropic format
-        """
-        formatted_messages = []
-        
-        for message in messages:
-            if isinstance(message, UserPromptMessage):
-                if isinstance(message.content, str):
-                    content = [{"type": "text", "text": message.content}]
-                    
-                    # Add cache_control to user messages if enabled
-                    if enable_cache:
-                        content.append({
-                            "type": "text",
-                            "text": "",
-                            "cache_control": {"type": "ephemeral"}
-                        })
-                    
-                    formatted_messages.append({
-                        "role": "user",
-                        "content": content
-                    })
-                else:
-                    # Handle multi-modal content
-                    content = []
-                    for item in message.content:
-                        if item.type == PromptMessageContentType.TEXT:
-                            content.append({"type": "text", "text": item.data})
-                        elif item.type == PromptMessageContentType.IMAGE:
-                            # Process image data
-                            data_split = item.data.split(";base64,")
-                            mime_type = data_split[0].replace("data:", "")
-                            base64_data = data_split[1]
-                            
-                            content.append({
-                                "type": "image",
-                                "source": {
-                                    "type": "base64",
-                                    "media_type": mime_type,
-                                    "data": base64_data
-                                }
-                            })
-                    
-                    # Add cache_control if enabled
-                    if enable_cache:
-                        content.append({
-                            "type": "text",
-                            "text": "",
-                            "cache_control": {"type": "ephemeral"}
-                        })
-                    
-                    formatted_messages.append({
-                        "role": "user",
-                        "content": content
-                    })
+
+        content = delta.get("text") or ""
+        reasoning_content = delta.get("reasoningContent")
+
+        if reasoning_content:
+            if not is_reasoning:
+                reasoning_content = reasoning_content.get("text") or ""
+                content = "<think>\n" + reasoning_content
+                is_reasoning = True
+            else:
+                content = reasoning_content.get("text") or ""
+        elif is_reasoning and content:
+            content = "\n</think>" + content
+            is_reasoning = False
             
-            elif isinstance(message, AssistantPromptMessage):
-                if message.tool_calls:
-                    # Handle tool calls
-                    formatted_messages.append({
-                        "role": "assistant",
-                        "content": [{"type": "text", "text": message.content}],
-                        "tool_calls": [
-                            {
-                                "id": tool_call.id,
-                                "type": tool_call.type,
-                                "function": {
-                                    "name": tool_call.function.name,
-                                    "arguments": tool_call.function.arguments
-                                }
-                            } for tool_call in message.tool_calls
-                        ]
-                    })
-                else:
-                    formatted_messages.append({
-                        "role": "assistant",
-                        "content": [{"type": "text", "text": message.content}]
-                    })
-            
-            elif isinstance(message, ToolPromptMessage):
-                formatted_messages.append({
-                    "role": "tool",
-                    "tool_call_id": message.tool_call_id,
-                    "content": [{"type": "text", "text": message.content}]
-                })
-        
-        return formatted_messages
+        return content, is_reasoning
