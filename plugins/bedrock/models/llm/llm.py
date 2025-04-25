@@ -402,7 +402,6 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             reasoning_header_added = False
 
             for chunk in response["stream"]:
-                logger.info(f"chunk: {chunk}")
                 if "messageStart" in chunk:
                     return_model = model
                 elif "messageStop" in chunk:
