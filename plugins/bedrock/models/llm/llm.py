@@ -330,8 +330,9 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         else:
             assistant_prompt_message = AssistantPromptMessage(content=response_content[0]["text"])
 
-        # calculate num tokens
+        # calculate num token
         if response["usage"]:
+            logger.info(f"response['usage']: {response['usage']}")
             # transform usage
             prompt_tokens = response["usage"]["inputTokens"]
             completion_tokens = response["usage"]["outputTokens"]
@@ -745,7 +746,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         """
         prefix = model.split(".")[0]
         model_name = model.split(".")[1]
-
+        logger.info(f"Getting number of tokens for model: {model}")
         if isinstance(prompt_messages, str):
             prompt = prompt_messages
         else:
