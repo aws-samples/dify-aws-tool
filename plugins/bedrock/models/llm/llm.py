@@ -85,8 +85,8 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         {"prefix": "cohere.command-r", "support_system_prompts": True, "support_tool_use": True},
         {"prefix": "amazon.titan", "support_system_prompts": False, "support_tool_use": False},
         {"prefix": "ai21.jamba-1-5", "support_system_prompts": True, "support_tool_use": False},
-        {"prefix": "amazon.nova", "support_system_prompts": True, "support_tool_use": False},
-        {"prefix": "us.amazon.nova", "support_system_prompts": True, "support_tool_use": False},
+        {"prefix": "amazon.nova", "support_system_prompts": True, "support_tool_use": True},
+        {"prefix": "us.amazon.nova", "support_system_prompts": True, "support_tool_use": True},
     ]
 
     @staticmethod
@@ -693,19 +693,20 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                 message_dict = {"role": "user", "content": sub_messages}
         elif isinstance(message, AssistantPromptMessage):
             message = cast(AssistantPromptMessage, message)
+            message_dict = {
+                "role" : "assistant",
+                "content": []
+            }
+
             if message.tool_calls:
-                message_dict = {
-                    "role": "assistant",
-                    "content": [
-                        {
-                            "toolUse": {
-                                "toolUseId": message.tool_calls[0].id,
-                                "name": message.tool_calls[0].function.name,
-                                "input": json.loads(message.tool_calls[0].function.arguments),
-                            }
-                        }
-                    ],
-                }
+                for tool_use in message.tool_calls:
+                    message_dict["content"].append({
+                                "toolUse": {
+                                    "toolUseId": tool_use.id,
+                                    "name": tool_use.function.name,
+                                    "input": json.loads(tool_use.function.arguments),
+                                }
+                            })
             else:
                 message_dict = {"role": "assistant", "content": [{"text": message.content}]}
         elif isinstance(message, SystemPromptMessage):
