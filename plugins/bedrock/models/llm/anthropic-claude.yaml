@@ -1,6 +1,6 @@
-model: us.anthropic.claude-3-7-sonnet-20250219-v1:0
+model: anthropic claude
 label:
-  en_US: Claude 3.7 Sonnet(US.Cross Region Inference)
+  en_US: Anthropic Claude
 icon: icon_s_en.svg
 model_type: llm
 features:
@@ -13,6 +13,32 @@ model_properties:
   context_size: 200000
 # docs: https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-anthropic-claude-messages.html
 parameter_rules:
+  - name: model_name
+    label:
+      zh_Hans: Bedrock 模型
+      en_US: Bedrock Model
+    type: string
+    help:
+      zh_Hans: 指定模型名称
+      en_US: specify model name
+    required: true
+    default: Claude 3.7 Sonnet
+    options:
+      - US Claude 3.7 Sonnet
+      - EU Claude 3.7 Sonnet
+      - Claude 3.5 Sonnet
+      - US Claude 3.5 Sonnet
+      - EU Claude 3.5 Sonnet
+      - Claude 3.5 Sonnet V2
+      - US Claude 3.5 Sonnet V2
+      - US Claude 3 Sonnet
+      - Claude 3 Sonnet
+      - Claude 3.5 Haiku
+      - US Claude 3.5 Haiku
+      - Claude 3 Haiku
+      - US Claude 3 Haiku
+      - Claude 3 Opus
+      - US Claude 3 Opus
   - name: enable_cache
     label:
       zh_Hans: 启用提示缓存
@@ -58,7 +84,7 @@ parameter_rules:
       zh_Hans: 最大token数
       en_US: Max Tokens
     type: int
-    default: 8192
+    default: 4096
     min: 1
     max: 128000
     help:
@@ -108,8 +134,3 @@ parameter_rules:
       en_US: Only sample from the top K options for each subsequent token. Use top_k to remove long tail low probability responses.
   - name: response_format
     use_template: response_format
-pricing:
-  input: '0.003'
-  output: '0.015'
-  unit: '0.001'
-  currency: USD

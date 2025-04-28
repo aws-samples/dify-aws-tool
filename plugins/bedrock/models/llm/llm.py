@@ -53,6 +53,8 @@ from dify_plugin.errors.model import (
 
 from provider.get_bedrock_client import get_bedrock_client
 from .cache_config import is_cache_supported, get_cache_config
+from .model_ids import get_model_id
+from .model_ids import get_first_model
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 logger = logging.getLogger(__name__)
@@ -155,15 +157,18 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :return: full response or stream response chunk generator result
         """
 
-        model_info = BedrockLargeLanguageModel._find_model_info(model)
+        model_name = model_parameters.pop('model_name')
+        model_id = get_model_id(model, model_name)
+
+        model_info = BedrockLargeLanguageModel._find_model_info(model_id)
         if model_info:
-            model_info["model"] = model
+            model_info["model"] = model_id
             # invoke models via boto3 converse API
             return self._generate_with_converse(
                 model_info, credentials, prompt_messages, model_parameters, stop, stream, user, tools
             )
         # invoke other models via boto3 client
-        return self._generate(model, credentials, prompt_messages, model_parameters, stop, stream, user)
+        return self._generate(model_id, credentials, prompt_messages, model_parameters, stop, stream, user)
 
     def _generate_with_converse(
         self,
@@ -745,9 +750,14 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param tools: tools for tool calling
         :return:md = genai.GenerativeModel(model)
         """
-        prefix = model.split(".")[0]
-        model_name = model.split(".")[1]
-        logger.info(f"Getting number of tokens for model: {model}")
+        model_id = get_first_model(model)
+        if model_id.startswith('us.') or model_id.startswith('eu.'):
+            prefix = model_id.split(".")[1]
+            model_name = model_id.split(".")[2]
+        else:
+            prefix = model_id.split(".")[0]
+            model_name = model_id.split(".")[1]
+
         if isinstance(prompt_messages, str):
             prompt = prompt_messages
         else:
@@ -763,12 +773,14 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param credentials: model credentials
         :return:
         """
+        model_id = get_first_model(model)
+
         required_params = {}
-        if "anthropic" in model:
+        if "anthropic" in model_id:
             required_params = {
                 "max_tokens": 32,
             }
-        elif "ai21" in model:
+        elif "ai21" in model_id:
             # ValidationException: Malformed input request: #/temperature: expected type: Number,
             # found: Null#/maxTokens: expected type: Integer, found: Null#/topP: expected type: Number, found: Null,
             # please reformat your input and try again.
@@ -781,7 +793,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         try:
             ping_message = UserPromptMessage(content="ping")
             self._invoke(
-                model=model,
+                model=model_id,
                 credentials=credentials,
                 prompt_messages=[ping_message],
                 model_parameters=required_params,
@@ -932,8 +944,10 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         Create payload for bedrock api call depending on model provider
         """
         payload = {}
-        model_prefix = model.split(".")[0]
-        model_name = model.split(".")[1]
+        if model.startswith('us.') or model.startswith('eu.'):
+            model_prefix = model.split(".")[1]
+        else:
+            model_prefix = model.split(".")[0]
 
         if model_prefix == "ai21":
             payload["temperature"] = model_parameters.get("temperature")
