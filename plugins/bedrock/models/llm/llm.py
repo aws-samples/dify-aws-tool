@@ -53,8 +53,7 @@ from dify_plugin.errors.model import (
 
 from provider.get_bedrock_client import get_bedrock_client
 from .cache_config import is_cache_supported, get_cache_config
-from .model_ids import get_model_id
-from .model_ids import get_first_model
+from . import model_ids
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 logger = logging.getLogger(__name__)
@@ -158,7 +157,13 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         """
 
         model_name = model_parameters.pop('model_name')
-        model_id = get_model_id(model, model_name)
+        model_id = model_ids.get_model_id(model, model_name)
+        if model_parameters.pop('cross-region', False):
+            region_name = credentials['aws_region']
+            region_prefix = model_ids.get_region_area(region_name)
+            if not region_prefix:
+                raise InvokeError(f'Region {region_name} Unsupport cross-region Inference')
+            model_id = "{}.{}".format(region_prefix, model_id)
 
         model_info = BedrockLargeLanguageModel._find_model_info(model_id)
         if model_info:
@@ -750,7 +755,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param tools: tools for tool calling
         :return:md = genai.GenerativeModel(model)
         """
-        model_id = get_first_model(model)
+        model_id = model_ids.get_first_model(model)
         if model_id.startswith('us.') or model_id.startswith('eu.'):
             prefix = model_id.split(".")[1]
             model_name = model_id.split(".")[2]
@@ -773,7 +778,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param credentials: model credentials
         :return:
         """
-        model_id = get_first_model(model)
+        model_id = model_ids.get_first_model(model)
 
         required_params = {}
         if "anthropic" in model_id:

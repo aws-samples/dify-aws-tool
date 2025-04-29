@@ -26,13 +26,16 @@ parameter_rules:
       - Nova Pro
       - Nova Lite
       - Nova Micro
-      - US Nova Pro
-      - US Nova Lite
-      - US Nova Micro
-      - EU Nova Pro
-      - EU Nova Lite
-      - EU Nova Micro
-
+  - name: cross-region
+    label:
+      zh_Hans: 使用跨区域推理
+      en_US: Use Cross-Region Inference
+    type: boolean
+    required: true
+    default: true
+    help:
+      zh_Hans: 跨区域推理会自动选择您所在地理区域 AWS 区域 内的最佳位置来处理您的推理请求。
+      en_US: Cross-Region inference automatically selects the optimal AWS Region within your geography to process your inference request.
   - name: enable_cache
     label:
       zh_Hans: 启用提示缓存

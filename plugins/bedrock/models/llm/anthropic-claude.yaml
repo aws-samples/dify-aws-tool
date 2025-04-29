@@ -24,21 +24,24 @@ parameter_rules:
     required: true
     default: Claude 3.7 Sonnet
     options:
-      - US Claude 3.7 Sonnet
-      - EU Claude 3.7 Sonnet
+      - Claude 3.7 Sonnet
       - Claude 3.5 Sonnet
-      - US Claude 3.5 Sonnet
-      - EU Claude 3.5 Sonnet
+      - Claude 3.5 Sonnet
       - Claude 3.5 Sonnet V2
-      - US Claude 3.5 Sonnet V2
-      - US Claude 3 Sonnet
       - Claude 3 Sonnet
       - Claude 3.5 Haiku
-      - US Claude 3.5 Haiku
       - Claude 3 Haiku
-      - US Claude 3 Haiku
       - Claude 3 Opus
-      - US Claude 3 Opus
+  - name: cross-region
+    label:
+      zh_Hans: 使用跨区域推理
+      en_US: Use Cross-Region Inference
+    type: boolean
+    required: true
+    default: true
+    help:
+      zh_Hans: 跨区域推理会自动选择您所在地理区域 AWS 区域 内的最佳位置来处理您的推理请求。
+      en_US: Cross-Region inference automatically selects the optimal AWS Region within your geography to process your inference request.
   - name: enable_cache
     label:
       zh_Hans: 启用提示缓存
