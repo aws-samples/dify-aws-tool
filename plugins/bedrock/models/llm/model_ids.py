@@ -8,44 +8,27 @@ Based on AWS documentation:
 
 BEDROCK_MODEL_IDS = {
     'anthropic claude': {
-        'US Claude 3.7 Sonnet': 'us.anthropic.claude-3-7-sonnet-20250219-v1:0',
-        'EU Claude 3.7 Sonnet': 'eu.anthropic.claude-3-7-sonnet-20250219-v1:0',
+        'Claude 3.7 Sonnet': 'anthropic.claude-3-7-sonnet-20250219-v1:0',
         'Claude 3.5 Sonnet': 'anthropic.claude-3-5-sonnet-20240620-v1:0',
         'Claude 3.5 Sonnet V2': 'anthropic.claude-3-5-sonnet-20241022-v2:0',
-        'US Claude 3.5 Sonnet': 'us.anthropic.claude-3-5-sonnet-20240620-v1:0',
-        'US Claude 3.5 Sonnet V2': 'us.anthropic.claude-3-5-sonnet-20241022-v2:0',
-        'EU Claude 3.5 Sonnet': 'eu.anthropic.claude-3-5-sonnet-20240620-v1:0',
         'Claude 3.5 Haiku': 'anthropic.claude-3-5-haiku-20241022-v1:0',
-        'US Claude 3.5 Haiku': 'us.anthropic.claude-3-5-haiku-20241022-v1:0',
         'Claude 3 Sonnet': 'anthropic.claude-3-sonnet-20240229-v1:0',
-        'US Claude 3 Sonnet': 'us.anthropic.claude-3-sonnet-20240229-v1:0',
         'Claude 3 Haiku': 'anthropic.claude-3-haiku-20240307-v1:0',
-        'US Claude 3 Haiku': 'us.anthropic.claude-3-haiku-20240307-v1:0',
         'Claude 3 Opus': 'anthropic.claude-3-opus-20240229-v1:0',
-        'US Claude 3 Opus': 'us.anthropic.claude-3-opus-20240229-v1:0',
     },
     'amazon nova': {
         'Nova Pro': 'amazon.nova-pro-v1:0',
-        'US Nova Pro': 'us.amazon.nova-pro-v1:0',
-        'EU Nova Pro': 'eu.amazon.nova-pro-v1:0',
         'Nova Lite': 'amazon.nova-lite-v1:0',
-        'US Nova Lite': 'us.amazon.nova-lite-v1:0',
-        'EU Nova Lite': 'eu.amazon.nova-lite-v1:0',
-        'Nova Micro': 'amazon.nova-micro-v1:0',
-        'US Nova Micro': 'us.amazon.nova-micro-v1:0',
-        'EU Nova Micro': 'eu.amazon.nova-micro-v1:0'
+        'Nova Micro': 'amazon.nova-micro-v1:0'
     },
     'meta': {
         'Llama 3 8B Instruct': 'meta.llama3-8b-instruct-v1:0',
         'Llama 3 70B Instruct': 'meta.llama3-70b-instruct-v1:0',
         'Llama 3.1 8B Instruct': 'meta.llama3-1-8b-instruct-v1:0',
-        'US Llama 3.1 8B Instruct': 'us.meta.llama3-1-8b-instruct-v1:0',
         'Llama 3.1 70B Instruct': 'meta.llama3-1-70b-instruct-v1:0',
-        'US Llama 3.1 70B Instruct': 'us.meta.llama3-1-70b-instruct-v1:0',
         'Llama 3.1 405B Instruct': 'meta.llama3-1-405b-instruct-v1:0',
-        'US Llama 3.1 405B Instruct': 'us.meta.llama3-1-405b-instruct-v1:0',
-        'US Llama 3.2 11B Instruct': 'us.meta.llama3-2-11b-instruct-v1:0',
-        'US Llama 3.2 90B Instruct': 'us.meta.llama3-2-90b-instruct-v1:0'
+        'Llama 3.2 11B Instruct': 'meta.llama3-2-11b-instruct-v1:0',
+        'Llama 3.2 90B Instruct': 'meta.llama3-2-90b-instruct-v1:0'
     },
     'mistral': {
         'Mistral 7B Instruct': 'mistral.mistral-7b-instruct-v0:2',
@@ -58,7 +41,7 @@ BEDROCK_MODEL_IDS = {
         'Jamba 1.5 Large': 'ai21.jamba-1-5-large-v1:0'
     },
     'deepseek': {
-        'DeepSeek-R1': 'us.deepseek.r1-v1:0'
+        'DeepSeek-R1': 'deepseek.r1-v1:0'
     }
 }
 
@@ -88,3 +71,19 @@ def get_first_model(model_type):
     """
     models = BEDROCK_MODEL_IDS.get(model_type, {})
     return next(iter(models.values()))
+
+def get_region_area(region_name):
+    """
+    根据AWS区域名称识别所属地区
+    :param region_name: AWS区域名称，如'us-east-1'
+    :return: 所属地区，如'US', 'EU', 'APAC'等
+    """
+    prefix = region_name.split('-')[0].lower()
+
+    area_mapping = {
+        'us': 'us',
+        'eu': 'eu',
+        'ap': 'apac'
+    }
+
+    return area_mapping.get(prefix, None)

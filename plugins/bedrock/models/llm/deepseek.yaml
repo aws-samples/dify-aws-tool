@@ -21,10 +21,19 @@ parameter_rules:
       zh_Hans: 指定模型名称
       en_US: specify model name
     required: true
-    default: US DeepSeek Coder
+    default: DeepSeek R1
     options:
-      - US DeepSeek Coder
-
+      - DeepSeek R1
+  - name: cross-region
+    label:
+      zh_Hans: 使用跨区域推理
+      en_US: Use Cross-Region Inference
+    type: boolean
+    required: true
+    default: true
+    help:
+      zh_Hans: 跨区域推理会自动选择您所在地理区域 AWS 区域 内的最佳位置来处理您的推理请求。
+      en_US: Cross-Region inference automatically selects the optimal AWS Region within your geography to process your inference request.
   - name: max_tokens
     use_template: max_tokens
     required: true

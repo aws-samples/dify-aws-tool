@@ -24,14 +24,20 @@ parameter_rules:
       - Llama 3 8B Instruct
       - Llama 3 70B Instruct
       - Llama 3.1 8B Instruct
-      - US Llama 3.1 8B Instruct
       - Llama 3.1 70B Instruct
-      - US Llama 3.1 70B Instruct
       - Llama 3.1 405B Instruct
-      - US Llama 3.1 405B Instruct
-      - US Llama 3.2 11B Instruct
-      - US Llama 3.2 90B Instruct
-
+      - Llama 3.2 11B Instruct
+      - Llama 3.2 90B Instruct
+  - name: cross-region
+    label:
+      zh_Hans: 使用跨区域推理
+      en_US: Use Cross-Region Inference
+    type: boolean
+    required: true
+    default: true
+    help:
+      zh_Hans: 跨区域推理会自动选择您所在地理区域 AWS 区域 内的最佳位置来处理您的推理请求。
+      en_US: Cross-Region inference automatically selects the optimal AWS Region within your geography to process your inference request.
   - name: temperature
     use_template: temperature
 
