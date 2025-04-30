@@ -26,7 +26,6 @@ parameter_rules:
     options:
       - Claude 3.7 Sonnet
       - Claude 3.5 Sonnet
-      - Claude 3.5 Sonnet
       - Claude 3.5 Sonnet V2
       - Claude 3 Sonnet
       - Claude 3.5 Haiku
