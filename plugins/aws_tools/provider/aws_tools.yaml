@@ -13,6 +13,8 @@ identity:
   tags:
     - productivity
 tools:
+  - tools/bedrock_retrieve.yaml
+  - tools/bedrock_retrieve_and_generate.yaml
   - tools/opensearch_knn_search.yaml
   - tools/s3_operator.yaml
   - tools/apply_guardrail.yaml

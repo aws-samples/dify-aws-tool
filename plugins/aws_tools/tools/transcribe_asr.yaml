@@ -131,32 +131,6 @@ parameters:
       zh_Hans: 请输入Transcribe的 AWS 区域，例如 'us-east-1'。
     llm_description: Please enter the AWS region for the transcribe service, for example 'us-east-1'.
     form: form
-  - name: aws_access_key_id
-    type: string
-    required: false
-    label:
-      en_US: AWS ACCESS KEY ID
-      zh_Hans: AWS ACCESS KEY ID
-      pt_BR: AWS ACCESS KEY ID
-    human_description:
-      en_US: AWS ACCESS KEY ID
-      zh_Hans: AWS ACCESS KEY ID
-      pt_BR: AWS ACCESS KEY ID
-    llm_description: ACCESS KEY OF AWS USER
-    form: form
-  - name: aws_secret_access_key
-    type: string
-    required: false
-    label:
-      en_US: AWS SECRET ACCESS KEY
-      zh_Hans: AWS SECRET ACCESS KEY
-      pt_BR: AWS SECRET ACCESS KEY
-    human_description:
-      en_US: AWS SECRET ACCESS KEY
-      zh_Hans: AWS SECRET ACCESS KEY
-      pt_BR: AWS SECRET ACCESS KEY
-    llm_description: SECRET ACCESS KEY OF AWS USER
-    form: form
 extra:
   python:
     source: tools/transcribe_asr.py
