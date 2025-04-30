@@ -232,7 +232,7 @@ class TranscribeTool(Tool):
                 status = self.transcribe_client.get_transcription_job(TranscriptionJobName=job_name)
                 if status["TranscriptionJob"]["TranscriptionJobStatus"] in ["COMPLETED", "FAILED"]:
                     break
-                time.sleep(5)
+                time.sleep(2)
 
             if status["TranscriptionJob"]["TranscriptionJobStatus"] == "COMPLETED":
                 return status["TranscriptionJob"]["Transcript"]["TranscriptFileUri"], None
@@ -337,13 +337,18 @@ class TranscribeTool(Tool):
         """
         try:
             if not self.transcribe_client:
-                aws_region = tool_parameters.get("aws_region")
-                if aws_region:
-                    self.transcribe_client = boto3.client("transcribe", region_name=aws_region)
-                    self.s3_client = boto3.client("s3", region_name=aws_region)
-                else:
-                    self.transcribe_client = boto3.client("transcribe")
-                    self.s3_client = boto3.client("s3")
+                aws_credentials = {
+                    'region_name': tool_parameters.get('aws_region', None),
+                    'aws_access_key_id': tool_parameters.get('aws_access_key_id', None), 
+                    'aws_secret_access_key': tool_parameters.get('aws_secret_access_key', None)
+                }
+
+                # Filter out None values
+                aws_credentials = {k: v for k, v in aws_credentials.items() if v is not None}
+
+                # Create clients with credentials if provided, otherwise use default credentials
+                self.transcribe_client = boto3.client('transcribe', **aws_credentials)
+                self.s3_client = boto3.client('s3', **aws_credentials)
 
             file_url = tool_parameters.get("file_url")
             file_type = tool_parameters.get("file_type")
