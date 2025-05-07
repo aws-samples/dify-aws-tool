@@ -199,13 +199,16 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         """
         bedrock_client = get_bedrock_client("bedrock-runtime", credentials)
 
-        # Check if cache is enabled in model parameters
-        enable_cache = model_parameters.pop("enable_cache", False)
-        logger.info(f"---enable_cache---: {enable_cache}")
+        # Get cache checkpoint settings from model parameters
+        system_cache_checkpoint = model_parameters.pop("system_cache_checkpoint", True)
+        penultimate_message_cache_checkpoint = model_parameters.pop("penultimate_message_cache_checkpoint", False)
+        logger.info(f"---cache_checkpoints--- system: {system_cache_checkpoint}, penultimate: {penultimate_message_cache_checkpoint}")
         model_id = model_info["model"]
-        print(f"[CACHE DEBUG] Model: {model_id}, Cache enabled: {enable_cache}")
-        logger.info(f"[CACHE DEBUG] Model: {model_id}, Cache enabled: {enable_cache}")
+        print(f"[CACHE DEBUG] Model: {model_id}, Cache checkpoints - System: {system_cache_checkpoint}, Penultimate: {penultimate_message_cache_checkpoint}")
+        logger.info(f"[CACHE DEBUG] Model: {model_id}, Cache checkpoints - System: {system_cache_checkpoint}, Penultimate: {penultimate_message_cache_checkpoint}")
 
+        # Enable cache if either checkpoint is enabled
+        enable_cache = system_cache_checkpoint or penultimate_message_cache_checkpoint
         cache_supported = is_cache_supported(model_id) and enable_cache
         print(f"[CACHE DEBUG] Model: {model_id}, Cache supported: {cache_supported}")
         logger.info(f"[CACHE DEBUG] Model: {model_id}, Cache supported: {cache_supported}")
@@ -214,7 +217,9 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         system, prompt_message_dicts = self._convert_converse_prompt_messages(
             prompt_messages,
             model_id=model_id,
-            enable_cache=enable_cache
+            enable_cache=enable_cache,
+            system_cache_checkpoint=system_cache_checkpoint,
+            penultimate_message_cache_checkpoint=penultimate_message_cache_checkpoint
         )
         inference_config, additional_model_fields = self._convert_converse_api_model_parameters(model_parameters, stop)
 
@@ -576,7 +581,8 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
 
         return inference_config, additional_model_fields
 
-    def _convert_converse_prompt_messages(self, prompt_messages: list[PromptMessage], model_id: str = None, enable_cache: bool = True) -> tuple[list, list[dict]]:
+    def _convert_converse_prompt_messages(self, prompt_messages: list[PromptMessage], model_id: str = None, enable_cache: bool = True,
+                                   system_cache_checkpoint: bool = True, penultimate_message_cache_checkpoint: bool = False) -> tuple[list, list[dict]]:
         """
         Convert prompt messages to dict list and system
         Add cache points for supported models when enable_cache is True
@@ -584,6 +590,8 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param prompt_messages: List of prompt messages to convert
         :param model_id: Model ID to check for cache support
         :param enable_cache: Whether to enable caching
+        :param system_cache_checkpoint: Whether to add cache checkpoint to system message
+        :param penultimate_message_cache_checkpoint: Whether to add cache checkpoint to penultimate user message
         :return: Tuple of system messages and prompt message dicts
         """
         system = []
@@ -603,7 +611,8 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             system.append({"text": message.content})
 
         # Add cache point to system if it's not empty and caching is supported for system field
-        if system and cache_supported and cache_config and "system" in cache_config["supported_fields"]:
+        # and system_cache_checkpoint is enabled
+        if system and cache_supported and cache_config and "system" in cache_config["supported_fields"] and system_cache_checkpoint:
             system.append({"cachePoint": {"type": "default"}})
             print(f"[CACHE DEBUG] Added cache point to system messages for model: {model_id}")
 
@@ -612,8 +621,8 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             message_dict = self._convert_prompt_message_to_dict(message)
             prompt_message_dicts.append(message_dict)
 
-        # Only add cache point to messages if supported
-        if cache_supported and cache_config and "messages" in cache_config["supported_fields"]:
+        # Only add cache point to messages if supported and penultimate_message_cache_checkpoint is enabled
+        if cache_supported and cache_config and "messages" in cache_config["supported_fields"] and penultimate_message_cache_checkpoint:
             # Find all user messages
             user_message_indices = [i for i, msg in enumerate(prompt_message_dicts) if msg["role"] in ["user", "assistant"]]
             
