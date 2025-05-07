@@ -36,11 +36,6 @@ CACHE_CONFIG = {
         "max_checkpoints": 4,
         "supported_fields": ["system", "messages", "tools"]
     },
-    # "anthropic.claude-3-5-sonnet-20241022-v2:0": {
-    #     "min_tokens": 1024,
-    #     "max_checkpoints": 4,
-    #     "supported_fields": ["system", "messages", "tools"]
-    # },
     "us.anthropic.claude-3-7-sonnet-20250219-v1:0": {
         "min_tokens": 1024,
         "max_checkpoints": 4,
@@ -51,11 +46,6 @@ CACHE_CONFIG = {
         "max_checkpoints": 4,
         "supported_fields": ["system", "messages", "tools"]
     },
-    # "us.anthropic.claude-3-5-sonnet-20241022-v2:0": {
-    #     "min_tokens": 1024,
-    #     "max_checkpoints": 4,
-    #     "supported_fields": ["system", "messages", "tools"]
-    # },
     "eu.anthropic.claude-3-7-sonnet-20250219-v1:0": {
         "min_tokens": 1024,
         "max_checkpoints": 4,
@@ -66,11 +56,6 @@ CACHE_CONFIG = {
         "max_checkpoints": 4,
         "supported_fields": ["system", "messages", "tools"]
     },
-    # "eu.anthropic.claude-3-5-sonnet-20241022-v2:0": {
-    #     "min_tokens": 1024,
-    #     "max_checkpoints": 4,
-    #     "supported_fields": ["system", "messages", "tools"]
-    # },
     "amazon.nova-micro-v1:0": {
         "min_tokens": 1024,
         "max_checkpoints": 4,
