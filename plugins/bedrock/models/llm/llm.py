@@ -156,14 +156,16 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :return: full response or stream response chunk generator result
         """
 
-        model_name = model_parameters.pop('model_name')
-        model_id = model_ids.get_model_id(model, model_name)
-        if model_parameters.pop('cross-region', False):
-            region_name = credentials['aws_region']
-            region_prefix = model_ids.get_region_area(region_name)
-            if not region_prefix:
-                raise InvokeError(f'Region {region_name} Unsupport cross-region Inference')
-            model_id = "{}.{}".format(region_prefix, model_id)
+        model_id = model
+        if model in model_ids.BEDROCK_MODEL_IDS:
+            model_name = model_parameters.pop('model_name')
+            model_id = model_ids.get_model_id(model, model_name)
+            if model_parameters.pop('cross-region', False):
+                region_name = credentials['aws_region']
+                region_prefix = model_ids.get_region_area(region_name)
+                if not region_prefix:
+                    raise InvokeError(f'Region {region_name} Unsupport cross-region Inference')
+                model_id = "{}.{}".format(region_prefix, model_id)
 
         model_info = BedrockLargeLanguageModel._find_model_info(model_id)
         if model_info:
@@ -769,6 +771,13 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             prompt = self._convert_messages_to_prompt(prompt_messages, prefix, model_name)
 
         return self._get_num_tokens_by_gpt2(prompt)
+    
+    def get_customizable_model_schema(self, model: str, credentials: dict) -> Optional[AIModelEntity]:
+        model_schemas = self.predefined_models()
+        for model_schema in model_schemas:
+            if model_schema.model == 'anthropic claude':
+                return model_schema
+        return model_schemas[0]
 
     def validate_credentials(self, model: str, credentials: dict) -> None:
         """
@@ -778,14 +787,13 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param credentials: model credentials
         :return:
         """
-        model_id = model_ids.get_first_model(model)
 
         required_params = {}
-        if "anthropic" in model_id:
+        if "anthropic" in model:
             required_params = {
                 "max_tokens": 32,
             }
-        elif "ai21" in model_id:
+        elif "ai21" in model:
             # ValidationException: Malformed input request: #/temperature: expected type: Number,
             # found: Null#/maxTokens: expected type: Integer, found: Null#/topP: expected type: Number, found: Null,
             # please reformat your input and try again.
@@ -798,7 +806,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         try:
             ping_message = UserPromptMessage(content="ping")
             self._invoke(
-                model=model_id,
+                model=model,
                 credentials=credentials,
                 prompt_messages=[ping_message],
                 model_parameters=required_params,
