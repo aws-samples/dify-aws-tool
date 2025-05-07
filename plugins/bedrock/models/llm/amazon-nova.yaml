@@ -38,8 +38,8 @@ parameter_rules:
       en_US: Cross-Region inference automatically selects the optimal AWS Region within your geography to process your inference request.
   - name: system_cache_checkpoint
     label:
-      zh_Hans: 系统消息缓存检查点
-      en_US: System Message Cache Checkpoint
+      zh_Hans: 缓存系统提示词
+      en_US: Cache System Prompt
     type: boolean
     required: false
     default: true
@@ -48,8 +48,8 @@ parameter_rules:
       en_US: Enable cache checkpoint in the system message to improve performance and reduce costs.
   - name: penultimate_message_cache_checkpoint
     label:
-      zh_Hans: 倒数第二条用户消息缓存检查点
-      en_US: Penultimate User Message Cache Checkpoint
+      zh_Hans: 缓存消息
+      en_US: Cache Messages
     type: boolean
     required: false
     default: false
