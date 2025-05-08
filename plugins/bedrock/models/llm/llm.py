@@ -774,27 +774,45 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param credentials: model credentials
         :return:
         """
-        model_id = model_ids.get_first_model(model)
-
-        required_params = {}
-        if "anthropic" in model_id:
+        if "anthropic" in model:
+            model = 'anthropic claude'
             required_params = {
                 "max_tokens": 32,
-            }
-        elif "ai21" in model_id:
-            # ValidationException: Malformed input request: #/temperature: expected type: Number,
-            # found: Null#/maxTokens: expected type: Integer, found: Null#/topP: expected type: Number, found: Null,
-            # please reformat your input and try again.
+                "model_name" : "Claude 3 Haiku",
+                "cross-region" : True
+            } 
+        elif "ai21" in model:
+            model = 'ai21'
             required_params = {
-                "temperature": 0.7,
-                "topP": 0.9,
-                "maxTokens": 32,
+                "model_name" : "Jamba 1.5 Mini"
+            } 
+        elif "deepseek" in model:
+            model = 'deepseek'
+            required_params = {
+                "model_name" : "DeepSeek-R1"
+            } 
+        elif "meta" in model:
+            model = 'meta'
+            required_params = {
+                "model_name" : "Llama 3.2 11B Instruct",
+                "cross-region" : True
+            } 
+        elif "mistral" in model:
+            model = 'mistral'
+            required_params = {
+                "model_name" : "Mistral Large"
             }
+        else:
+            model = 'amazon nova'
+            required_params = {
+                "model_name" : "Nova Lite",
+                "cross-region" : True
+            } 
 
         try:
             ping_message = UserPromptMessage(content="ping")
             self._invoke(
-                model=model_id,
+                model=model,
                 credentials=credentials,
                 prompt_messages=[ping_message],
                 model_parameters=required_params,
@@ -874,7 +892,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         Create payload for bedrock api call depending on model provider
         """
         payload = {}
-        if model.startswith('us.') or model.startswith('eu.'):
+        if model.startswith('us.') or model.startswith('eu.') or model.startswith('apac.'):
             model_prefix = model.split(".")[1]
         else:
             model_prefix = model.split(".")[0]
