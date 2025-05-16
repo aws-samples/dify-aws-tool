@@ -393,6 +393,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             tool_calls: list[AssistantPromptMessage.ToolCall] = []
             tool_use = {}
             reasoning_header_added = False
+            reasoning_tailer_added = False
 
             for chunk in response["stream"]:
                 if "messageStart" in chunk:
@@ -461,10 +462,6 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                             else:
                                 formatted_reasoning = reasoning_text
 
-                        # end of reasoningContent
-                        elif "signature" in delta["reasoningContent"]:
-                            formatted_reasoning = '\n</think>'
-
                         # Update complete content, although it may not be needed here, but maintains code consistency
                         full_assistant_content += formatted_reasoning
 
@@ -504,11 +501,12 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                 elif "contentBlockStop" in chunk:
                     # If reasoning was started but never completed (no text content followed)
                     # we need to close the thinking tag
-                    if reasoning_header_added is False and full_assistant_content.startswith("<think>"):
+                    if reasoning_tailer_added is False and full_assistant_content.startswith("<think>"):
                         assistant_prompt_message = AssistantPromptMessage(
                             content="\n</think>"
                         )
-                        reasoning_header_added = True
+                        full_assistant_content += "\n</think>"
+                        reasoning_tailer_added = True
                         index += 1
                         yield LLMResultChunk(
                             model=model,
@@ -744,13 +742,12 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param tools: tools for tool calling
         :return:md = genai.GenerativeModel(model)
         """
-        model_id = model_ids.get_first_model(model)
-        if model_id.startswith('us.') or model_id.startswith('eu.'):
-            prefix = model_id.split(".")[1]
-            model_name = model_id.split(".")[2]
+        if model.startswith('us.') or model.startswith('eu.'):
+            prefix = model.split(".")[1]
+            model_name = model.split(".")[2]
         else:
-            prefix = model_id.split(".")[0]
-            model_name = model_id.split(".")[1]
+            prefix = model.split(".")[0]
+            model_name = model.split(".")[1]
 
         if isinstance(prompt_messages, str):
             prompt = prompt_messages
@@ -789,7 +786,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         elif "deepseek" in model:
             model = 'deepseek'
             required_params = {
-                "model_name" : "DeepSeek-R1",
+                "model_name" : "DeepSeek R1",
                 "cross-region": True
             } 
         elif "meta" in model:
