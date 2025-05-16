@@ -789,7 +789,8 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         elif "deepseek" in model:
             model = 'deepseek'
             required_params = {
-                "model_name" : "DeepSeek-R1"
+                "model_name" : "DeepSeek-R1",
+                "cross-region": True
             } 
         elif "meta" in model:
             model = 'meta'
