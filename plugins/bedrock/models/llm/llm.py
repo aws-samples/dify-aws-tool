@@ -771,59 +771,46 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param credentials: model credentials
         :return:
         """
-        if "anthropic" in model:
-            model = 'anthropic claude'
-            required_params = {
-                "max_tokens": 32,
-                "model_name" : "Claude 3 Haiku",
-                "cross-region" : True
-            } 
-        elif "ai21" in model:
-            model = 'ai21'
-            required_params = {
-                "model_name" : "Jamba 1.5 Mini"
-            } 
-        elif "deepseek" in model:
-            model = 'deepseek'
-            required_params = {
-                "model_name" : "DeepSeek R1",
-                "cross-region": True
-            } 
-        elif "meta" in model:
-            model = 'meta'
-            required_params = {
-                "model_name" : "Llama 3.2 11B Instruct",
-                "cross-region" : True
-            } 
-        elif "mistral" in model:
-            model = 'mistral'
-            required_params = {
-                "model_name" : "Mistral Large"
-            }
-        else:
-            model = 'amazon nova'
-            required_params = {
-                "model_name" : "Nova Lite",
-                "cross-region" : True
-            } 
-
         try:
-            ping_message = UserPromptMessage(content="ping")
-            self._invoke(
-                model=model,
-                credentials=credentials,
-                prompt_messages=[ping_message],
-                model_parameters=required_params,
-                stream=False,
-            )
-
-        except ClientError as ex:
-            error_code = ex.response["Error"]["Code"]
-            full_error_msg = f"{error_code}: {ex.response['Error']['Message']}"
-            raise CredentialsValidateFailedError(str(self._map_client_to_invoke_error(error_code, full_error_msg)))
-
+            # get model mode
+            foundation_model_ids = self._list_foundation_models(credentials=credentials)
+            cris_prefix =  model_ids.get_region_area(credentials.get("aws_region"))
+            if model.startswith(cris_prefix):
+                model = model.split('.', 1)[1]
+            logger.info(f"get model_ids: {foundation_model_ids}")
+            if model not in foundation_model_ids:
+                raise ValueError(f"model id: {model} not found in bedrock")
         except Exception as ex:
             raise CredentialsValidateFailedError(str(ex))
+
+    def _list_foundation_models(self, credentials: dict) -> list[str]:
+        """
+        List available foundation models from Amazon Bedrock
+        """
+        def remove_context_window_suffix(model_ids):
+            """
+            使用正则表达式移除模型ID中的context window后缀
+            """
+            cleaned_ids = []
+            for model_id in model_ids:
+                if model_id.endswith('k'):
+                    parts = model_id.split(':')
+                    model_id_no_suffix = ':'.join(parts[:-1])
+                    cleaned_ids.append(model_id_no_suffix)
+                else:
+                    cleaned_ids.append(model_id)
+            return list(set(cleaned_ids))
+        try:
+            bedrock_client = get_bedrock_client("bedrock", credentials)
+            response = bedrock_client.list_foundation_models()
+            models = []
+            for model in response.get('modelSummaries', []):
+                models.append(model.get('modelId'))
+            return remove_context_window_suffix(models)
+        except Exception as e:
+            logger.info(f"Error listing Bedrock foundation models: {str(e)}")
+            # Fall back to config if there's an error
+            raise e
 
     def _convert_one_message_to_text(
         self, message: PromptMessage, model_prefix: str, model_name: Optional[str] = None
