@@ -1,38 +1,32 @@
+![cover-v5-optimized](./dify_on_aws.svg)
+
 <p align="center">
-  <h1 align="center">Dify AWS Tool</h1>
-  <p align="center">
-    <a href="README_ZH.md"><strong>简体中文</strong></a> | <a href="README.md"><strong>English</strong></a> | <strong>日本語</strong>
-  </p>
+  <a href="https://github.com/aws-samples/dify-aws-tool/blob/main/workflow/README.md">Demos</a> ·
+  <a href="https://github.com/aws-samples/dify-aws-tool/blob/main/dify.yaml">Deploy Dify With CloudFormation</a> ·
+  <a href="https://github.com/aws-samples/solution-for-deploying-dify-on-aws">Deploy Dify on EKS</a> ·
 </p>
 
 <p align="center">
   <a href="https://github.com/langgenius/dify">
-    <img src="https://img.shields.io/badge/Powered%20by-Dify-blue" alt="Powered by Dify">
+    <img src="https://img.shields.io/badge/Powered%20by-Bedrock-277E68" alt="Powered by Bedrock">
   </a>
   <a href="https://aws.amazon.com/">
-    <img src="https://img.shields.io/badge/Platform-AWS-orange" alt="Platform AWS">
+    <img src="https://img.shields.io/badge/Powered%20by-SageMaker-8750F5" alt="Powered by SageMaker">
+  </a>
+  <a href="https://aws.amazon.com/">
+    <img src="https://img.shields.io/badge/Powered%20by-AWS%20Tools-F37D0B" alt="Powered by S3">
   </a>
 </p>
 
-## 📑 目次
+<p align="center">
+  <a href="./README_ZH.md"><img alt="简体中文版自述文件" src="https://img.shields.io/badge/简体中文-d9d9d9"></a>
+  <a href="./README.md"><img alt="README in English" src="https://img.shields.io/badge/English-d9d9d9"></a>
+  <a href="./README_JA.md"><img alt="日本語のREADME" src="https://img.shields.io/badge/日本語-d9d9d9"></a>
+</p>
 
-- [リポジトリ紹介](#-リポジトリ紹介)
-- [前提条件](#️-前提条件)
-- [技術リソース](#-技術リソース)
-  - [ワークフロー](#ワークフロー-デモページ)
-  - [拡張ツール](#拡張ツール)
-  - [モデルプロバイダー](#モデルプロバイダー)
-- [使用上の注意](#-使用上の注意)
-  - [ヘルプの取得](#ヘルプの取得)
-  - [貢献方法](#貢献方法)
-- [追加資料](#-追加資料)
-  - [デモ動画](#デモ動画)
-  - [関連ブログ/ドキュメント](#関連ブログドキュメント)
-  - [ハンズオンラボ](#ハンズオンラボ)
+## 📋 はじめに
 
-## 📋 リポジトリ紹介
-
-このリポジトリは、[Dify](https://github.com/langgenius/dify)の3つのプラグイン（**Bedrock Model Provider**、**SageMaker Model Provider**、**AWS Tools**）のソースコードと、関連するワークフローやデモを提供しています。DifyユーザーとAWSユーザーの参考になるよう公開しています。
+このリポジトリでは、Difyの3つのプラグイン：Bedrock Model Provider、SageMaker Model Provider、およびAWS Toolsのソースコード、並びにDifyユーザーとAWSユーザー向けの参考となる関連ワークフローとデモを提供しています。
 
 ## ⚙️ 前提条件
 
@@ -127,7 +121,6 @@
 - [最新のBedrock C3.5-V2に基づくKimiを構築する3つのステップ](https://mp.weixin.qq.com/s/_2obKrn849a6jOxML_8Btw)
 - [AWSサービスをDifyに統合するツール](https://mp.weixin.qq.com/s/ZZK4Qh0kcnlZHIdO82nVZA)
 - [DifyとSageMaker ASR/TTSの統合](https://mp.weixin.qq.com/s/g2aey251YPk-tekL1uc_nw)
-- [EKSアップグレード計画](https://github.com/user-attachments/assets/0e7250a2-362d-47ae-95d5-b4004f9b30f4)
 
 ### 関連ブログ/ドキュメント
 
@@ -138,4 +131,4 @@
 ### ハンズオンラボ
 
 - [Difyで迅速にGenAIアプリを構築する](https://catalog.us-east-1.prod.workshops.aws/workshops/2c19fcb1-1f1c-4f52-b759-0ca4d2ae2522/zh-CN)
-- [EKSベースのDifyコミュニティバージョンのCDKデプロイソリューション](https://github.com/aws-samples/solution-for-deploying-dify-on-aws)
+- [Siliconflow+DeepSeek+Dify workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/87e070e2-5621-4c94-9285-529514ec4454/en-US)

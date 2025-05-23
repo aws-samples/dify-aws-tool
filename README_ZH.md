@@ -1,36 +1,30 @@
+![cover-v5-optimized](./dify_on_aws.svg)
+
 <p align="center">
-  <h1 align="center">Dify AWS Tool</h1>
-  <p align="center">
-    <strong>简体中文</strong> | <a href="README.md"><strong>English</strong></a> | <a href="README_JA.md"><strong>日本語</strong></a>
-  </p>
+  <a href="https://github.com/aws-samples/dify-aws-tool/blob/main/workflow/README.md">Demos</a> ·
+  <a href="https://github.com/aws-samples/dify-aws-tool/blob/main/dify.yaml">Deploy Dify With CloudFormation</a> ·
+  <a href="https://github.com/aws-samples/solution-for-deploying-dify-on-aws">Deploy Dify on EKS</a> ·
 </p>
 
 <p align="center">
   <a href="https://github.com/langgenius/dify">
-    <img src="https://img.shields.io/badge/Powered%20by-Dify-blue" alt="Powered by Dify">
+    <img src="https://img.shields.io/badge/Powered%20by-Bedrock-277E68" alt="Powered by Bedrock">
   </a>
   <a href="https://aws.amazon.com/">
-    <img src="https://img.shields.io/badge/Platform-AWS-orange" alt="Platform AWS">
+    <img src="https://img.shields.io/badge/Powered%20by-SageMaker-8750F5" alt="Powered by SageMaker">
+  </a>
+  <a href="https://aws.amazon.com/">
+    <img src="https://img.shields.io/badge/Powered%20by-AWS%20Tools-F37D0B" alt="Powered by S3">
   </a>
 </p>
 
-## 📑 目录
+<p align="center">
+  <a href="./README_ZH.md"><img alt="简体中文版自述文件" src="https://img.shields.io/badge/简体中文-d9d9d9"></a>
+  <a href="./README.md"><img alt="README in English" src="https://img.shields.io/badge/English-d9d9d9"></a>
+  <a href="./README_JA.md"><img alt="日本語のREADME" src="https://img.shields.io/badge/日本語-d9d9d9"></a>
+</p>
 
-- [仓库简介](#-仓库简介)
-- [前置条件](#️-前置条件)
-- [技术资源](#-技术资源)
-  - [工作流](#工作流-demo页面)
-  - [扩展工具](#扩展工具)
-  - [模型提供商](#模型提供商)
-- [使用须知](#-使用须知)
-  - [寻求帮助](#寻求帮助)
-  - [贡献方式](#贡献方式)
-- [其他材料](#-其他材料)
-  - [演示视频](#演示视频)
-  - [相关Blog/文档](#相关blog文档)
-  - [动手实验](#动手实验)
-
-## 📋 仓库简介
+## 📋 简介
 
 本仓库提供了 [Dify](https://github.com/langgenius/dify) 中亚马逊云 **Bedrock Model Provider**、**SageMaker Model Provider** 以及 **AWS Tools** 三个插件的源码，以及一些相关的 Workflow 和 Demo，供 Dify 用户和 AWS 用户参考借鉴。
 
@@ -127,7 +121,6 @@
 - [三步构建基于最新Bedrock C3.5-V2的Kimi](https://mp.weixin.qq.com/s/_2obKrn849a6jOxML_8Btw)
 - [AWS服务作为工具集成到Dify](https://mp.weixin.qq.com/s/ZZK4Qh0kcnlZHIdO82nVZA)
 - [Dify与SageMaker上的ASR/TTS集成](https://mp.weixin.qq.com/s/g2aey251YPk-tekL1uc_nw)
-- [EKS 版本升级计划文档生成](https://github.com/user-attachments/assets/0e7250a2-362d-47ae-95d5-b4004f9b30f4)
 
 #### 相关Blog/文档
 
@@ -138,4 +131,4 @@
 #### 动手实验
 
 - [Rapidly Build GenAI Apps with Dify](https://catalog.us-east-1.prod.workshops.aws/workshops/2c19fcb1-1f1c-4f52-b759-0ca4d2ae2522/zh-CN)
-- [基于EKS的Dify社区版本CDK部署方案](https://github.com/aws-samples/solution-for-deploying-dify-on-aws)
+- [硅基流动+DeepSeek+Dify workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/87e070e2-5621-4c94-9285-529514ec4454/en-US)

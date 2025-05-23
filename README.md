@@ -1,40 +1,35 @@
+![cover-v5-optimized](./dify_on_aws.svg)
+
 <p align="center">
-  <h1 align="center">Dify AWS Tool</h1>
-  <p align="center">
-    <a href="README_ZH.md"><strong>简体中文</strong></a> | <strong>English</strong> | <a href="README_JA.md"><strong>日本語</strong></a>
-  </p>
+  <a href="https://github.com/aws-samples/dify-aws-tool/blob/main/workflow/README.md">Demos</a> ·
+  <a href="https://github.com/aws-samples/dify-aws-tool/blob/main/dify.yaml">Deploy Dify With CloudFormation</a> ·
+  <a href="https://github.com/aws-samples/solution-for-deploying-dify-on-aws">Deploy Dify on EKS</a> ·
 </p>
 
 <p align="center">
   <a href="https://github.com/langgenius/dify">
-    <img src="https://img.shields.io/badge/Powered%20by-Dify-blue" alt="Powered by Dify">
+    <img src="https://img.shields.io/badge/Powered%20by-Bedrock-277E68" alt="Powered by Bedrock">
   </a>
   <a href="https://aws.amazon.com/">
-    <img src="https://img.shields.io/badge/Platform-AWS-orange" alt="Platform AWS">
+    <img src="https://img.shields.io/badge/Powered%20by-SageMaker-8750F5" alt="Powered by SageMaker">
+  </a>
+  <a href="https://aws.amazon.com/">
+    <img src="https://img.shields.io/badge/Powered%20by-AWS%20Tools-F37D0B" alt="Powered by S3">
   </a>
 </p>
 
-## 📑 Table of Contents
+<p align="center">
+  <a href="./README_ZH.md"><img alt="简体中文版自述文件" src="https://img.shields.io/badge/简体中文-d9d9d9"></a>
+  <a href="./README.md"><img alt="README in English" src="https://img.shields.io/badge/English-d9d9d9"></a>
+  <a href="./README_JA.md"><img alt="日本語のREADME" src="https://img.shields.io/badge/日本語-d9d9d9"></a>
+</p>
 
-- [Repository Introduction](#-repository-introduction)
-- [Prerequisites](#️-prerequisites)
-- [Technical Resources](#-technical-resources)
-  - [Workflows](#workflows-demo-page)
-  - [Extension Tools](#extension-tools)
-  - [Model Providers](#model-providers)
-- [Usage Notes](#-usage-notes)
-  - [Getting Help](#getting-help)
-  - [How to Contribute](#how-to-contribute)
-- [Additional Materials](#-additional-materials)
-  - [Demo Videos](#demo-videos)
-  - [Related Blogs/Documents](#related-blogsdocuments)
-  - [Hands-on Labs](#hands-on-labs)
 
-## 📋 Repository Introduction
+## 📋 Introduction
 
 This repository provides the source code for three plugins in [Dify](https://github.com/langgenius/dify): **Bedrock Model Provider**, **SageMaker Model Provider**, and **AWS Tools**, as well as related workflows and demos for reference by Dify users and AWS users.
 
-## ⚙️ Prerequisites
+### ⚙️ Prerequisites
 
 - Dify environment (can be deployed with one click using AWS CloudFormation - [dify.yaml](./dify.yaml))
   For production deployment, please refer to solution example [Dify-on-EKS](https://github.com/aws-samples/solution-for-deploying-dify-on-aws)
@@ -126,8 +121,6 @@ This repository provides the source code for three plugins in [Dify](https://git
 - [Three Steps to Build Kimi Based on the Latest Bedrock C3.5-V2](https://mp.weixin.qq.com/s/_2obKrn849a6jOxML_8Btw)
 - [AWS Services as Tools Integrated into Dify](https://mp.weixin.qq.com/s/ZZK4Qh0kcnlZHIdO82nVZA)
 - [Dify and SageMaker ASR/TTS Integration](https://mp.weixin.qq.com/s/g2aey251YPk-tekL1uc_nw)
-- [EKS Upgrade Planning](https://github.com/user-attachments/assets/0e7250a2-362d-47ae-95d5-b4004f9b30f4)
-- [Bedrock based ChatBot for Nextcloud](https://github.com/user-attachments/assets/06612c09-0773-41e3-9a34-31d3382fc4d1)
 
 ### Related Blogs/Documents
 
@@ -138,4 +131,5 @@ This repository provides the source code for three plugins in [Dify](https://git
 ### Hands-on Labs
 
 - [Rapidly Build GenAI Apps with Dify](https://catalog.us-east-1.prod.workshops.aws/workshops/2c19fcb1-1f1c-4f52-b759-0ca4d2ae2522/zh-CN)
-- [CDK Deployment Solution for Dify Community Version Based on EKS](https://github.com/aws-samples/solution-for-deploying-dify-on-aws)
+- [Siliconflow+DeepSeek+Dify workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/87e070e2-5621-4c94-9285-529514ec4454/en-US)
+
