@@ -4,7 +4,10 @@ from typing import IO, Any, Optional
 
 import boto3  # type: ignore
 
-from provider.sagemaker import generate_presigned_url
+from provider.sagemaker import generate_presigned_url, buffer_to_s3
+
+def generate_presigned_url(s3_client: Any, file: IO[bytes], bucket_name: str, s3_prefix: str, expiration=600) -> str:
+    object_key = buffer_to_s3(s3_client, file, bucket_name, s3_prefix)
 
 from dify_plugin.entities.model import AIModelEntity, FetchFrom, I18nObject, ModelType
 from dify_plugin.errors.model import (
@@ -69,8 +72,10 @@ class SageMakerSpeech2TextModel(Speech2TextModel):
             bucket = credentials.get("audio_s3_cache_bucket")
             assert bucket is not None, "audio_s3_cache_bucket is required in credentials"
 
-            s3_presign_url = generate_presigned_url(self.s3_client, file, bucket, s3_prefix)
-            payload = {"audio_s3_presign_uri": s3_presign_url}
+            object_key = buffer_to_s3(self.s3_client, file, bucket, s3_prefix)
+            # s3_presign_url = generate_presigned_url(self.s3_client, file, bucket, s3_prefix)
+            # payload = {"audio_s3_presign_uri": s3_presign_url}
+            payload = {"bucket_name": bucket, "s3_key" : object_key}
 
             response_model = self.sagemaker_client.invoke_endpoint(
                 EndpointName=sagemaker_endpoint, Body=json.dumps(payload), ContentType="application/json"
