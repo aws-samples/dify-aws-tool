@@ -599,7 +599,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
 
         # Process system messages first
         system_messages = [msg for msg in prompt_messages if isinstance(msg, SystemPromptMessage)]
-        other_messages = [msg for msg in prompt_messages if isinstance(msg, UserPromptMessage)]
+        other_messages = [msg for msg in prompt_messages if not isinstance(msg, SystemPromptMessage)]
 
         # Add system messages
         for message in system_messages:
@@ -620,7 +620,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             # Only add cache point to messages if supported and latest_two_messages_cache_checkpoint is enabled
         if cache_config and "messages" in cache_config["supported_fields"] and latest_two_messages_cache_checkpoint:
             # Find all user messages
-            user_message_indices = [i for i, msg in enumerate(prompt_message_dicts) if msg["role"] in ["user", "assistant"]]
+            user_message_indices = [i for i, msg in enumerate(prompt_message_dicts) if msg["role"] in ["user"]]
 
             # Add cache point to available user messages (up to the latest two)
             if len(user_message_indices) > 0:
