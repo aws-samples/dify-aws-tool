@@ -111,7 +111,7 @@ def get_cache_config(model_id: str) -> dict:
         print(f"[CACHE CONFIG] Cache config for model {model_id}: {config}")
         logger.info(f"[CACHE CONFIG] Cache config for model {model_id}: {config}")
         return config
-    
+
     # Return default configuration if model not found
     default_config = {
         "min_tokens": 1024,

@@ -63,3 +63,7 @@ https://github.com/user-attachments/assets/bb6a4d2a-57f4-4009-853d-5f0618b8b97a
 **16. Convert workflow to MCP server**
 
 https://github.com/user-attachments/assets/add489eb-0244-4c38-9bcd-b070204dc28a
+
+**17. Cloud drive Based on NextCloud + Bedrock Knowledge base**
+
+https://github.com/user-attachments/assets/06612c09-0773-41e3-9a34-31d3382fc4d1
