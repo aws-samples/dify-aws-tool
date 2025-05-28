@@ -49,20 +49,18 @@ parameter_rules:
       en_US: Cache System Prompt
     type: boolean
     required: false
-    default: true
     help:
       zh_Hans: 在系统消息中启用缓存检查点，可以提高性能并降低成本。
       en_US: Enable cache checkpoint in the system message to improve performance and reduce costs.
-  - name: penultimate_message_cache_checkpoint
+  - name: latest_two_messages_cache_checkpoint
     label:
-      zh_Hans: 缓存消息
-      en_US: Cache Messages
+      zh_Hans: 缓存最新两条消息
+      en_US: Cache Latest Two Messages
     type: boolean
     required: false
-    default: false
     help:
-      zh_Hans: 在倒数第二条用户消息中启用缓存检查点，可以提高性能并降低成本。
-      en_US: Enable cache checkpoint in the penultimate user message to improve performance and reduce costs.
+      zh_Hans: 在最新的两条用户消息中启用缓存检查点，可以提高性能并降低成本。
+      en_US: Enable cache checkpoint in the latest two user messages to improve performance and reduce costs.
   - name: reasoning_type
     label:
       zh_Hans: 推理配置
