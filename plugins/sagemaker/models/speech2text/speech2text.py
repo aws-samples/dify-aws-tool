@@ -6,9 +6,6 @@ import boto3  # type: ignore
 
 from provider.sagemaker import generate_presigned_url, buffer_to_s3
 
-def generate_presigned_url(s3_client: Any, file: IO[bytes], bucket_name: str, s3_prefix: str, expiration=600) -> str:
-    object_key = buffer_to_s3(s3_client, file, bucket_name, s3_prefix)
-
 from dify_plugin.entities.model import AIModelEntity, FetchFrom, I18nObject, ModelType
 from dify_plugin.errors.model import (
     CredentialsValidateFailedError,
