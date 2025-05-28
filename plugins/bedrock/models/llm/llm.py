@@ -599,7 +599,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
 
         # Process system messages first
         system_messages = [msg for msg in prompt_messages if isinstance(msg, SystemPromptMessage)]
-        other_messages = [msg for msg in prompt_messages if not isinstance(msg, SystemPromptMessage)]
+        other_messages = [msg for msg in prompt_messages if isinstance(msg, UserPromptMessage)]
 
         # Add system messages
         for message in system_messages:

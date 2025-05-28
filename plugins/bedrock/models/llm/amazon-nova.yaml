@@ -47,8 +47,8 @@ parameter_rules:
       en_US: Enable cache checkpoint in the system message to improve performance and reduce costs.
   - name: latest_two_messages_cache_checkpoint
     label:
-      zh_Hans: 缓存最新两条消息
-      en_US: Cache Latest Two Messages
+      zh_Hans: 缓存用户消息
+      en_US: Cache User Messages
     type: boolean
     required: false
     help:
