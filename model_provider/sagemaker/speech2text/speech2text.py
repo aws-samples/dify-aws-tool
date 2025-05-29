@@ -4,8 +4,6 @@ from typing import IO, Any, Optional
 
 import boto3
 
-from provider.sagemaker import generate_presigned_url, buffer_to_s3
-
 from core.model_runtime.entities.common_entities import I18nObject
 from core.model_runtime.entities.model_entities import AIModelEntity, FetchFrom, ModelType
 from core.model_runtime.errors.invoke import (
@@ -18,7 +16,7 @@ from core.model_runtime.errors.invoke import (
 )
 from core.model_runtime.errors.validate import CredentialsValidateFailedError
 from core.model_runtime.model_providers.__base.speech2text_model import Speech2TextModel
-from core.model_runtime.model_providers.sagemaker.sagemaker import generate_presigned_url
+from core.model_runtime.model_providers.sagemaker.sagemaker import buffer_to_s3, generate_presigned_url
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +82,7 @@ class SageMakerSpeech2TextModel(Speech2TextModel):
                 asr_text = json_obj["text"]
             else:
                 # For Whisper Model
-                resp = sagemaker_client.invoke_endpoint(EndpointName=endpoint_name, Body=data, ContentType='audio/x-audio')
+                resp = self.sagemaker_client.invoke_endpoint(EndpointName=sagemaker_endpoint, Body=file.read(), ContentType='audio/x-audio')
                 json_obj = json.loads(resp["Body"].read().decode("utf8"))
                 asr_text = json_obj["text"]
                 

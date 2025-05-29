@@ -82,7 +82,7 @@ class SageMakerSpeech2TextModel(Speech2TextModel):
                 asr_text = json_obj["text"]
             else:
                 # For Whisper Model
-                resp = sagemaker_client.invoke_endpoint(EndpointName=endpoint_name, Body=data, ContentType='audio/x-audio')
+                resp = self.sagemaker_client.invoke_endpoint(EndpointName=sagemaker_endpoint, Body=file.read(), ContentType='audio/x-audio')
                 json_obj = json.loads(resp["Body"].read().decode("utf8"))
                 asr_text = json_obj["text"]
 
