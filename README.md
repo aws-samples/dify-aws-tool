@@ -89,6 +89,7 @@ This repository provides the source code for three plugins in [Dify](https://git
 | Bge-embedding-m3 | SageMaker\Embedding | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/bge-embedding-m3-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
 | CosyVoice | SageMaker\TTS | [Code](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/cosyvoice) | [ybalbert](ybalbert@amazon.com) |
 | SenseVoice | SageMaker\ASR | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/funasr-deploy.ipynb) | [ybalbert](ybalbert@amazon.com) |
+| Whisper-large-v3-turbo | SageMaker\ASR | [Notebook](https://github.com/aws-samples/dify-aws-tool/blob/main/notebook/whisper-deploy-china-region.ipynb) | [ybalbert](ybalbert@amazon.com) |
 
 > **📌 Important Note**
 >
