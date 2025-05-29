@@ -64,8 +64,8 @@ model_credential_schema:
         - variable: __model_type
           value: speech2text
       label:
-        zh_Hans: 音频缓存桶(s3 bucket)
-        en_US: audio cache bucket(s3 bucket)
+        zh_Hans: 音频缓存桶(s3 bucket, Whisper模型不填, FunASR模型需要填)
+        en_US: audio cache bucket(s3 bucket, it's needed for FunASR and useless for Whisper)
       type: text-input
       required: true
       placeholder:
