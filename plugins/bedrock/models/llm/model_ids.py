@@ -21,7 +21,8 @@ BEDROCK_MODEL_IDS = {
     'amazon nova': {
         'Nova Pro': 'amazon.nova-pro-v1:0',
         'Nova Lite': 'amazon.nova-lite-v1:0',
-        'Nova Micro': 'amazon.nova-micro-v1:0'
+        'Nova Micro': 'amazon.nova-micro-v1:0',
+        'Nova Premier': 'amazon.nova-premier-v1:0'
     },
     'meta': {
         'Llama 3 8B Instruct': 'meta.llama3-8b-instruct-v1:0',
