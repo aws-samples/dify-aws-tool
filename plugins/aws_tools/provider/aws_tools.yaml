@@ -26,6 +26,7 @@ tools:
   - tools/translation_evaluator.yaml
   - tools/sagemaker_chinese_toxicity_detector.yaml
   - tools/lambda_yaml_to_json.yaml
+  - tools/extract_frame.yaml
 extra:
   python:
     source: provider/aws_tools.py
