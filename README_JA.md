@@ -79,6 +79,8 @@
 | AWS Bedrock Nova Canvas | SAAS | Amazon Nova Canvasに基づく画像生成 | | [alexwuu](alexwuu@amazon.com) |
 | AWS Bedrock Nova Reel | SAAS | Amazon Nova Reelに基づく動画生成 | | [alexwuu](alexwuu@amazon.com) |
 | OpenSearch Knn Retriever | PAAS | KNN手法を使用してOpenSearchからデータを検索 | [Notebook](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/search_img_by_img) | [ybalbert](ybalbert@amazon.com) |
+| Frame Extractor | PAAS | GIF からフレーム画像を抽出して LLM の入力とする |  | [ybalbert](ybalbert@amazon.com) |
+
 
 ### モデルプロバイダー
 
