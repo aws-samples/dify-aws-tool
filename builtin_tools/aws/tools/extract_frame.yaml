@@ -26,7 +26,7 @@ parameters:
       pt_BR: input url video/gif）
     llm_description: input url video/gif）
     form: llm
-  - name: frame count
+  - name: frame_count
     type: number
     required: true
     label:

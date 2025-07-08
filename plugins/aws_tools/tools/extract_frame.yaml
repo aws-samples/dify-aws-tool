@@ -26,17 +26,17 @@ parameters:
       pt_BR: input url video/gif）
     llm_description: input url video/gif）
     form: llm
-  - name: frame count
+  - name: frame_count
     type: number
     required: true
     label:
-      en_US: Frame count
-      zh_Hans: 帧数(2帧即首帧+尾帧，5帧即首尾帧+中间帧)
+      en_US: Frame count(first/last frames + some middle frames)
+      zh_Hans: 帧数(首尾帧+中间帧)
     human_description:
       en_US: Frame count
       zh_Hans: 帧数
     form: form
-    default: 2
+    default: 3
   - name: input_type
     type: select
     required: true
