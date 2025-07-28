@@ -250,6 +250,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         stream: bool = True,
         user: Optional[str] = None,
         tools: Optional[list[PromptMessageTool]] = None,
+        model: Optional[str] = None,
     ) -> Union[LLMResult, Generator]:
         """
         Invoke large language model with converse API
@@ -920,19 +921,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :return: inference profile information
         """
         try:
-            # Get AWS credentials
-            aws_access_key_id = credentials.get("aws_access_key_id")
-            aws_secret_access_key = credentials.get("aws_secret_access_key")
-            aws_region = credentials.get("aws_region", "us-east-1")
-            
-            # Create Bedrock client
-            session = boto3.Session(
-                aws_access_key_id=aws_access_key_id,
-                aws_secret_access_key=aws_secret_access_key,
-                region_name=aws_region
-            )
-            
-            bedrock_client = session.client('bedrock')
+            bedrock_client = get_bedrock_client("bedrock", credentials)
             
             # Call get-inference-profile API
             response = bedrock_client.get_inference_profile(
@@ -981,19 +970,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param credentials: credentials containing AWS access info
         """
         try:
-            # Get AWS credentials
-            aws_access_key_id = credentials.get("aws_access_key_id")
-            aws_secret_access_key = credentials.get("aws_secret_access_key")
-            aws_region = credentials.get("aws_region", "us-east-1")
-            
-            # Create Bedrock client
-            session = boto3.Session(
-                aws_access_key_id=aws_access_key_id,
-                aws_secret_access_key=aws_secret_access_key,
-                region_name=aws_region
-            )
-            
-            bedrock_client = session.client('bedrock')
+            bedrock_client = get_bedrock_client("bedrock", credentials)
             
             # Call get-inference-profile API
             response = bedrock_client.get_inference_profile(

@@ -6,6 +6,7 @@ from botocore.exceptions import ClientError
 from dify_plugin import ModelProvider
 from dify_plugin.entities.model import ModelType
 from dify_plugin.errors.model import CredentialsValidateFailedError
+from .get_bedrock_client import get_bedrock_client
 
 logger = logging.getLogger(__name__)
 
@@ -66,19 +67,7 @@ class AmazonBedrockModelProvider(ModelProvider):
         :param credentials: credentials containing AWS access info
         """
         try:
-            # Get AWS credentials
-            aws_access_key_id = credentials.get("aws_access_key_id")
-            aws_secret_access_key = credentials.get("aws_secret_access_key")
-            aws_region = credentials.get("aws_region", "us-east-1")
-            
-            # Create Bedrock client
-            session = boto3.Session(
-                aws_access_key_id=aws_access_key_id,
-                aws_secret_access_key=aws_secret_access_key,
-                region_name=aws_region
-            )
-            
-            bedrock_client = session.client('bedrock')
+            bedrock_client = get_bedrock_client("bedrock", credentials)
             
             # Call get-inference-profile API
             response = bedrock_client.get_inference_profile(
@@ -102,36 +91,3 @@ class AmazonBedrockModelProvider(ModelProvider):
         except Exception as e:
             raise CredentialsValidateFailedError(f"Failed to validate inference profile: {str(e)}")
 
-    def get_inference_profile_info(self, inference_profile_id: str, credentials: Mapping) -> dict:
-        """
-        Get inference profile information from Bedrock API
-        
-        :param inference_profile_id: inference profile identifier
-        :param credentials: credentials containing AWS access info
-        :return: inference profile information
-        """
-        try:
-            # Get AWS credentials
-            aws_access_key_id = credentials.get("aws_access_key_id")
-            aws_secret_access_key = credentials.get("aws_secret_access_key")
-            aws_region = credentials.get("aws_region", "us-east-1")
-            
-            # Create Bedrock client
-            session = boto3.Session(
-                aws_access_key_id=aws_access_key_id,
-                aws_secret_access_key=aws_secret_access_key,
-                region_name=aws_region
-            )
-            
-            bedrock_client = session.client('bedrock')
-            
-            # Call get-inference-profile API
-            response = bedrock_client.get_inference_profile(
-                inferenceProfileIdentifier=inference_profile_id
-            )
-            
-            return response
-            
-        except Exception as e:
-            logger.error(f"Failed to get inference profile info: {str(e)}")
-            raise e
