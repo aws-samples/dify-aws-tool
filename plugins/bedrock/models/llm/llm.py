@@ -158,53 +158,70 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param user: unique user id
         :return: full response or stream response chunk generator result
         """
-        # Check if this is an inference profile based custom model
+        try:
+            model_info = self._get_model_info(model, credentials, model_parameters)
+            if model_info:
+                return self._generate_with_converse(
+                    model_info, credentials, prompt_messages, model_parameters, stop, stream, user, tools, model
+                )
+        except Exception as e:
+            logger.error(f"Failed to get model info: {str(e)}")
+            if credentials.get("inference_profile_id"):
+                raise InvokeError(f"Failed to invoke inference profile: {str(e)}")
+
+        # Fallback to traditional model ID for non-converse API models
+        model_name = model_parameters.get('model_name')
+        if not model_name:
+            raise InvokeError("Model name is required for non-converse API models")
+
+        model_id = model_ids.get_model_id(model, model_name)
+        return self._generate(model_id, credentials, prompt_messages, model_parameters, stop, stream, user)
+
+    def _get_model_info(self, model: str, credentials: dict, model_parameters: dict) -> dict:
+        """
+        Get model information for converse API
+        
+        :param model: model name
+        :param credentials: model credentials
+        :param model_parameters: model parameters
+        :return: model info dict with model ID and capabilities
+        """
         inference_profile_id = credentials.get("inference_profile_id")
         if inference_profile_id:
-            try:
-                # Get the full ARN from the profile ID
-                profile_info = self._get_inference_profile_info_direct(inference_profile_id, credentials)
-                profile_arn = profile_info.get("inferenceProfileArn")
-                
-                if not profile_arn:
-                    raise InvokeError(f"Could not get ARN for inference profile {inference_profile_id}")
-                
-                # Use inference profile ARN as model ID
-                model_id = profile_arn
-                logger.info(f"Using inference profile ARN: {model_id}")
-                
-                # Determine model capabilities from underlying models
-                underlying_models = profile_info.get("models", [])
-                model_info = None
-                
-                if underlying_models:
-                    first_model_arn = underlying_models[0].get("modelArn", "")
-                    # Extract model ID from ARN
-                    if "foundation-model/" in first_model_arn:
-                        underlying_model_id = first_model_arn.split("foundation-model/")[1]
-                        model_info = BedrockLargeLanguageModel._find_model_info(underlying_model_id)
-                        if model_info:
-                            # Use the inference profile ARN but with underlying model capabilities
-                            model_info = model_info.copy()
-                            model_info["model"] = model_id  # Use inference profile ARN for actual API call
-                            logger.info(f"Using inference profile {model_id} with capabilities from {underlying_model_id}")
-                
-                # Fallback: assume it supports converse API with full capabilities
-                if not model_info:
-                    logger.info(f"Using inference profile {model_id} with default capabilities")
-                    model_info = {
-                        "model": model_id,
-                        "support_system_prompts": True,
-                        "support_tool_use": True
-                    }
-                
-                return self._generate_with_converse(
-                    model_info, credentials, prompt_messages, model_parameters, stop, stream, user, tools
-                )
-                
-            except Exception as e:
-                logger.error(f"Failed to process inference profile: {str(e)}")
-                raise InvokeError(f"Failed to invoke inference profile: {str(e)}")
+            # Get the full ARN from the profile ID
+            profile_info = self._get_inference_profile_info_direct(inference_profile_id, credentials)
+            profile_arn = profile_info.get("inferenceProfileArn")
+
+            if not profile_arn:
+                raise InvokeError(f"Could not get ARN for inference profile {inference_profile_id}")
+
+            # Use inference profile ARN as model ID
+            model_id = profile_arn
+            logger.info(f"Using inference profile ARN: {model_id}")
+
+            # Determine model capabilities from underlying models
+            underlying_models = profile_info.get("models", [])
+            model_info = None
+
+            if underlying_models:
+                first_model_arn = underlying_models[0].get("modelArn", "")
+                # Extract model ID from ARN
+                if "foundation-model/" in first_model_arn:
+                    underlying_model_id = first_model_arn.split("foundation-model/")[1]
+                    model_info = BedrockLargeLanguageModel._find_model_info(underlying_model_id)
+                    if model_info:
+                        # Use the inference profile ARN but with underlying model capabilities
+                        model_info = model_info.copy()
+                        model_info["model"] = model_id  # Use inference profile ARN for actual API call
+                        logger.info(f"Using inference profile {model_id} with capabilities from {underlying_model_id}")
+                        return model_info
+            if not model_info:
+                logger.info(f"Using inference profile {model_id} with default capabilities")
+                return {
+                    "model": model_id,
+                    "support_system_prompts": True,
+                    "support_tool_use": True
+                }
         else:
             # Use traditional model ID resolution
             model_name = model_parameters.pop('model_name')
@@ -216,15 +233,12 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                     raise InvokeError(f'Region {region_name} Unsupport cross-region Inference')
                 model_id = "{}.{}".format(region_prefix, model_id)
 
-        model_info = BedrockLargeLanguageModel._find_model_info(model_id)
-        if model_info:
-            model_info["model"] = model_id
-            # invoke models via boto3 converse API
-            return self._generate_with_converse(
-                model_info, credentials, prompt_messages, model_parameters, stop, stream, user, tools
-            )
-        # invoke other models via boto3 client
-        return self._generate(model_id, credentials, prompt_messages, model_parameters, stop, stream, user)
+            model_info = BedrockLargeLanguageModel._find_model_info(model_id)
+            if model_info:
+                model_info["model"] = model_id
+                return model_info
+            
+            return None
 
     def _generate_with_converse(
         self,
@@ -838,10 +852,51 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                 profile_name = profile_info.get("inferenceProfileName", model)
                 context_length = int(credentials.get("context_length", 4096))
                 
+                # Find matching predefined model based on underlying model ARN
+                default_pricing = None
+                matched_features = []
+                underlying_models = profile_info.get("models", [])
+                if underlying_models:
+                    first_model_arn = underlying_models[0].get("modelArn", "")
+                    if "foundation-model/" in first_model_arn:
+                        underlying_model_id = first_model_arn.split("foundation-model/")[1]
+                        model_schemas = self.predefined_models()
+                        for model_schema in model_schemas:
+                            if self._model_id_matches_schema(underlying_model_id, model_schema):
+                                default_pricing = model_schema.pricing
+                                matched_features = model_schema.features or []
+                                break
+                
+                # Fallback to first predefined model pricing if no match found
+                if not default_pricing:
+                    model_schemas = self.predefined_models()
+                    if model_schemas:
+                        default_pricing = model_schemas[0].pricing
+                
                 # Create custom model entity based on inference profile
                 return AIModelEntity(
                     model=model,
-                    label=I18nObject(en_US=profile_name),
+                    label=I18nObject(en_US=model),
+                    model_type=ModelType.LLM,
+                    features=matched_features,
+                    fetch_from=FetchFrom.CUSTOMIZABLE_MODEL,
+                    model_properties={
+                        "mode": LLMMode.CHAT,
+                        "context_size": context_length,
+                    },
+                    parameter_rules=[],
+                    pricing=default_pricing
+                )
+            except Exception as e:
+                logger.error(f"Failed to get inference profile schema: {str(e)}")
+                # Create fallback custom model entity with user's model name
+                context_length = int(credentials.get("context_length", 4096))
+                model_schemas = self.predefined_models()
+                default_pricing = model_schemas[0].pricing if model_schemas else None
+                
+                return AIModelEntity(
+                    model=model,
+                    label=I18nObject(en_US=model),
                     model_type=ModelType.LLM,
                     features=[],
                     fetch_from=FetchFrom.CUSTOMIZABLE_MODEL,
@@ -850,24 +905,11 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                         "context_size": context_length,
                     },
                     parameter_rules=[],
-                    pricing=PriceConfig(
-                        input=0.0,
-                        output=0.0,
-                        unit=0.001,
-                        currency="USD"
-                    )
+                    pricing=default_pricing
                 )
-            except Exception as e:
-                logger.error(f"Failed to get inference profile schema: {str(e)}")
-                # Fallback to default schema
-                pass
         
-        # Fallback to default model schema
-        model_schemas = self.predefined_models()
-        for model_schema in model_schemas:
-            if model_schema.model == 'anthropic claude':
-                return model_schema
-        return model_schemas[0]
+        # This should not be reached for inference profile models, but keep as final fallback
+        return None
 
     def _get_inference_profile_info_direct(self, inference_profile_id: str, credentials: dict) -> dict:
         """
@@ -1330,3 +1372,27 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             return InvokeConnectionError(error_msg)
 
         return InvokeError(error_msg)
+
+    def _model_id_matches_schema(self, model_id: str, model_schema) -> bool:
+        """
+        Check if a model ID matches a predefined model schema
+        
+        :param model_id: The model ID from inference profile (e.g., anthropic.claude-3-5-sonnet-20241022-v2:0)
+        :param model_schema: The predefined model schema
+        :return: True if the model ID matches the schema
+        """
+        # Extract the model family from the model ID
+        if "anthropic.claude" in model_id:
+            return model_schema.model == "anthropic claude"
+        elif "amazon.nova" in model_id:
+            return model_schema.model == "amazon nova"
+        elif "ai21" in model_id:
+            return model_schema.model == "ai21"
+        elif "meta.llama" in model_id:
+            return model_schema.model == "meta"
+        elif "mistral" in model_id:
+            return model_schema.model == "mistral"
+        elif "deepseek" in model_id:
+            return model_schema.model == "deepseek"
+        
+        return False
