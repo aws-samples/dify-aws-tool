@@ -123,7 +123,7 @@
 - [三步构建基于最新Bedrock C3.5-V2的Kimi](https://mp.weixin.qq.com/s/_2obKrn849a6jOxML_8Btw)
 - [AWS服务作为工具集成到Dify](https://mp.weixin.qq.com/s/ZZK4Qh0kcnlZHIdO82nVZA)
 - [Dify与SageMaker上的ASR/TTS集成](https://mp.weixin.qq.com/s/g2aey251YPk-tekL1uc_nw)
-- [如何在Dify中使用bedrock inference profile]（https://github.com/user-attachments/assets/938e879a-b7dd-44e5-a096-4c22f67b319b）
+- [如何在Dify中使用bedrock inference profile](https://github.com/user-attachments/assets/938e879a-b7dd-44e5-a096-4c22f67b319b)
 
 #### 相关Blog/文档
 

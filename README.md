@@ -123,7 +123,7 @@ This repository provides the source code for three plugins in [Dify](https://git
 - [Three Steps to Build Kimi Based on the Latest Bedrock C3.5-V2](https://mp.weixin.qq.com/s/_2obKrn849a6jOxML_8Btw)
 - [AWS Services as Tools Integrated into Dify](https://mp.weixin.qq.com/s/ZZK4Qh0kcnlZHIdO82nVZA)
 - [Dify and SageMaker ASR/TTS Integration](https://mp.weixin.qq.com/s/g2aey251YPk-tekL1uc_nw)
-- [How to use bedrock inference profile]（https://github.com/user-attachments/assets/938e879a-b7dd-44e5-a096-4c22f67b319b）
+- [How to use bedrock inference profile](https://github.com/user-attachments/assets/938e879a-b7dd-44e5-a096-4c22f67b319b)
 
 ### Related Blogs/Documents
 
