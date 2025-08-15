@@ -33,7 +33,8 @@ class BedrockRetrieveTool(BuiltinTool):
             }
 
             if rerank_model_id != "default":
-                model_for_rerank_arn = f"arn:aws:bedrock:us-west-2::foundation-model/{rerank_model_id}"
+                region = self.bedrock_client.meta.region_name
+                model_for_rerank_arn = f"arn:aws:bedrock:{region}::foundation-model/{rerank_model_id}"
                 rerankingConfiguration = {
                     "bedrockRerankingConfiguration": {
                         "numberOfRerankedResults": num_results,
