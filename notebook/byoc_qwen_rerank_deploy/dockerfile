@@ -1,0 +1,17 @@
+FROM vllm/vllm-openai:latest
+
+RUN pip install fastapi uvicorn
+
+COPY ./app/inference.py /opt/ml/code/inference.py
+COPY ./app/serve /opt/ml/code/serve
+
+RUN chmod +x /opt/ml/code/serve
+
+WORKDIR /opt/ml/code
+
+EXPOSE 8080
+
+ENV PATH="/opt/ml/code:${PATH}"
+
+ENTRYPOINT []
+CMD ["serve"]

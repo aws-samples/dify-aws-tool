@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Set the directory to check
+base_dir="/opt/ml/code/"
+export SAGEMAKER_BIND_TO_PORT=${SAGEMAKER_BIND_TO_PORT:-8080}
+
+# Check if the directory exists
+if [ ! -d "$base_dir" ]; then
+    echo "Error: $base_dir directory does not exist"
+    exit 1
+fi
+
+cd $base_dir
+command="python3 inference.py"
+eval $command
