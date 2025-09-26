@@ -30,7 +30,7 @@ class AgentCoreMemoryTool(Tool):
     namespace: str = None
     
     def _initialize_memory_client(self, tool_parameters: dict[str, Any]) -> bool:
-        """Initialize Memory client with AWS credentials like bedrock_retrieve"""
+        """Initialize Memory client with AWS credentials """
         try:
             # Get AWS credentials from tool parameters
             aws_region = tool_parameters.get("aws_region")
@@ -41,7 +41,7 @@ class AgentCoreMemoryTool(Tool):
             region = aws_region or 'us-east-1'
             
             if AGENTCORE_SDK_AVAILABLE:
-                # Create client kwargs similar to bedrock_retrieve
+                # Create client kwargs 
                 client_kwargs = {"region_name": region}
                 
                 # Only add credentials if both access key and secret key are provided
