@@ -1,0 +1,127 @@
+identity:
+  name: "invoke_code_interpreter"
+  author: "aws"
+  label:
+    en_US: "invoke_code_interpreter"
+description:
+  human: 
+    en_US: > 
+      This tool offers an isolated code execution sandbox that allows you to perform various code interpreter actions.
+      Supported actions include:
+      (1) execute python, javascript, or typescript code,
+      (2) execute terminal commands.
+      For detailed usage instructions, please refer to the description of the action_type parameter.
+  llm: agentcore code interpreter
+parameters:
+  - name: action_type
+    type: string
+    required: true
+    label:
+      en_US: action_type
+    human_description:
+      en_US: perform a code interpreter action
+    llm_description: >
+      Set the value of action_type to specify a code interpreter action that you want to perform. Available values include: exec_code, exec_command. 
+      To perform a specific action, you may need to provide some other required arguments for the action. Please refer to the action details below to find out what arguments are required for each action.
+      Only provide action_type and other required arguments. Do not supply arguments that are not relevant to your chosen action.
+      <action_details>
+      1. exec_code
+        This action is used to execute python, javascript, or typescript code.
+        Args:
+          action_type (string, required): set to exec_code
+          language (string, required): The programming language of the code to execute. Available values include python, javascript, typescript.
+          code (string, requried): The code to execute in a code interpreter session. This is the source code in the specified programming language that will be executed by the code interpreter.
+          session_id (string, optional): The unique ID of the code interpreter session to use. If you want to use a existing or past code interpreter session, please specify the session ID. If you do not specify the session ID, the tool will initiate a new session for you.
+          aws_ak (string, optional): The AWS access key to access services provided by AWS. If do not specify one, the tool will try to find it in your environment variables.
+          aws_sk (string, optional): The AWS secret key to access services provided by AWS. If do not specify one, the tool will try to find it in your environment variables.
+          aws_region (string, optional): Specify the region for AWS services. If do not specify one, the tool will try to find it in your environment variables.
+        Return:
+          Execution result in text.
+      2. exec_command
+        This action is used to execute terminal commands within the sandbox environment.
+        Args:
+          action_type (string, required): set to exec_command
+          command (string, required): The terminal command to execute in a code interpreter session.
+          session_id (string, optional): The unique ID of the code interpreter session to use. If you want to use a existing or past code interpreter session, please specify the session ID. If you do not specify the session ID, the tool will initiate a new session for you.
+          aws_ak (string, optional): The AWS access key to access services provided by AWS. If do not specify one, the tool will try to find it in your environment variables.
+          aws_sk (string, optional): The AWS secret key to access services provided by AWS. If do not specify one, the tool will try to find it in your environment variables.
+          aws_region (string, optional): Specify the region for AWS services. If do not specify one, the tool will try to find it in your environment variables.
+        Return:
+          Execution result in text.
+      </action_details>
+    form: llm
+  - name: code_interpreter_id
+    type: string
+    required: true
+    label:
+      en_US: code_interpreter_id
+    human_description:
+      en_US: ID of the Amazon Bedrock AgentCore code interpreter to use
+    llm_description: The ID of the code interpreter to use.
+    form: form 
+  - name: session_id
+    type: string
+    required: false
+    label:
+      en_US: session id
+    human_description:
+      en_US: The unique identifier of the code interpreter session to use.
+    llm_description: The unique ID of the code interpreter session to use. If you want to use a existing or past code interpreter session, please specify the session ID. If you do not specify the session ID, the tool will initiate a new session for you.
+    form: llm
+  - name: language
+    type: string
+    required: false
+    label:
+      en_US: language
+    human_description:
+      en_US: programming language of the code
+    llm_description: The programming language of the code to execute. Available values include python, javascript, typescript.
+    form: llm
+  - name: code
+    type: string
+    required: false
+    label:
+      en_US: code
+    human_description:
+      en_US: code to be executed
+    llm_description: The code to execute in a code interpreter session. This is the source code in the specified programming language that will be executed by the code interpreter.
+    form: llm
+  - name: command
+    type: string
+    required: false
+    label:
+      en_US: command
+    human_description:
+      en_US: command to be executed
+    llm_description: The terminal command to execute in a code interpreter session.
+    form: llm
+  - name: aws_ak
+    type: string
+    required: false
+    label:
+      en_US: aws_ak
+    human_description:
+      en_US: your aws access key
+    llm_description: The AWS access key to access services provided by AWS. If do not specify one, the tool will try to find it in your environment variables.
+    form: form
+  - name: aws_sk
+    type: string
+    required: false
+    label:
+      en_US: aws_sk
+    human_description:
+      en_US: your aws secret key
+    llm_description: The AWS secret key to access services provided by AWS. If do not specify one, the tool will try to find it in your environment variables.
+    form: form
+  - name: aws_region
+    type: string
+    required: false
+    label:
+      en_US: aws_region
+    human_description:
+      en_US: your aws region
+    llm_description: Specify the region for AWS services. If do not specify one, the tool will try to find it in your environment variables.
+    form: form
+extra:
+  python:
+    source: tools/invoke_code_interpreter.py
