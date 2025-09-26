@@ -1,0 +1,227 @@
+identity:
+  name: agentcore_memory
+  author: liniyuan
+  label:
+    en_US: AgentCore Memory
+    zh_Hans: AgentCore 记忆
+    pt_BR: Memória AgentCore
+  icon: icon.svg
+
+description:
+  human:
+    en_US: Unified AgentCore Memory tool for recording, retrieving, and searching memories
+    zh_Hans: 统一的 AgentCore 记忆工具，用于记录、检索和搜索记忆
+    pt_BR: Ferramenta unificada de memória AgentCore para gravar, recuperar e pesquisar memórias
+  llm: |
+    AGENTCORE MEMORY TOOL - Unified tool for all memory operations.
+    
+    OPERATIONS:
+    1. **RECORD** - Save new information to memory
+    2. **RETRIEVE** - Get conversation history (last K turns)
+    3. **SEARCH** - Find relevant memories by query
+    
+    WHEN TO USE:
+    - Record: User says "记录", "保存", "记住", "请记录"
+    - Retrieve: Need context from recent conversations
+    - Search: Looking for specific information from past interactions
+    
+    **Required Parameters**:
+    - memory_id: Get from AWS Console AgentCore Memory
+    - actor_id: Entity/user identifier
+    - session_id: Conversation session identifier
+    - namespace: Memory namespace (required for search)
+    
+    **Functions**:
+    - Record: client.create_event(memory_id, actor_id, session_id, messages)
+    - Retrieve: client.get_last_k_turns(memory_id, actor_id, session_id, k)
+    - Search: client.search(memory_id, query, max_results, actor_id, namespace)
+    
+    IMPORTANT: Always specify the operation parameter!
+
+parameters:
+  - name: aws_region
+    type: string
+    required: false
+    label:
+      en_US: AWS Region
+      zh_Hans: AWS区域
+      pt_BR: Região AWS
+    human_description:
+      en_US: AWS region for the AgentCore Memory service (optional)
+      zh_Hans: AgentCore Memory服务的AWS区域（可选）
+      pt_BR: Região AWS para o serviço AgentCore Memory (opcional)
+    llm_description: AWS region for the AgentCore Memory service.
+    form: form
+
+  - name: aws_access_key_id
+    type: string
+    required: false
+    label:
+      en_US: AWS Access Key ID
+      zh_Hans: AWS访问密钥ID
+      pt_BR: ID da Chave de Acesso AWS
+    human_description:
+      en_US: AWS access key ID for authentication (optional)
+      zh_Hans: 用于身份验证的AWS访问密钥ID（可选）
+      pt_BR: ID da chave de acesso AWS para autenticação (opcional)
+    llm_description: AWS access key ID for authentication.
+    form: form
+
+  - name: aws_secret_access_key
+    type: string
+    required: false
+    label:
+      en_US: AWS Secret Access Key
+      zh_Hans: AWS秘密访问密钥
+      pt_BR: Chave de Acesso Secreta AWS
+    human_description:
+      en_US: AWS secret access key for authentication (optional)
+      zh_Hans: 用于身份验证的AWS秘密访问密钥（可选）
+      pt_BR: Chave de acesso secreta AWS para autenticação (opcional)
+    llm_description: AWS secret access key for authentication.
+    form: form
+
+  - name: operation
+    type: select
+    required: true
+    options:
+      - value: record
+        label:
+          en_US: Record Information
+          zh_Hans: 记录信息
+          pt_BR: Gravar Informação
+      - value: retrieve
+        label:
+          en_US: Retrieve History
+          zh_Hans: 检索历史
+          pt_BR: Recuperar Histórico
+      - value: search
+        label:
+          en_US: Search Memories
+          zh_Hans: 搜索记忆
+          pt_BR: Pesquisar Memórias
+    label:
+      en_US: Operation
+      zh_Hans: 操作
+      pt_BR: Operação
+    human_description:
+      en_US: Select the memory operation to perform
+      zh_Hans: 选择要执行的记忆操作
+      pt_BR: Selecione a operação de memória a ser executada
+    llm_description: |
+      The type of memory operation to perform:
+      - "record": Save new information to memory
+      - "retrieve": Get recent conversation history
+      - "search": Find relevant memories by query
+    form: form
+
+  - name: information
+    type: string
+    required: false
+    label:
+      en_US: Information to Record
+      zh_Hans: 要记录的信息
+      pt_BR: Informação para Gravar
+    human_description:
+      en_US: The information to record (required for record operation)
+      zh_Hans: 要记录的信息（记录操作必需）
+      pt_BR: A informação a ser gravada (obrigatória para operação de gravação)
+    llm_description: |
+      The information that needs to be recorded. This should be the complete information
+      or important details that need to be stored for future reference.
+      Required when operation is "record".
+    form: llm
+
+  - name: search_query
+    type: string
+    required: false
+    label:
+      en_US: Search Query
+      zh_Hans: 搜索查询
+      pt_BR: Consulta de Pesquisa
+    human_description:
+      en_US: What you want to search for (required for search operation)
+      zh_Hans: 您想要搜索的内容（搜索操作必需）
+      pt_BR: O que você quer pesquisar (obrigatório para operação de pesquisa)
+    llm_description: |
+      The search query to find relevant memories. Use natural language to describe
+      what you're looking for. Required when operation is "search".
+    form: llm
+
+  - name: max_results
+    type: number
+    required: false
+    default: 10
+    label:
+      en_US: Maximum Results
+      zh_Hans: 最大结果数
+      pt_BR: Máximo de Resultados
+    human_description:
+      en_US: Maximum number of results to return (1-50 for retrieve, 1-20 for search)
+      zh_Hans: 返回的最大结果数量（检索1-50，搜索1-20）
+      pt_BR: Número máximo de resultados a retornar (1-50 para recuperar, 1-20 para pesquisar)
+    llm_description: |
+      Maximum number of results to return. 
+      For retrieve operation: 1-50 conversation turns (default 10)
+      For search operation: 1-20 memories (default 10)
+    form: llm
+
+  - name: memory_id
+    type: string
+    required: true
+    label:
+      en_US: Memory ID
+      zh_Hans: 记忆ID
+      pt_BR: ID da Memória
+    human_description:
+      en_US: ID of the memory resource (get from AWS Console)
+      zh_Hans: 记忆资源ID（从AWS控制台获取）
+      pt_BR: ID do recurso de memória (obter do Console AWS)
+    llm_description: The memory resource ID from AWS Console AgentCore Memory service.
+    form: form
+
+  - name: actor_id
+    type: string
+    required: true
+    label:
+      en_US: Actor ID
+      zh_Hans: 参与者ID
+      pt_BR: ID do Ator
+    human_description:
+      en_US: ID of the actor/entity (required)
+      zh_Hans: 参与者/实体ID（必填）
+      pt_BR: ID do ator/entidade (obrigatório)
+    llm_description: The actor ID for this memory operation.
+    form: form
+
+  - name: session_id
+    type: string
+    required: true
+    label:
+      en_US: Session ID
+      zh_Hans: 会话ID
+      pt_BR: ID da Sessão
+    human_description:
+      en_US: ID of the conversation session (required)
+      zh_Hans: 对话会话的ID（必填）
+      pt_BR: ID da sessão de conversa (obrigatório)
+    llm_description: The session ID for this conversation.
+    form: form
+
+  - name: namespace
+    type: string
+    required: false
+    label:
+      en_US: Namespace
+      zh_Hans: 命名空间
+      pt_BR: Namespace
+    human_description:
+      en_US: Memory namespace (required for search operation)
+      zh_Hans: 记忆命名空间（搜索操作必填）
+      pt_BR: Namespace da memória (obrigatório para operação de pesquisa)
+    llm_description: The memory namespace for search operation.
+    form: form
+
+extra:
+  python:
+    source: tools/agentcore_memory.py
