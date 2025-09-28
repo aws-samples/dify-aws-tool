@@ -7,10 +7,10 @@ identity:
     pt_BR: "Ferramenta de Navegador AgentCore"
 description:
   human:
-    en_US: "A managed browser automation tool for web interactions. Supports opening pages, searching, taking screenshots, extracting content, filling forms, and executing JavaScript.**Notice:** The script must be written either as: 1. **A single JavaScript expression** (e.g., `document.body.scrollHeight`) 2. **An arrow function** `() => { ... }` if multiple statements are required. **Do not use `return` at the top level.** Use `return` only inside an arrow function. Examples: ✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`"
-    zh_Hans: "一个用于网页交互的托管浏览器自动化工具。支持打开页面、搜索、截图、提取内容、填写表单和执行JavaScript。**注意：** 脚本必须写成以下形式之一：1. **单个JavaScript表达式**（例如，`document.body.scrollHeight`）2. **箭头函数** `() => { ... }`（如果需要多个语句）。**不要在顶层使用`return`。** 只在箭头函数内部使用`return`。示例：✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`"
-    pt_BR: "Uma ferramenta de automação de navegador gerenciada para interações web. Suporta abertura de páginas, pesquisa, capturas de tela, extração de conteúdo, preenchimento de formulários e execução de JavaScript.**Aviso:** O script deve ser escrito como: 1. **Uma única expressão JavaScript** (ex., `document.body.scrollHeight`) 2. **Uma função arrow** `() => { ... }` se múltiplas declarações forem necessárias. **Não use `return` no nível superior.** Use `return` apenas dentro de uma função arrow. Exemplos: ✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`"
-  llm: "A managed browser automation tool for web interactions. Supports opening pages, searching, taking screenshots, extracting content, filling forms, and executing JavaScript.**Notice:** The script must be written either as: 1. **A single JavaScript expression** (e.g., `document.body.scrollHeight`) 2. **An arrow function** `() => { ... }` if multiple statements are required. **Do not use `return` at the top level.** Use `return` only inside an arrow function. Examples: ✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`"
+    en_US: "A managed browser automation tool for web interactions. Supports opening pages, searching, extracting content, filling forms, and executing JavaScript.**Notice:** The script must be written either as: 1. **A single JavaScript expression** (e.g., `document.body.scrollHeight`) 2. **An arrow function** `() => { ... }` if multiple statements are required. **Do not use `return` at the top level.** Use `return` only inside an arrow function. Examples: ✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`"
+    zh_Hans: "一个用于网页交互的托管浏览器自动化工具。支持打开页面、搜索、提取内容、填写表单和执行JavaScript。**注意：** 脚本必须写成以下形式之一：1. **单个JavaScript表达式**（例如，`document.body.scrollHeight`）2. **箭头函数** `() => { ... }`（如果需要多个语句）。**不要在顶层使用`return`。** 只在箭头函数内部使用`return`。示例：✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`"
+    pt_BR: "Uma ferramenta de automação de navegador gerenciada para interações web. Suporta abertura de páginas, pesquisa, extração de conteúdo, preenchimento de formulários e execução de JavaScript.**Aviso:** O script deve ser escrito como: 1. **Uma única expressão JavaScript** (ex., `document.body.scrollHeight`) 2. **Uma função arrow** `() => { ... }` se múltiplas declarações forem necessárias. **Não use `return` no nível superior.** Use `return` apenas dentro de uma função arrow. Exemplos: ✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`"
+  llm: "A managed browser automation tool for web interactions. Supports opening pages, searching, extracting content, filling forms, and executing JavaScript.**Notice:** The script must be written either as: 1. **A single JavaScript expression** (e.g., `document.body.scrollHeight`) 2. **An arrow function** `() => { ... }` if multiple statements are required. **Do not use `return` at the top level.** Use `return` only inside an arrow function. Examples: ✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`"
 parameters:
   - name: action
     type: select
@@ -43,15 +43,6 @@ parameters:
           en_US: "Perform a Google search and retrieve search results"
           zh_Hans: "执行Google搜索并获取搜索结果"
           pt_BR: "Realizar uma pesquisa no Google e recuperar resultados de pesquisa"
-      - value: take_screenshot
-        label:
-          en_US: Take Screenshot
-          zh_Hans: 截图
-          pt_BR: Capturar Tela
-        description:
-          en_US: "Capture a screenshot of the current page or specified URL"
-          zh_Hans: "对当前页面或指定URL进行截图"
-          pt_BR: "Capturar uma captura de tela da página atual ou URL especificada"
       - value: extract_content
         label:
           en_US: Extract Content
@@ -96,7 +87,7 @@ parameters:
       en_US: "The action to perform with the browser tool"
       zh_Hans: "使用浏览器工具执行的操作"
       pt_BR: "A ação a ser executada com a ferramenta do navegador"
-    llm_description: "The specific browser action to perform: init_browser_session (initialize AWS browser session), browse_url (visit a webpage), search_web (search the internet), take_screenshot (capture page image), extract_content (get page text), fill_form (interact with forms), execute_script (run JavaScript), close_browser_session (close current session)"
+    llm_description: "The specific browser action to perform: init_browser_session (initialize AWS browser session), browse_url (visit a webpage), search_web (search the internet), extract_content (get page text), fill_form (interact with forms), execute_script (run JavaScript), close_browser_session (close current session)"
     form: llm
   - name: url
     type: string
@@ -109,7 +100,7 @@ parameters:
       en_US: "The URL to browse or interact with"
       zh_Hans: "要浏览或交互的网址"
       pt_BR: "A URL para navegar ou interagir"
-    llm_description: "The target URL for browse_url, take_screenshot, extract_content, or fill_form actions. Optional for take_screenshot, extract_content, fill_form, and execute_script if you want to work with the current page"
+    llm_description: "The target URL for browse_url, extract_content, or fill_form actions. Optional for extract_content, fill_form, and execute_script if you want to work with the current page"
     form: llm
   - name: query
     type: string
