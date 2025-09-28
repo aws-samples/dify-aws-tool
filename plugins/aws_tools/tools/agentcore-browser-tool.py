@@ -250,41 +250,6 @@ class AgentcoreBrowserToolTool(Tool):
                 "status": "Error occurred during search"
             }
     
-    def _take_screenshot(self, url: str = None, wait_time: int = 3) -> dict:
-        """Take a screenshot using existing browser session"""
-        try:
-            if not self.page:
-                return {
-                    "success": False,
-                    "error": "Browser session not initialized. Please call init_browser_session first.",
-                    "status": "No active browser session"
-                }
-            
-            # Navigate to URL if provided
-            if url:
-                self.page.goto(url, wait_until="domcontentloaded")
-                time.sleep(wait_time)
-            
-            # Take screenshot of current page
-            screenshot_bytes = self.page.screenshot(full_page=True)
-            screenshot_data = base64.b64encode(screenshot_bytes).decode('utf-8')
-            
-            current_url = self.page.url
-            
-            return {
-                "success": True,
-                "url": current_url,
-                "screenshot": screenshot_data,
-                "status": "Screenshot captured successfully"
-            }
-                
-        except Exception as e:
-            return {
-                "success": False,
-                "error": f"Failed to take screenshot: {str(e)}",
-                "status": "Error occurred while taking screenshot"
-            }
-    
     def _extract_content(self, url: str = None, wait_time: int = 3) -> dict:
         """Extract structured content using existing browser session"""
         try:
@@ -520,9 +485,6 @@ class AgentcoreBrowserToolTool(Tool):
                     return
                 result = self._search_web(query, wait_time)
                 
-            elif action == "take_screenshot":
-                result = self._take_screenshot(url, wait_time)
-                
             elif action == "extract_content":
                 result = self._extract_content(url, wait_time)
                 
@@ -544,7 +506,7 @@ class AgentcoreBrowserToolTool(Tool):
             else:
                 yield self.create_json_message({
                     "success": False,
-                    "error": f"Unknown action: {action}. Supported actions: init_browser_session, browse_url, search_web, take_screenshot, extract_content, fill_form, execute_script, close_browser_session"
+                    "error": f"Unknown action: {action}. Supported actions: init_browser_session, browse_url, search_web, extract_content, fill_form, execute_script, close_browser_session"
                 })
                 return
             
