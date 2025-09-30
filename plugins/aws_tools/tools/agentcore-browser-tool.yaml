@@ -1,6 +1,6 @@
 identity:
   name: "agentcore-browser-tool"
-  author: "wanglx"
+  author: "aws"
   label:
     en_US: "AgentCore Browser Tool"
     zh_Hans: "AgentCore 浏览器工具"
@@ -16,15 +16,6 @@ parameters:
     type: select
     required: true
     options:
-      - value: init_browser_session
-        label:
-          en_US: Initialize Browser Session
-          zh_Hans: 初始化浏览器会话
-          pt_BR: Inicializar Sessão do Navegador
-        description:
-          en_US: "Initialize a new AWS managed browser session for subsequent operations"
-          zh_Hans: "初始化一个新的AWS托管浏览器会话，用于后续操作"
-          pt_BR: "Inicializar uma nova sessão de navegador gerenciada pela AWS para operações subsequentes"
       - value: browse_url
         label:
           en_US: Browse URL
@@ -70,15 +61,6 @@ parameters:
           en_US: "Execute custom JavaScript code on the current webpage"
           zh_Hans: "在当前网页上执行自定义JavaScript代码"
           pt_BR: "Executar código JavaScript personalizado na página web atual"
-      - value: close_browser_session
-        label:
-          en_US: Close Browser Session
-          zh_Hans: 关闭浏览器会话
-          pt_BR: Fechar Sessão do Navegador
-        description:
-          en_US: "Close the current browser session and clean up resources"
-          zh_Hans: "关闭当前浏览器会话并清理资源"
-          pt_BR: "Fechar a sessão atual do navegador e limpar recursos"
     label:
       en_US: Action
       zh_Hans: 操作
@@ -87,8 +69,21 @@ parameters:
       en_US: "The action to perform with the browser tool"
       zh_Hans: "使用浏览器工具执行的操作"
       pt_BR: "A ação a ser executada com a ferramenta do navegador"
-    llm_description: "The specific browser action to perform: init_browser_session (initialize AWS browser session), browse_url (visit a webpage), search_web (search the internet), extract_content (get page text), fill_form (interact with forms), execute_script (run JavaScript), close_browser_session (close current session)"
+    llm_description: "The specific browser action to perform: browse_url (visit a webpage), search_web (search the internet), extract_content (get page text), fill_form (interact with forms), execute_script (run JavaScript)"
     form: llm
+  - name: browser_session_id
+    type: string
+    required: true
+    label:
+      en_US: Browser Session Id
+      zh_Hans: Browser Session Id
+      pt_BR: Browser Session Id
+    human_description:
+      en_US: "Browser Session Id"
+      zh_Hans: "Browser Session Id"
+      pt_BR: "Browser Session Id"
+    llm_description: "The Browser Session Id for browser interaction environment"
+    form: form
   - name: url
     type: string
     required: false
@@ -157,4 +152,4 @@ parameters:
     form: llm
 extra:
   python:
-    source: tools/agentcore-browser-tool.py
+    source: tools/agentcore-browser-tool2.py

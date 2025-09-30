@@ -30,6 +30,7 @@ tools:
   - tools/invoke_code_interpreter.yaml
   - tools/agentcore_memory.yaml
   - tools/agentcore-browser-tool.yaml
+  - tools/agentcore-browser-session-manager.yaml
 extra:
   python:
     source: provider/aws_tools.py

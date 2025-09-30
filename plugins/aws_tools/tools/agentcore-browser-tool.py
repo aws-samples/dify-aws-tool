@@ -12,36 +12,37 @@ from playwright.sync_api import sync_playwright
 
 from dify_plugin import Tool
 from dify_plugin.entities.tool import ToolInvokeMessage
+from dify_plugin.errors.model import (
+    CredentialsValidateFailedError,
+    InvokeAuthorizationError,
+    InvokeBadRequestError,
+    InvokeConnectionError,
+    InvokeError,
+    InvokeRateLimitError,
+    InvokeServerUnavailableError,
+)
+import traceback
 
+from provider.utils import ParameterStoreManager
 
 class AgentcoreBrowserToolTool(Tool):
     # 类级别的共享状态，在所有实例之间共享
-    _shared_browser_session = None
-    _shared_browser_client = None
     _shared_browser = None
     _shared_page = None
     _shared_playwright = None
+    _browser_session_id = None
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.region = os.environ.get("AWS_DEFAULT_REGION", "us-west-2")
     
     @property
-    def browser_session(self):
-        return AgentcoreBrowserToolTool._shared_browser_session
+    def browser_session_id(self):
+        return AgentcoreBrowserToolTool._browser_session_id
     
-    @browser_session.setter
-    def browser_session(self, value):
-        AgentcoreBrowserToolTool._shared_browser_session = value
-    
-    @property
-    def browser_client(self):
-        return AgentcoreBrowserToolTool._shared_browser_client
-    
-    @browser_client.setter
-    def browser_client(self, value):
-        AgentcoreBrowserToolTool._shared_browser_client = value
-    
+    @browser_session_id.setter
+    def browser_session_id(self, value):
+        AgentcoreBrowserToolTool._browser_session_id = value
+
     @property
     def browser(self):
         return AgentcoreBrowserToolTool._shared_browser
@@ -66,58 +67,58 @@ class AgentcoreBrowserToolTool(Tool):
     def playwright(self, value):
         AgentcoreBrowserToolTool._shared_playwright = value
     
-    def _get_browser_client(self) -> BrowserClient:
-        """Initialize and return AWS AgentCore Browser client"""
-        if self.browser_client is None:
-            try:
-                # Check AWS credentials
-                session = boto3.Session()
-                credentials = session.get_credentials()
-                if not credentials:
-                    raise NoCredentialsError()
-                
-                self.browser_client = BrowserClient(region=self.region)
-                
-            except NoCredentialsError:
-                raise Exception("AWS credentials not found. Please configure AWS credentials.")
-            except Exception as e:
-                raise Exception(f"Failed to initialize AWS AgentCore Browser client: {str(e)}")
-        
-        return self.browser_client
-    
-    def _init_browser_session(self) -> dict:
+    def _init_browser_session(self, browser_session_id) -> dict:
         """Initialize AWS AgentCore Browser session"""
         try:
-            # Clean up existing session if any
-            self._cleanup_browser()
+            if self.browser_session_id != browser_session_id:
+                self.browser_session_id = browser_session_id
+
+                # Get session info from Parameter Store
+                param_manager = ParameterStoreManager()
+                session_data = param_manager.get_parameter(f"/browser-session/{browser_session_id}", as_dict=True)
+                
+                if not session_data:
+                    raise InvokeError(f"Browser session {browser_session_id} not found in Parameter Store")
+                
+                ws_url = session_data.get("ws_url")
+                ws_headers = session_data.get("ws_headers")
+                
+                if not ws_url or not ws_headers:
+                    raise InvokeError(f"Invalid session data for {browser_session_id}")
+
+                # Clean up existing session if any
+                self._cleanup_browser()
             
-            # Create new browser session
-            self.browser_session = browser_session(region=self.region)
-            self.browser_client = self.browser_session.__enter__()
+                # Use Playwright to connect to the remote browser
+                self.playwright = sync_playwright().start()
             
-            # Get WebSocket connection details
-            ws_url, headers = self.browser_client.generate_ws_headers()
+                try:
+                    self.browser = self.playwright.chromium.connect_over_cdp(
+                        endpoint_url=ws_url,
+                        headers=ws_headers
+                    )
+                
+                    context = self.browser.contexts[0]
+                
+                    self.page = context.pages[0]
+                
+                except Exception:
+                    # 如果连接失败，确保playwright被清理
+                    if self.playwright:
+                        self.playwright.stop()
+                        self.playwright = None
+                    raise
+            else:
             
-            # Use Playwright to connect to the remote browser
-            self.playwright = sync_playwright().start()
-            self.browser = self.playwright.chromium.connect_over_cdp(
-                endpoint_url=ws_url,
-                headers=headers
-            )
             
-            # Get the default context and page
-            context = self.browser.contexts[0]
-            self.page = context.pages[0]
-            
+        
             # Debug information
             session_info = {
                 "success": True,
-                "status": "Browser session initialized successfully",
-                "session_id": id(self.browser_session),
                 "page_id": id(self.page),
-                "browser_id": id(self.browser),
-                "debug_info": f"Session stored in class variable: {id(AgentcoreBrowserToolTool._shared_page)}"
+                "browser_id": id(self.browser)
             }
+        
             
             return session_info
             
@@ -126,7 +127,7 @@ class AgentcoreBrowserToolTool(Tool):
             return {
                 "success": False,
                 "error": f"Failed to initialize browser session: {str(e)}",
-                "status": "Browser session initialization failed"
+                "status": "Connect to Browser session failed"
             }
     
     def _cleanup_browser(self):
@@ -140,10 +141,6 @@ class AgentcoreBrowserToolTool(Tool):
             if self.playwright:
                 self.playwright.stop()
                 self.playwright = None
-            if self.browser_session and self.browser_client:
-                self.browser_session.__exit__(None, None, None)
-                self.browser_session = None
-                self.browser_client = None
         except Exception:
             pass
     
@@ -439,35 +436,26 @@ class AgentcoreBrowserToolTool(Tool):
                 "error": f"Failed to execute script: {str(e)}",
                 "status": "Error occurred while executing script"
             }
-    
-    def _close_browser_session(self) -> dict:
-        """Close the current browser session"""
-        try:
-            self._cleanup_browser()
-            return {
-                "success": True,
-                "status": "Browser session closed successfully"
-            }
-        except Exception as e:
-            return {
-                "success": False,
-                "error": f"Failed to close browser session: {str(e)}",
-                "status": "Error occurred while closing session"
-            }
 
     def _invoke(self, tool_parameters: dict[str, Any]) -> Generator[ToolInvokeMessage]:
-        action = tool_parameters.get("action")
-        url = tool_parameters.get("url", "")
-        query = tool_parameters.get("query", "")
-        form_data = tool_parameters.get("form_data", "{}")
-        script = tool_parameters.get("script", "")
-        wait_time = int(tool_parameters.get("wait_time", 3))
         
         try:
-            if action == "init_browser_session":
-                result = self._init_browser_session()
-                
-            elif action == "browse_url":
+            action = tool_parameters.get("action")
+            browser_session_id = tool_parameters.get("browser_session_id")
+            
+            url = tool_parameters.get("url", "")
+            query = tool_parameters.get("query", "")
+            form_data = tool_parameters.get("form_data", "{}")
+            script = tool_parameters.get("script", "")
+            wait_time = int(tool_parameters.get("wait_time", 3))
+
+            if not browser_session_id:
+                raise InvokeError(f"browser_session_id is missing.")
+
+            self._init_browser_session(browser_session_id)
+            
+            if action == "browse_url":
+            
                 if not url:
                     yield self.create_json_message({
                         "success": False,
@@ -477,6 +465,7 @@ class AgentcoreBrowserToolTool(Tool):
                 result = self._browse_url(url, wait_time)
                 
             elif action == "search_web":
+            
                 if not query:
                     yield self.create_json_message({
                         "success": False,
@@ -486,12 +475,15 @@ class AgentcoreBrowserToolTool(Tool):
                 result = self._search_web(query, wait_time)
                 
             elif action == "extract_content":
+            
                 result = self._extract_content(url, wait_time)
                 
             elif action == "fill_form":
+            
                 result = self._fill_form(url, form_data, wait_time)
                 
             elif action == "execute_script":
+            
                 if not script:
                     yield self.create_json_message({
                         "success": False,
@@ -499,9 +491,6 @@ class AgentcoreBrowserToolTool(Tool):
                     })
                     return
                 result = self._execute_script(url, script, wait_time)
-                
-            elif action == "close_browser_session":
-                result = self._close_browser_session()
                 
             else:
                 yield self.create_json_message({
@@ -513,6 +502,7 @@ class AgentcoreBrowserToolTool(Tool):
             yield self.create_json_message(result)
             
         except Exception as e:
+            traceback.print_stack()
             yield self.create_json_message({
                 "success": False,
                 "error": f"Unexpected error: {str(e)}",
