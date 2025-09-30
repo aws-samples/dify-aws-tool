@@ -29,6 +29,7 @@ tools:
   - tools/extract_frame.yaml
   - tools/invoke_code_interpreter.yaml
   - tools/agentcore_memory.yaml
+  - tools/agentcore_memory_search.yaml
   - tools/agentcore-browser-tool.yaml
   - tools/agentcore-browser-session-manager.yaml
 extra:
