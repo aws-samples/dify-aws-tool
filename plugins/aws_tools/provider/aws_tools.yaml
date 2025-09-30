@@ -27,10 +27,10 @@ tools:
   - tools/sagemaker_chinese_toxicity_detector.yaml
   - tools/lambda_yaml_to_json.yaml
   - tools/extract_frame.yaml
-  - tools/invoke_code_interpreter.yaml
   - tools/agentcore_memory.yaml
   - tools/agentcore-browser-tool.yaml
   - tools/agentcore-browser-session-manager.yaml
+  - tools/agentcore_code_interpreter.yaml
 extra:
   python:
     source: provider/aws_tools.py
