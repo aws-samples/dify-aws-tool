@@ -27,10 +27,18 @@ class AgentCoreMemoryTool(Tool):
     memory_id: str = None
     actor_id: str = None
     session_id: str = None
-    namespace: str = None
+    
+    def _clean_id_parameter(self, value: str) -> str:
+        """Clean ID parameter by removing surrounding quotes if present"""
+        if value and isinstance(value, str):
+            # Remove surrounding quotes if present
+            value = value.strip()
+            if (value.startswith('"') and value.endswith('"')) or (value.startswith("'") and value.endswith("'")):
+                value = value[1:-1]
+        return value
     
     def _initialize_memory_client(self, tool_parameters: dict[str, Any]) -> bool:
-        """Initialize Memory client with AWS credentials """
+        """Initialize Memory client with AWS credentials"""
         try:
             # Get AWS credentials from tool parameters
             aws_region = tool_parameters.get("aws_region")
@@ -41,9 +49,6 @@ class AgentCoreMemoryTool(Tool):
             region = aws_region or 'us-east-1'
             
             if AGENTCORE_SDK_AVAILABLE:
-                # Create client kwargs 
-                client_kwargs = {"region_name": region}
-                
                 # Only add credentials if both access key and secret key are provided
                 if aws_access_key_id and aws_secret_access_key:
                     # For MemoryClient, we need to set environment variables or use boto3 session
@@ -52,7 +57,7 @@ class AgentCoreMemoryTool(Tool):
                     os.environ['AWS_SECRET_ACCESS_KEY'] = aws_secret_access_key
                     os.environ['AWS_REGION'] = region
                 
-                # Initialize MemoryClient without hardcoded credentials
+                # Initialize MemoryClient
                 self.memory_client = MemoryClient(region_name=region)
                 logger.info(f"Memory client initialized for region: {region}")
                 return True
@@ -64,19 +69,62 @@ class AgentCoreMemoryTool(Tool):
             logger.error(f"Failed to initialize Memory client: {str(e)}")
             return False
     
-    def _get_runtime_config(self, key: str, default_value: str) -> str:
-        """Get configuration from runtime (AgentCore Memory Manager settings)"""
+    def _create_new_memory_resource(self, tool_parameters: dict[str, Any]) -> tuple[str, str, str]:
+        """Create new memory resource and return memory_id, actor_id, session_id"""
         try:
-            # Try to get from runtime credentials/settings
-            if self.runtime and hasattr(self.runtime, 'credentials'):
-                credentials = self.runtime.credentials
-                if credentials and key in credentials:
-                    return credentials[key]
+            # Default strategies for new memory resources
+            default_strategies = [
+                {
+                    'semanticMemoryStrategy':
+                        {
+                            'name':'semanticMemory',
+                            "namespaces": ["/semantic/{actorId}/{sessionId}"]
+                            }
+                        },
+                {
+                    'summaryMemoryStrategy': 
+                        {
+                            'name': 'summaryMemory',
+                            "namespaces": ["/summaries/{actorId}/{sessionId}"]
+                            }
+                        },
+                {
+                    'userPreferenceMemoryStrategy': 
+                        {
+                            'name': 'userPreferenceMemory',
+                            "namespaces": ["/userPreference/{actorId}/{sessionId}"]
+                            }
+                }
+            ]
             
-            # Fallback to default
-            return default_value
-        except Exception:
-            return default_value
+            # Generate unique identifiers
+            import uuid
+            import time
+            
+            timestamp = int(time.time())
+            # Memory name must match pattern [a-zA-Z][a-zA-Z0-9_]{0,47}
+            memory_name = f"autoMemory_{timestamp}"
+            actor_id = f"actor_{uuid.uuid4().hex[:8]}"
+            session_id = f"session_{uuid.uuid4().hex[:8]}"
+            
+            # Create memory resource
+            result = self.memory_client.create_memory_and_wait(
+                name=memory_name,
+                description="Auto-created memory resource",
+                strategies=default_strategies
+            )
+            
+            memory_id = result.get('memoryId', 'unknown')
+            
+            logger.info(f"Created new memory resource: {memory_id}, actor: {actor_id}, session: {session_id}")
+            
+            return memory_id, actor_id, session_id
+            
+        except Exception as e:
+            logger.error(f"Failed to create memory resource: {str(e)}")
+            raise
+    
+
     
     def _record_information(self, tool_parameters: dict[str, Any]) -> Generator[ToolInvokeMessage]:
         """Record information to memory"""
@@ -96,7 +144,7 @@ class AgentCoreMemoryTool(Tool):
             yield self.create_text_message(f"💾 Recording information for {actor_id}...")
             
             if self.memory_client:
-                # Format messages for storage - treat the information as a user message with assistant acknowledgment
+                # Format messages for storage
                 messages = [
                     (information, "USER"),
                     ("Information recorded successfully.", "ASSISTANT")
@@ -118,20 +166,10 @@ class AgentCoreMemoryTool(Tool):
                     elif 'eventId' in result:
                         event_id = result['eventId']
                 
-                # Format response
-                response_data = {
-                    'success': True,
-                    'message': "Information recorded successfully",
-                    'data': {
-                        'event_id': event_id,
-                        'memory_id': memory_id,
-                        'actor_id': actor_id,
-                        'session_id': session_id,
-                        'information_length': len(information)
-                    }
-                }
+                # Format response as text message
+                response_text = f"✅ Information recorded successfully!\n\nEvent ID: {event_id}\nMemory ID: {memory_id}\nActor ID: {actor_id}\nSession ID: {session_id}\nInformation length: {len(information)} characters"
                 
-                yield self.create_json_message(response_data)
+                yield self.create_text_message(response_text)
             else:
                 yield self.create_text_message("❌ AgentCore Memory SDK not available")
                 
@@ -176,7 +214,7 @@ class AgentCoreMemoryTool(Tool):
                                 'turn_number': i + 1,
                                 'event_id': f'turn_{i+1}',
                                 'timestamp': 'unknown',
-                                'messages': event  # event is already the list of messages
+                                'messages': event
                             }
                         elif isinstance(event, dict):
                             # Fallback for dict format
@@ -217,122 +255,20 @@ class AgentCoreMemoryTool(Tool):
         except Exception as e:
             logger.error(f"Retrieve history error: {str(e)}")
             yield self.create_text_message(f"Exception in retrieve operation: {str(e)}")
-    
-    def _search_memories(self, tool_parameters: dict[str, Any]) -> Generator[ToolInvokeMessage]:
-        """Search for relevant memories"""
-        try:
-            # Extract business parameters
-            search_query = tool_parameters.get('search_query', '')
-            max_results = tool_parameters.get('max_results', 10)
-            
-            if not search_query:
-                yield self.create_text_message("Error: Search query is required")
-                return
-            
-            # Validate max_results
-            if max_results < 1 or max_results > 20:
-                max_results = 10
-            
-            # Use instance variables
-            memory_id = self.memory_id
-            actor_id = self.actor_id
-            namespace = self.namespace
-            
-            yield self.create_text_message(f"🔍 Searching memories for: '{search_query}'")
-            
-            if self.memory_client:
-                # Search memories using retrieve_memories method
-                result = self.memory_client.retrieve_memories(
-                    memory_id=memory_id,
-                    actor_id=actor_id,
-                    namespace=namespace,
-                    query=search_query,
-                    top_k=max_results
-                )
-                
-                # Extract memories from response
-                memories_list = result.get('memories', []) if isinstance(result, dict) else result
-                
-                # Ensure it's a list
-                if not isinstance(memories_list, list):
-                    memories_list = list(memories_list) if hasattr(memories_list, '__iter__') else []
-                
-                # Apply max_results limit if needed
-                if max_results and len(memories_list) > max_results:
-                    memories_list = memories_list[:max_results]
-                
-                # Process memories to ensure JSON serialization
-                processed_memories = []
-                for memory in memories_list:
-                    if isinstance(memory, dict):
-                        # Convert datetime objects to strings
-                        processed_memory = {}
-                        for key, value in memory.items():
-                            if hasattr(value, 'isoformat'):  # datetime object
-                                processed_memory[key] = value.isoformat()
-                            else:
-                                processed_memory[key] = value
-                        processed_memories.append(processed_memory)
-                    else:
-                        processed_memories.append(str(memory))
-                
-                # Format response with detailed information
-                response_data = {
-                    'success': True,
-                    'message': f"Found {len(processed_memories)} relevant memor(ies)",
-                    'data': {
-                        'memories_count': len(processed_memories),
-                        'memory_id': memory_id,
-                        'namespace': namespace,
-                        'query': search_query,
-                        'memories': processed_memories
-                    }
-                }
-                
-                # Create a formatted text response for better readability
-                try:
-                    formatted_response = f"tool response: {json.dumps(response_data, ensure_ascii=False, default=str)}"
-                    yield self.create_text_message(formatted_response)
-                except Exception as json_error:
-                    # Fallback to simple response if JSON serialization fails
-                    simple_response = f"Found {len(processed_memories)} memories for query: {search_query}"
-                    yield self.create_text_message(simple_response)
-            else:
-                yield self.create_text_message("❌ AgentCore Memory SDK not available")
-                
-        except Exception as e:
-            logger.error(f"Search memories error: {str(e)}")
-            yield self.create_text_message(f"Exception in search operation: {str(e)}")
-    
-    def validate_parameters(self, parameters: dict[str, Any]) -> None:
-        """
-        Validate the parameters
-        """
-        operation = parameters.get('operation')
-        if not operation:
-            raise ValueError("operation is required")
-        
-        if operation not in ['record', 'retrieve', 'search']:
-            raise ValueError("operation must be one of: record, retrieve, search")
-        
-        if operation == 'record' and not parameters.get('information'):
-            raise ValueError("information is required for record operation")
-        
-        if operation == 'search' and not parameters.get('search_query'):
-            raise ValueError("search_query is required for search operation")
 
     def _invoke(self, tool_parameters: dict[str, Any]) -> Generator[ToolInvokeMessage]:
         """
         invoke tools
         """
         try:
-            # Debug: Log received parameters
-            logger.info(f"Received parameters: {list(tool_parameters.keys())}")
-            
             # Check operation first
             operation = tool_parameters.get("operation")
             if not operation:
-                yield self.create_text_message("❌ Please select an operation (record/retrieve/search)")
+                yield self.create_text_message("❌ Please select an operation (record/retrieve)")
+                return
+            
+            if operation not in ['record', 'retrieve']:
+                yield self.create_text_message(f"❌ Invalid operation: {operation}. Must be 'record' or 'retrieve'")
                 return
             
             # Initialize Memory client if not already initialized
@@ -341,46 +277,39 @@ class AgentCoreMemoryTool(Tool):
                     yield self.create_text_message("❌ Failed to initialize AgentCore Memory client")
                     return
 
-            # Get required parameters
-            if not self.memory_id:
-                self.memory_id = tool_parameters.get("memory_id")
-                if not self.memory_id:
-                    yield self.create_text_message("❌ Please provide memory_id from AWS Console")
+            # Get and clean parameters like agentcore_memory_search.py
+            memory_id = tool_parameters.get("memory_id", "").strip().strip('"\'')
+            actor_id = tool_parameters.get("actor_id", "").strip().strip('"\'')
+            session_id = tool_parameters.get("session_id", "").strip().strip('"\'') 
+            
+            # If any required parameter is missing, create new ones
+            if not memory_id or not actor_id or not session_id:
+                yield self.create_text_message("🏗️ Creating new memory resource...")
+                try:
+                    memory_id, actor_id, session_id = self._create_new_memory_resource(tool_parameters)
+                    yield self.create_text_message(f"✅ New memory resource created!\n\nMemory ID: {memory_id}\nActor ID: {actor_id}\nSession ID: {session_id}")
+                    
+                    # Return the generated IDs in JSON format
+                    creation_data = {
+                        'memory_id': memory_id,
+                        'actor_id': actor_id,
+                        'session_id': session_id
+                    }
+                    yield self.create_json_message(creation_data)
+                except Exception as e:
+                    yield self.create_text_message(f"❌ Failed to create memory resource: {str(e)}")
                     return
             
-            if not self.actor_id:
-                self.actor_id = tool_parameters.get("actor_id")
-                if not self.actor_id:
-                    yield self.create_text_message("❌ Please provide actor_id")
-                    return
-                
-            if not self.session_id:
-                self.session_id = tool_parameters.get("session_id")
-                if not self.session_id:
-                    yield self.create_text_message("❌ Please provide session_id")
-                    return
-                
-            # Namespace is only required for search
-            if operation == "search":
-                if not self.namespace:
-                    self.namespace = tool_parameters.get("namespace")
-                    if not self.namespace:
-                        yield self.create_text_message("❌ Please provide namespace for search operation")
-                        return
-            else:
-                # Set namespace for non-search operations if provided
-                if not self.namespace:
-                    self.namespace = tool_parameters.get("namespace")
-
+            # Set instance variables
+            self.memory_id = memory_id
+            self.actor_id = actor_id
+            self.session_id = session_id
+            
             # Route to appropriate operation
             if operation == 'record':
                 yield from self._record_information(tool_parameters)
             elif operation == 'retrieve':
                 yield from self._retrieve_history(tool_parameters)
-            elif operation == 'search':
-                yield from self._search_memories(tool_parameters)
-            else:
-                yield self.create_text_message(f"❌ Unknown operation: {operation}")
 
         except Exception as e:
             logger.error(f"Invoke error: {str(e)}", exc_info=True)
