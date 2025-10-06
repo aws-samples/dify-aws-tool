@@ -33,7 +33,7 @@ class AgentcoreBrowserSessionManagerTool(Tool):
         browser_client.start(identifier="aws.browser.v1", session_timeout_seconds=session_timeout_seconds)
 
         ws_url, headers = browser_client.generate_ws_headers()
-        live_view_url = browser_client.generate_live_view_url()
+        live_view_url = browser_client.generate_live_view_url(expires=300)
 
         logger.warning(f"Session ID: {browser_client.session_id}")
 
@@ -41,6 +41,7 @@ class AgentcoreBrowserSessionManagerTool(Tool):
         ssm_value = {
             "ws_url" : ws_url,
             "ws_headers" : headers,
+            "live_view_url" : live_view_url
         }
 
         # Write to Parameter Store
@@ -51,7 +52,6 @@ class AgentcoreBrowserSessionManagerTool(Tool):
         session_info = {
             "success": True,
             "status": "Browser session initialized successfully",
-            "live_view_url" : live_view_url,
             "session_id" : browser_client.session_id
         }
         

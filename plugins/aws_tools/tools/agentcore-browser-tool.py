@@ -4,6 +4,8 @@ import base64
 from collections.abc import Generator
 from typing import Any, Optional, Dict
 import os
+import tempfile
+from pathlib import Path
 
 from bedrock_agentcore.tools.browser_client import BrowserClient, browser_session
 import boto3
@@ -34,6 +36,7 @@ class AgentcoreBrowserToolTool(Tool):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self._setup_temp_dir()
     
     @property
     def browser_session_id(self):
@@ -67,6 +70,23 @@ class AgentcoreBrowserToolTool(Tool):
     def playwright(self, value):
         AgentcoreBrowserToolTool._shared_playwright = value
     
+    def _setup_temp_dir(self):
+        """设置 Playwright 临时目录"""
+        try:
+            # 创建用户专用的临时目录
+            user_temp = Path.home() / "tmp" / "playwright"
+            user_temp.mkdir(parents=True, exist_ok=True)
+            
+            # 设置权限
+            os.chmod(user_temp, 0o755)
+            
+            # 设置环境变量
+            os.environ["TMPDIR"] = str(user_temp)
+            os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(user_temp / "browsers")
+            
+        except Exception as e:
+            print(f"Warning: Could not setup custom temp dir: {e}")
+
     def _init_browser_session(self, browser_session_id) -> dict:
         """Initialize AWS AgentCore Browser session"""
         try:
@@ -109,16 +129,14 @@ class AgentcoreBrowserToolTool(Tool):
                         self.playwright = None
                     raise
             else:
-            
-            
-        
+                print("reuse existing browser session.")
+
             # Debug information
             session_info = {
                 "success": True,
                 "page_id": id(self.page),
                 "browser_id": id(self.browser)
             }
-        
             
             return session_info
             

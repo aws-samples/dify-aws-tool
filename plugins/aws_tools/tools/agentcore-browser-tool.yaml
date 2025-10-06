@@ -84,6 +84,20 @@ parameters:
       pt_BR: "Browser Session Id"
     llm_description: "The Browser Session Id for browser interaction environment"
     form: form
+  - name: aws_region
+    type: string
+    required: true
+    default: "us-west-2"
+    label:
+      en_US: AWS Region
+      zh_Hans: AWS Region
+      pt_BR: AWS Region
+    human_description:
+      en_US: "AWS Region"
+      zh_Hans: "AWS Region"
+      pt_BR: "AWS Region"
+    llm_description: "The aws region for Browser Session"
+    form: form
   - name: url
     type: string
     required: false
@@ -152,4 +166,4 @@ parameters:
     form: llm
 extra:
   python:
-    source: tools/agentcore-browser-tool2.py
+    source: tools/agentcore-browser-tool.py

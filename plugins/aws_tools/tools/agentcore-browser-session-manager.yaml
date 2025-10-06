@@ -2,9 +2,9 @@ identity:
   name: "agentcore-browser-session-manager"
   author: "aws"
   label:
-    en_US: "Browser Session Manager"
-    zh_Hans: "AgentCore 浏览器环境管理器"
-    pt_BR: "Browser Session Manager"
+    en_US: "AgentCore Browser Session Manager"
+    zh_Hans: "AgentCore AgentCore 浏览器环境管理器"
+    pt_BR: "AgentCore Browser Session Manager"
 description:
   human:
     en_US: "Browser Session Manager is for launching or shutting down browser session. "

@@ -2,7 +2,9 @@ identity:
   name: "agentcore_code_interpreter"
   author: "aws"
   label:
-    en_US: "agentcore_code_interpreter"
+    en_US: "AgentCore Code Interpreter"
+    zh_Hans: "AgentCore 代码执行器"
+    pt_BR: "AgentCore Code Interpreter"
 description:
   human: 
     en_US: > 
@@ -11,7 +13,7 @@ description:
       (1) execute python, javascript, or typescript code,
       (2) execute terminal commands.
       The tool can automatically create code interpreters and sessions if not provided.
-  llm: agentcore code interpreter
+  llm: agentcore code interpreter is a sandbox to execute command and code
 parameters:
   - name: language
     type: select
