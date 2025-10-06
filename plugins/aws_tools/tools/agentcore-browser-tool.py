@@ -87,14 +87,16 @@ class AgentcoreBrowserToolTool(Tool):
         except Exception as e:
             print(f"Warning: Could not setup custom temp dir: {e}")
 
-    def _init_browser_session(self, browser_session_id) -> dict:
+    def _init_browser_session(self, browser_session_id:str, aws_region:str) -> dict:
         """Initialize AWS AgentCore Browser session"""
         try:
             if self.browser_session_id != browser_session_id:
+                print("start to initialize browser session...")
+
                 self.browser_session_id = browser_session_id
 
                 # Get session info from Parameter Store
-                param_manager = ParameterStoreManager()
+                param_manager = ParameterStoreManager(aws_region)
                 session_data = param_manager.get_parameter(f"/browser-session/{browser_session_id}", as_dict=True)
                 
                 if not session_data:
@@ -121,13 +123,16 @@ class AgentcoreBrowserToolTool(Tool):
                     context = self.browser.contexts[0]
                 
                     self.page = context.pages[0]
+
+                    print("finish initializing browser session.")
                 
-                except Exception:
+                except Exception as e:
                     # 如果连接失败，确保playwright被清理
                     if self.playwright:
                         self.playwright.stop()
                         self.playwright = None
-                    raise
+
+                    print(f"connect_over_cdp fails due to {str(e)}")
             else:
                 print("reuse existing browser session.")
 
@@ -141,6 +146,7 @@ class AgentcoreBrowserToolTool(Tool):
             return session_info
             
         except Exception as e:
+            print(f"init_browser_session fails due to {str(e)}")
             self._cleanup_browser()
             return {
                 "success": False,
@@ -460,7 +466,8 @@ class AgentcoreBrowserToolTool(Tool):
         try:
             action = tool_parameters.get("action")
             browser_session_id = tool_parameters.get("browser_session_id")
-            
+            aws_region = tool_parameters.get("aws_region", "us-west-2")
+             
             url = tool_parameters.get("url", "")
             query = tool_parameters.get("query", "")
             form_data = tool_parameters.get("form_data", "{}")
@@ -470,7 +477,7 @@ class AgentcoreBrowserToolTool(Tool):
             if not browser_session_id:
                 raise InvokeError(f"browser_session_id is missing.")
 
-            self._init_browser_session(browser_session_id)
+            self._init_browser_session(browser_session_id, aws_region)
             
             if action == "browse_url":
             
