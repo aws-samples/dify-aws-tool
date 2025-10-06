@@ -1,0 +1,622 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: code_interpreter_sample
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: tool
+      id: 1758681756716-source-1759138671203-target
+      source: '1758681756716'
+      sourceHandle: source
+      target: '1759138671203'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1759138671203-source-1758683104451-target
+      source: '1759138671203'
+      sourceHandle: source
+      target: '1758683104451'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1758683104451-source-1758682176081-target
+      source: '1758683104451'
+      sourceHandle: source
+      target: '1758682176081'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: code
+          max_length: 10240
+          options: []
+          required: true
+          type: paragraph
+          variable: code
+        - label: command
+          max_length: 10240
+          options: []
+          required: false
+          type: paragraph
+          variable: command
+        - label: code_interpreter_id
+          max_length: 1024
+          options: []
+          required: false
+          type: paragraph
+          variable: code_interpreter_id
+        - label: AWS_AK
+          max_length: 100
+          options: []
+          required: false
+          type: text-input
+          variable: AWS_AK
+        - label: AWS_SK
+          max_length: 100
+          options: []
+          required: false
+          type: text-input
+          variable: AWS_SK
+        - label: AWS_REGION
+          max_length: 100
+          options: []
+          required: false
+          type: text-input
+          variable: AWS_REGION
+        - label: session_id
+          max_length: 100
+          options: []
+          required: false
+          type: text-input
+          variable: session_id
+      height: 246
+      id: '1758681756716'
+      position:
+        x: 91.19744000000003
+        y: 232.03616
+      positionAbsolute:
+        x: 91.19744000000003
+        y: 232.03616
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1759138671203'
+          - json
+          value_type: array[object]
+          variable: code_output
+        - value_selector:
+          - '1758683104451'
+          - session_id
+          value_type: string
+          variable: session_id
+        selected: false
+        title: End
+        type: end
+      height: 116
+      id: '1758682176081'
+      position:
+        x: 1281.1004325439578
+        y: 286.8253439548808
+      positionAbsolute:
+        x: 1281.1004325439578
+        y: 286.8253439548808
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(obj):\n    return {\"session_id\": obj[0][\"\
+          session_id\"]}"
+        code_language: python3
+        desc: extract session id
+        outputs:
+          session_id:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1759138671203'
+          - json
+          value_type: array[object]
+          variable: obj
+      height: 82
+      id: '1758683104451'
+      position:
+        x: 952.0803086999797
+        y: 286.8253439548808
+      positionAbsolute:
+        x: 952.0803086999797
+        y: 286.8253439548808
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: perform a code interpreter action
+            ja_JP: perform a code interpreter action
+            pt_BR: perform a code interpreter action
+            zh_Hans: perform a code interpreter action
+          label:
+            en_US: action_type
+            ja_JP: action_type
+            pt_BR: action_type
+            zh_Hans: action_type
+          llm_description: "Set the value of action_type to specify a code interpreter\
+            \ action that you want to perform. Available values include: exec_code,\
+            \ exec_command.  To perform a specific action, you may need to provide\
+            \ some other required arguments for the action. Please refer to the action\
+            \ details below to find out what arguments are required for each action.\
+            \ Only provide action_type and other required arguments. Do not supply\
+            \ arguments that are not relevant to your chosen action. <action_details>\
+            \ 1. exec_code\n  This action is used to execute python, javascript, or\
+            \ typescript code.\n  Args:\n    action_type (string, required): set to\
+            \ exec_code\n    language (string, required): The programming language\
+            \ of the code to execute. Available values include python, javascript,\
+            \ typescript.\n    code (string, requried): The code to execute in a code\
+            \ interpreter session. This is the source code in the specified programming\
+            \ language that will be executed by the code interpreter.\n    session_id\
+            \ (string, optional): The unique ID of the code interpreter session to\
+            \ use. If you want to use a existing or past code interpreter session,\
+            \ please specify the session ID. If you do not specify the session ID,\
+            \ the tool will initiate a new session for you.\n    aws_ak (string, optional):\
+            \ The AWS access key to access services provided by AWS. If do not specify\
+            \ one, the tool will try to find it in your environment variables.\n \
+            \   aws_sk (string, optional): The AWS secret key to access services provided\
+            \ by AWS. If do not specify one, the tool will try to find it in your\
+            \ environment variables.\n    aws_region (string, optional): Specify the\
+            \ region for AWS services. If do not specify one, the tool will try to\
+            \ find it in your environment variables.\n  Return:\n    Execution result\
+            \ in text.\n2. exec_command\n  This action is used to execute terminal\
+            \ commands within the sandbox environment.\n  Args:\n    action_type (string,\
+            \ required): set to exec_command\n    command (string, required): The\
+            \ terminal command to execute in a code interpreter session.\n    session_id\
+            \ (string, optional): The unique ID of the code interpreter session to\
+            \ use. If you want to use a existing or past code interpreter session,\
+            \ please specify the session ID. If you do not specify the session ID,\
+            \ the tool will initiate a new session for you.\n    aws_ak (string, optional):\
+            \ The AWS access key to access services provided by AWS. If do not specify\
+            \ one, the tool will try to find it in your environment variables.\n \
+            \   aws_sk (string, optional): The AWS secret key to access services provided\
+            \ by AWS. If do not specify one, the tool will try to find it in your\
+            \ environment variables.\n    aws_region (string, optional): Specify the\
+            \ region for AWS services. If do not specify one, the tool will try to\
+            \ find it in your environment variables.\n  Return:\n    Execution result\
+            \ in text.\n</action_details>\n"
+          max: null
+          min: null
+          name: action_type
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: ID of the Amazon Bedrock AgentCore code interpreter to use
+            ja_JP: ID of the Amazon Bedrock AgentCore code interpreter to use
+            pt_BR: ID of the Amazon Bedrock AgentCore code interpreter to use
+            zh_Hans: ID of the Amazon Bedrock AgentCore code interpreter to use
+          label:
+            en_US: code_interpreter_id
+            ja_JP: code_interpreter_id
+            pt_BR: code_interpreter_id
+            zh_Hans: code_interpreter_id
+          llm_description: The ID of the code interpreter to use.
+          max: null
+          min: null
+          name: code_interpreter_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The unique identifier of the code interpreter session to use.
+            ja_JP: The unique identifier of the code interpreter session to use.
+            pt_BR: The unique identifier of the code interpreter session to use.
+            zh_Hans: The unique identifier of the code interpreter session to use.
+          label:
+            en_US: session id
+            ja_JP: session id
+            pt_BR: session id
+            zh_Hans: session id
+          llm_description: The unique ID of the code interpreter session to use. If
+            you want to use a existing or past code interpreter session, please specify
+            the session ID. If you do not specify the session ID, the tool will initiate
+            a new session for you.
+          max: null
+          min: null
+          name: session_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: programming language of the code
+            ja_JP: programming language of the code
+            pt_BR: programming language of the code
+            zh_Hans: programming language of the code
+          label:
+            en_US: language
+            ja_JP: language
+            pt_BR: language
+            zh_Hans: language
+          llm_description: The programming language of the code to execute. Available
+            values include python, javascript, typescript.
+          max: null
+          min: null
+          name: language
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: code to be executed
+            ja_JP: code to be executed
+            pt_BR: code to be executed
+            zh_Hans: code to be executed
+          label:
+            en_US: code
+            ja_JP: code
+            pt_BR: code
+            zh_Hans: code
+          llm_description: The code to execute in a code interpreter session. This
+            is the source code in the specified programming language that will be
+            executed by the code interpreter.
+          max: null
+          min: null
+          name: code
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: command to be executed
+            ja_JP: command to be executed
+            pt_BR: command to be executed
+            zh_Hans: command to be executed
+          label:
+            en_US: command
+            ja_JP: command
+            pt_BR: command
+            zh_Hans: command
+          llm_description: The terminal command to execute in a code interpreter session.
+          max: null
+          min: null
+          name: command
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: your aws access key
+            ja_JP: your aws access key
+            pt_BR: your aws access key
+            zh_Hans: your aws access key
+          label:
+            en_US: aws_ak
+            ja_JP: aws_ak
+            pt_BR: aws_ak
+            zh_Hans: aws_ak
+          llm_description: The AWS access key to access services provided by AWS.
+            If do not specify one, the tool will try to find it in your environment
+            variables.
+          max: null
+          min: null
+          name: aws_ak
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: your aws secret key
+            ja_JP: your aws secret key
+            pt_BR: your aws secret key
+            zh_Hans: your aws secret key
+          label:
+            en_US: aws_sk
+            ja_JP: aws_sk
+            pt_BR: aws_sk
+            zh_Hans: aws_sk
+          llm_description: The AWS secret key to access services provided by AWS.
+            If do not specify one, the tool will try to find it in your environment
+            variables.
+          max: null
+          min: null
+          name: aws_sk
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: your aws region
+            ja_JP: your aws region
+            pt_BR: your aws region
+            zh_Hans: your aws region
+          label:
+            en_US: aws_region
+            ja_JP: aws_region
+            pt_BR: aws_region
+            zh_Hans: aws_region
+          llm_description: Specify the region for AWS services. If do not specify
+            one, the tool will try to find it in your environment variables.
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          action_type: ''
+          aws_ak: ''
+          aws_region: ''
+          aws_sk: ''
+          code: ''
+          code_interpreter_id: ''
+          command: ''
+          language: ''
+          session_id: ''
+        provider_id: 91ab1bb2-1458-4a05-b9ef-2e1578a98d68/agentcore/agentcore
+        provider_name: 91ab1bb2-1458-4a05-b9ef-2e1578a98d68/agentcore/agentcore
+        provider_type: builtin
+        selected: false
+        title: agentcore_code_interpreter
+        tool_configurations:
+          aws_ak:
+            type: mixed
+            value: '{{#1758681756716.AWS_AK#}}'
+          aws_region:
+            type: mixed
+            value: '{{#1758681756716.AWS_REGION#}}'
+          aws_sk:
+            type: mixed
+            value: '{{#1758681756716.AWS_SK#}}'
+          code_interpreter_id:
+            type: mixed
+            value: '{{#1758681756716.code_interpreter_id#}}'
+          session_id:
+            type: mixed
+            value: '{{#1758681756716.session_id#}}'
+        tool_description: 'This tool offers an isolated code execution sandbox that
+          allows you to perform various code interpreter actions. Supported actions
+          include: (1) execute python, javascript, or typescript code, (2) execute
+          terminal commands. For detailed usage instructions, please refer to the
+          description of the action_type parameter.
+
+          '
+        tool_label: agentcore_code_interpreter
+        tool_name: agentcore_code_interpreter
+        tool_node_version: '2'
+        tool_parameters:
+          action_type:
+            type: mixed
+            value: null
+          code:
+            type: mixed
+            value: '{{#1758681756716.code#}}'
+          command:
+            type: mixed
+            value: '{{#1758681756716.command#}}'
+          language:
+            type: constant
+            value: python
+          session_id:
+            type: mixed
+            value: null
+        type: tool
+      height: 194
+      id: '1759138671203'
+      position:
+        x: 561.5329866658242
+        y: 251.77088587560627
+      positionAbsolute:
+        x: 561.5329866658242
+        y: 251.77088587560627
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: Run
+        desc: ''
+        height: 267
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          16px;","text":"AgentCore Code Interpreter 使用方法","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          16px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"前提条件：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"user需要有agentcore相关权限","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"必选参数：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"language：请指定编程语言（python/js/ts）","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"code：请指定代码","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"可选参数：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"command：可执行的终端命令，若提供则在code前执行，若不提供则跳过session_id：用于执行command和code的代码解释器会话，若不提供则自动创建会话","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"code_interpreter_id：代码解释器的id，若不提供则自动创建代码解释器","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"aws_ak: 若不提供则从环境中获取","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"aws_sk: 若不提供则从环境中获取","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"aws_region: 若不提供则从环境中获取","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"返回格式：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          14px;"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"若工具运行成功，            ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"{\"status\": \"success\", \"session_id\": session_id, \"code_interpreter_id\":
+          code_interpreter_id, \"results\": tool_results}","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"若运行失败， {\"status\": \"error\", \"reason\": error_msg}","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          14px;","textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":1,"textStyle":"font-size:
+          16px;"},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          14px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 652
+      height: 267
+      id: '1759200582805'
+      position:
+        x: 224.42865090588714
+        y: 586.6106935737654
+      positionAbsolute:
+        x: 224.42865090588714
+        y: 586.6106935737654
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 652
+    viewport:
+      x: -335.31931689182977
+      y: 225.40320563853072
+      zoom: 0.6484349201163303

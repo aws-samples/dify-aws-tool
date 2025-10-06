@@ -1,0 +1,1287 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 护理员Alice
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/bedrock:0.0.36@79c4fdb187f012fcb79fdd455535055a6bcd0b0bd4a022db2348ad7ad1b20a14
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1758789350267-source-1758789330598-target
+      source: '1758789350267'
+      sourceHandle: source
+      target: '1758789330598'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: tool
+      id: 1758786789172-source-1759136452466-target
+      source: '1758786789172'
+      sourceHandle: source
+      target: '1759136452466'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1759136452466-source-1758789350267-target
+      source: '1759136452466'
+      sourceHandle: source
+      target: '1758789350267'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: tool
+      id: 1758786789172-source-1759136523881-target
+      source: '1758786789172'
+      sourceHandle: source
+      target: '1759136523881'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1759136523881-source-1758789350267-target
+      source: '1759136523881'
+      sourceHandle: source
+      target: '1758789350267'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1758789330598-source-1759136873478-target
+      source: '1758789330598'
+      sourceHandle: source
+      target: '1759136873478'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1759136873478-source-1759199334476-target
+      source: '1759136873478'
+      sourceHandle: source
+      target: '1759199334476'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1759199334476-source-1758879830264-target
+      source: '1759199334476'
+      sourceHandle: source
+      target: '1758879830264'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 45
+      id: '1758786789172'
+      position:
+        x: -11.599738015293326
+        y: 281.4663173537245
+      positionAbsolute:
+        x: -11.599738015293326
+        y: 281.4663173537245
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1758789350267'
+          - output
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic claude
+          provider: langgenius/bedrock/bedrock
+        prompt_template:
+        - id: c3112702-dee5-43a1-b46d-da6f23ec54dd
+          role: system
+          text: '你是护理员Alice，专门负责宠物的日常护理。
+
+            请用友好、专业的语调与用户交流，并充分利用上下文{{#context#}}提供个性化服务。'
+        - id: d848b501-bffd-4d32-bbe5-68ba9c96ba19
+          role: user
+          text: Max最近身体状况怎么样？有无异样？
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 74
+      id: '1758789330598'
+      position:
+        x: 949.033329974555
+        y: 269.6331687531971
+      positionAbsolute:
+        x: 949.033329974555
+        y: 269.6331687531971
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '"相关记忆":{{long_term}}
+
+          "历史消息":{{short_term}}'
+        title: Template
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1759136523881'
+          - json
+          value_type: array[object]
+          variable: long_term
+        - value_selector:
+          - '1759136452466'
+          - json
+          value_type: array[object]
+          variable: short_term
+      height: 45
+      id: '1758789350267'
+      position:
+        x: 663.033329974555
+        y: 269.6331687531971
+      positionAbsolute:
+        x: 663.033329974555
+        y: 269.6331687531971
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1758789330598'
+          - text
+          value_type: string
+          variable: text
+        - value_selector:
+          - '1759199334476'
+          - memory_id
+          value_type: string
+          variable: memory_id
+        - value_selector:
+          - '1759199334476'
+          - actor_id
+          value_type: string
+          variable: actor_id
+        - value_selector:
+          - '1759199334476'
+          - seesion_id
+          value_type: string
+          variable: seesion_id
+        selected: false
+        title: End
+        type: end
+      height: 138
+      id: '1758879830264'
+      position:
+        x: 1866.5499507579643
+        y: 269.6331687531971
+      positionAbsolute:
+        x: 1866.5499507579643
+        y: 269.6331687531971
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: liniyuan
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"加载另一个对话中历史对话（短期记忆）","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"搜索相关信息（长期记忆）","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1758880664056'
+      position:
+        x: 341.4478791104126
+        y: 85.31117268933724
+      positionAbsolute:
+        x: 341.4478791104126
+        y: 85.31117268933724
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: liniyuan
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"存储本次对话","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1758880693542'
+      position:
+        x: 1261.779209539119
+        y: 153.675523342867
+      positionAbsolute:
+        x: 1261.779209539119
+        y: 153.675523342867
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Select the memory operation to perform
+            ja_JP: Select the memory operation to perform
+            pt_BR: Selecione a operação de memória a ser executada
+            zh_Hans: 选择要执行的记忆操作
+          label:
+            en_US: Operation
+            ja_JP: Operation
+            pt_BR: Operação
+            zh_Hans: 操作
+          llm_description: 'The type of memory operation to perform:
+
+            - "record": Save new information to memory
+
+            - "retrieve": Get recent conversation history
+
+            '
+          max: null
+          min: null
+          name: operation
+          options:
+          - icon: ''
+            label:
+              en_US: Record Information
+              ja_JP: Record Information
+              pt_BR: Gravar Informação
+              zh_Hans: 记录信息
+            value: record
+          - icon: ''
+            label:
+              en_US: Retrieve History
+              ja_JP: Retrieve History
+              pt_BR: Recuperar Histórico
+              zh_Hans: 检索历史
+            value: retrieve
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The information to record (required for record operation)
+            ja_JP: The information to record (required for record operation)
+            pt_BR: A informação a ser gravada (obrigatória para operação de gravação)
+            zh_Hans: 要记录的信息（记录操作必需）
+          label:
+            en_US: Information to Record
+            ja_JP: Information to Record
+            pt_BR: Informação para Gravar
+            zh_Hans: 要记录的信息
+          llm_description: 'The information that needs to be recorded. This should
+            be the complete information
+
+            or important details that need to be stored for future reference.
+
+            Required when operation is "record".
+
+            '
+          max: null
+          min: null
+          name: information
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ID of the memory resource (get from AWS Console). If not provided,
+              a new one will be created.
+            ja_JP: ID of the memory resource (get from AWS Console). If not provided,
+              a new one will be created.
+            pt_BR: ID do recurso de memória (obter do Console AWS). Se não fornecido,
+              um novo será criado.
+            zh_Hans: 记忆资源ID（从AWS控制台获取）。如果未提供，将创建新的。
+          label:
+            en_US: Memory ID
+            ja_JP: Memory ID
+            pt_BR: ID da Memória
+            zh_Hans: 记忆ID
+          llm_description: The memory resource ID from AWS Console AgentCore Memory
+            service. If not provided, a new memory resource will be created automatically.
+          max: null
+          min: null
+          name: memory_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ID of the actor/entity. If not provided, a new one will be created.
+            ja_JP: ID of the actor/entity. If not provided, a new one will be created.
+            pt_BR: ID do ator/entidade. Se não fornecido, um novo será criado.
+            zh_Hans: 参与者/实体ID。如果未提供，将创建新的。
+          label:
+            en_US: Actor ID
+            ja_JP: Actor ID
+            pt_BR: ID do Ator
+            zh_Hans: 参与者ID
+          llm_description: The actor ID for this memory operation. If not provided,
+            a new actor ID will be generated automatically.
+          max: null
+          min: null
+          name: actor_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ID of the conversation session. If not provided, a new one will
+              be created.
+            ja_JP: ID of the conversation session. If not provided, a new one will
+              be created.
+            pt_BR: ID da sessão de conversa. Se não fornecido, um novo será criado.
+            zh_Hans: 对话会话的ID。如果未提供，将创建新的。
+          label:
+            en_US: Session ID
+            ja_JP: Session ID
+            pt_BR: ID da Sessão
+            zh_Hans: 会话ID
+          llm_description: The session ID for this conversation. If not provided,
+            a new session ID will be generated automatically.
+          max: null
+          min: null
+          name: session_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 10
+          form: llm
+          human_description:
+            en_US: Maximum number of conversation turns to return (1-50)
+            ja_JP: Maximum number of conversation turns to return (1-50)
+            pt_BR: Número máximo de turnos de conversa a retornar (1-50)
+            zh_Hans: 返回的最大对话轮数（1-50）
+          label:
+            en_US: Maximum Results
+            ja_JP: Maximum Results
+            pt_BR: Máximo de Resultados
+            zh_Hans: 最大结果数
+          llm_description: 'Maximum number of conversation turns to return for retrieve
+            operation (1-50, default 10)
+
+            '
+          max: null
+          min: null
+          name: max_results
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS region for the AgentCore Memory service (optional)
+            ja_JP: AWS region for the AgentCore Memory service (optional)
+            pt_BR: Região AWS para o serviço AgentCore Memory (opcional)
+            zh_Hans: AgentCore Memory服务的AWS区域（可选）
+          label:
+            en_US: AWS Region
+            ja_JP: AWS Region
+            pt_BR: Região AWS
+            zh_Hans: AWS区域
+          llm_description: AWS region for the AgentCore Memory service.
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS access key ID for authentication (optional)
+            ja_JP: AWS access key ID for authentication (optional)
+            pt_BR: ID da chave de acesso AWS para autenticação (opcional)
+            zh_Hans: 用于身份验证的AWS访问密钥ID（可选）
+          label:
+            en_US: AWS Access Key ID
+            ja_JP: AWS Access Key ID
+            pt_BR: ID da Chave de Acesso AWS
+            zh_Hans: AWS访问密钥ID
+          llm_description: AWS access key ID for authentication.
+          max: null
+          min: null
+          name: aws_access_key_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS secret access key for authentication (optional)
+            ja_JP: AWS secret access key for authentication (optional)
+            pt_BR: Chave de acesso secreta AWS para autenticação (opcional)
+            zh_Hans: 用于身份验证的AWS秘密访问密钥（可选）
+          label:
+            en_US: AWS Secret Access Key
+            ja_JP: AWS Secret Access Key
+            pt_BR: Chave de Acesso Secreta AWS
+            zh_Hans: AWS秘密访问密钥
+          llm_description: AWS secret access key for authentication.
+          max: null
+          min: null
+          name: aws_secret_access_key
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          actor_id: ''
+          aws_access_key_id: ''
+          aws_region: ''
+          aws_secret_access_key: ''
+          information: ''
+          max_results: ''
+          memory_id: ''
+          operation: ''
+          session_id: ''
+        provider_id: 685831b1-7072-4477-bdac-c4b494cc1401/aws_tools/aws_tools
+        provider_name: 685831b1-7072-4477-bdac-c4b494cc1401/aws_tools/aws_tools
+        provider_type: builtin
+        selected: true
+        title: AgentCore Memory
+        tool_configurations:
+          aws_access_key_id:
+            type: mixed
+            value: null
+          aws_region:
+            type: mixed
+            value: null
+          aws_secret_access_key:
+            type: mixed
+            value: null
+        tool_description: AgentCore Memory tool for recording information and retrieving
+          conversation history
+        tool_label: AgentCore Memory
+        tool_name: agentcore_memory
+        tool_node_version: '2'
+        tool_parameters:
+          actor_id:
+            type: mixed
+            value: actor_5579d477
+          information:
+            type: mixed
+            value: ''
+          max_results:
+            type: constant
+            value: 10
+          memory_id:
+            type: mixed
+            value: autoMemory_1759125509-IodCu66Rgu
+          operation:
+            type: constant
+            value: retrieve
+          session_id:
+            type: mixed
+            value: session_f56d2d52
+        type: tool
+      height: 117
+      id: '1759136452466'
+      position:
+        x: 336.8334508905735
+        y: 212.23320905853666
+      positionAbsolute:
+        x: 336.8334508905735
+        y: 212.23320905853666
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ID of the memory resource (get from AWS Console)
+            ja_JP: ID of the memory resource (get from AWS Console)
+            pt_BR: ID do recurso de memória (obter do Console AWS)
+            zh_Hans: 记忆资源ID（从AWS控制台获取）
+          label:
+            en_US: Memory ID
+            ja_JP: Memory ID
+            pt_BR: ID da Memória
+            zh_Hans: 记忆ID
+          llm_description: The memory resource ID from AWS Console AgentCore Memory
+            service.
+          max: null
+          min: null
+          name: memory_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: /
+          form: llm
+          human_description:
+            en_US: Memory namespace (optional, use "/" when not provided for Global
+              across all strategies)
+            ja_JP: Memory namespace (optional, use "/" when not provided for Global
+              across all strategies)
+            pt_BR: Namespace da memória (opcional, use "/" quando não fornecido para
+              busca global)
+            zh_Hans: 记忆命名空间（可选，未提供时使用"/"进行全局搜索）
+          label:
+            en_US: Namespace
+            ja_JP: Namespace
+            pt_BR: Namespace
+            zh_Hans: 命名空间
+          llm_description: The memory namespace for search operation. Use "/" for
+            global search across all strategies.
+          max: null
+          min: null
+          name: namespace
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: all
+          form: llm
+          human_description:
+            en_US: What you want to search for (use "all" when not provided)
+            ja_JP: What you want to search for (use "all" when not provided)
+            pt_BR: O que você quer pesquisar (use "all" quando não fornecido)
+            zh_Hans: 您想要搜索的内容（未提供时使用"all"）
+          label:
+            en_US: Search Query
+            ja_JP: Search Query
+            pt_BR: Consulta de Pesquisa
+            zh_Hans: 搜索查询
+          llm_description: 'The search query to find relevant memories. Use natural
+            language to describe
+
+            what you''re looking for. Use "all" to search for all memories.
+
+            '
+          max: null
+          min: null
+          name: search_query
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 10
+          form: llm
+          human_description:
+            en_US: Maximum number of memories to return (1-20, default=10)
+            ja_JP: Maximum number of memories to return (1-20, default=10)
+            pt_BR: Número máximo de memórias a retornar (1-20, padrão=10)
+            zh_Hans: 返回的最大记忆数量（1-20，默认=10）
+          label:
+            en_US: Maximum Results
+            ja_JP: Maximum Results
+            pt_BR: Máximo de Resultados
+            zh_Hans: 最大结果数
+          llm_description: 'Maximum number of memories to return (1-20, default 10)
+
+            '
+          max: null
+          min: null
+          name: max_results
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS region for the AgentCore Memory service (optional)
+            ja_JP: AWS region for the AgentCore Memory service (optional)
+            pt_BR: Região AWS para o serviço AgentCore Memory (opcional)
+            zh_Hans: AgentCore Memory服务的AWS区域（可选）
+          label:
+            en_US: AWS Region
+            ja_JP: AWS Region
+            pt_BR: Região AWS
+            zh_Hans: AWS区域
+          llm_description: AWS region for the AgentCore Memory service.
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS access key ID for authentication (optional)
+            ja_JP: AWS access key ID for authentication (optional)
+            pt_BR: ID da chave de acesso AWS para autenticação (opcional)
+            zh_Hans: 用于身份验证的AWS访问密钥ID（可选）
+          label:
+            en_US: AWS Access Key ID
+            ja_JP: AWS Access Key ID
+            pt_BR: ID da Chave de Acesso AWS
+            zh_Hans: AWS访问密钥ID
+          llm_description: AWS access key ID for authentication.
+          max: null
+          min: null
+          name: aws_access_key_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS secret access key for authentication (optional)
+            ja_JP: AWS secret access key for authentication (optional)
+            pt_BR: Chave de acesso secreta AWS para autenticação (opcional)
+            zh_Hans: 用于身份验证的AWS秘密访问密钥（可选）
+          label:
+            en_US: AWS Secret Access Key
+            ja_JP: AWS Secret Access Key
+            pt_BR: Chave de Acesso Secreta AWS
+            zh_Hans: AWS秘密访问密钥
+          llm_description: AWS secret access key for authentication.
+          max: null
+          min: null
+          name: aws_secret_access_key
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          aws_access_key_id: ''
+          aws_region: ''
+          aws_secret_access_key: ''
+          max_results: ''
+          memory_id: ''
+          namespace: ''
+          search_query: ''
+        provider_id: 685831b1-7072-4477-bdac-c4b494cc1401/aws_tools/aws_tools
+        provider_name: 685831b1-7072-4477-bdac-c4b494cc1401/aws_tools/aws_tools
+        provider_type: builtin
+        selected: false
+        title: AgentCore Memory Search
+        tool_configurations:
+          aws_access_key_id:
+            type: mixed
+            value: null
+          aws_region:
+            type: mixed
+            value: null
+          aws_secret_access_key:
+            type: mixed
+            value: null
+        tool_description: AgentCore Memory Search tool for finding relevant memories
+          by query
+        tool_label: AgentCore Memory Search
+        tool_name: agentcore_memory_search
+        tool_node_version: '2'
+        tool_parameters:
+          max_results:
+            type: constant
+            value: 10
+          memory_id:
+            type: mixed
+            value: autoMemory_1759125509-IodCu66Rgu
+          namespace:
+            type: mixed
+            value: /
+          search_query:
+            type: mixed
+            value: Max的身体状况
+        type: tool
+      height: 117
+      id: '1759136523881'
+      position:
+        x: 336.8334508905735
+        y: 367.1998790839816
+      positionAbsolute:
+        x: 336.8334508905735
+        y: 367.1998790839816
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Select the memory operation to perform
+            ja_JP: Select the memory operation to perform
+            pt_BR: Selecione a operação de memória a ser executada
+            zh_Hans: 选择要执行的记忆操作
+          label:
+            en_US: Operation
+            ja_JP: Operation
+            pt_BR: Operação
+            zh_Hans: 操作
+          llm_description: 'The type of memory operation to perform:
+
+            - "record": Save new information to memory
+
+            - "retrieve": Get recent conversation history
+
+            '
+          max: null
+          min: null
+          name: operation
+          options:
+          - icon: ''
+            label:
+              en_US: Record Information
+              ja_JP: Record Information
+              pt_BR: Gravar Informação
+              zh_Hans: 记录信息
+            value: record
+          - icon: ''
+            label:
+              en_US: Retrieve History
+              ja_JP: Retrieve History
+              pt_BR: Recuperar Histórico
+              zh_Hans: 检索历史
+            value: retrieve
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The information to record (required for record operation)
+            ja_JP: The information to record (required for record operation)
+            pt_BR: A informação a ser gravada (obrigatória para operação de gravação)
+            zh_Hans: 要记录的信息（记录操作必需）
+          label:
+            en_US: Information to Record
+            ja_JP: Information to Record
+            pt_BR: Informação para Gravar
+            zh_Hans: 要记录的信息
+          llm_description: 'The information that needs to be recorded. This should
+            be the complete information
+
+            or important details that need to be stored for future reference.
+
+            Required when operation is "record".
+
+            '
+          max: null
+          min: null
+          name: information
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ID of the memory resource (get from AWS Console). If not provided,
+              a new one will be created.
+            ja_JP: ID of the memory resource (get from AWS Console). If not provided,
+              a new one will be created.
+            pt_BR: ID do recurso de memória (obter do Console AWS). Se não fornecido,
+              um novo será criado.
+            zh_Hans: 记忆资源ID（从AWS控制台获取）。如果未提供，将创建新的。
+          label:
+            en_US: Memory ID
+            ja_JP: Memory ID
+            pt_BR: ID da Memória
+            zh_Hans: 记忆ID
+          llm_description: The memory resource ID from AWS Console AgentCore Memory
+            service. If not provided, a new memory resource will be created automatically.
+          max: null
+          min: null
+          name: memory_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ID of the actor/entity. If not provided, a new one will be created.
+            ja_JP: ID of the actor/entity. If not provided, a new one will be created.
+            pt_BR: ID do ator/entidade. Se não fornecido, um novo será criado.
+            zh_Hans: 参与者/实体ID。如果未提供，将创建新的。
+          label:
+            en_US: Actor ID
+            ja_JP: Actor ID
+            pt_BR: ID do Ator
+            zh_Hans: 参与者ID
+          llm_description: The actor ID for this memory operation. If not provided,
+            a new actor ID will be generated automatically.
+          max: null
+          min: null
+          name: actor_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ID of the conversation session. If not provided, a new one will
+              be created.
+            ja_JP: ID of the conversation session. If not provided, a new one will
+              be created.
+            pt_BR: ID da sessão de conversa. Se não fornecido, um novo será criado.
+            zh_Hans: 对话会话的ID。如果未提供，将创建新的。
+          label:
+            en_US: Session ID
+            ja_JP: Session ID
+            pt_BR: ID da Sessão
+            zh_Hans: 会话ID
+          llm_description: The session ID for this conversation. If not provided,
+            a new session ID will be generated automatically.
+          max: null
+          min: null
+          name: session_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 10
+          form: llm
+          human_description:
+            en_US: Maximum number of conversation turns to return (1-50)
+            ja_JP: Maximum number of conversation turns to return (1-50)
+            pt_BR: Número máximo de turnos de conversa a retornar (1-50)
+            zh_Hans: 返回的最大对话轮数（1-50）
+          label:
+            en_US: Maximum Results
+            ja_JP: Maximum Results
+            pt_BR: Máximo de Resultados
+            zh_Hans: 最大结果数
+          llm_description: 'Maximum number of conversation turns to return for retrieve
+            operation (1-50, default 10)
+
+            '
+          max: null
+          min: null
+          name: max_results
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS region for the AgentCore Memory service (optional)
+            ja_JP: AWS region for the AgentCore Memory service (optional)
+            pt_BR: Região AWS para o serviço AgentCore Memory (opcional)
+            zh_Hans: AgentCore Memory服务的AWS区域（可选）
+          label:
+            en_US: AWS Region
+            ja_JP: AWS Region
+            pt_BR: Região AWS
+            zh_Hans: AWS区域
+          llm_description: AWS region for the AgentCore Memory service.
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS access key ID for authentication (optional)
+            ja_JP: AWS access key ID for authentication (optional)
+            pt_BR: ID da chave de acesso AWS para autenticação (opcional)
+            zh_Hans: 用于身份验证的AWS访问密钥ID（可选）
+          label:
+            en_US: AWS Access Key ID
+            ja_JP: AWS Access Key ID
+            pt_BR: ID da Chave de Acesso AWS
+            zh_Hans: AWS访问密钥ID
+          llm_description: AWS access key ID for authentication.
+          max: null
+          min: null
+          name: aws_access_key_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: AWS secret access key for authentication (optional)
+            ja_JP: AWS secret access key for authentication (optional)
+            pt_BR: Chave de acesso secreta AWS para autenticação (opcional)
+            zh_Hans: 用于身份验证的AWS秘密访问密钥（可选）
+          label:
+            en_US: AWS Secret Access Key
+            ja_JP: AWS Secret Access Key
+            pt_BR: Chave de Acesso Secreta AWS
+            zh_Hans: AWS秘密访问密钥
+          llm_description: AWS secret access key for authentication.
+          max: null
+          min: null
+          name: aws_secret_access_key
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          actor_id: ''
+          aws_access_key_id: ''
+          aws_region: ''
+          aws_secret_access_key: ''
+          information: ''
+          max_results: ''
+          memory_id: ''
+          operation: ''
+          session_id: ''
+        provider_id: 685831b1-7072-4477-bdac-c4b494cc1401/aws_tools/aws_tools
+        provider_name: 685831b1-7072-4477-bdac-c4b494cc1401/aws_tools/aws_tools
+        provider_type: builtin
+        selected: false
+        title: AgentCore Memory
+        tool_configurations:
+          aws_access_key_id:
+            type: mixed
+            value: null
+          aws_region:
+            type: mixed
+            value: null
+          aws_secret_access_key:
+            type: mixed
+            value: null
+        tool_description: AgentCore Memory tool for recording information and retrieving
+          conversation history
+        tool_label: AgentCore Memory
+        tool_name: agentcore_memory
+        tool_node_version: '2'
+        tool_parameters:
+          actor_id:
+            type: mixed
+            value: null
+          information:
+            type: mixed
+            value: '{{#1758789330598.text#}}'
+          max_results:
+            type: constant
+            value: 10
+          memory_id:
+            type: mixed
+            value: null
+          operation:
+            type: constant
+            value: record
+          session_id:
+            type: mixed
+            value: null
+        type: tool
+      height: 117
+      id: '1759136873478'
+      position:
+        x: 1253.033329974555
+        y: 269.6331687531971
+      positionAbsolute:
+        x: 1253.033329974555
+        y: 269.6331687531971
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\ndef main(arg1):\n    return {\n        \"memory_id\":arg1[0][\"\
+          memory_id\"],\n        \"actor_id\":arg1[0][\"actor_id\"],\n        \"seesion_id\"\
+          :arg1[0][\"session_id\"]\n        }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          actor_id:
+            children: null
+            type: string
+          memory_id:
+            children: null
+            type: string
+          seesion_id:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1759136873478'
+          - json
+          value_type: array[object]
+          variable: arg1
+      height: 45
+      id: '1759199334476'
+      position:
+        x: 1550.6677150246644
+        y: 269.6331687531971
+      positionAbsolute:
+        x: 1550.6677150246644
+        y: 269.6331687531971
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: liniyuan
+        desc: ''
+        height: 149
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"得到新建记忆的信息：","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"{","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"  \"memory_id\":
+          \"autoMemory_1759200074-ilwj7R95IG\",","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"  \"actor_id\":
+          \"actor_36fa3069\",","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"  \"seesion_id\":
+          \"session_bf8ef652\"","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"}","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 400
+      height: 149
+      id: '17591993980990'
+      position:
+        x: 1525.8681559332733
+        y: 96.26033659854141
+      positionAbsolute:
+        x: 1525.8681559332733
+        y: 96.26033659854141
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 400
+    viewport:
+      x: 190.12977819037815
+      y: 195.86331551730422
+      zoom: 0.6339088927967846

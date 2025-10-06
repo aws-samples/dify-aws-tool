@@ -59,6 +59,9 @@
 | ASR_Transcribe | 语音转录文字 | [DSL](./workflow/ASR_Transcribe.yml) | | [ybalbert](ybalbert@amazon.com) |
 | Image(Text)-2-Image Search | 文搜图 & 图搜图 | [DSL](./workflow/opensearch_img_search.yml) | OpenSearch Knn Retriever | [ybalbert](ybalbert@amazon.com) |
 | MCP Server 集成  | MCP Server 集成演示 | [DSL](./workflow/mcp_server_integration.yml) |  | [ybalbert](ybalbert@amazon.com) |
+| Chat-With-Browser | 基于AgentCore Browser Tool与远程浏览器交互 | [DSL](./workflow/chat-with-browser.yml) | [agentcore-browser-viewer](https://github.com/ybalbert001/agentcore-browser-viewer) | [ybalbert](ybalbert@amazon.com) |
+| Manage-Memory-By-yourself | 基于 AgentCore memory自行管理您的内存 | [DSL1](./workflow/AgentCore-Memory-1.yml)  [DSL2](./workflow/AgentCore-Memory-2.yml) | | [liniyuan](liniyuan@amazon.com) |
+| Execute-Code/Command | 基于AgentCore Code Interpreter 在隔离的受管沙箱中执行代码和命令 | [DSL](./workflow/code_interpreter_demo.yml) | | [runpeng](runpeng@amazon.com) |
 
 > 💡 更多工作流可以关注社区网站：[dify101.com](https://dify101.com/)、[difyshare.com](https://difyshare.com/)、[Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
@@ -79,6 +82,9 @@
 | AWS Bedrock Nova Reel | SAAS | 基于Amazon Nova Reel生成视频 | | [alexwuu](alexwuu@amazon.com) |
 | OpenSearch Knn Retriever | PAAS | 用KNN方法从OpenSearch召回数据 | [Notebook](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/search_img_by_img) | [ybalbert](ybalbert@amazon.com) |
 | Frame Extractor | PAAS | 对GIF输入抽帧作为LLM输入 |  | [ybalbert](ybalbert@amazon.com) |
+| AgentCore Browser | SAAS | 与远程托管的浏览器环境进行交互 | | [wanglx](wanglx@amazon.com) |
+| AgentCore Memory | SAAS | 基于AWS 托管Memory服务，管理长短记忆 | | [liniyuan](liniyuan@amazon.com) |
+| AgentCore Code Interpreter | SAAS | 在AWS隔离的托管沙盒中执行代码和命令 | | [runpeng](runpeng@amazon.com) |
 
 #### 模型提供商
 

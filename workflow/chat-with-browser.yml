@@ -1,0 +1,1991 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: chat-with-browser
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/aws_tools:0.0.13@e2d9127b57c17736960cb72c990122a4e86d54de3a8fcf33d10125cca32219c7
+    version: null
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/bedrock:0.0.38@60000189e84751d3e7b3fd5edda4ae9d3c36ef459a4d4d448a1fc161c61e2f6a
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 3e3a2960-2a6e-4148-aaf1-74044d41eaa2
+    name: live_view_url
+    selector:
+    - conversation
+    - live_view_url
+    value: ''
+    value_type: string
+  - description: ''
+    id: 077806e3-e67e-4dc9-844f-658e2034d5b6
+    name: browser_session_id
+    selector:
+    - conversation
+    - browser_session_id
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1759635131811-source-1759636878299-target
+      source: '1759635131811'
+      sourceHandle: source
+      target: '1759636878299'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1759637031058-source-1759637071544-target
+      source: '1759637031058'
+      sourceHandle: source
+      target: '1759637071544'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: llm
+      id: 1759637071544-source-1759637686203-target
+      source: '1759637071544'
+      sourceHandle: source
+      target: '1759637686203'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1759637686203-source-1759637943459-target
+      source: '1759637686203'
+      sourceHandle: source
+      target: '1759637943459'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1759637943459-source-1759638352519-target
+      source: '1759637943459'
+      sourceHandle: source
+      target: '1759638352519'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: answer
+      id: 1759638465737-source-1759638627349-target
+      source: '1759638465737'
+      sourceHandle: source
+      target: '1759638627349'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: agent
+        targetType: answer
+      id: 1759637135573-source-1759638692143-target
+      source: '1759637135573'
+      sourceHandle: source
+      target: '1759638692143'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: agent
+      id: 1759636878299-false-17596387563950-target
+      source: '1759636878299'
+      sourceHandle: 'false'
+      target: '17596387563950'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: agent
+        targetType: answer
+      id: 17596387563950-source-1759638915389-target
+      source: '17596387563950'
+      sourceHandle: source
+      target: '1759638915389'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: agent
+      id: 1759638352519-false-1759637135573-target
+      source: '1759638352519'
+      sourceHandle: 'false'
+      target: '1759637135573'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1759636878299-true-1759669476040-target
+      source: '1759636878299'
+      sourceHandle: 'true'
+      target: '1759669476040'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1759669476040-source-1759637031058-target
+      source: '1759669476040'
+      sourceHandle: source
+      target: '1759637031058'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1759638352519-true-1759669516204-target
+      source: '1759638352519'
+      sourceHandle: 'true'
+      target: '1759669516204'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1759669516204-source-1759638465737-target
+      source: '1759669516204'
+      sourceHandle: source
+      target: '1759638465737'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 52
+      id: '1759635131811'
+      position:
+        x: 30
+        y: 528
+      positionAbsolute:
+        x: 30
+        y: 528
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: empty
+            id: 61110248-eab3-4dbf-a2a6-c1330238ff93
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - browser_session_id
+          id: 'true'
+          logical_operator: and
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 124
+      id: '1759636878299'
+      position:
+        x: 362
+        y: 528
+      positionAbsolute:
+        x: 362
+        y: 528
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json \n\ndef main(arg1) -> dict:\n    session_id = arg1[0][\"\
+          session_id\"]\n    live_view_url = f\"https://pdcdaspi9t.us-east-1.awsapprunner.com/?browser_session_id={session_id}\"\
+          \n    return {\n        \"session_id\": session_id,\n        \"live_view_url\"\
+          : live_view_url\n    }\n"
+        code_language: python3
+        outputs:
+          live_view_url:
+            children: null
+            type: string
+          session_id:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1759669476040'
+          - json
+          value_type: array[object]
+          variable: arg1
+      height: 52
+      id: '1759637031058'
+      position:
+        x: 1127.8368355026012
+        y: 384
+      positionAbsolute:
+        x: 1127.8368355026012
+        y: 384
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1759637031058'
+          - session_id
+          variable_selector:
+          - conversation
+          - browser_session_id
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1759637031058'
+          - live_view_url
+          variable_selector:
+          - conversation
+          - live_view_url
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner
+        type: assigner
+        version: '2'
+      height: 110
+      id: '1759637071544'
+      position:
+        x: 1451.2756921523494
+        y: 384
+      positionAbsolute:
+        x: 1451.2756921523494
+        y: 384
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: 你是一位browser Agent，擅长连接远程browser session进行交互。首次交互时请总是先查看远程浏览器的当前页面内容
+          maximum_iterations:
+            type: constant
+            value: 20
+          model:
+            type: constant
+            value:
+              completion_params:
+                model_name: Claude 4.5 Sonnet
+              mode: chat
+              model: anthropic claude
+              model_type: llm
+              provider: langgenius/bedrock/bedrock
+              type: model-selector
+          query:
+            type: constant
+            value: '{{#sys.query#}}'
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: 'A managed browser automation tool for web interactions.
+                  Supports opening pages, searching, extracting content, filling forms,
+                  and executing JavaScript.**Notice:** The script must be written
+                  either as: 1. **A single JavaScript expression** (e.g., `document.body.scrollHeight`)
+                  2. **An arrow function** `() => { ... }` if multiple statements
+                  are required. **Do not use `return` at the top level.** Use `return`
+                  only inside an arrow function. Examples: ✅ `document.title` ✅ `()
+                  => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;
+                  }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`'
+              parameters:
+                action:
+                  auto: 1
+                  value: null
+                form_data:
+                  auto: 1
+                  value: null
+                query:
+                  auto: 1
+                  value: null
+                script:
+                  auto: 1
+                  value: null
+                url:
+                  auto: 1
+                  value: null
+                wait_time:
+                  auto: 1
+                  value: null
+              provider_name: langgenius/aws_tools/aws_tools
+              provider_show_name: langgenius/aws_tools/aws_tools
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: The action to perform with the browser tool
+                  ja_JP: The action to perform with the browser tool
+                  pt_BR: A ação a ser executada com a ferramenta do navegador
+                  zh_Hans: 使用浏览器工具执行的操作
+                label:
+                  en_US: Action
+                  ja_JP: Action
+                  pt_BR: Ação
+                  zh_Hans: 操作
+                llm_description: 'The specific browser action to perform: browse_url
+                  (visit a webpage), search_web (search the internet), extract_content
+                  (get page text), fill_form (interact with forms), execute_script
+                  (run JavaScript)'
+                max: null
+                min: null
+                name: action
+                options:
+                - icon: ''
+                  label:
+                    en_US: Browse URL
+                    ja_JP: Browse URL
+                    pt_BR: Navegar URL
+                    zh_Hans: 浏览网址
+                  value: browse_url
+                - icon: ''
+                  label:
+                    en_US: Search Web
+                    ja_JP: Search Web
+                    pt_BR: Pesquisar Web
+                    zh_Hans: 网页搜索
+                  value: search_web
+                - icon: ''
+                  label:
+                    en_US: Extract Content
+                    ja_JP: Extract Content
+                    pt_BR: Extrair Conteúdo
+                    zh_Hans: 提取内容
+                  value: extract_content
+                - icon: ''
+                  label:
+                    en_US: Fill Form
+                    ja_JP: Fill Form
+                    pt_BR: Preencher Formulário
+                    zh_Hans: 填写表单
+                  value: fill_form
+                - icon: ''
+                  label:
+                    en_US: Execute Script
+                    ja_JP: Execute Script
+                    pt_BR: Executar Script
+                    zh_Hans: 执行脚本
+                  value: execute_script
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: select
+              - auto_generate: null
+                default: null
+                form: form
+                human_description:
+                  en_US: Browser Session Id
+                  ja_JP: Browser Session Id
+                  pt_BR: Browser Session Id
+                  zh_Hans: Browser Session Id
+                label:
+                  en_US: Browser Session Id
+                  ja_JP: Browser Session Id
+                  pt_BR: Browser Session Id
+                  zh_Hans: Browser Session Id
+                llm_description: The Browser Session Id for browser interaction environment
+                max: null
+                min: null
+                name: browser_session_id
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: us-west-2
+                form: form
+                human_description:
+                  en_US: AWS Region
+                  ja_JP: AWS Region
+                  pt_BR: AWS Region
+                  zh_Hans: AWS Region
+                label:
+                  en_US: AWS Region
+                  ja_JP: AWS Region
+                  pt_BR: AWS Region
+                  zh_Hans: AWS Region
+                llm_description: The aws region for Browser Session
+                max: null
+                min: null
+                name: aws_region
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: The URL to browse or interact with
+                  ja_JP: The URL to browse or interact with
+                  pt_BR: A URL para navegar ou interagir
+                  zh_Hans: 要浏览或交互的网址
+                label:
+                  en_US: URL
+                  ja_JP: URL
+                  pt_BR: URL
+                  zh_Hans: 网址
+                llm_description: The target URL for browse_url, extract_content, or
+                  fill_form actions. Optional for extract_content, fill_form, and
+                  execute_script if you want to work with the current page
+                max: null
+                min: null
+                name: url
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: Search query for web search
+                  ja_JP: Search query for web search
+                  pt_BR: Consulta de pesquisa para busca na web
+                  zh_Hans: 网页搜索的查询语句
+                label:
+                  en_US: Search Query
+                  ja_JP: Search Query
+                  pt_BR: Consulta de Pesquisa
+                  zh_Hans: 搜索查询
+                llm_description: The search query string when using search_web action
+                max: null
+                min: null
+                name: query
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: JSON string containing form field data to fill
+                  ja_JP: JSON string containing form field data to fill
+                  pt_BR: String JSON contendo dados de campo de formulário para preencher
+                  zh_Hans: 包含要填写的表单字段数据的JSON字符串
+                label:
+                  en_US: Form Data
+                  ja_JP: Form Data
+                  pt_BR: Dados do Formulário
+                  zh_Hans: 表单数据
+                llm_description: JSON formatted string containing form field names
+                  and values to fill when using fill_form action
+                max: null
+                min: null
+                name: form_data
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: 3
+                form: llm
+                human_description:
+                  en_US: 'Time to wait for page to load (default: 3 seconds)'
+                  ja_JP: 'Time to wait for page to load (default: 3 seconds)'
+                  pt_BR: 'Tempo para aguardar o carregamento da página (padrão: 3
+                    segundos)'
+                  zh_Hans: 等待页面加载的时间（默认：3秒）
+                label:
+                  en_US: Wait Time (seconds)
+                  ja_JP: Wait Time (seconds)
+                  pt_BR: Tempo de Espera (segundos)
+                  zh_Hans: 等待时间（秒）
+                llm_description: Number of seconds to wait for page loading and JavaScript
+                  execution
+                max: null
+                min: null
+                name: wait_time
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: number
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: JavaScript code to execute on the webpage
+                  ja_JP: JavaScript code to execute on the webpage
+                  pt_BR: Código JavaScript para executar na página web
+                  zh_Hans: 在网页上执行的JavaScript代码
+                label:
+                  en_US: JavaScript Code
+                  ja_JP: JavaScript Code
+                  pt_BR: Código JavaScript
+                  zh_Hans: JavaScript 代码
+                llm_description: JavaScript code to execute when using execute_script
+                  action
+                max: null
+                min: null
+                name: script
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              settings:
+                aws_region:
+                  value:
+                    type: mixed
+                    value: us-east-1
+                browser_session_id:
+                  value:
+                    type: mixed
+                    value: '{{#conversation.browser_session_id#}}'
+              tool_description: 'A managed browser automation tool for web interactions.
+                Supports opening pages, searching, extracting content, filling forms,
+                and executing JavaScript.**Notice:** The script must be written either
+                as: 1. **A single JavaScript expression** (e.g., `document.body.scrollHeight`)
+                2. **An arrow function** `() => { ... }` if multiple statements are
+                required. **Do not use `return` at the top level.** Use `return` only
+                inside an arrow function. Examples: ✅ `document.title` ✅ `() => {
+                window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;
+                }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`'
+              tool_label: AgentCore Browser Tool
+              tool_name: agentcore-browser-tool
+              type: builtin
+        agent_strategy_label: FunctionCalling
+        agent_strategy_name: function_calling
+        agent_strategy_provider_name: langgenius/agent/agent
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          window:
+            enabled: true
+            size: 50
+        meta:
+          minimum_dify_version: null
+          version: 0.0.2
+        plugin_unique_identifier: langgenius/agent:0.0.21@74345c311f27b01bb49d8ccd3dcf78c18773a6ca16bf6c561f999b9dae47a55e
+        selected: false
+        title: Agent
+        tool_node_version: '2'
+        type: agent
+      height: 196
+      id: '1759637135573'
+      position:
+        x: 2868
+        y: 560.9150388691853
+      positionAbsolute:
+        x: 2868
+        y: 560.9150388691853
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            model_name: Claude 4.5 Sonnet
+            temperature: 0.7
+          mode: chat
+          name: anthropic claude
+          provider: langgenius/bedrock/bedrock
+        prompt_template:
+        - id: dba71ae1-ce8f-49c0-aff4-8c22a7554d74
+          role: system
+          text: '帮忙理解用户的意图和输出。
+
+
+            注意：并不是所有网页都需要登陆，除非用户明确说要登陆，则识别为登陆意图'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              intention:
+                description: 用户意图，比如登陆某页面(login_to_url), 访问某页面(browse_url), 填写表单(fill_form),
+                  操作浏览器(interact_browser)
+                enum:
+                - login_to_url
+                - browse_url
+                - fill_form
+                - interact_browser
+                type: string
+              login_url:
+                description: 登录页面的URL，仅仅在login_to_url意图时有效，例如：小红书=https://www.xiaohongshu.com/explore
+                type: string
+            required:
+            - intention
+            type: object
+        structured_output_enabled: true
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1759637686203'
+      position:
+        x: 1781
+        y: 384
+      positionAbsolute:
+        x: 1781
+        y: 384
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\n\ndef main(arg1: str):\n    output_llm = json.loads(arg1)\n\
+          \    \n    return {\n        \"intention\": output_llm.get(\"intention\"\
+          ),\n        \"login_url\": output_llm.get(\"login_url\", \"\")\n    }\n"
+        code_language: python3
+        outputs:
+          intention:
+            children: null
+            type: string
+          login_url:
+            children: null
+            type: string
+        selected: false
+        title: Code 2
+        type: code
+        variables:
+        - value_selector:
+          - '1759637686203'
+          - text
+          value_type: string
+          variable: arg1
+      height: 52
+      id: '1759637943459'
+      position:
+        x: 2115.978143263769
+        y: 384
+      positionAbsolute:
+        x: 2115.978143263769
+        y: 384
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 4c5cb064-28c5-4afb-9f73-f8f99e7b6d15
+            value: login_to_url
+            varType: string
+            variable_selector:
+            - '1759637943459'
+            - intention
+          - comparison_operator: not empty
+            id: 54d1fb13-7b5f-485e-b584-0e1f0787f038
+            value: ''
+            varType: string
+            variable_selector:
+            - '1759637943459'
+            - login_url
+          id: 'true'
+          logical_operator: and
+        selected: false
+        title: IF/ELSE 2
+        type: if-else
+      height: 150
+      id: '1759638352519'
+      position:
+        x: 2483.9320238269556
+        y: 384
+      positionAbsolute:
+        x: 2483.9320238269556
+        y: 384
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        selected: false
+        template: '已经根据要求初始化了浏览器环境(session_id={{ session_id }}）。
+
+
+          如果需要人工介入如扫码登陆， 可以点击 {{live_view_url}} 访问该虚拟环境。'
+        title: Template
+        type: template-transform
+        variables:
+        - value_selector:
+          - conversation
+          - browser_session_id
+          value_type: string
+          variable: session_id
+        - value_selector:
+          - conversation
+          - live_view_url
+          value_type: string
+          variable: live_view_url
+      height: 52
+      id: '1759638465737'
+      position:
+        x: 3208.4593995459045
+        y: 238.49963028349566
+      positionAbsolute:
+        x: 3208.4593995459045
+        y: 238.49963028349566
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1759638465737.output#}}'
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 103
+      id: '1759638627349'
+      position:
+        x: 3549.764350083195
+        y: 238.49963028349566
+      positionAbsolute:
+        x: 3549.764350083195
+        y: 238.49963028349566
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1759637135573.text#}}'
+        selected: false
+        title: Answer 2
+        type: answer
+        variables: []
+      height: 103
+      id: '1759638692143'
+      position:
+        x: 3222.3599094284996
+        y: 560.9150388691853
+      positionAbsolute:
+        x: 3222.3599094284996
+        y: 560.9150388691853
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: 你是一位browser Agent，擅长连接远程browser session进行交互。首次交互时请总是先查看远程浏览器的当前页面内容
+          maximum_iterations:
+            type: constant
+            value: 20
+          model:
+            type: constant
+            value:
+              completion_params:
+                model_name: Claude 4.5 Sonnet
+              mode: chat
+              model: anthropic claude
+              model_type: llm
+              provider: langgenius/bedrock/bedrock
+              type: model-selector
+          query:
+            type: constant
+            value: '{{#sys.query#}}'
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: 'A managed browser automation tool for web interactions.
+                  Supports opening pages, searching, extracting content, filling forms,
+                  and executing JavaScript.**Notice:** The script must be written
+                  either as: 1. **A single JavaScript expression** (e.g., `document.body.scrollHeight`)
+                  2. **An arrow function** `() => { ... }` if multiple statements
+                  are required. **Do not use `return` at the top level.** Use `return`
+                  only inside an arrow function. Examples: ✅ `document.title` ✅ `()
+                  => { window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;
+                  }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`'
+              parameters:
+                action:
+                  auto: 1
+                  value: null
+                form_data:
+                  auto: 1
+                  value: null
+                query:
+                  auto: 1
+                  value: null
+                script:
+                  auto: 1
+                  value: null
+                url:
+                  auto: 1
+                  value: null
+                wait_time:
+                  auto: 1
+                  value: null
+              provider_name: langgenius/aws_tools/aws_tools
+              provider_show_name: langgenius/aws_tools/aws_tools
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: The action to perform with the browser tool
+                  ja_JP: The action to perform with the browser tool
+                  pt_BR: A ação a ser executada com a ferramenta do navegador
+                  zh_Hans: 使用浏览器工具执行的操作
+                label:
+                  en_US: Action
+                  ja_JP: Action
+                  pt_BR: Ação
+                  zh_Hans: 操作
+                llm_description: 'The specific browser action to perform: browse_url
+                  (visit a webpage), search_web (search the internet), extract_content
+                  (get page text), fill_form (interact with forms), execute_script
+                  (run JavaScript)'
+                max: null
+                min: null
+                name: action
+                options:
+                - icon: ''
+                  label:
+                    en_US: Browse URL
+                    ja_JP: Browse URL
+                    pt_BR: Navegar URL
+                    zh_Hans: 浏览网址
+                  value: browse_url
+                - icon: ''
+                  label:
+                    en_US: Search Web
+                    ja_JP: Search Web
+                    pt_BR: Pesquisar Web
+                    zh_Hans: 网页搜索
+                  value: search_web
+                - icon: ''
+                  label:
+                    en_US: Extract Content
+                    ja_JP: Extract Content
+                    pt_BR: Extrair Conteúdo
+                    zh_Hans: 提取内容
+                  value: extract_content
+                - icon: ''
+                  label:
+                    en_US: Fill Form
+                    ja_JP: Fill Form
+                    pt_BR: Preencher Formulário
+                    zh_Hans: 填写表单
+                  value: fill_form
+                - icon: ''
+                  label:
+                    en_US: Execute Script
+                    ja_JP: Execute Script
+                    pt_BR: Executar Script
+                    zh_Hans: 执行脚本
+                  value: execute_script
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: select
+              - auto_generate: null
+                default: null
+                form: form
+                human_description:
+                  en_US: Browser Session Id
+                  ja_JP: Browser Session Id
+                  pt_BR: Browser Session Id
+                  zh_Hans: Browser Session Id
+                label:
+                  en_US: Browser Session Id
+                  ja_JP: Browser Session Id
+                  pt_BR: Browser Session Id
+                  zh_Hans: Browser Session Id
+                llm_description: The Browser Session Id for browser interaction environment
+                max: null
+                min: null
+                name: browser_session_id
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: us-west-2
+                form: form
+                human_description:
+                  en_US: AWS Region
+                  ja_JP: AWS Region
+                  pt_BR: AWS Region
+                  zh_Hans: AWS Region
+                label:
+                  en_US: AWS Region
+                  ja_JP: AWS Region
+                  pt_BR: AWS Region
+                  zh_Hans: AWS Region
+                llm_description: The aws region for Browser Session
+                max: null
+                min: null
+                name: aws_region
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: The URL to browse or interact with
+                  ja_JP: The URL to browse or interact with
+                  pt_BR: A URL para navegar ou interagir
+                  zh_Hans: 要浏览或交互的网址
+                label:
+                  en_US: URL
+                  ja_JP: URL
+                  pt_BR: URL
+                  zh_Hans: 网址
+                llm_description: The target URL for browse_url, extract_content, or
+                  fill_form actions. Optional for extract_content, fill_form, and
+                  execute_script if you want to work with the current page
+                max: null
+                min: null
+                name: url
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: Search query for web search
+                  ja_JP: Search query for web search
+                  pt_BR: Consulta de pesquisa para busca na web
+                  zh_Hans: 网页搜索的查询语句
+                label:
+                  en_US: Search Query
+                  ja_JP: Search Query
+                  pt_BR: Consulta de Pesquisa
+                  zh_Hans: 搜索查询
+                llm_description: The search query string when using search_web action
+                max: null
+                min: null
+                name: query
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: JSON string containing form field data to fill
+                  ja_JP: JSON string containing form field data to fill
+                  pt_BR: String JSON contendo dados de campo de formulário para preencher
+                  zh_Hans: 包含要填写的表单字段数据的JSON字符串
+                label:
+                  en_US: Form Data
+                  ja_JP: Form Data
+                  pt_BR: Dados do Formulário
+                  zh_Hans: 表单数据
+                llm_description: JSON formatted string containing form field names
+                  and values to fill when using fill_form action
+                max: null
+                min: null
+                name: form_data
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: 3
+                form: llm
+                human_description:
+                  en_US: 'Time to wait for page to load (default: 3 seconds)'
+                  ja_JP: 'Time to wait for page to load (default: 3 seconds)'
+                  pt_BR: 'Tempo para aguardar o carregamento da página (padrão: 3
+                    segundos)'
+                  zh_Hans: 等待页面加载的时间（默认：3秒）
+                label:
+                  en_US: Wait Time (seconds)
+                  ja_JP: Wait Time (seconds)
+                  pt_BR: Tempo de Espera (segundos)
+                  zh_Hans: 等待时间（秒）
+                llm_description: Number of seconds to wait for page loading and JavaScript
+                  execution
+                max: null
+                min: null
+                name: wait_time
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: number
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: JavaScript code to execute on the webpage
+                  ja_JP: JavaScript code to execute on the webpage
+                  pt_BR: Código JavaScript para executar na página web
+                  zh_Hans: 在网页上执行的JavaScript代码
+                label:
+                  en_US: JavaScript Code
+                  ja_JP: JavaScript Code
+                  pt_BR: Código JavaScript
+                  zh_Hans: JavaScript 代码
+                llm_description: JavaScript code to execute when using execute_script
+                  action
+                max: null
+                min: null
+                name: script
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              settings:
+                aws_region:
+                  value:
+                    type: mixed
+                    value: us-east-1
+                browser_session_id:
+                  value:
+                    type: mixed
+                    value: '{{#conversation.browser_session_id#}}'
+              tool_description: 'A managed browser automation tool for web interactions.
+                Supports opening pages, searching, extracting content, filling forms,
+                and executing JavaScript.**Notice:** The script must be written either
+                as: 1. **A single JavaScript expression** (e.g., `document.body.scrollHeight`)
+                2. **An arrow function** `() => { ... }` if multiple statements are
+                required. **Do not use `return` at the top level.** Use `return` only
+                inside an arrow function. Examples: ✅ `document.title` ✅ `() => {
+                window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;
+                }` ❌ `window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;`'
+              tool_label: AgentCore Browser Tool
+              tool_name: agentcore-browser-tool
+              type: builtin
+        agent_strategy_label: FunctionCalling
+        agent_strategy_name: function_calling
+        agent_strategy_provider_name: langgenius/agent/agent
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          window:
+            enabled: true
+            size: 50
+        meta:
+          minimum_dify_version: null
+          version: 0.0.2
+        plugin_unique_identifier: langgenius/agent:0.0.21@74345c311f27b01bb49d8ccd3dcf78c18773a6ca16bf6c561f999b9dae47a55e
+        selected: false
+        title: Agent-2
+        tool_node_version: '2'
+        type: agent
+      height: 196
+      id: '17596387563950'
+      position:
+        x: 785
+        y: 680.0175840044952
+      positionAbsolute:
+        x: 785
+        y: 680.0175840044952
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#17596387563950.text#}}'
+        selected: false
+        title: Answer 4
+        type: answer
+        variables: []
+      height: 103
+      id: '1759638915389'
+      position:
+        x: 1127.8368355026012
+        y: 680.0175840044952
+      positionAbsolute:
+        x: 1127.8368355026012
+        y: 680.0175840044952
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"创建Browser Session","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1759668636260'
+      position:
+        x: 785
+        y: 245.08944835962296
+      positionAbsolute:
+        x: 785
+        y: 245.08944835962296
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 128
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"复用已经创建好的Browser session，执行Agent Node，不断和浏览器交互","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 128
+      id: '1759668674124'
+      position:
+        x: 785
+        y: 553.0901880825381
+      positionAbsolute:
+        x: 785
+        y: 553.0901880825381
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"提取Browser session id","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1759668714722'
+      position:
+        x: 1122.2150727902608
+        y: 245.08944835962296
+      positionAbsolute:
+        x: 1122.2150727902608
+        y: 245.08944835962296
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 105
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"把Browser_session_id存贮在会话变量中","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 105
+      id: '1759668781901'
+      position:
+        x: 1451.2756921523494
+        y: 245.08944835962305
+      positionAbsolute:
+        x: 1451.2756921523494
+        y: 245.08944835962305
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 103
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"识别用户的意图+识别URL","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 256
+      height: 103
+      id: '1759668828529'
+      position:
+        x: 1781
+        y: 245.08944835962296
+      positionAbsolute:
+        x: 1781
+        y: 245.08944835962296
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 256
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"解析大模型的输出","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1759668896193'
+      position:
+        x: 2115.978143263769
+        y: 249.038175791968
+      positionAbsolute:
+        x: 2115.978143263769
+        y: 249.038175791968
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 106
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"如果是登陆需求，需要人工介入，导航到login URL","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 106
+      id: '1759668925395'
+      position:
+        x: 2868
+        y: 113.20195211929783
+      positionAbsolute:
+        x: 2868
+        y: 113.20195211929783
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 199
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"整理格式，返回浏览器的live view链接。这个live view需要额外部署一个web服务(https://github.com/ybalbert001/agentcore-browser-viewer)","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textStyle":"font-size:
+          16px;","textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 244
+      height: 199
+      id: '1759669012959'
+      position:
+        x: 3208.4593995459045
+        y: -9.306819785057797
+      positionAbsolute:
+        x: 3208.4593995459045
+        y: -9.306819785057797
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 244
+    - data:
+        author: ybalbert
+        desc: ''
+        height: 105
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"执行Agent Node，不断和浏览器交互","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1,"textStyle":"font-size:
+          16px;"}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 105
+      id: '1759669120140'
+      position:
+        x: 2863.603870454435
+        y: 424.0984252925994
+      positionAbsolute:
+        x: 2863.603870454435
+        y: 424.0984252925994
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The function of Browser Session Manager
+            ja_JP: The function of Browser Session Manager
+            pt_BR: The function of Browser Session Manager
+            zh_Hans: Browser Session Manager的功能
+          label:
+            en_US: function_name
+            ja_JP: function_name
+            pt_BR: function_name
+            zh_Hans: 功能名称
+          llm_description: The specific fuction name of Browser Session Manager
+          max: null
+          min: null
+          name: function_name
+          options:
+          - icon: ''
+            label:
+              en_US: Initialize Browser Session
+              ja_JP: Initialize Browser Session
+              pt_BR: Inicializar Sessão do Navegador
+              zh_Hans: 初始化浏览器会话
+            value: init_browser_session
+          - icon: ''
+            label:
+              en_US: Close Browser Session
+              ja_JP: Close Browser Session
+              pt_BR: Fechar Sessão do Navegador
+              zh_Hans: 关闭浏览器会话
+            value: close_browser_session
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 7200
+          form: form
+          human_description:
+            en_US: Browser Session timeout seconds
+            ja_JP: Browser Session timeout seconds
+            pt_BR: Browser Session timeout seconds
+            zh_Hans: 浏览器环境Session过期时间
+          label:
+            en_US: Browser Session timeout seconds
+            ja_JP: Browser Session timeout seconds
+            pt_BR: Browser Session timeout seconds
+            zh_Hans: 浏览器环境Session过期时间
+          llm_description: The timeout seconds of browser interaction session
+          max: null
+          min: null
+          name: session_timeout_seconds
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Browser Session Id
+            ja_JP: Browser Session Id
+            pt_BR: Browser Session Id
+            zh_Hans: Browser Session Id
+          label:
+            en_US: Browser Session Id
+            ja_JP: Browser Session Id
+            pt_BR: Browser Session Id
+            zh_Hans: Browser Session Id
+          llm_description: The session id of browser interaction environment
+          max: null
+          min: null
+          name: session_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: us-west-2
+          form: form
+          human_description:
+            en_US: AWS region where the Bedrock Knowledge Base is located
+            ja_JP: AWS region where the Bedrock Knowledge Base is located
+            pt_BR: AWS region where the Bedrock Knowledge Base is located
+            zh_Hans: Bedrock知识库所在的AWS区域
+          label:
+            en_US: AWS Region
+            ja_JP: AWS Region
+            pt_BR: AWS Region
+            zh_Hans: AWS 区域
+          llm_description: AWS region where the Bedrock Knowledge Base is located
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          aws_region: ''
+          function_name: ''
+          session_id: ''
+          session_timeout_seconds: ''
+        provider_id: langgenius/aws_tools/aws_tools
+        provider_name: langgenius/aws_tools/aws_tools
+        provider_type: builtin
+        selected: false
+        title: AgentCore Browser Session Manager
+        tool_configurations:
+          aws_region:
+            type: mixed
+            value: us-east-1
+          session_id:
+            type: mixed
+            value: null
+          session_timeout_seconds:
+            type: constant
+            value: 7200
+        tool_description: 'Browser Session Manager is for launching or shutting down
+          browser session. '
+        tool_label: AgentCore Browser Session Manager
+        tool_name: agentcore-browser-session-manager
+        tool_node_version: '2'
+        tool_parameters:
+          function_name:
+            type: constant
+            value: init_browser_session
+        type: tool
+      height: 140
+      id: '1759669476040'
+      position:
+        x: 785
+        y: 384
+      positionAbsolute:
+        x: 785
+        y: 384
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The action to perform with the browser tool
+            ja_JP: The action to perform with the browser tool
+            pt_BR: A ação a ser executada com a ferramenta do navegador
+            zh_Hans: 使用浏览器工具执行的操作
+          label:
+            en_US: Action
+            ja_JP: Action
+            pt_BR: Ação
+            zh_Hans: 操作
+          llm_description: 'The specific browser action to perform: browse_url (visit
+            a webpage), search_web (search the internet), extract_content (get page
+            text), fill_form (interact with forms), execute_script (run JavaScript)'
+          max: null
+          min: null
+          name: action
+          options:
+          - icon: ''
+            label:
+              en_US: Browse URL
+              ja_JP: Browse URL
+              pt_BR: Navegar URL
+              zh_Hans: 浏览网址
+            value: browse_url
+          - icon: ''
+            label:
+              en_US: Search Web
+              ja_JP: Search Web
+              pt_BR: Pesquisar Web
+              zh_Hans: 网页搜索
+            value: search_web
+          - icon: ''
+            label:
+              en_US: Extract Content
+              ja_JP: Extract Content
+              pt_BR: Extrair Conteúdo
+              zh_Hans: 提取内容
+            value: extract_content
+          - icon: ''
+            label:
+              en_US: Fill Form
+              ja_JP: Fill Form
+              pt_BR: Preencher Formulário
+              zh_Hans: 填写表单
+            value: fill_form
+          - icon: ''
+            label:
+              en_US: Execute Script
+              ja_JP: Execute Script
+              pt_BR: Executar Script
+              zh_Hans: 执行脚本
+            value: execute_script
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Browser Session Id
+            ja_JP: Browser Session Id
+            pt_BR: Browser Session Id
+            zh_Hans: Browser Session Id
+          label:
+            en_US: Browser Session Id
+            ja_JP: Browser Session Id
+            pt_BR: Browser Session Id
+            zh_Hans: Browser Session Id
+          llm_description: The Browser Session Id for browser interaction environment
+          max: null
+          min: null
+          name: browser_session_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: us-west-2
+          form: form
+          human_description:
+            en_US: AWS Region
+            ja_JP: AWS Region
+            pt_BR: AWS Region
+            zh_Hans: AWS Region
+          label:
+            en_US: AWS Region
+            ja_JP: AWS Region
+            pt_BR: AWS Region
+            zh_Hans: AWS Region
+          llm_description: The aws region for Browser Session
+          max: null
+          min: null
+          name: aws_region
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The URL to browse or interact with
+            ja_JP: The URL to browse or interact with
+            pt_BR: A URL para navegar ou interagir
+            zh_Hans: 要浏览或交互的网址
+          label:
+            en_US: URL
+            ja_JP: URL
+            pt_BR: URL
+            zh_Hans: 网址
+          llm_description: The target URL for browse_url, extract_content, or fill_form
+            actions. Optional for extract_content, fill_form, and execute_script if
+            you want to work with the current page
+          max: null
+          min: null
+          name: url
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Search query for web search
+            ja_JP: Search query for web search
+            pt_BR: Consulta de pesquisa para busca na web
+            zh_Hans: 网页搜索的查询语句
+          label:
+            en_US: Search Query
+            ja_JP: Search Query
+            pt_BR: Consulta de Pesquisa
+            zh_Hans: 搜索查询
+          llm_description: The search query string when using search_web action
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: JSON string containing form field data to fill
+            ja_JP: JSON string containing form field data to fill
+            pt_BR: String JSON contendo dados de campo de formulário para preencher
+            zh_Hans: 包含要填写的表单字段数据的JSON字符串
+          label:
+            en_US: Form Data
+            ja_JP: Form Data
+            pt_BR: Dados do Formulário
+            zh_Hans: 表单数据
+          llm_description: JSON formatted string containing form field names and values
+            to fill when using fill_form action
+          max: null
+          min: null
+          name: form_data
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 3
+          form: llm
+          human_description:
+            en_US: 'Time to wait for page to load (default: 3 seconds)'
+            ja_JP: 'Time to wait for page to load (default: 3 seconds)'
+            pt_BR: 'Tempo para aguardar o carregamento da página (padrão: 3 segundos)'
+            zh_Hans: 等待页面加载的时间（默认：3秒）
+          label:
+            en_US: Wait Time (seconds)
+            ja_JP: Wait Time (seconds)
+            pt_BR: Tempo de Espera (segundos)
+            zh_Hans: 等待时间（秒）
+          llm_description: Number of seconds to wait for page loading and JavaScript
+            execution
+          max: null
+          min: null
+          name: wait_time
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: JavaScript code to execute on the webpage
+            ja_JP: JavaScript code to execute on the webpage
+            pt_BR: Código JavaScript para executar na página web
+            zh_Hans: 在网页上执行的JavaScript代码
+          label:
+            en_US: JavaScript Code
+            ja_JP: JavaScript Code
+            pt_BR: Código JavaScript
+            zh_Hans: JavaScript 代码
+          llm_description: JavaScript code to execute when using execute_script action
+          max: null
+          min: null
+          name: script
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          action: ''
+          aws_region: ''
+          browser_session_id: ''
+          form_data: ''
+          query: ''
+          script: ''
+          url: ''
+          wait_time: ''
+        provider_id: langgenius/aws_tools/aws_tools
+        provider_name: langgenius/aws_tools/aws_tools
+        provider_type: builtin
+        selected: false
+        title: AgentCore Browser Tool
+        tool_configurations:
+          aws_region:
+            type: mixed
+            value: us-east-1
+          browser_session_id:
+            type: mixed
+            value: '{{#conversation.browser_session_id#}}'
+        tool_description: 'A managed browser automation tool for web interactions.
+          Supports opening pages, searching, extracting content, filling forms, and
+          executing JavaScript.**Notice:** The script must be written either as: 1.
+          **A single JavaScript expression** (e.g., `document.body.scrollHeight`)
+          2. **An arrow function** `() => { ... }` if multiple statements are required.
+          **Do not use `return` at the top level.** Use `return` only inside an arrow
+          function. Examples: ✅ `document.title` ✅ `() => { window.scrollTo(0, document.body.scrollHeight);
+          return document.body.scrollHeight; }` ❌ `window.scrollTo(0, document.body.scrollHeight);
+          return document.body.scrollHeight;`'
+        tool_label: AgentCore Browser Tool
+        tool_name: agentcore-browser-tool
+        tool_node_version: '2'
+        tool_parameters:
+          action:
+            type: constant
+            value: browse_url
+          form_data:
+            type: mixed
+            value: null
+          query:
+            type: mixed
+            value: null
+          script:
+            type: mixed
+            value: null
+          url:
+            type: mixed
+            value: '{{#1759637943459.login_url#}}'
+          wait_time:
+            type: constant
+            value: 3
+        type: tool
+      height: 114
+      id: '1759669516204'
+      position:
+        x: 2868
+        y: 238.49963028349566
+      positionAbsolute:
+        x: 2868
+        y: 238.49963028349566
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -821.803927570927
+      y: 131.37455315585254
+      zoom: 0.46427516476768715
+  rag_pipeline_variables: []

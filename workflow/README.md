@@ -71,3 +71,12 @@ https://github.com/user-attachments/assets/06612c09-0773-41e3-9a34-31d3382fc4d1
 **18. Extract Frames from GIF As LLM input**
 
 https://github.com/user-attachments/assets/bf92fed0-4a68-45c0-90d4-02b2c546bd0e
+
+**19. Interact with remote Browser based on AWS AgentCore Browser Tool**
+https://github.com/user-attachments/assets/9d9778ca-2367-4676-ac4d-fcab31a0f69b
+
+**20. Manage your memory based on AWS AgentCore Memory**
+https://github.com/user-attachments/assets/fe81489d-d5f2-4bae-8463-ad2a0d4bf4a8
+
+**21. Execute Code/CMD in an isolated sandbox based on AWS AgentCore Code Interpreter**
+https://github.com/user-attachments/assets/3e1c86d0-8dca-43fd-bbb8-0caf157b2ea2

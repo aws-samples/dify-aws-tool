@@ -60,6 +60,9 @@ This repository provides the source code for three plugins in [Dify](https://git
 | ASR_Transcribe | Transcribe audio to text | [DSL](./workflow/ASR_Transcribe.yml) | | [ybalbert](ybalbert@amazon.com) |
 | Image(Text)-2-Image Search | Image2Image & Text2Image Search | [DSL](./workflow/opensearch_img_search.yml) | OpenSearch Knn Retriever | [ybalbert](ybalbert@amazon.com) |
 | MCP Server Integration  | MCP Server Integration Demo | [DSL](./workflow/mcp_server_integration.yml) |  | [ybalbert](ybalbert@amazon.com) |
+| Chat-With-Browser | Interact with Remote Browser based on AgentCore Browser Tool | [DSL](./workflow/chat-with-browser.yml) | [agentcore-browser-viewer](https://github.com/ybalbert001/agentcore-browser-viewer) | [ybalbert](ybalbert@amazon.com) |
+| Manage-Memory-By-yourself | Manage Your memory by yourself based on AgentCore Memory | [DSL1](./workflow/AgentCore-Memory-1.yml)  [DSL2](./workflow/AgentCore-Memory-2.yml) | | [liniyuan](liniyuan@amazon.com) |
+| Execute-Code/Command | Execute code and commands in an isolated managed sandbox based on AgentCore Code Interpreter | [DSL](./workflow/code_interpreter_demo.yml) | | [runpeng](runpeng@amazon.com) |
 
 > 💡 For more workflows, check out community websites: [dify101.com](https://dify101.com/), [difyshare.com](https://difyshare.com/), [Awesome-Dify-Workflow](https://github.com/svcvit/Awesome-Dify-Workflow)
 
@@ -80,6 +83,9 @@ This repository provides the source code for three plugins in [Dify](https://git
 | AWS Bedrock Nova Reel | SAAS | Generate videos based on Amazon Nova Reel | | [alexwuu](alexwuu@amazon.com) |
 | OpenSearch Knn Retriever | PAAS | Retrieve data from OpenSearch using KNN method | [Notebook](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/search_img_by_img) | [ybalbert](ybalbert@amazon.com) |
 | Frame Extractor | PAAS | Extract Frame Images from GIF as LLM Input |  | [ybalbert](ybalbert@amazon.com) |
+| AgentCore Browser | SAAS | Interact with remote managed browser session | | [wanglx](wanglx@amazon.com) |
+| AgentCore Memory | SAAS | Record/Retrieve short-term/long term memory with managed service | | [liniyuan](liniyuan@amazon.com) |
+| AgentCore Code Interpreter | SAAS | Execute code and commands in an isolated managed sandbox | | [runpeng](runpeng@amazon.com) |
 
 ### Model Providers
 
