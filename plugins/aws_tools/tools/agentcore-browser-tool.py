@@ -38,7 +38,6 @@ class AgentcoreBrowserToolTool(Tool):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._setup_temp_dir()
-        self._current_session_id = None
     
     def _setup_temp_dir(self):
         """设置 Playwright 临时目录"""
@@ -72,7 +71,6 @@ class AgentcoreBrowserToolTool(Tool):
     async def _init_browser_session(self, browser_session_id:str, aws_region:str) -> dict:
         """Initialize AWS AgentCore Browser session"""
         try:
-            self._current_session_id = browser_session_id
             session = self._get_session(browser_session_id)
             
             if not session:
@@ -139,9 +137,6 @@ class AgentcoreBrowserToolTool(Tool):
     async def _cleanup_browser(self, session_id: str = None):
         """Clean up the browser session and all resources"""
         try:
-            if session_id is None:
-                session_id = self._current_session_id
-            
             if not session_id:
                 return
                 
@@ -155,10 +150,10 @@ class AgentcoreBrowserToolTool(Tool):
         except Exception:
             pass
     
-    async def _browse_url(self, url: str, wait_time: int = 3) -> dict:
+    async def _browse_url(self, browser_session_id:str, url: str, wait_time: int = 3) -> dict:
         """Browse a URL using existing browser session"""
         try:
-            session = self._get_session(self._current_session_id)
+            session = self._get_session(browser_session_id)
             page = session.get("page")
             
             if not page:
@@ -198,10 +193,10 @@ class AgentcoreBrowserToolTool(Tool):
                 "status": "Error occurred while browsing"
             }
     
-    async def _search_web(self, query: str, wait_time: int = 3) -> dict:
+    async def _search_web(self, browser_session_id:str, query: str, wait_time: int = 3) -> dict:
         """Perform web search using existing browser session"""
         try:
-            session = self._get_session(self._current_session_id)
+            session = self._get_session(browser_session_id)
             page = session.get("page")
             
             if not page:
@@ -262,10 +257,10 @@ class AgentcoreBrowserToolTool(Tool):
                 "status": "Error occurred during search"
             }
     
-    async def _extract_content(self, url: str = None, wait_time: int = 3) -> dict:
+    async def _extract_content(self, browser_session_id:str, url: str = None, wait_time: int = 3) -> dict:
         """Extract structured content using existing browser session"""
         try:
-            session = self._get_session(self._current_session_id)
+            session = self._get_session(browser_session_id)
             page = session.get("page")
             
             if not page:
@@ -352,10 +347,10 @@ class AgentcoreBrowserToolTool(Tool):
                 "status": "Error occurred while extracting content"
             }
     
-    async def _fill_form(self, url: str = None, form_data: str = "{}", wait_time: int = 3) -> dict:
+    async def _fill_form(self, browser_session_id:str, url: str = None, form_data: str = "{}", wait_time: int = 3) -> dict:
         """Fill form fields using existing browser session"""
         try:
-            session = self._get_session(self._current_session_id)
+            session = self._get_session(browser_session_id)
             page = session.get("page")
             
             if not page:
@@ -427,10 +422,10 @@ class AgentcoreBrowserToolTool(Tool):
                 "status": "Error occurred while filling form"
             }
     
-    async def _execute_script(self, url: str = None, script: str = "", wait_time: int = 3) -> dict:
+    async def _execute_script(self, browser_session_id:str, url: str = None, script: str = "", wait_time: int = 3) -> dict:
         """Execute JavaScript on a webpage using existing browser session"""
         try:
-            session = self._get_session(self._current_session_id)
+            session = self._get_session(browser_session_id)
             page = session.get("page")
             
             if not page:
@@ -487,7 +482,7 @@ class AgentcoreBrowserToolTool(Tool):
                         "error": "URL is required for browse_url action"
                     })
                     return
-                result = asyncio.run(self._browse_url(url, wait_time))
+                result = asyncio.run(self._browse_url(browser_session_id, url, wait_time))
                 
             elif action == "search_web":
             
@@ -497,15 +492,15 @@ class AgentcoreBrowserToolTool(Tool):
                         "error": "Query is required for search_web action"
                     })
                     return
-                result = asyncio.run(self._search_web(query, wait_time))
+                result = asyncio.run(self._search_web(browser_session_id, query, wait_time))
                 
             elif action == "extract_content":
             
-                result = asyncio.run(self._extract_content(url, wait_time))
+                result = asyncio.run(self._extract_content(browser_session_id, url, wait_time))
                 
             elif action == "fill_form":
             
-                result = asyncio.run(self._fill_form(url, form_data, wait_time))
+                result = asyncio.run(self._fill_form(browser_session_id, url, form_data, wait_time))
                 
             elif action == "execute_script":
             
@@ -515,7 +510,7 @@ class AgentcoreBrowserToolTool(Tool):
                         "error": "Script is required for execute_script action"
                     })
                     return
-                result = asyncio.run(self._execute_script(url, script, wait_time))
+                result = asyncio.run(self._execute_script(browser_session_id, url, script, wait_time))
                 
             else:
                 yield self.create_json_message({
