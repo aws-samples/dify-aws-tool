@@ -7,3 +7,4 @@ sacrebleu~=2.5.1
 Pillow~=11.2.1
 playwright>=1.49.0
 bedrock-agentcore~=0.1.4
+nest-asyncio~=1.6.0
