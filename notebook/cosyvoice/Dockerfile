@@ -15,7 +15,7 @@ RUN apt-get -y install sox libsox-dev
 RUN git lfs install
 RUN git clone https://www.modelscope.cn/iic/${MODEL_NAME}.git ${MODEL_DIR}
 
-RUN git clone --recursive https://gitee.com/maccf/CosyVoice.git
+RUN git clone --recursive https://github.com/FunAudioLLM/CosyVoice.git
 
 RUN pip3 install orjson
 RUN pip3 install boto3
