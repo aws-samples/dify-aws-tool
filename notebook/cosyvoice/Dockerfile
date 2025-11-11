@@ -20,6 +20,12 @@ RUN git clone --recursive https://gitee.com/maccf/CosyVoice.git
 RUN pip3 install orjson
 RUN pip3 install boto3
 RUN pip3 install ffmpeg-python
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+    
 RUN cd CosyVoice && pip3 install -r requirements.txt
 
 RUN ls
