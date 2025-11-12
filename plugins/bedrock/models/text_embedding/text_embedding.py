@@ -95,7 +95,7 @@ class BedrockTextEmbeddingModel(TextEmbeddingModel):
                     "taskType": "SINGLE_EMBEDDING",
                     "singleEmbeddingParams": {
                         "embeddingPurpose": embedding_purpose,
-                        "embeddingDimension": 3072,
+                        "embeddingDimension": 1024,
                         "text": {
                             "truncationMode": "END",
                             "value": text
