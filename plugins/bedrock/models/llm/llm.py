@@ -1069,7 +1069,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :return:
         """
         if 'auth_method' not in credentials:
-            raise CredentialsValidateFailedError("no auth_method specified in {credentials}.")
+            raise CredentialsValidateFailedError("Authentication method 'auth_method' is missing in credentials.")
 
         try:
             if credentials['auth_method'] == 'IAM_Role':
@@ -1081,7 +1081,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                 if credentials['bedrock_api_key']:
                     return
 
-            raise CredentialsValidateFailedError(f"invalid credential of {credentials['auth_method']}, credentials: {credentials}")
+            raise CredentialsValidateFailedError(f"Invalid or incomplete credentials for auth_method: {credentials.get('auth_method')}")
         except Exception as ex:
             raise CredentialsValidateFailedError(str(ex))
 
