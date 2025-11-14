@@ -396,8 +396,32 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         if model_info["support_system_prompts"] and system and len(system) > 0:
             parameters["system"] = system
 
-        if model_info["support_tool_use"] and tools:
-            parameters["toolConfig"] = self._convert_converse_tool_config(tools=tools)
+        # Check if toolConfig is needed
+        # AWS Bedrock requires toolConfig when messages contain toolUse or toolResult blocks
+        # even if no tools are passed in the current invocation (e.g., in multi-turn agent conversations)
+        needs_tool_config = False
+        if model_info["support_tool_use"]:
+            if tools:
+                # Tools are provided, definitely need toolConfig
+                needs_tool_config = True
+            else:
+                # Check if message history contains tool-related content
+                for msg in prompt_messages:
+                    if isinstance(msg, AssistantPromptMessage) and msg.tool_calls:
+                        needs_tool_config = True
+                        break
+                    if isinstance(msg, ToolPromptMessage):
+                        needs_tool_config = True
+                        break
+
+        if needs_tool_config:
+            if tools:
+                # Use full toolConfig with tool definitions
+                parameters["toolConfig"] = self._convert_converse_tool_config(tools=tools)
+            else:
+                # Provide empty toolConfig to satisfy Bedrock API requirements
+                # when messages contain tool content but no new tools are provided
+                parameters["toolConfig"] = {"tools": []}
         try:
             # for issue #10976
             conversations_list = parameters["messages"]
@@ -705,7 +729,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
             inference_config["temperature"] = model_parameters["temperature"]
 
         if "top_p" in model_parameters:
-            inference_config["topP"] = model_parameters["temperature"]
+            inference_config["topP"] = model_parameters["top_p"]
 
         if stop:
             inference_config["stopSequences"] = stop
