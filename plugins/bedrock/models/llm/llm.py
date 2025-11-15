@@ -396,32 +396,43 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         if model_info["support_system_prompts"] and system and len(system) > 0:
             parameters["system"] = system
 
-        # Check if toolConfig is needed
+        # Check if message history contains tool-related content
         # AWS Bedrock requires toolConfig when messages contain toolUse or toolResult blocks
-        # even if no tools are passed in the current invocation (e.g., in multi-turn agent conversations)
-        needs_tool_config = False
+        has_tool_content_in_messages = False
+        if model_info["support_tool_use"]:
+            for msg in prompt_messages:
+                if isinstance(msg, AssistantPromptMessage) and msg.tool_calls:
+                    has_tool_content_in_messages = True
+                    break
+                if isinstance(msg, ToolPromptMessage):
+                    has_tool_content_in_messages = True
+                    break
+
+        # Add toolConfig based on tools and message history
         if model_info["support_tool_use"]:
             if tools:
-                # Tools are provided, definitely need toolConfig
-                needs_tool_config = True
-            else:
-                # Check if message history contains tool-related content
-                for msg in prompt_messages:
-                    if isinstance(msg, AssistantPromptMessage) and msg.tool_calls:
-                        needs_tool_config = True
-                        break
-                    if isinstance(msg, ToolPromptMessage):
-                        needs_tool_config = True
-                        break
-
-        if needs_tool_config:
-            if tools:
-                # Use full toolConfig with tool definitions
+                # Normal case: tools provided
                 parameters["toolConfig"] = self._convert_converse_tool_config(tools=tools)
-            else:
-                # Provide empty toolConfig to satisfy Bedrock API requirements
-                # when messages contain tool content but no new tools are provided
-                parameters["toolConfig"] = {"tools": []}
+            elif has_tool_content_in_messages:
+                # WORKAROUND for Dify Agent issue:
+                # In the last iteration, Dify sets tools=[] but messages contain tool history
+                # AWS Bedrock requires toolConfig.tools to have at least 1 element
+                # Create a placeholder tool that LLM won't call, allowing agent to finish gracefully
+                logger.info(
+                    "Message history contains tool calls but no tools provided. "
+                    "Creating placeholder tool to satisfy AWS Bedrock API requirements. "
+                    "This prevents the agent from making further tool calls."
+                )
+                placeholder_tool = PromptMessageTool(
+                    name="__no_more_tools_available__",
+                    description="This is a placeholder tool. No more tools are available for this conversation. Please provide a final answer based on the information already gathered.",
+                    parameters={
+                        "type": "object",
+                        "properties": {},
+                        "required": []
+                    }
+                )
+                parameters["toolConfig"] = self._convert_converse_tool_config(tools=[placeholder_tool])
         try:
             # for issue #10976
             conversations_list = parameters["messages"]
