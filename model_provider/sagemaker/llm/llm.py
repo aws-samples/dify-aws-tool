@@ -135,55 +135,84 @@ class SageMakerLargeLanguageModel(LargeLanguageModel):
         full_response = ""
         buffer = ""
         for chunk_bytes in resp:
-            buffer += chunk_bytes.decode("utf-8")
-            last_idx = 0
-            for match in re.finditer(r"^data:\s*(.+?)(\n\n)", buffer):
-                try:
-                    data = json.loads(match.group(1).strip())
-                    last_idx = match.span()[1]
+            # Handle None or empty chunks from sporadic model output anomalies
+            if not chunk_bytes:
+                logger.warning("Received empty or None chunk from SageMaker stream, skipping...")
+                continue
 
-                    if "content" in data["choices"][0]["delta"]:
-                        chunk_content = data["choices"][0]["delta"]["content"]
-                        assistant_prompt_message = AssistantPromptMessage(content=chunk_content, tool_calls=[])
+            try:
+                chunk_json_str = chunk_bytes.decode("utf-8")
+            except (UnicodeDecodeError, AttributeError) as e:
+                logger.warning(f"Failed to decode chunk: {e}, skipping...")
+                continue
+            if chunk_json_str.startswith("data: "):
+                chunk_json_str = chunk_json_str[len("data: "):]
 
-                        if data["choices"][0]["finish_reason"] is not None:
-                            temp_assistant_prompt_message = AssistantPromptMessage(content=full_response, tool_calls=[])
-                            prompt_tokens = self._num_tokens_from_messages(messages=prompt_messages, tools=tools)
-                            completion_tokens = self._num_tokens_from_messages(
-                                messages=[temp_assistant_prompt_message], tools=[]
-                            )
-                            usage = self._calc_response_usage(
-                                model=model,
-                                credentials=credentials,
-                                prompt_tokens=prompt_tokens,
-                                completion_tokens=completion_tokens,
-                            )
+            buffer += chunk_json_str
+            try:
+                data = json.loads(buffer.strip())
+                chunk_content = ''
+                if not hasattr(self, '_reasoning_header_added'):
+                    self._reasoning_header_added = False
 
-                            yield LLMResultChunk(
-                                model=model,
-                                prompt_messages=prompt_messages,
-                                system_fingerprint=None,
-                                delta=LLMResultChunkDelta(
-                                    index=0,
-                                    message=assistant_prompt_message,
-                                    finish_reason=data["choices"][0]["finish_reason"],
-                                    usage=usage,
-                                ),
-                            )
-                        else:
-                            yield LLMResultChunk(
-                                model=model,
-                                prompt_messages=prompt_messages,
-                                system_fingerprint=None,
-                                delta=LLMResultChunkDelta(index=0, message=assistant_prompt_message),
-                            )
+                if "reasoning_content" in data["choices"][0]["delta"]:
+                    reasoning_content = data["choices"][0]["delta"]["reasoning_content"]
 
-                            full_response += chunk_content
-                except (json.JSONDecodeError, KeyError, IndexError) as e:
-                    logger.info("json parse exception, content: {}".format(match.group(1).strip()))
-                    pass
+                    if not self._reasoning_header_added:
+                        chunk_content = "<think>\n" + reasoning_content
+                        # Record that the marker has been added
+                        self._reasoning_header_added = True
+                    else:
+                        chunk_content = reasoning_content
 
-            buffer = buffer[last_idx:]
+                elif "content" in data["choices"][0]["delta"]:
+                    chunk_content = data["choices"][0]["delta"]["content"]
+
+                    if hasattr(self, '_reasoning_header_added') and self._reasoning_header_added:
+                        chunk_content = "\n</think>\n\n" + chunk_content
+                        delattr(self, '_reasoning_header_added')
+                else:
+                    continue  
+
+                assistant_prompt_message = AssistantPromptMessage(content=chunk_content, tool_calls=[])
+                if data["choices"][0]["finish_reason"] is not None:
+                    temp_assistant_prompt_message = AssistantPromptMessage(content=full_response, tool_calls=[])
+                    prompt_tokens = self._num_tokens_from_messages(messages=prompt_messages, tools=tools)
+                    completion_tokens = self._num_tokens_from_messages(
+                        messages=[temp_assistant_prompt_message], tools=[]
+                    )
+                    usage = self._calc_response_usage(
+                        model=model,
+                        credentials=credentials,
+                        prompt_tokens=prompt_tokens,
+                        completion_tokens=completion_tokens,
+                    )
+
+                    yield LLMResultChunk(
+                        model=model,
+                        prompt_messages=prompt_messages,
+                        system_fingerprint=None,
+                        delta=LLMResultChunkDelta(
+                            index=0,
+                            message=assistant_prompt_message,
+                            finish_reason=data["choices"][0]["finish_reason"],
+                            usage=usage,
+                        ),
+                    )
+                else:
+                    yield LLMResultChunk(
+                        model=model,
+                        prompt_messages=prompt_messages,
+                        system_fingerprint=None,
+                        delta=LLMResultChunkDelta(index=0, message=assistant_prompt_message),
+                    )
+
+                    full_response += chunk_content
+
+                buffer = ""
+            except (json.JSONDecodeError, KeyError, IndexError) as e:
+                logger.info("json parse exception, content: {}".format(buffer))
+                pass
 
     def _invoke(
         self,
