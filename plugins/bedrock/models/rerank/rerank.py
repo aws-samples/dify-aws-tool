@@ -97,10 +97,16 @@ class BedrockRerankModel(RerankModel):
 
         numberOfResults = min(len(text_sources) if top_n is None else top_n, len(text_sources))
 
-        body = json.dumps({
+        body_dict = {
             "query": query,
             "documents": docs
-        })
+        }
+
+        # Only add api_version for Cohere models
+        if "cohere" in model_id.lower():
+            body_dict["api_version"] = 2
+        
+        body = json.dumps(body_dict)
     
         response = bedrock_runtime.invoke_model(
             modelId=model_package_arn,
