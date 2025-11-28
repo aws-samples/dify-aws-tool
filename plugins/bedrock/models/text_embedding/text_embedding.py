@@ -63,9 +63,9 @@ class BedrockTextEmbeddingModel(TextEmbeddingModel):
             # Get the full ARN from the profile ID
             profile_info = get_inference_profile_info(inference_profile_id, credentials)
             model_package_arn = profile_info.get("inferenceProfileArn")
-            if not model_id:
+            if not model_package_arn:
                 raise InvokeError(f"Could not get ARN for inference profile {inference_profile_id}")
-            logger.info(f"Using inference profile ARN: {model_id}")
+            logger.info(f"Using inference profile ARN: {model_package_arn}")
             
             # Determine model prefix from underlying models
             underlying_models = profile_info.get("models", [])
@@ -80,6 +80,7 @@ class BedrockTextEmbeddingModel(TextEmbeddingModel):
                 raise InvokeError(f"No underlying models found in inference profile")
         else:
             # Traditional model - use model directly
+            model_package_arn = model
             model_prefix = model.split(".")[0]
             
         bedrock_runtime = get_bedrock_client("bedrock-runtime", credentials)
