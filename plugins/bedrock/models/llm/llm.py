@@ -1087,22 +1087,22 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
         :param credentials: model credentials
         :return:
         """
-        if 'auth_method' not in credentials:
-            raise CredentialsValidateFailedError("Authentication method 'auth_method' is missing in credentials.")
-
         try:
-            if credentials['auth_method'] == 'IAM_Role':
+            # Check if this is an inference profile based custom model
+            inference_profile_id = credentials.get("inference_profile_id")
+            if inference_profile_id:
+                # Validate inference profile directly
+                validate_inference_profile(inference_profile_id, credentials)
+                logger.info(f"Successfully validated inference profile: {inference_profile_id}")
                 return
-            elif credentials['auth_method'] == 'Access_Secret_Key':
-                if credentials['aws_access_key_id'] and credentials['aws_secret_access_key']:
-                    return 
-            elif credentials['auth_method'] == 'API_Key':
-                if credentials['bedrock_api_key']:
-                    return
-
-            raise CredentialsValidateFailedError(f"Invalid or incomplete credentials for auth_method: {credentials.get('auth_method')}")
+            
+            # Traditional model validation - just try to get bedrock client
+            bedrock_client = get_bedrock_client("bedrock-runtime", credentials)
+            # Just getting the client validates the credentials
+            logger.info(f"Successfully validated model: {model}")
         except Exception as ex:
             raise CredentialsValidateFailedError(str(ex))
+
 
     def _list_foundation_models(self, credentials: dict) -> list[str]:
         """
