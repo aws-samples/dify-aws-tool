@@ -21,7 +21,7 @@ parameter_rules:
       zh_Hans: 指定模型名称
       en_US: specify model name
     required: true
-    default: Nova Pro
+    default: Nova Lite V2
     options:
       - Nova Premier V1
       - Nova Pro V1 
