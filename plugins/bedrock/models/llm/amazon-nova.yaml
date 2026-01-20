@@ -23,10 +23,11 @@ parameter_rules:
     required: true
     default: Nova Pro
     options:
-      - Nova Premier
-      - Nova Pro
-      - Nova Lite
-      - Nova Micro
+      - Nova Premier V1
+      - Nova Pro V1 
+      - Nova Lite V1
+      - Nova Lite V2
+      - Nova Micro V1 
   - name: cross-region
     label:
       zh_Hans: 跨区域推理
