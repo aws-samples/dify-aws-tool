@@ -1,0 +1,71 @@
+#!/bin/bash
+# SGLang SageMaker 启动脚本（简化版 - 使用原生 SageMaker API）
+
+set -e
+
+# 环境变量配置
+base_dir="/opt/ml/model/"
+export SAGEMAKER_BIND_TO_PORT=${SAGEMAKER_BIND_TO_PORT:-8080}
+
+# 日志函数
+log() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"
+}
+
+log "SGLang SageMaker deployment (native SageMaker API support)"
+
+# 检查目录是否存在
+if [ ! -d "$base_dir" ]; then
+    log "ERROR: $base_dir directory does not exist"
+    exit 1
+fi
+
+# 查找模型目录
+model_dir=$(find "$base_dir" -mindepth 1 -maxdepth 1 -type d -print -quit)
+
+if [ -z "$model_dir" ]; then
+    log "ERROR: No model directory found in $base_dir"
+    exit 1
+fi
+
+log "Found model directory: $model_dir"
+
+# 加载环境变量（如果存在）
+if [ -f "$model_dir/.env" ]; then
+    log "Loading environment variables from .env"
+    source "$model_dir/.env"
+fi
+
+# 检查是否有自定义启动脚本
+if [ -f "$model_dir/start.sh" ]; then
+    log "Found custom start.sh, executing it"
+    cp "$model_dir/start.sh" /app/
+    chmod +x /app/start.sh
+    exec /app/start.sh
+fi
+
+# 默认启动逻辑
+
+# 确定模型路径
+if [ -f "$model_dir/model_id" ]; then
+    model_id=$(cat "$model_dir/model_id")
+    log "Using model_id from file: $model_id"
+else
+    # 从目录名推断模型 ID
+    model_id=$(basename "$model_dir")
+    model_id=$(echo "$model_id" | sed -E 's/^[^-]+-+//; s/--/\//g')
+    log "Inferred model_id from directory: $model_id"
+fi
+
+# 启动 SGLang 服务器
+# SGLang v0.2.13+ 原生支持 /ping 和 /invocations 端点
+log "Starting SGLang server on port $SAGEMAKER_BIND_TO_PORT"
+log "SGLang natively supports SageMaker APIs:"
+log "  - GET  /ping (health check)"
+log "  - POST /invocations (chat completions)"
+
+exec python3 -m sglang.launch_server \
+    --model-path "$model_dir" \
+    --host 0.0.0.0 \
+    --port "$SAGEMAKER_BIND_TO_PORT" \
+    --trust-remote-code

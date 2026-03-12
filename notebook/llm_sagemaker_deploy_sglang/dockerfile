@@ -1,0 +1,27 @@
+ARG SGLANG_REPO
+ARG SGLANG_VERSION
+FROM ${SGLANG_REPO}:${SGLANG_VERSION}
+
+# 设置工作目录
+WORKDIR /app
+
+# 复制启动脚本
+COPY app/serve /app/serve
+
+# 安装 s5cmd（用于从 S3 下载模型）
+RUN curl -L -O "https://sourceforge.net/projects/s5cmd.mirror/files/v2.2.1/s5cmd_2.2.1_Linux-64bit.tar.gz" && \
+    tar zxvf s5cmd_2.2.1_Linux-64bit.tar.gz && \
+    rm s5cmd_2.2.1_Linux-64bit.tar.gz CHANGELOG.md LICENSE README.md && \
+    chmod +x s5cmd && \
+    chmod +x serve
+
+# 暴露端口（SGLang 原生支持 /ping 和 /invocations）
+EXPOSE 8080
+
+# 设置环境变量
+ENV PATH="/app:${PATH}"
+ENV PYTHONUNBUFFERED=1
+
+# 运行 serve 脚本
+ENTRYPOINT []
+CMD ["serve"]
