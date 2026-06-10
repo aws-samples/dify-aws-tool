@@ -79,6 +79,8 @@ This repository provides the source code for three plugins in [Dify](https://git
 | Transcribe Tool | SAAS | AWS transcribe service tool (ASR) | | [river xie](chuanxie@amazon.com) |
 | Bedrock Retriever | PAAS | Amazon Bedrock knowledge base retrieval tool | | [ychchen](ychchen@amazon.com) |
 | S3 Operator | SAAS | Read and write S3 bucket content, can return presigned URLs | | [ybalbert](ybalbert@amazon.com) |
+| S3 File Uploader | SAAS | Upload a workflow file (file variable) to S3 and optionally return a presigned URL | | [leoou](leoou@amazon.com) |
+| S3 File Download | SAAS | Download an S3 object as a Dify file variable for downstream nodes | | [leoou](leoou@amazon.com) |
 | AWS Bedrock Nova Canvas | SAAS | Generate images based on Amazon Nova Canvas | | [alexwuu](alexwuu@amazon.com) |
 | AWS Bedrock Nova Reel | SAAS | Generate videos based on Amazon Nova Reel | | [alexwuu](alexwuu@amazon.com) |
 | OpenSearch Knn Retriever | PAAS | Retrieve data from OpenSearch using KNN method | [Notebook](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/search_img_by_img) | [ybalbert](ybalbert@amazon.com) |

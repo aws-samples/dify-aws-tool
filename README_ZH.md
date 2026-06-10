@@ -78,6 +78,8 @@
 | Transcribe Tool | SAAS | AWS transcribe service tool (ASR) | | [river xie](chuanxie@amazon.com) |
 | Bedrock Retriever | PAAS | Amazon Bedrock知识库检索工具 | | [ychchen](ychchen@amazon.com) |
 | S3 Operator | SAAS | 读写S3中bucket的内容，可以返回presignURL | | [ybalbert](ybalbert@amazon.com) |
+| S3 File Uploader | SAAS | 将工作流中的 file 变量上传到 S3, 可选返回 presignURL | | [leoou](leoou@amazon.com) |
+| S3 File Download | SAAS | 从 S3 下载对象为 Dify file 变量, 供下游节点使用 | | [leoou](leoou@amazon.com) |
 | AWS Bedrock Nova Canvas | SAAS | 基于Amazon Nova Canvas生成图像 | | [alexwuu](alexwuu@amazon.com) |
 | AWS Bedrock Nova Reel | SAAS | 基于Amazon Nova Reel生成视频 | | [alexwuu](alexwuu@amazon.com) |
 | OpenSearch Knn Retriever | PAAS | 用KNN方法从OpenSearch召回数据 | [Notebook](https://github.com/aws-samples/dify-aws-tool/tree/main/notebook/search_img_by_img) | [ybalbert](ybalbert@amazon.com) |
