@@ -140,7 +140,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                 prompt_messages[0] = format_prompt
             else:
                 prompt_messages.insert(0, format_prompt)
-            prompt_messages.append(AssistantPromptMessage(content=f"\n```{response_format}"))
+            prompt_messages.append(UserPromptMessage(content=f"Output ```{response_format} block only."))
         return self._invoke(model, credentials, prompt_messages, model_parameters, tools, stop, stream, user)
 
     def _invoke(
@@ -203,7 +203,7 @@ class BedrockLargeLanguageModel(LargeLanguageModel):
                                 prompt_messages[0] = format_prompt
                             else:
                                 prompt_messages.insert(0, format_prompt)
-                            prompt_messages.append(AssistantPromptMessage(content=f"\n```{response_format}"))
+                            prompt_messages.append(UserPromptMessage(content=f"Output ```{response_format} block only."))
                         else:
                             # For non-Anthropic models, just remove response_format parameter
                             model_parameters.pop("response_format", None)
